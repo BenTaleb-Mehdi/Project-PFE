@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+
+actor Coach
+actor Client
+
+rectangle "Coach Management System" {
+
+  Coach --> (Se connecter)
+  Coach --> (Gérer les clients)
+  Coach --> (Créer programme)
+  Coach --> (Assigner programme)
+  Coach --> (Suivre progression)
+  Coach --> (Gérer paiements)
+  Coach --> (Consulter tableau de bord)
+
+  Client --> (Se connecter)
+  Client --> (Consulter programme)
+  Client --> (Voir progression)
+}
+
+@enduml

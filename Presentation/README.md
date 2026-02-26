@@ -130,7 +130,7 @@ style: |
   <div class="dt-card" style="border-top-color: #f39c12;">
     <h4>Contexte : </h4>
     <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      "Coach Amin is an experienced fitness coach who helps clients achieve their physical goals through personalized training and nutrition plans.
+      "Coach Achraf is an experienced fitness coach who helps clients achieve their physical goals through personalized training and nutrition plans.
 
   However, despite his strong expertise, he faces difficulties in managing administrative tasks such as organizing workout programs, tracking client progress, and handling payments. Most of his work is done manually, which consumes time and reduces efficiency ."
     </blockquote>
@@ -162,23 +162,32 @@ style: |
 
 ---
 
-
-
 ## 3. Branche Fonctionnelle : Design Thinking
+### Empatie : 
+<div class="sommaire-grid">
+  <div class="dt-card" style="margin-top:0; border-top-color: #f39c12;">
+    <h4> Ce que le Coach ressent :</h4>
+    <ul>
+      <li><strong>Frustration :</strong> Perte de temps sur WhatsApp/Excel.</li>
+      <li><strong>Confusion :</strong> Difficulté à retrouver "ce PDF" envoyé il y a 3 mois.</li>
+      <li><strong>Surcharge :</strong> Gestion manuelle des paiements et relances.</li>
+    </ul>
+  </div>
+
+  <div class="dt-card" style="margin-top:0; border-top-color: #3498db;">
+    <h4> L'opportunité digitale :</h4>
+    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px; font-size: 0.9em;">
+      "Passer d'une gestion artisanale à un <b>Moteur de Nutrition Unifié</b> pour libérer 95% du temps du coach au profit de la stratégie."
+    </blockquote>
+  </div>
+</div>
+
+---
+
+## Branche Fonctionnelle : Design Thinking
 ### Carte Empatie : 
 <div class="img-container">
   <img src="images/image-carte-empatie.png" class="img-methodo" alt="Scrum">
-</div>
----
-## 3. Branche Fonctionnelle : Design Thinking
-### 1. EMPATHIE
-<div class="img-container">
-  <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Comprendre l'utilisateur</h4>
-    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      "Observation des difficultés réelles des étudiants lors des examens : stress du temps, erreurs de lecture et attente des résultats."
-    </blockquote>
-  </div>
 </div>
 
 ---
@@ -192,9 +201,10 @@ style: |
   <div class="dt-card" style="border-top-color: #f39c12;">
     <h4>Cadrage du problème</h4>
     <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      "vide"
+      "Coach Achraf, malgré son expertise avancée en fitness, rencontre des difficultés dans l’organisation et la gestion de son activité.
+Ses tâches sont réalisées manuellement via des outils dispersés comme WhatsApp et Excel, ce qui entraîne une perte de temps, un manque d’efficacité et une image professionnelle qui ne reflète pas son véritable niveau d’expertise."
     </blockquote>
-    <p>vide</p>
+ 
   </div>
 </div>
 
@@ -205,10 +215,14 @@ style: |
 
 <div class="img-container">
   <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Solutions retenues</h4>
-    <p>• Interface <strong>"Single Question"</strong> pour éviter la surcharge cognitive.</p>
-    <p>• <strong>Timer dynamique</strong> par catégorie de question.</p>
-    <p>• <strong>Dashboard</strong> temps réel pour le suivi des formateurs.</p>
+    <h4>Développer une plateforme digitale centralisée permettant de gérer :</h4>
+    <p>• Les clients</p>
+    <p>• Les programmes (nutrition & entraînement)</p>
+    <p>• Les suivi de progression</p>
+    <p>• Les paiements</p>
+    <h4>Objectif de l’Idéation</h4>
+    <p> > Transformer une gestion manuelle et dispersée en un système structuré, automatisé et professionnel.</p>
+ 
   </div>
 </div>
 
@@ -230,7 +244,9 @@ style: |
 
 <div class="maquette-grid">
   <div style="text-align: center;">
-   
+   <div class="img-container">
+     <img src="images/maquette.png" class="img-methodo" alt="Scrum">
+  </div>
   </div>
 </div>
 

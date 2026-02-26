@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+
+actor Coach
+actor Client
+
+rectangle "Sprint 2 - Automation & Client Space" {
+
+  Coach --> (Créer template programme)
+  Coach --> (Générer programme depuis template)
+
+  Coach --> (Ajouter progression)
+  Coach --> (Enregistrer paiement)
+
+  Client --> (Se connecter)
+  Client --> (Consulter programme)
+  Client --> (Voir progression)
+}
+
+@enduml
