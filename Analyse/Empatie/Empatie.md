@@ -10,7 +10,7 @@ Le coach est un expert métier qui souhaite scaler son activité et passer d'une
 
 - Augmenter sa valeur perçue (Premium Branding) pour justifier des tarifs plus élevés.
 
- **Douleurs et Frustrations (Pains)
+##  Douleurs et Frustrations (Pains)
 L'application doit répondre à des problèmes de gestion quotidienne qui "étouffent" le coach :**
 
 - La répétition inutile : Perte de 3h/jour à réécrire les mêmes plans alimentaires et entraînements.
@@ -19,7 +19,7 @@ L'application doit répondre à des problèmes de gestion quotidienne qui "étou
 
 - Le manque d'autorité : L'envoi de simples PDF ou messages textes qui ne reflètent pas son expertise de "Senior Coach".
 
-**Fonctionnalités "Gain" Attendues (Solutions)
+## Fonctionnalités "Gain" Attendues (Solutions)
 Pour satisfaire l'utilisateur, le système doit offrir :**
 
 - Un Cockpit de gestion : Une interface unique pour voir le progrès de chaque client en un coup d'œil.
@@ -28,7 +28,7 @@ Pour satisfaire l'utilisateur, le système doit offrir :**
 
 - Un Portfolio Interactif : Une vitrine qui affiche automatiquement les résultats "Avant/Après" et les témoignages pour attirer de nouveaux clients.
 
-**Expérience Client (Frontend)
+## Expérience Client (Frontend)
 Le système ne doit pas seulement aider le coach, mais aussi motiver l'élève :**
 
 - Interface Intuitive : Accès rapide au programme du jour sans chercher dans l'historique WhatsApp.
