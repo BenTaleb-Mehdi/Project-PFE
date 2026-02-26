@@ -23,9 +23,9 @@ style: |
     right: 60px;
   }
   .logo-header img { height: 140px; margin: 0; margin-left:10px; margin-right:10px }
-  h1 { color: #088dc7; font-size: 2.8em; margin-top: 100px; text-align: left; }
-  h2 { color: #088dc7; font-size: 2em; border-bottom: 2px solid #088dc7; margin-bottom: 40px;}
-  h3 { text-align: left; color: #444; margin-top: 0; }
+  h1 { color: rgb(15, 162, 1); font-size: 2.8em; margin-top: 100px; text-align: left; }
+  h2 { color: #069806; font-size: 2em; border-bottom: 2px solid #06a210; margin-bottom: 40px;}
+  h3 { text-align: left; color: #016e19; margin-top: 0; }
 
   .sommaire-grid {
     display: grid;
@@ -36,13 +36,13 @@ style: |
   .sommaire-item {
     display: flex;
     align-items: center;
-    background: #f4faff;
+    background: #f4fff6;
     border-radius: 12px;
     padding: 15px 20px;
-    border-left: 5px solid #088dc7;
+    border-left: 5px solid #08c71e;
   }
   .sommaire-num {
-    background: #088dc7; color: white; width: 35px; height: 35px;
+    background: #06d310; color: white; width: 35px; height: 35px;
     display: flex; justify-content: center; align-items: center;
     border-radius: 50%; font-weight: bold; margin-right: 15px; flex-shrink: 0;
   }
@@ -63,10 +63,10 @@ style: |
   }
 
   .dt-card {
-    background: #f0f7fa;
+    background: #f3faf0;
     padding: 30px;
     border-radius: 10px;
-    border-top: 6px solid #088dc7;
+    border-top: 6px solid #0cca02;
     text-align: left;
     margin-top: 20px;
     width: 100%;
@@ -103,8 +103,8 @@ style: |
   <img src="images/logo-solicode.png" alt="Logo Right">
 </div>
 
-# **Projet de Fin de Formation**
-### **Digitalisation des Services de Coaching : Développement d’une Solution Web Intégrée de Gestion et de Branding**
+# Projet de Fin de Formation
+### Digitalisation des Services de Coaching : Développement d’une Solution Web Intégrée de Gestion et de Branding
 
 **Réalisé par :** <span class="highlight">Mehdi Bentaleb</span>  
 **Encadré par :** <span class="highlight">M. ESSARRAJ Fouad</span>  
@@ -120,12 +120,25 @@ style: |
   <div class="sommaire-item"><div class="sommaire-num">3</div><div class="sommaire-text">Branche Fonctionnelle</div></div>
   <div class="sommaire-item"><div class="sommaire-num">4</div><div class="sommaire-text">Branche Technique</div></div>
   <div class="sommaire-item"><div class="sommaire-num">5</div><div class="sommaire-text">Conception</div></div>
-    <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Démonstration</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Démonstration</div></div>
   <div class="sommaire-item"><div class="sommaire-num">7</div><div class="sommaire-text">Conclusion</div></div>
 </div>
 
 ---
 ## 1. Contexte du projet
+<div class="img-container">
+  <div class="dt-card" style="border-top-color: #f39c12;">
+    <h4>Contexte : </h4>
+    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
+      "Coach Amin is an experienced fitness coach who helps clients achieve their physical goals through personalized training and nutrition plans.
+
+  However, despite his strong expertise, he faces difficulties in managing administrative tasks such as organizing workout programs, tracking client progress, and handling payments. Most of his work is done manually, which consumes time and reduces efficiency ."
+    </blockquote>
+  </div>
+</div>
+
+
+> This project focuses on analyzing Coach Amin’s needs in order to propose solutions that improve his organization, optimize his workflow, and enhance his professional performance.
 
 ---
 
@@ -152,8 +165,13 @@ style: |
 
 
 ## 3. Branche Fonctionnelle : Design Thinking
+### Carte Empatie : 
+<div class="img-container">
+  <img src="images/image-carte-empatie.png" class="img-methodo" alt="Scrum">
+</div>
+---
+## 3. Branche Fonctionnelle : Design Thinking
 ### 1. EMPATHIE
-
 <div class="img-container">
   <div class="dt-card" style="border-top-color: #f39c12;">
     <h4>Comprendre l'utilisateur</h4>
@@ -165,6 +183,8 @@ style: |
 
 ---
 
+
+
 ## Branche Fonctionnelle : Design Thinking
 ### 2. DÉFINITION
 
@@ -172,9 +192,9 @@ style: |
   <div class="dt-card" style="border-top-color: #f39c12;">
     <h4>Cadrage du problème</h4>
     <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      "Comment simplifier l'évaluation tout en offrant un feedback immédiat ?"
+      "vide"
     </blockquote>
-    <p>Focus sur : L'accessibilité, la rapidité et la fiabilité des données.</p>
+    <p>vide</p>
   </div>
 </div>
 
