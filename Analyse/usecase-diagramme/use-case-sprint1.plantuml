@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+
+actor Coach
+
+rectangle "Sprint 1 - Core Management" {
+
+  Coach --> (Se connecter)
+  Coach --> (Ajouter client)
+  Coach --> (Modifier client)
+  Coach --> (Supprimer client)
+  Coach --> (Lister clients)
+
+  Coach --> (Créer programme)
+  Coach --> (Assigner programme)
+
+  Coach --> (Voir nombre total clients)
+}
+
+@enduml
