@@ -35,7 +35,7 @@
 
 - Progress photos lost in the gallery
 
-He sees others looking more organized and professional.
+> He sees others looking more organized and professional.
 
 ## 4️. What He Says
 
