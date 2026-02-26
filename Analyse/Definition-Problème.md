@@ -4,7 +4,7 @@
 
 ---
 
-## 🚩 L'Énoncé du Problème Central
+##  L'Énoncé du Problème Central
 > **« Coach Achraf souffre actuellement d'une "suffocation opérationnelle". Malgré son expertise de haut niveau, la croissance de son entreprise est paralysée par des tâches administratives manuelles, une communication fragmentée (WhatsApp/Excel) et une absence d'infrastructure professionnelle. Cela crée un "écart de crédibilité" qui donne à son service premium un aspect amateur, empêche toute mise à l'échelle et mène à l'épuisement professionnel. »**
 
 ---
