@@ -1,7 +1,7 @@
 # Pandoc Build Script for QCM Project (DOCX Only)
 # This script converts modular Markdown files into a professional DOCX report.
 
-$outputDocx = "QCM_Report.docx"
+$outputDocx = "PFE_Raport.docx"
 
 $inputFiles = "00_title_page.md",
 "01_toc.md",
