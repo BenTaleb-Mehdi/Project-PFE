@@ -1,22 +1,41 @@
 @startuml
 left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
 
-actor Coach
-actor Client
+actor "Coach (Admin)" as Admin
+actor "Co-coach (Assistant)" as Staff
+actor "Client (Élève)" as Client
+
+' الإرث: الكوتش يمتلك تلقائياً جميع صلاحيات المساعد
+Staff <|-- Admin
 
 rectangle "Coach Management System" {
+  
+  package "Administration & Stratégie" {
+    Admin --> (Gérer l'équipe & Co-coachs)
+    Admin --> (Gérer les paiements & Revenus)
+    Admin --> (Consulter le Dashboard global)
+  }
+  
+  package "Gestion Opérationnelle" {
+    Staff --> (S'authentifier)
+    Staff --> (Gérer les dossiers Clients)
+    Staff --> (Gérer la bibliothèque de repas)
+    Staff --> (Concevoir des Programmes / Templates)
+    (Concevoir des Programmes / Templates) ..> (Calculer les Macros) : <<include>>
+    Staff --> (Assigner un programme au client)
+  }
 
-  Coach --> (Se connecter)
-  Coach --> (Gérer les clients)
-  Coach --> (Créer programme)
-  Coach --> (Assigner programme)
-  Coach --> (Suivre progression)
-  Coach --> (Gérer paiements)
-  Coach --> (Consulter tableau de bord)
+  package "Suivi Interactif" {
+    Staff --> (Consulter les photos & courbes de poids)
+    Client --> (Mettre à jour son poids & photos)
+  }
 
-  Client --> (Se connecter)
-  Client --> (Consulter programme)
-  Client --> (Voir progression)
+  package "Espace Client" {
+    Client --> (S'authentifier)
+    Client --> (Consulter son programme assigné)
+    Client --> (Visualiser sa propre progression)
+  }
 }
-
 @enduml
