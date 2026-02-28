@@ -1,5 +1,5 @@
 # Définition du Problème : Le Piège de l'Autorité et de l'Efficacité
-**Client :** Coach Amin (Expert Fitness)  
+**Client :** Coach Achraf (Expert Fitness)  
 **Objectif :** Passer de « Dactylo Numérique » à « Marque Mondiale ».
 
 ---
