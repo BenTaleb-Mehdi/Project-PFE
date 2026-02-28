@@ -7,7 +7,6 @@ actor "Coach (Admin)" as Admin
 actor "Co-coach (Assistant)" as Staff
 actor "Client (Élève)" as Client
 
-' الإرث: الكوتش يمتلك تلقائياً جميع صلاحيات المساعد
 Staff <|-- Admin
 
 rectangle "Coach Management System" {

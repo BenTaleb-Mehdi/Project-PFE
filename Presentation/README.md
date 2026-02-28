@@ -49,17 +49,30 @@ style: |
   
   .img-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    height: 100%;
+    width: 100%;
+    height: 420px; /* Fixed height to prevent overflow */
+    margin-top: 10px;
+    overflow: hidden;
   }
+
   .img-methodo {
-    width: 85%;
-    height: auto;
-    max-height: 450px;
+    max-width: 85%;
+    max-height: 100%;
     object-fit: contain;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .img-usecase {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
   }
 
   .dt-card {
@@ -72,7 +85,6 @@ style: |
     width: 100%;
   }
 
-  /* --- FIX COULEURS TECH STACK --- */
   .tech-container {
     display: flex;
     flex-wrap: wrap;
@@ -83,7 +95,7 @@ style: |
     padding: 8px 18px;
     border-radius: 6px;
     font-weight: 600;
-    background-color: #545353ff; /* Gris foncé unique */
+    background-color: #545353ff;
     color: #ffffff !important;
     font-size: 0.85em;
     border: 1px solid #222;
@@ -92,8 +104,8 @@ style: |
     display: flex;
     gap: 15px;
     justify-content: center;
-    align-items: flex-start;
-    height: 350px;
+    align-items: center;
+    height: 400px;
   }
 
 ---
@@ -126,25 +138,19 @@ style: |
 
 ---
 ## 1. Contexte du projet
-<div class="img-container">
-  <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Contexte : </h4>
-    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      "Coach Achraf is an experienced fitness coach who helps clients achieve their physical goals through personalized training and nutrition plans.
-
-  However, despite his strong expertise, he faces difficulties in managing administrative tasks such as organizing workout programs, tracking client progress, and handling payments. Most of his work is done manually, which consumes time and reduces efficiency ."
-    </blockquote>
-  </div>
+<div class="dt-card" style="border-top-color: #f39c12;">
+  <h4>Contexte : </h4>
+  <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
+    "Coach Achraf is an experienced fitness coach who helps clients achieve their physical goals through personalized training and nutrition plans.
+    However, despite his strong expertise, he faces difficulties in managing administrative tasks such as organizing workout programs, tracking client progress, and handling payments. Most of his work is done manually, which consumes time and reduces efficiency."
+  </blockquote>
 </div>
-
 
 > This project focuses on analyzing Coach Amin’s needs in order to propose solutions that improve his organization, optimize his workflow, and enhance his professional performance.
 
 ---
 
 ## 2. Méthodologie : Design Thinking
-
-
 
 <div class="img-container">
   <img src="images/designThinking.png" class="img-methodo" alt="Design Thinking">
@@ -154,8 +160,6 @@ style: |
 
 ## Méthodologie : Scrum (Agile)
 
-
-
 <div class="img-container">
   <img src="images/scrum.jpg" class="img-methodo" alt="Scrum">
 </div>
@@ -163,160 +167,148 @@ style: |
 ---
 
 ## 3. Branche Fonctionnelle : Design Thinking
-### Empatie : 
+### Empathie
+
 <div class="sommaire-grid">
   <div class="dt-card" style="margin-top:0; border-top-color: #f39c12;">
     <h4> Ce que le Coach ressent :</h4>
     <ul>
       <li><strong>Frustration :</strong> Perte de temps sur WhatsApp/Excel.</li>
-      <li><strong>Confusion :</strong> Difficulté à retrouver "ce PDF" envoyé il y a 3 mois.</li>
-      <li><strong>Surcharge :</strong> Gestion manuelle des paiements et relances.</li>
+      <li><strong>Confusion :</strong> Difficulté à retrouver "ce PDF".</li>
+      <li><strong>Surcharge :</strong> Gestion manuelle des paiements.</li>
     </ul>
   </div>
 
   <div class="dt-card" style="margin-top:0; border-top-color: #3498db;">
     <h4> L'opportunité digitale :</h4>
     <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px; font-size: 0.9em;">
-      "Passer d'une gestion artisanale à un <b>Moteur de Nutrition Unifié</b> pour libérer 95% du temps du coach au profit de la stratégie."
+      "Passer d'une gestion artisanale à un <b>Moteur de Nutrition Unifié</b> pour libérer 95% du temps du coach."
     </blockquote>
   </div>
 </div>
 
 ---
 
-## Branche Fonctionnelle : Design Thinking
-### Carte Empatie : 
+## Branche Fonctionnelle : Carte Empathie
+
 <div class="img-container">
-  <img src="images/image-carte-empatie.png" class="img-methodo" alt="Scrum">
+  <img src="images/image-carte-empatie.png" class="img-methodo" alt="Carte Empathie">
 </div>
 
 ---
 
+## Branche Fonctionnelle : 2. DÉFINITION
 
-
-## Branche Fonctionnelle : Design Thinking
-### 2. DÉFINITION
-
-<div class="img-container">
-  <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Cadrage du problème</h4>
-    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-      "Coach Achraf, malgré son expertise avancée en fitness, rencontre des difficultés dans l’organisation et la gestion de son activité.
-Ses tâches sont réalisées manuellement via des outils dispersés comme WhatsApp et Excel, ce qui entraîne une perte de temps, un manque d’efficacité et une image professionnelle qui ne reflète pas son véritable niveau d’expertise."
-    </blockquote>
- 
-  </div>
+<div class="dt-card" style="border-top-color: #f39c12;">
+  <h4>Cadrage du problème</h4>
+  <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
+    "Ses tâches sont réalisées manuellement via des outils dispersés comme WhatsApp et Excel, ce qui entraîne une perte de temps, un manque d’efficacité et une image professionnelle qui ne reflète pas son véritable niveau d’expertise."
+  </blockquote>
 </div>
 
 ---
 
-## Branche Fonctionnelle : Design Thinking
-### 3. IDÉATION
+## Branche Fonctionnelle : 3. IDÉATION
 
-<div class="img-container">
-  <div class="dt-card" style="border-top-color: #f39c12;">
-    <h4>Développer une plateforme digitale centralisée permettant de gérer :</h4>
-    <p>• Les clients</p>
-    <p>• Les programmes (nutrition & entraînement)</p>
-    <p>• Les suivi de progression</p>
-    <p>• Les paiements</p>
-    <h4>Objectif de l’Idéation</h4>
-    <p> > Transformer une gestion manuelle et dispersée en un système structuré, automatisé et professionnel.</p>
- 
-  </div>
+<div class="dt-card" style="border-top-color: #f39c12;">
+  <h4>Plateforme digitale centralisée :</h4>
+  <p>• Gestion des clients & programmes nutrition</p>
+  <p>• Suivi de progression & automatisation des paiements</p>
+  <h4>Objectif de l’Idéation</h4>
+  > Transformer une gestion manuelle en un système structuré et professionnel.
 </div>
 
 ---
 
 ## Branche Fonctionnelle : Cas d'utilisation
 
-
-
+### Global Use Case
 <div class="img-container">
-  <h3>Interaction Utilisateur (UML)</h3>
-  <img src="images/use-case.png" class="img-methodo" alt="Use Case">
+  <img src="images/usecase-global.png" class="img-usecase" alt="Global Use Case">
 </div>
 
 ---
+
+## Branche Fonctionnelle : Cas d'utilisation
+
+### Sprint 1 : Gestion de Base
+<div class="img-container">
+  <img src="images/sprint1-usecase.png" class="img-usecase" alt="Sprint 1 Use Case">
+</div>
+
+---
+
+## Branche Fonctionnelle : Cas d'utilisation
+
+### Sprint 2 : Nutrition & Training
+<div class="img-container">
+  <img src="images/sprint2-usecase.png" class="img-usecase" alt="Sprint 2 Use Case">
+</div>
+
+---
+
 ## Branche Fonctionnelle : Maquettes (UI/UX)
 
-
-
-<div class="maquette-grid">
-  <div style="text-align: center;">
-   <div class="img-container">
-     <img src="images/maquette.png" class="img-methodo" alt="Scrum">
-  </div>
-  </div>
+<div class="img-container">
+  <img src="images/maquette.png" class="img-methodo" alt="Maquettes UI">
 </div>
 
 ---
 
 ## 4. Branche Technique : Tech Stack
+
 <div class="sommaire-grid">
   <div class="dt-card" style="margin-top:0;">
-    <h4>Les technologies à utiliser</h4>
+    <h4>Back-end & Architecture</h4>
     <ul>
-      <li><strong>Base de données:</strong> MySQL </li>
-      <li><strong>Framework:</strong> Laravel 12</li>
-      <li><strong>Architecture:</strong> N-Tiers</li>
-      <strong>Controller:</strong> Requêtes HTTP
-      <strong>Service:</strong> Logique métier
-      <strong>Model:</strong> Base de données
-      <li><strong>Architecture:</strong> MVC</li>
-      <li><strong> Blade :</strong>Templates réutilisables (components, layouts).</li>
+      <li><strong>DB :</strong> MySQL / <strong>Framework :</strong> Laravel 12</li>
+      <li><strong>Architecture :</strong> N-Tiers (Service Layer)</li>
+      <li><strong>Spatie :</strong> Rôles & Permissions</li>
     </ul>
   </div>
   <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
+    <h4>Front-end & Outils</h4>
     <ul>
-      <li><strong> AJAX :</strong> Interactions dynamiques (ex: Modales) sans rechargement de page.</li>
-      <li><strong>Alpine.js :</strong>  Librairie JavaScript pour les interactions dynamiques.</li>
-      <li><strong>Spatie :</strong> Librairie pour la gestion des permissions et rôles.</li>
-      <li><strong>Vite :</strong>   Outil de build rapide.</li>
-      <li><strong>Lucide :</strong> Librairie d'icônes.</li>
-      <li><strong>Tailwind CSS :</strong>Développement rapide, responsive.</li>
+      <li><strong>Styling :</strong> Tailwind CSS</li>
+      <li><strong>Dynamic :</strong> Alpine.js & AJAX</li>
+      <li><strong>Icons :</strong> Lucide / <strong>Build :</strong> Vite</li>
     </ul>
   </div>
 </div>
 
 ---
 
+## 5. Conception : MLD
 
-## 5. Conception : Diagramme de classe
-
-
- <h3>Modélisation des données (MLD)</h3>
+<h3>Modélisation des données</h3>
 <div class="img-container">
- 
-  
+  <img src="images/mld-diagram.png" class="img-usecase" alt="MLD Diagram">
 </div>
 
 ---
 
-## 5. Démonstration : Environnement & Outils
+## 6. Démonstration : Outils
 
 <div class="sommaire-grid">
   <div class="dt-card" style="margin-top:0;">
-    <h4>Environnement de Développement</h4>
+    <h4>Développement</h4>
     <ul>
-      <li><strong>IDE :</strong> VS Code & Antigravity </li>
-      <li><strong>Monitoring DB :</strong> Workbench Sql</li>
+      <li><strong>IDE :</strong> VS Code</li>
+      <li><strong>DB :</strong> MySQL Workbench</li>
     </ul>
   </div>
   <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
-    <h4>Gestion & Déploiement</h4>
+    <h4>Gestion & Versioning</h4>
     <ul>
-      <li><strong>Modelisation UML :</strong>Mermaid/PlantUML</li>
-      <li><strong>Gestion de version :</strong> Git (GitHub)</li>
-      <li><strong>Navigateur :</strong> Chrome DevTools</li>
+      <li><strong>Git :</strong> GitHub</li>
+      <li><strong>UML :</strong> Mermaid / PlantUML</li>
     </ul>
   </div>
 </div>
 
-<br>
-
 ---
-## 6. Conclusion
 
+## 7. Conclusion
 
 ### Merci pour votre attention !
+**Questions ?**
