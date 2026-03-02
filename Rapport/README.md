@@ -173,8 +173,6 @@ La logique centrale est : **"Créer une fois, assigner indéfiniment."** Il ne s
 
 Le système repose sur une interaction dynamique entre trois acteurs, structurés par une hiérarchie de permissions stricte.
 
-
-
 ### 6.1 Les Acteurs et leurs Rôles
 * **Le Coach (Achraf) :** Administrateur principal. Contrôle total sur le business (paiements) et l'équipe.
 * **Le Co-Coach (Assistant) :** Manager opérationnel. Gère les clients et la création de programmes.
