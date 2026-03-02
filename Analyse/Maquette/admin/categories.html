@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | AntiGravity V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-50 antialiased" x-data="{ 
+    sidebarOpen: false, 
+    categories: ['Ftor', 'Gheda', 'Cas-croûte', 'Acha'],
+    newCat: '',
+    addCategory() {
+        if(this.newCat.trim()) {
+            this.categories.push(this.newCat);
+            this.newCat = '';
+        }
+    }
+}">
+
+    <!-- Mobile Header -->
+    <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600"></div>
+            <span class="font-mono font-bold text-sm uppercase">AntiGravity</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+    </header>
+
+    <!-- Sidebar -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-12">
+                <div class="h-6 w-6 bg-cyan-600"></div>
+                <span class="font-mono font-bold text-lg uppercase tracking-tighter">AntiGravity</span>
+            </div>
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Dashboard</a>
+                <div class="py-2">
+                    <p class="px-4 text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Nutrition_Engine</p>
+                    <a href="categories.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">Categories</a>
+                    <a href="meals.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Meals</a>
+                    <a href="programs.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Programs</a>
+                </div>
+                <a href="clients.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Clients</a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12">
+        <header class="mb-10">
+            <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Category_Management</h1>
+            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-widest">Step_01: Define Meal Sequences</p>
+        </header>
+
+        <div class="max-w-2xl">
+            <div class="ag-card p-8">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-6">Sequence_Registry</h3>
+                
+                <div class="space-y-4 mb-8">
+                    <template x-for="(cat, index) in categories" :key="index">
+                        <div class="flex items-center justify-between p-4 bg-zinc-50 ag-border group hover:border-cyan-200 transition-all">
+                            <span class="text-xs font-mono font-bold uppercase text-zinc-900" x-text="cat"></span>
+                            <div class="flex items-center space-x-4">
+                                <span class="text-[8px] font-mono text-zinc-400 uppercase">Slot_Active</span>
+                                <button @click="categories.splice(index, 1)" class="text-zinc-300 hover:text-red-500 transition-colors">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="flex space-x-2">
+                    <input type="text" x-model="newCat" placeholder="NEW_CATEGORY_NAME" 
+                           class="flex-1 px-4 py-3 text-xs font-mono uppercase tracking-widest ag-border focus:border-cyan-600 outline-none">
+                    <button @click="addCategory" class="px-6 py-3 bg-zinc-900 text-white text-xs font-mono uppercase font-bold tracking-widest hover:bg-black transition-colors">
+                        Add_Sequence
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
