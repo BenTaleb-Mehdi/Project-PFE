@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Progress | AntiGravity V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="../admin/style.css">
+</head>
+<body class="bg-zinc-50 antialiased font-sans" x-data="{ sidebarOpen: false, photos: [{ id: 1, date: '2026-03-02', weight: '83.1', type: 'FRONT' }, { id: 2, date: '2026-02-02', weight: '85.5', type: 'FRONT' }] }">
+    <!-- Mobile Header (Hamburger) -->
+    <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600"></div>
+            <span class="font-mono font-bold text-sm tracking-tighter uppercase">My_AntiGravity</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </header>
+
+    <!-- Sidebar / Drawer -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-12">
+                <div class="h-6 w-6 bg-cyan-600"></div>
+                <div class="flex flex-col">
+                    <span class="font-mono font-bold text-lg tracking-tighter uppercase leading-none">AntiGravity</span>
+                    <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mt-1">Pupil_Portal_V3.0</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="portal.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Dashboard
+                </a>
+                <a href="evolution.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">
+                    Evolution
+                </a>
+                <a href="program-view.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    My_Programs
+                </a>
+            </nav>
+        </div>
+
+        <!-- Pupil Indicator -->
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 ag-border border-x-0 border-b-0">
+            <div class="flex items-center space-x-3">
+                <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-600 font-mono text-xs font-bold">M</div>
+                <div>
+                    <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi_B</p>
+                    <p class="text-[8px] font-mono text-cyan-600 uppercase">Active_Pupil</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Backdrop -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12 max-w-2xl">
+        <header class="mb-10">
+            <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Evolution_Sync</h1>
+            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-widest">Action: Add_Progress_Image</p>
+        </header>
+
+        <div class="space-y-8">
+            <!-- Upload Zone -->
+            <div class="ag-card p-10 bg-white border-dashed border-2 border-zinc-200 flex flex-col items-center justify-center text-center group hover:border-cyan-600 transition-all cursor-pointer">
+                <div class="h-16 w-16 bg-zinc-50 flex items-center justify-center mb-6 group-hover:bg-cyan-50 transition-colors">
+                    <svg class="h-8 w-8 text-zinc-300 group-hover:text-cyan-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4" />
+                    </svg>
+                </div>
+                <h3 class="text-xs font-mono font-bold uppercase tracking-widest text-zinc-900 mb-2">Deploy_New_Snapshot</h3>
+                <p class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em]">Front / Side / Back</p>
+                <input type="file" class="hidden">
+            </div>
+
+            <!-- Weight Input -->
+            <div class="ag-card p-6 bg-white">
+                <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Current_Mass (Sync)</label>
+                <div class="flex items-end space-x-4">
+                    <input type="number" step="0.1" placeholder="83.1" class="text-3xl font-mono font-bold w-full bg-transparent outline-none focus:text-cyan-600">
+                    <span class="text-xs font-mono text-zinc-300 pb-2">KG</span>
+                </div>
+            </div>
+
+            <button class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-all">
+                Finalize_Upload_Session
+            </button>
+
+            <!-- Simple History Header -->
+            <div class="pt-8 border-t border-zinc-100">
+                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-6">Recent_Syncs</h4>
+                
+                <div class="space-y-4">
+                    <template x-for="photo in photos" :key="photo.id">
+                        <div class="ag-card bg-white p-4 flex items-center space-x-4">
+                            <div class="h-12 w-12 bg-zinc-100 flex items-center justify-center">
+                                <svg class="h-6 w-6 text-zinc-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[10px] font-mono font-bold text-zinc-900" x-text="photo.date"></p>
+                                <p class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest" x-text="photo.weight + ' KG // ' + photo.type"></p>
+                            </div>
+                            <button class="text-zinc-300 hover:text-red-500">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

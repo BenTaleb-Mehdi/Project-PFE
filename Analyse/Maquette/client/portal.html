@@ -50,14 +50,16 @@
             </div>
 
             <nav class="space-y-1">
-                <a href="#" @click.prevent="activeView = 'dashboard'; sidebarOpen = false" 
-                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all"
-                   :class="activeView === 'dashboard' ? 'bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'">
+                <a href="portal.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">
                     Dashboard
                 </a>
-                <a href="#" @click.prevent="activeView = 'programs'; sidebarOpen = false" 
-                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all"
-                   :class="activeView === 'programs' || activeView === 'program-details' ? 'bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'">
+                <a href="evolution.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Evolution
+                </a>
+                <a href="program-view.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
                     My_Programs
                 </a>
             </nav>
