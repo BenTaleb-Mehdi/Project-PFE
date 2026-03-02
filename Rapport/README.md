@@ -143,7 +143,6 @@ Basé sur l'analyse d'empathie, voici les modules clés à développer :
 | **Suivi Biométrique** | Graphiques dynamiques & Sliders photos | Client |
 
 
-
 ## 4. Définition du Problème
 
 Malgré une expertise avancée en fitness, **Coach Achraf** se heurte à des barrières structurelles qui freinent sa croissance. Le diagnostic révèle les points critiques suivants :
