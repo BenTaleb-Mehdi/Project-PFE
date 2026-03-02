@@ -32,8 +32,7 @@
                 <div class="py-2">
                     <p class="px-4 text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Nutrition_Engine</p>
                     <a href="categories.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Categories</a>
-                    <a href="meals.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Meals</a>
-                    <a href="programs.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Programs</a>
+                    <a href="nutrition.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Nutrition</a>
                 </div>
                 <a href="clients.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">Clients</a>
             </nav>
@@ -96,10 +95,39 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Select_Nutrition_Protocol</label>
-                        <select class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border outline-none focus:border-cyan-600">
-                            <option>SHRED_X_V2 (Achraf_Perf)</option>
-                            <option>BULK_POWER_HYBRID</option>
-                        </option>
+                        <div x-data="{ 
+                            open: false, 
+                            selected: '',
+                            options: ['SHRED_X_V2 (Achraf_Perf)', 'BULK_POWER_HYBRID']
+                        }" class="relative">
+                            <button @click="open = !open" 
+                                    class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border flex items-center justify-between outline-none focus:border-cyan-600">
+                                <span x-text="selected || 'Select_Nutrition_Protocol'" :class="!selected ? 'text-zinc-400' : ''"></span>
+                                <svg class="h-4 w-4 text-zinc-400 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <!-- Portal-like Dropdown -->
+                            <div x-show="open" 
+                                 @click.outside="open = false"
+                                 x-transition:enter="fade-in-100"
+                                 class="absolute left-0 mt-1 w-full ag-dropdown-surface z-[100]">
+                                <template x-for="option in options" :key="option">
+                                    <div @click="selected = option; open = false" 
+                                         class="ag-dropdown-item"
+                                         :class="selected === option ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
+                                        <div class="flex items-center space-x-3">
+                                            <svg class="h-3 w-3 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                            </svg>
+                                            <span x-text="option"></span>
+                                        </div>
+                                        <span class="font-mono text-[8px] uppercase text-zinc-300">PROTO</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Duration_Protocol (Weeks)</label>
