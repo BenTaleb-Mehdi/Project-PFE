@@ -23,9 +23,9 @@ style: |
     right: 60px;
   }
   .logo-header img { height: 140px; margin: 0; margin-left:10px; margin-right:10px }
-  h1 { color: rgb(15, 162, 1); font-size: 2.8em; margin-top: 100px; text-align: left; }
-  h2 { color: #069806; font-size: 2em; border-bottom: 2px solid #06a210; margin-bottom: 40px;}
-  h3 { text-align: left; color: #016e19; margin-top: 0; }
+  h1 { color: #029fcaff; font-size: 2.8em; margin-top: 100px; text-align: left; }
+  h2 { color: #029fcaff; font-size: 2em; border-bottom: 2px solid #029fcaff; margin-bottom: 40px;}
+  h3 { text-align: left; color: #029fcaff; margin-top: 0; }
 
   .sommaire-grid {
     display: grid;
@@ -36,13 +36,13 @@ style: |
   .sommaire-item {
     display: flex;
     align-items: center;
-    background: #f4fff6;
+    background: #f2fafcff;
     border-radius: 12px;
     padding: 15px 20px;
-    border-left: 5px solid #08c71e;
+    border-left: 5px solid #029fcaff;
   }
   .sommaire-num {
-    background: #06d310; color: white; width: 35px; height: 35px;
+    background: #029fcaff;; color: white; width: 35px; height: 35px;
     display: flex; justify-content: center; align-items: center;
     border-radius: 50%; font-weight: bold; margin-right: 15px; flex-shrink: 0;
   }
@@ -76,10 +76,10 @@ style: |
   }
 
   .dt-card {
-    background: #f3faf0;
+    background: #f2fafcff;
     padding: 30px;
     border-radius: 10px;
-    border-top: 6px solid #0cca02;
+    border-top: 6px solid #029fcaff;
     text-align: left;
     margin-top: 20px;
     width: 100%;

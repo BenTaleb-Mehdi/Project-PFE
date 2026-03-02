@@ -12,29 +12,29 @@ Staff <|-- Admin
 rectangle "Coach Management System" {
   
   package "Administration & Stratégie" {
-    Admin --> (Gérer l'équipe & Co-coachs)
-    Admin --> (Gérer les paiements & Revenus)
-    Admin --> (Consulter le Dashboard global)
+    Admin -- (Gérer l'équipe & Co-coachs)
+    Admin -- (Gérer les paiements & Revenus)
+    Admin -- (Consulter le Dashboard global)
   }
   
   package "Gestion Opérationnelle" {
-    Staff --> (S'authentifier)
-    Staff --> (Gérer les dossiers Clients)
-    Staff --> (Gérer la bibliothèque de repas)
-    Staff --> (Concevoir des Programmes / Templates)
-    (Concevoir des Programmes / Templates) ..> (Calculer les Macros) : <<include>>
-    Staff --> (Assigner un programme au client)
+    Staff -- (S'authentifier)
+    Staff -- (Gérer les dossiers Clients)
+    Staff -- (Gérer la bibliothèque de repas)
+    Staff -- (Concevoir des Programmes / Templates)
+    (Concevoir des Programmes / Templates) .. (Calculer les Macros) : <<include>>
+    Staff -- (Assigner un programme au client)
   }
 
   package "Suivi Interactif" {
-    Staff --> (Consulter les photos & courbes de poids)
-    Client --> (Mettre à jour son poids & photos)
+    Staff -- (Consulter les photos & courbes de poids)
+    Client -- (Mettre à jour son poids & photos)
   }
 
   package "Espace Client" {
-    Client --> (S'authentifier)
-    Client --> (Consulter son programme assigné)
-    Client --> (Visualiser sa propre progression)
+    Client -- (S'authentifier)
+    Client -- (Consulter son programme assigné)
+    Client -- (Visualiser sa propre progression)
   }
 }
 @enduml

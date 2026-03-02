@@ -13,31 +13,31 @@ Admin -up-|> Staff
 rectangle "Sprint 2 - Automation & Collaboration" {
 
   package "Automatisation & Gestion (Équipe)" {
-    Staff --> (Créer template programme)
-    Staff --> (Générer programme depuis template)
-    Staff --> (Calculer macros en temps réel)
+    Staff -- (Créer template programme)
+    Staff -- (Générer programme depuis template)
+    Staff -- (Calculer macros en temps réel)
     (Générer programme depuis template) ..> (Calculer macros en temps réel) : <<include>>
   }
 
   package "Suivi Interactif (Performance)" {
     ' Actions du Client pour alimenter le système
-    Client --> (Ajouter poids & mensurations)
-    Client --> (Télécharger photos de progression)
+    Client -- (Ajouter poids & mensurations)
+    Client -- (Télécharger photos de progression)
     
     ' Actions du Staff pour analyser les résultats
-    Staff --> (Consulter historique poids)
-    Staff --> (Visualiser galerie photos)
+    Staff -- (Consulter historique poids)
+    Staff -- (Visualiser galerie photos)
   }
 
   package "Contrôle Business" {
-    Admin --> (Enregistrer paiement)
-    Admin --> (Gérer l'équipe de Co-Coachs)
+    Admin -- (Enregistrer paiement)
+    Admin -- (Gérer l'équipe de Co-Coachs)
   }
 
   package "Espace Client" {
-    Client --> (Se connecter)
-    Client --> (Consulter programme)
-    Client --> (Voir progression graphique)
+    Client -- (Se connecter)
+    Client -- (Consulter programme)
+    Client -- (Voir progression graphique)
   }
 }
 @enduml
