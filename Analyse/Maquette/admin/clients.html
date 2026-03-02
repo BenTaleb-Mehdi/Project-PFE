@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients | AntiGravity V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-50 antialiased" x-data="{ 
+    sidebarOpen: false, 
+    showAssignModal: false,
+    selectedClient: null,
+    clients: [
+        { id: '142', name: 'Mehdi Ben Taleb', goal: 'Shred_X', status: 'Active' },
+        { id: '143', name: 'Sarah O.', goal: 'Bulk_Plus', status: 'Pending' }
+    ]
+}">
+
+    <!-- Sidebar Wrapper -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-12">
+                <div class="h-6 w-6 bg-cyan-600"></div>
+                <span class="font-mono font-bold text-lg uppercase tracking-tighter">AntiGravity</span>
+            </div>
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Dashboard</a>
+                <div class="py-2">
+                    <p class="px-4 text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Nutrition_Engine</p>
+                    <a href="categories.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Categories</a>
+                    <a href="meals.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Meals</a>
+                    <a href="programs.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Programs</a>
+                </div>
+                <a href="clients.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">Clients</a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12">
+        <header class="mb-10 lg:flex lg:justify-between lg:items-end">
+            <div>
+                <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Client_Registry</h1>
+                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-widest">Pupil_Database // Assignment_Protocol</p>
+            </div>
+            <button class="mt-4 lg:mt-0 px-6 py-3 bg-zinc-900 text-white text-[10px] font-mono uppercase font-bold tracking-widest hover:bg-black transition-all">
+                Onboard_New_Pupil
+            </button>
+        </header>
+
+        <!-- Client List -->
+        <div class="grid grid-cols-1 gap-4">
+            <template x-for="client in clients" :key="client.id">
+                <div class="ag-card p-6 bg-white flex flex-col md:flex-row md:items-center justify-between group">
+                    <div class="flex items-center space-x-6">
+                        <div class="h-10 w-10 ag-border flex items-center justify-center font-mono font-bold text-cyan-600 bg-cyan-50" x-text="client.name[0]"></div>
+                        <div>
+                            <h4 class="text-xs font-mono font-bold uppercase" x-text="client.name"></h4>
+                            <p class="text-[10px] font-mono text-zinc-400 uppercase mt-1" x-text="'ID: #' + client.id + ' // Goal: ' + client.goal"></p>
+                        </div>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex items-center space-x-6">
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[8px] font-mono font-bold uppercase tracking-widest ag-border border-emerald-100" x-text="client.status"></span>
+                        <button @click="selectedClient = client; showAssignModal = true" class="px-4 py-2 text-[10px] font-mono uppercase text-cyan-600 font-bold hover:underline">
+                            Assign_Program
+                        </button>
+                        <button class="text-zinc-300 hover:text-zinc-900">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Assignment Modal -->
+        <div x-show="showAssignModal" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/5backdrop-blur-sm">
+            
+            <div class="ag-card bg-white w-full max-w-lg p-8 shadow-2xl" @click.away="showAssignModal = false">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h3 class="text-xs font-mono font-bold uppercase tracking-widest">Program_Assignment_Wizard</h3>
+                        <p class="text-[10px] font-mono text-zinc-400 mt-1 uppercase" x-text="'Target: ' + selectedClient?.name"></p>
+                    </div>
+                    <button @click="showAssignModal = false" class="text-zinc-400 hover:text-zinc-900">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Select_Nutrition_Protocol</label>
+                        <select class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border outline-none focus:border-cyan-600">
+                            <option>SHRED_X_V2 (Achraf_Perf)</option>
+                            <option>BULK_POWER_HYBRID</option>
+                        </option>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Duration_Protocol (Weeks)</label>
+                        <input type="number" value="12" class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border outline-none focus:border-cyan-600">
+                    </div>
+                    
+                    <button @click="showAssignModal = false" class="w-full py-4 bg-cyan-600 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-lg shadow-cyan-600/10">
+                        Link_Protocol_to_Client
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
