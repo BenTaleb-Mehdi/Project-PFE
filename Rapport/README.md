@@ -139,9 +139,9 @@ Basé sur l'analyse d'empathie, voici les modules clés à développer :
 
 | Module | Fonctionnalité Clé | Utilisateur |
 | :--- | :--- | :--- |
-| **Gestion des Plans** | Moteur de templates (Drag & Drop) | Coach / Co-Coach |
+| **Gestion des Plans** | Moteur de templates  | Coach / Co-Coach |
 | **Suivi Biométrique** | Graphiques dynamiques & Sliders photos | Client |
-| **Mobile Web App** | Lecture optimisée des exercices | Client |
+
 
 
 ## 4. Définition du Problème
@@ -177,7 +177,7 @@ Le système repose sur une interaction dynamique entre trois acteurs, structuré
 
 ### 6.1 Les Acteurs et leurs Rôles
 * **Le Coach (Achraf) :** Administrateur principal. Contrôle total sur le business (paiements) et l'équipe.
-* **Le Co-Coach (Assistant) :** Manager opérationnel. Gère les clients et la création de contenu technique.
+* **Le Co-Coach (Assistant) :** Manager opérationnel. Gère les clients et la création de programmes.
 * **Le Client  :** Utilisateur final. Consomme les programmes et alimente le suivi.
 
 ### 6.2 Détail des Cas d'Utilisation
