@@ -1,0 +1,83 @@
+<!-- Mobile Backdrop -->
+<div x-show="isSidebarOpen" 
+     x-transition.opacity
+     @click="isSidebarOpen = false"
+     class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-50 lg:hidden"
+     style="display: none;"></div>
+
+<aside id="application-sidebar" 
+       :class="isSidebarOpen || isLargeScreen ? 'translate-x-0' : '-translate-x-full'"
+       class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-zinc-200 transition-all duration-300 transform lg:translate-x-0 font-sans"
+       @click.away="isSidebarOpen = false">
+    <!-- Mobile Close Trigger -->
+    <div class="lg:hidden absolute top-4 right-4 z-50">
+        <button type="button" 
+                @click.stop="isSidebarOpen = false"
+                class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all font-mono">
+            <span class="sr-only">Close Sidebar</span>
+            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+    </div>
+
+    <div class="p-6">
+        <!-- Atom: BrandLogo (Sidebar Version) -->
+        <div class="flex items-center space-x-3 mb-12">
+            <div class="h-6 w-6 bg-cyan-600"></div>
+            <div class="flex flex-col">
+                <span class="font-bold text-lg tracking-tighter uppercase leading-none text-zinc-900">AntiGravity</span>
+                <span class="text-[8px] text-cyan-700 uppercase tracking-widest mt-1 font-mono">Light_Engine_V3.0</span>
+            </div>
+        </div>
+
+        <nav class="hs-accordion-group p-0 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+            <ul class="space-y-1">
+                <li>
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 focus:outline-none transition-all" href="#">
+                        Dashboard
+                    </a>
+                </li>
+
+                <!-- Molecule: AccordionItem -->
+                <li class="hs-accordion" id="nutrition-accordion">
+                    <button type="button" class="hs-accordion-toggle hs-accordion-active:text-cyan-600 w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none" aria-expanded="true">
+                        Nutrition_Engine
+                        <svg class="hs-accordion-active:block ms-auto hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        <svg class="hs-accordion-active:hidden ms-auto block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+
+                    <div id="nutrition-accordion-content" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="nutrition-accordion">
+                        <ul class="pt-1 ps-4 space-y-1">
+                            <li>
+                                <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all" href="#">
+                                    Categories
+                                </a>
+                            </li>
+                            <li>
+                                <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-cyan-700 uppercase tracking-widest border-l-2 border-cyan-600 bg-cyan-50 transition-all font-mono" href="#">
+                                    Nutrition
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all" href="#">
+                        Clients
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Molecule: UserProfile -->
+    <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200">
+        <div class="flex items-center space-x-3">
+            <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-xs font-mono">A</div>
+            <div>
+                <p class="text-[10px] font-bold text-zinc-900 uppercase">User_Name</p>
+                <p class="text-[8px] text-cyan-700 uppercase font-mono tracking-widest">User_Role</p>
+            </div>
+        </div>
+    </div>
+</aside>

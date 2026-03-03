@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # 📜 ANTI-GRAVITY UI RULES (REACTBIT LIGHT V3.0)
 
 ## 🎨 VISUAL IDENTITY (THE LIGHT SPEC)
@@ -38,3 +42,25 @@
 - **Included Options:** - Text: Bold, Italic, Underline, Strike.
   - Structure: H1, H2, H3, Bullet List, Ordered List, Quote.
   - Advanced: Link, Image Upload, Code Block, Horizontal Rule, Table Support.
+
+## 📊 CALIBRATED CHARTS (THE ANALYTICS SPEC)
+- **Visuals:** - **Primary Line:** Cyan-600 (2px weight).
+  - **Area Fill:** Linear Gradient (Cyan-600 at 10% opacity to transparent).
+  - **Grid Lines:** Zinc-100 (1px solid, dashed: `4 4`).
+- **Typography:**
+  - **Labels/Values:** `font-mono text-[10px] text-zinc-400 uppercase`.
+  - **Tooltips:** `bg-zinc-950 text-zinc-50 rounded-none p-2 text-[10px] font-mono shadow-md`.
+- **Interaction:**
+  - **Hover Pulse:** 4px Cyan-600 dot on data points.
+  - **Animation:** 300ms Linear Ease-in.
+
+## 🎨 CHART DESIGN (THE GRAPHIC SPEC)
+- **Palette:** Strict **Monochrome-Cyan Scale** (Cyan-50 to Cyan-950). Avoid multi-color categories.
+- **Geometry:** Hard edges only. Tooltips and data markers must be `rounded-none`.
+- **Composition:** 
+  - **Progress Tracking:** Line/Area charts with `Cyan-600` primary stroke.
+  - **Comparisons:** Bar charts with high-contrast `Zinc-900` vs `Cyan-600`.
+- **Labels:** Axis labels must be `font-mono` (JetBrains Mono) at `10px` size.
+- **Grid:** Only horizontal dashed lines (`Zinc-100`). No vertical grids.
+
+

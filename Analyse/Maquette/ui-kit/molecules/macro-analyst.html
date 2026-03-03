@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macro Analyst | AntiGravity Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: MacroAnalyst // AG_V3</p>
+
+    <div class="max-w-sm bg-white border border-zinc-200 p-8 shadow-[4px_4px_0_0_rgba(0,0,0,0.03)]"
+         x-data="{
+            protein: 140,
+            carbs: 200,
+            fat: 60,
+            get kcal() { return Math.round(this.protein * 4 + this.carbs * 4 + this.fat * 9); }
+         }">
+
+        <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4 font-sans text-zinc-900">Matrix_Analysis</h3>
+
+        <div class="space-y-8 mb-10">
+            <!-- Protein -->
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] uppercase font-sans">
+                    <span class="text-zinc-500 font-bold">Protein (g)</span>
+                    <span class="text-cyan-700 font-bold font-mono" x-text="protein + 'g'"></span>
+                </div>
+                <input type="range" min="0" max="300" x-model="protein"
+                       class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
+            </div>
+            <!-- Carbs -->
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] uppercase font-sans">
+                    <span class="text-zinc-500 font-bold">Carbs (g)</span>
+                    <span class="text-cyan-700 font-bold font-mono" x-text="carbs + 'g'"></span>
+                </div>
+                <input type="range" min="0" max="500" x-model="carbs"
+                       class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
+            </div>
+            <!-- Fat -->
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] uppercase font-sans">
+                    <span class="text-zinc-500 font-bold">Fat (g)</span>
+                    <span class="text-cyan-700 font-bold font-mono" x-text="fat + 'g'"></span>
+                </div>
+                <input type="range" min="0" max="200" x-model="fat"
+                       class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
+            </div>
+        </div>
+
+        <!-- Total -->
+        <div class="text-center p-6 bg-zinc-50 border border-zinc-200 border-dashed">
+            <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 font-sans">Total_Kcal</p>
+            <div class="text-4xl font-bold text-zinc-950 font-mono" x-text="kcal"></div>
+            <p class="text-[8px] text-cyan-600 uppercase tracking-widest mt-2 font-sans">Energy_Out</p>
+        </div>
+    </div>
+
+</body>
+</html>

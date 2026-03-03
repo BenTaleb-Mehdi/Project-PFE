@@ -1,0 +1,81 @@
+items:
+  - name: "NavItem"
+    category: "Navigation"
+    path: "./molecules/nav-item.html"
+    status: "validated"
+    description: "Sidebar navigation link with active state."
+    documentation: "https://preline.co/docs/sidebar.html"
+    dependencies:
+      - "AtomName"
+
+  - name: "KpiCard"
+    category: "Data"
+    path: "./molecules/kpi-card.html"
+    status: "validated"
+    description: "Metric card with label, value and trend."
+    documentation: "Custom"
+    dependencies:
+      - "KpiLabel"
+      - "KpiValue"
+
+  - name: "CategoryItem"
+    category: "Content"
+    path: "./molecules/category-item.html"
+    status: "validated"
+    description: "Individual category row with action buttons."
+    documentation: "Custom"
+    dependencies:
+      - "ActionButton"
+
+  - name: "ModalBase"
+    category: "Overlays"
+    path: "./molecules/modal-base.html"
+    status: "validated"
+    description: "Base structure for system modals with backdrop."
+    documentation: "https://preline.co/docs/overlay.html"
+
+  - name: "MacroAnalyst"
+    category: "Features"
+    path: "./molecules/macro-analyst.html"
+    status: "validated"
+    description: "Nutrient analysis block with sliders."
+    documentation: "Custom"
+    dependencies:
+      - "MacroSlider"
+
+  - name: "ProtocolTimelineItem"
+    category: "Features"
+    path: "./molecules/protocol-timeline-item.html"
+    status: "validated"
+    description: "Single row in a protocol builder sequence."
+    documentation: "Custom"
+    dependencies:
+      - "ActionButton"
+
+  - name: "RichTextToolbar"
+    category: "Features"
+    path: "./molecules/rich-text-toolbar.html"
+    status: "validated"
+    description: "Formatting toolbar for the text editor."
+    documentation: "Custom"
+    dependencies:
+      - "EditorButton"
+
+  - name: "AdminSystemLoad"
+    category: "Analytics"
+    path: "./molecules/admin-system-load.html"
+    status: "validated"
+    description: "High-density performance monitoring chart for Admin."
+    documentation: "Graphic.md#Admin_Engine_Agent"
+    dependencies: []
+
+  - name: "ClientWeightProgress"
+    category: "Analytics"
+    path: "./molecules/client-weight-progress.html"
+    status: "validated"
+    description: "Personal progress tracking chart for Clients."
+    documentation: "Graphic.md#Client_Progress_Agent"
+    dependencies: []
+
+
+

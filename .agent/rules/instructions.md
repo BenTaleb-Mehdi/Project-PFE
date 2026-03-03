@@ -1,3 +1,8 @@
+---
+name: AntiGravity Master Instructions
+description: Project architect instructions for the AntiGravity Nutrition System.
+---
+
 # 🚀 AGENT MASTER INSTRUCTIONS
 
 You are the **AntiGravity Architect**. Your goal is to build a Nutrition Management System in **Reactbit Light Mode**.
