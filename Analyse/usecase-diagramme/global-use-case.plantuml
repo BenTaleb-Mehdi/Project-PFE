@@ -3,47 +3,73 @@ left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+' Actors
+actor "Visiteur (Public)" as Visitor
+actor "Client " as Client
+actor "Co-coach (Staff)" as Staff
 actor "Coach (Admin)" as Admin
-actor "Co-coach (Assistant)" as Staff
-actor "Client (Élève)" as Client
 
-' Inheritance: Admin can do everything Staff can do
+' Hierarchy
 Staff <|-- Admin
 
 rectangle "Coach Management System" {
   
-  package "Authentification & Accès" {
-    (S'inscrire / Créer un compte Coach) as SignupCoach
-    (S'authentifier / Login) as Login
+  package "Plateforme Publique (Vitrine)" {
+    usecase "Consulter les tarifs & services" as ViewPublic
+    usecase "S'inscrire (Nouveau Coach)" as Signup
+  }
+
+  package "Authentification & Sécurité" {
+    usecase "S'authentifier (Login)" as Login
+  }
+
+  package "Espace Client (Web/Desktop)" {
+    usecase "Mettre à jour poids & photos" as UpdateStats
+    usecase "Visualiser sa progression détaillée" as ViewProgress
     
-    Admin -- SignupCoach
-    Staff -- Login
-    Client -- Login
+    UpdateStats ..> Login : <<include>>
+    ViewProgress ..> Login : <<include>>
+  }
+
+  package "Espace Client (Mobile App)" {
+    usecase "Consulter son programme assigné" as ViewProg
+    
+    ViewProg ..> Login : <<include>>
+  }
+
+  package "Gestion Opérationnelle (Web Staff)" {
+    usecase "Gérer les dossiers Clients" as ManageClients
+    usecase "Concevoir des Programmes" as DesignProgs
+    usecase "Calculer les Macros" as CalcMacros
+    
+    ManageClients ..> Login : <<include>>
+    DesignProgs ..> Login : <<include>>
+    DesignProgs ..> CalcMacros : <<include>>
   }
 
   package "Administration & Stratégie" {
-    Admin -- (Gérer l'équipe & Co-coachs)
-    Admin -- (Gérer les paiements & Revenus)
-    Admin -- (Consulter le Dashboard global)
-  }
-  
-  package "Gestion Opérationnelle" {
-    Staff -- (Gérer les dossiers Clients)
-    (Gérer les dossiers Clients) ..> (Créer un compte Client) : <<include>>
-    Staff -- (Gérer la bibliothèque de repas)
-    Staff -- (Concevoir des Programmes / Templates)
-    (Concevoir des Programmes / Templates) ..> (Calculer les Macros) : <<include>>
-    Staff -- (Assigner un programme au client)
-  }
-
-  package "Suivi Interactif" {
-    Staff -- (Consulter les photos & courbes de poids)
-    Client -- (Mettre à jour son poids & photos)
-  }
-
-  package "Espace Client" {
-    Client -- (Consulter son programme assigné)
-    Client -- (Visualiser sa propre progression)
+    usecase "Gérer l'équipe" as ManageStaff
+    usecase "Gérer les paiements" as ManageMoney
+    
+    ManageStaff ..> Login : <<include>>
+    ManageMoney ..> Login : <<include>>
   }
 }
+
+' Connections
+Visitor -- ViewPublic
+Visitor -- Signup
+
+' Client access split by platform
+Client -- ViewProg : "(Via Mobile)"
+Client -- UpdateStats : "(Via Web)"
+Client -- ViewProgress : "(Via Web)"
+
+' Staff & Admin
+Staff -- ManageClients
+Staff -- DesignProgs
+
+Admin -- ManageStaff
+Admin -- ManageMoney
+
 @enduml
