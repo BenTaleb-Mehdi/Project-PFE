@@ -1,3 +1,7 @@
+---
+description: ANTI-GRAVITY WORKFLOW (V3.0)
+---
+
 # 🔄 ANTI-GRAVITY WORKFLOW (V3.0)
 
 ## PHASE 1: CORE STRUCTURE

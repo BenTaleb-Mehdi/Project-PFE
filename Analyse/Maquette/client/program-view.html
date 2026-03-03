@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Active Program | AntiGravity V3.0</title>
+    <title>Daily Protocol | AntiGravity V3.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="../admin/style.css">
 </head>
-<body class="bg-zinc-50 antialiased font-sans" x-data="{ sidebarOpen: false }">
+<body class="bg-zinc-50 antialiased font-sans" x-data="{ 
+    sidebarOpen: false,
+    detailModalOpen: false,
+    selectedMeal: null,
+    dailyMacros: { kcal: 1850, p: 185, c: 140, f: 60 }
+}">
     <!-- Mobile Header (Hamburger) -->
     <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
         <div class="flex items-center space-x-2">
@@ -62,37 +67,160 @@
         </div>
     </aside>
 
-    <!-- Backdrop -->
+    <!-- Backdrop (Sidebar) -->
     <div x-show="sidebarOpen" @click="sidebarOpen = false" class="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
 
-    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12 max-w-2xl">
-        <header class="mb-10">
-            <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Program_View</h1>
-            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-widest">Active_Protocol: Shred_X_Lite</p>
+    <main class="lg:ml-64 min-h-screen p-6 pb-24 max-w-md mx-auto">
+        <header class="mb-10 lg:pt-6 pt-20">
+            <h1 class="text-2xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Active_Protocol</h1>
+            <p class="text-[10px] font-mono text-zinc-400 mt-1 uppercase tracking-widest">Master_Plan: Shred_X_Lite (Standard_V3)</p>
         </header>
 
-        <div class="space-y-4">
-            <!-- Meal Slot -->
-            <template x-for="meal in [
-                { time: '08:00', name: 'Ftor', menu: 'Oatmeal_Power_V3', kcal: '450' },
-                { time: '13:00', name: 'Gheda', menu: 'Salmon_Bowl_V2', kcal: '650' },
-                { time: '20:00', name: 'Acha', menu: 'Chicken_Salad_V1', kcal: '400' }
-            ]">
-                <div class="ag-card p-6 bg-white flex justify-between items-center group hover:border-cyan-200 transition-all cursor-pointer">
-                    <div class="flex items-center space-x-4">
-                        <div class="text-[10px] font-mono text-zinc-400 uppercase w-12" x-text="meal.time"></div>
-                        <div class="h-8 w-[1px] bg-zinc-100"></div>
-                        <div>
-                            <p class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-1" x-text="meal.name"></p>
-                            <p class="text-xs font-mono font-bold text-zinc-900 uppercase" x-text="meal.menu"></p>
-                        </div>
+        <!-- Global Protocol Dashboard -->
+        <div class="ag-card p-6 bg-white mb-8 border-l-4 border-l-zinc-900">
+            <div class="flex justify-between items-center mb-6">
+                <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Daily_Pulse_Recap</p>
+                <span class="text-xs font-mono font-bold text-cyan-600" x-text="dailyMacros.kcal + ' KCAL'"></span>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
+                        <span>Protein</span>
+                        <span x-text="dailyMacros.p + 'G'"></span>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xs font-mono font-bold text-cyan-600" x-text="meal.kcal + ' KCAL'"></p>
+                    <div class="h-1 bg-zinc-100 overflow-hidden">
+                        <div class="bg-cyan-600 h-full" style="width: 100%"></div>
                     </div>
                 </div>
-            </template>
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
+                        <span>Carbs</span>
+                        <span x-text="dailyMacros.c + 'G'"></span>
+                    </div>
+                    <div class="h-1 bg-zinc-100 overflow-hidden">
+                        <div class="bg-zinc-900 h-full" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
+                        <span>Fats</span>
+                        <span x-text="dailyMacros.f + 'G'"></span>
+                    </div>
+                    <div class="h-1 bg-zinc-100 overflow-hidden">
+                        <div class="bg-zinc-400 h-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-8">
+            <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 border-b border-zinc-100 pb-2">Daily_Sequence</h4>
+            
+            <!-- Meal Protocol List -->
+            <div class="space-y-4 relative">
+                <!-- Vertical Line Connector -->
+                <div class="absolute left-[23px] top-6 bottom-6 w-[1px] bg-zinc-100 z-0"></div>
+
+                <template x-for="meal in [
+                    { cat: 'Ftor', time: '08:00', menu: 'Oatmeal_Power_V3', kcal: 450, p: 35, c: 50, f: 12 },
+                    { cat: 'Ghrda', time: '13:00', menu: 'Salmon_Bowl_V2', kcal: 650, p: 45, c: 55, f: 18 },
+                    { cat: 'Acha', time: '20:00', menu: 'Chicken_Salad_V1', kcal: 400, p: 55, c: 10, f: 15 }
+                ]">
+                    <div @click="selectedMeal = meal; detailModalOpen = true" 
+                         class="group relative z-10 flex items-start space-x-6 cursor-pointer">
+                        <!-- Node -->
+                        <div class="h-12 w-12 bg-white ag-border flex-shrink-0 flex items-center justify-center transition-all group-hover:border-cyan-600 group-hover:scale-110">
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 group-hover:text-cyan-600" x-text="meal.cat"></span>
+                        </div>
+                        
+                        <!-- Card -->
+                        <div class="flex-1 ag-card p-5 bg-white group-hover:border-cyan-100 transition-all">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest" x-text="meal.time"></span>
+                                <span class="text-[10px] font-mono font-bold text-cyan-600" x-text="meal.kcal + ' KCAL'"></span>
+                            </div>
+                            <h4 class="text-xs font-mono font-bold text-zinc-900 uppercase" x-text="meal.menu"></h4>
+                            <p class="text-[8px] font-mono text-zinc-400 uppercase mt-4 flex items-center">
+                                View_Detailed_Macros
+                                <svg class="h-2 w-2 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7" stroke-width="3" /></svg>
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </div>
         </div>
     </main>
+
+    <!-- Detail Modal Popup -->
+    <div x-show="detailModalOpen" 
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        
+        <!-- Backdrop -->
+        <div @click="detailModalOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-md"></div>
+
+        <!-- Modal Surface -->
+        <div class="ag-card bg-white w-full max-w-sm relative z-10 overflow-hidden">
+            <!-- Header -->
+            <div class="p-6 border-b border-zinc-50 bg-zinc-50/50">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-[10px] font-mono font-bold text-cyan-600 bg-cyan-50 px-2 py-1 uppercase" x-text="selectedMeal?.cat"></span>
+                    <button @click="detailModalOpen = false" class="text-zinc-400 hover:text-zinc-900 transition-colors">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                <h4 class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-1" x-text="'Sync_Time: ' + selectedMeal?.time"></h4>
+                <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase leading-tight" x-text="selectedMeal?.menu"></h2>
+            </div>
+
+            <!-- Content: Macros -->
+            <div class="p-8 space-y-8">
+                <div class="flex justify-between items-end border-b border-zinc-50 pb-6">
+                    <div>
+                        <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Energy_Yield</p>
+                        <p class="text-3xl font-mono font-bold text-cyan-700" x-text="selectedMeal?.kcal + ' KCAL'"></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="flex flex-col space-y-2">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase">Protein</span>
+                        <div class="h-1 bg-zinc-100 overflow-hidden">
+                            <div class="bg-cyan-600 h-full" style="width: 85%"></div>
+                        </div>
+                        <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.p + 'G'"></span>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase">Carbs</span>
+                        <div class="h-1 bg-zinc-100 overflow-hidden">
+                            <div class="bg-zinc-900 h-full" style="width: 45%"></div>
+                        </div>
+                        <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.c + 'G'"></span>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase">Fats</span>
+                        <div class="h-1 bg-zinc-100 overflow-hidden">
+                            <div class="bg-zinc-400 h-full" style="width: 25%"></div>
+                        </div>
+                        <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.f + 'G'"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 bg-zinc-50 border-t border-zinc-100">
+                <button @click="detailModalOpen = false" 
+                        class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-all">
+                    Return_to_Protocol
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

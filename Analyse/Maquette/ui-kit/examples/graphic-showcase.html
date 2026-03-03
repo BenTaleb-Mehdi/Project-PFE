@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Showcase | AntiGravity V3.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { border-radius: 0 !important; }
+        [x-cloak] { display: none !important; }
+        .section-anchor { scroll-margin-top: 80px; }
+    </style>
+</head>
+
+<body class="bg-zinc-50 font-sans text-zinc-900"
+      x-data="{
+        sidebarOpen: false,
+        isLarge: window.innerWidth >= 1024,
+        active: 'general',
+        modalOpen: false,
+        macroOpen: false,
+        dropdownOpen: false, dropdownVal: 'FTOR',
+        protein: 140, carbs: 200, fat: 60,
+        get kcal() { return Math.round(this.protein*4 + this.carbs*4 + this.fat*9); }
+      }"
+      x-init="window.addEventListener('resize', () => isLarge = window.innerWidth >= 1024)">
+
+    <!-- ═══ MOBILE HEADER ═══ -->
+    <header class="lg:hidden sticky top-0 z-[48] bg-white border-b border-zinc-200 px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="h-5 w-5 bg-cyan-600"></div>
+            <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">AntiGravity</span>
+        </div>
+        <button @click="sidebarOpen = true" class="h-10 w-10 flex items-center justify-center border border-zinc-200 hover:bg-zinc-50">
+            <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- ═══ BACKDROP ═══ -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false"
+         x-transition.opacity class="fixed inset-0 bg-zinc-950/20 z-50 lg:hidden" style="display:none;"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside :class="sidebarOpen || isLarge ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-r border-zinc-200 flex flex-col transition-transform duration-300 lg:translate-x-0">
+
+        <!-- Close (mobile) -->
+        <div class="lg:hidden flex justify-end p-3 border-b border-zinc-200">
+            <button @click="sidebarOpen = false" class="h-8 w-8 flex items-center justify-center border border-zinc-200 hover:bg-zinc-50 text-zinc-400">
+                <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-5">
+            <!-- Brand -->
+            <div class="flex items-center gap-3 mb-10">
+                <div class="h-6 w-6 bg-cyan-600"></div>
+                <div>
+                    <p class="font-bold text-sm tracking-tighter uppercase text-zinc-900">AntiGravity</p>
+                    <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono">Molecule_Showcase_V3</p>
+                </div>
+            </div>
+
+            <!-- Nav groups -->
+            <nav class="space-y-0.5">
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 font-mono">General_Atoms</p>
+                <template x-for="item in [
+                    { id:'general',   label:'01 // Branding',       href:'atoms-general.html'  },
+                    { id:'buttons',   label:'02 // Buttons',         href:'atoms-buttons.html'  },
+                    { id:'inputs',    label:'03 // Inputs',          href:'atoms-inputs.html'   },
+                    { id:'intel',     label:'04 // Intel_Cards',     href:'atoms-intel.html'    }
+                ]">
+                    <div class="flex items-center">
+                        <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
+                            <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                        <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
+                           :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
+                           class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
+                    </div>
+                </template>
+
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 pt-5 font-mono">Molecules</p>
+                <template x-for="item in [
+                    { id:'m-navbar',      label:'Navbar',                href:'../molecules/navbar.html'                   },
+                    { id:'m-navitem',     label:'Nav_Item',              href:'../molecules/nav-item.html'                 },
+                    { id:'m-kpi',         label:'KPI_Card',              href:'../molecules/kpi-card.html'                 },
+                    { id:'m-macro',       label:'Macro_Analyst',         href:'../molecules/macro-analyst.html'            },
+                    { id:'m-category',    label:'Category_Item',         href:'../molecules/category-item.html'            },
+                    { id:'m-modal',       label:'Modal_Base',            href:'../molecules/modal-base.html'               },
+                    { id:'m-timeline',    label:'Timeline_Item',         href:'../molecules/protocol-timeline-item.html'   },
+                    { id:'m-editor',      label:'Rich_Text_Editor',      href:'../molecules/rich-text-toolbar.html'        },
+                    { id:'m-clientchart', label:'Weight_Progress',       href:'../molecules/client-weight-progress.html'   },
+                    { id:'m-adminchart',  label:'System_Load',           href:'../molecules/admin-system-load.html'        }
+                ]">
+                    <div class="flex items-center">
+                        <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
+                            <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                        <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
+                           :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
+                           class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
+                    </div>
+                </template>
+            </nav>
+        </div>
+
+        <!-- Footer badge -->
+        <div class="p-4 border-t border-zinc-200">
+            <div class="flex items-center gap-3">
+                <div class="h-7 w-7 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-[9px] font-mono">V3</div>
+                <div>
+                    <p class="text-[9px] font-bold text-zinc-900 uppercase font-sans">Molecule_Showcase</p>
+                    <p class="text-[8px] text-cyan-700 uppercase font-mono">10 Components</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-10">
+
+        <!-- Page Header -->
+        <header class="mb-14 border-b-2 border-zinc-900 pb-8">
+            <h1 class="text-3xl font-bold tracking-tighter uppercase text-zinc-900">Atomic_Graphic_Showcase</h1>
+            <p class="text-[10px] text-cyan-700 mt-3 font-bold uppercase tracking-widest font-mono">Protocol: Graphic.md // Agent_Engine_V3.0 // 10 Molecules</p>
+        </header>
+
+        <!-- ─── SECTION: GENERAL ─── -->
+        <section id="general" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">01 // Branding_And_Navigation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white border border-zinc-200 p-8 flex flex-col items-center gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Brand_Identity</span>
+                    <div class="flex items-center gap-3"><div class="h-7 w-7 bg-cyan-600"></div><span class="font-bold text-base uppercase tracking-tighter text-zinc-900">AntiGravity</span></div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-8 flex flex-col items-center gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Avatar_Unit</span>
+                    <div class="h-12 w-12 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-sm font-bold text-cyan-700 font-mono">A_P</div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-8 flex flex-col items-center gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Nav_Toggle</span>
+                    <button class="h-11 w-11 flex flex-col items-center justify-center gap-1.5 border border-zinc-200 hover:bg-zinc-50 transition-colors">
+                        <div class="h-0.5 w-5 bg-zinc-900"></div><div class="h-0.5 w-5 bg-zinc-900"></div>
+                    </button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-8 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Palette</span>
+                    <div class="flex gap-2">
+                        <div class="h-9 w-9 bg-cyan-600 border border-zinc-200"></div>
+                        <div class="h-9 w-9 bg-zinc-900 border border-zinc-200"></div>
+                        <div class="h-9 w-9 bg-white border border-zinc-300"></div>
+                        <div class="h-9 w-9 bg-emerald-600 border border-zinc-200"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION: BUTTONS ─── -->
+        <section id="buttons" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">02 // Action_Protocols_Buttons</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Primary</span>
+                    <button class="w-full py-3 bg-zinc-950 text-white font-bold text-[9px] uppercase tracking-widest hover:bg-black transition-colors shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] font-sans">FINAL_EXECUTE</button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Accent</span>
+                    <button class="w-full py-3 bg-cyan-600 text-white font-bold text-[9px] uppercase tracking-widest hover:bg-cyan-700 transition-colors shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] font-sans">SYNC_METRICS</button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Outline</span>
+                    <button class="w-full py-3 bg-white border border-zinc-200 text-zinc-500 font-bold text-[9px] uppercase tracking-widest hover:bg-zinc-50 transition-colors font-sans">DISCARD_LOG</button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Icons</span>
+                    <div class="flex gap-2">
+                        <button class="h-10 w-10 flex items-center justify-center border border-zinc-200 hover:bg-zinc-50 transition-colors"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg></button>
+                        <button class="h-10 w-10 flex items-center justify-center bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></button>
+                        <button class="h-10 w-10 flex items-center justify-center border border-zinc-200 text-red-400 hover:bg-red-50 transition-colors"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION: INPUTS ─── -->
+        <section id="inputs" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">03 // Input_Channels</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Text input -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Standard_Input</span>
+                    <label class="text-[8px] text-zinc-400 uppercase tracking-widest">Channel_Label</label>
+                    <input type="text" placeholder="VALUE_ENTRY..." class="w-full h-10 bg-zinc-50 border border-zinc-200 px-3 font-mono text-[10px] uppercase focus:outline-none focus:border-cyan-600 transition-colors placeholder:opacity-30">
+                </div>
+                <!-- Range -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Macro_Range</span>
+                    <div class="flex justify-between text-[10px] uppercase"><span class="text-zinc-500 font-bold font-sans">Protein</span><span class="text-cyan-700 font-bold font-mono">140G</span></div>
+                    <input type="range" class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
+                </div>
+                <!-- Portal Select -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all" x-data="{open:false, val:'FTOR'}">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Portal_Select</span>
+                    <div class="relative">
+                        <button @click="open = !open" class="w-full h-10 bg-zinc-50 border border-zinc-200 px-3 font-mono text-[10px] text-cyan-700 flex items-center justify-between uppercase hover:border-cyan-600 transition-colors">
+                            <span x-text="val"></span>
+                            <svg class="h-3.5 w-3.5 transition-transform" :class="open?'rotate-180':''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" stroke-width="2"/></svg>
+                        </button>
+                        <div x-show="open" @click.outside="open=false" x-transition:enter="transition duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                             class="absolute inset-x-0 mt-1 bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] z-50" style="display:none;">
+                            <template x-for="opt in ['FTOR','GHEDA','ACHA']">
+                                <div @click="val=opt; open=false" class="px-4 py-2.5 font-mono text-[9px] uppercase text-zinc-500 border-l-2 border-l-transparent hover:bg-zinc-50 hover:text-cyan-600 hover:border-l-cyan-600 cursor-pointer transition-colors" x-text="opt"></div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── SECTION: INTEL ─── -->
+        <section id="intel" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">04 // Intel_Output_Metrics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">KPI_Unit</span>
+                    <span class="text-3xl font-bold tracking-tighter text-zinc-900">1,842<span class="text-cyan-600 text-xs ml-1 font-mono">Kcal</span></span>
+                    <p class="text-[9px] text-zinc-400 uppercase mt-2 tracking-widest font-sans">Active_Energy</p>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Status_Badges</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="py-1 px-2.5 border border-emerald-200 bg-emerald-50 text-[8px] font-bold text-emerald-700 uppercase font-mono">Sync_Done</span>
+                        <span class="py-1 px-2.5 border border-cyan-200 bg-cyan-50 text-[8px] font-bold text-cyan-700 uppercase font-mono">Live</span>
+                        <span class="py-1 px-2.5 border border-zinc-200 text-[8px] font-bold text-zinc-400 uppercase font-mono">Draft</span>
+                    </div>
+                </div>
+                <div class="bg-cyan-50/30 border border-cyan-100 p-6 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-cyan-700 font-mono uppercase block mb-3">Alert</span>
+                    <p class="text-xs text-zinc-900 leading-relaxed font-sans">Analytical engine detected potential <span class="font-bold underline decoration-cyan-400">Protein deficiency</span>.</p>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Growth</span>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold font-mono text-emerald-600">+12%</span>
+                        <span class="text-[9px] text-zinc-400 uppercase font-sans">vs_last</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: NAVBAR ─── -->
+        <section id="m-navbar" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Navbar</h2>
+            <div x-data="{ navActive: 'dashboard' }">
+                <nav class="bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] w-full overflow-x-auto">
+                    <div class="flex items-center px-6">
+                        <div class="flex h-12">
+                            <template x-for="tab in [
+                                { id:'dashboard', label:'Dashboard', badge:'01' },
+                                { id:'clients',   label:'Clients',   badge:'02' },
+                                { id:'nutrition', label:'Nutrition', badge:'03' }
+                            ]">
+                                <a href="#" @click.prevent="navActive = tab.id"
+                                   :class="navActive === tab.id ? 'text-cyan-600 border-b-2 border-cyan-600' : 'text-zinc-400 border-b-2 border-transparent hover:text-zinc-900'"
+                                   class="flex items-center h-full px-5 text-[10px] font-bold uppercase tracking-widest transition-colors font-sans">
+                                    <span x-text="tab.label"></span>
+                                    <span class="ml-2 px-1.5 py-0.5 text-[8px] border font-mono"
+                                          :class="navActive === tab.id ? 'bg-cyan-50 text-cyan-700 border-cyan-100' : 'bg-zinc-50 text-zinc-400 border-zinc-200'"
+                                          x-text="tab.badge"></span>
+                                </a>
+                            </template>
+                            <a class="flex items-center h-full px-5 text-[10px] font-bold uppercase tracking-widest text-zinc-300 border-b-2 border-transparent cursor-not-allowed pointer-events-none font-sans">Reports</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: NAV ITEM ─── -->
+        <section id="m-navitem" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Nav_Item (Sidebar)</h2>
+            <div x-data="{ navActive: 'dashboard' }" class="w-56">
+                <nav class="bg-white border border-zinc-200 p-3 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 font-mono">Navigation</p>
+                    <template x-for="item in [
+                        { id:'dashboard', label:'Dashboard' },
+                        { id:'clients',   label:'Clients'   },
+                        { id:'nutrition', label:'Nutrition' }
+                    ]">
+                        <a href="#" @click.prevent="navActive = item.id"
+                           :class="navActive === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50'"
+                           class="flex items-center py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors w-full font-sans"
+                           x-text="item.label"></a>
+                    </template>
+                    <a class="flex items-center py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 border-l-transparent text-zinc-300 cursor-not-allowed pointer-events-none font-sans">Reports</a>
+                </nav>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: KPI CARDS ─── -->
+        <section id="m-kpi" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // KPI_Card</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-white border border-zinc-200 p-7 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-4 font-sans">Active_Energy</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-cyan-700 font-mono">1,842</span><span class="text-xs text-zinc-400 uppercase font-sans">Kcal</span></div>
+                    <div class="mt-3 flex items-center text-[9px] text-emerald-600 uppercase font-sans gap-1">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2"/></svg>+4.2% vs prev
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-7 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-4 font-sans">Active_Clients</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-zinc-900 font-mono">24</span><span class="text-xs text-zinc-400 uppercase font-sans">Users</span></div>
+                    <p class="mt-3 text-[9px] text-zinc-400 uppercase font-sans">Stable // No_Change</p>
+                </div>
+                <div class="bg-white border border-zinc-200 p-7 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-4 font-sans">Protocols_Synced</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-zinc-900 font-mono">138</span><span class="text-xs text-zinc-400 uppercase font-sans">Plans</span></div>
+                    <p class="mt-3 text-[9px] text-cyan-600 uppercase font-sans">Engine_Active</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: MACRO ANALYST ─── -->
+        <section id="m-macro" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Macro_Analyst</h2>
+            <div class="max-w-sm bg-white border border-zinc-200 p-7 shadow-[4px_4px_0_0_rgba(0,0,0,0.03)]">
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-7 border-b border-zinc-100 pb-4 font-sans text-zinc-900">Matrix_Analysis</h3>
+                <div class="space-y-6 mb-8">
+                    <template x-for="macro in [{name:'Protein',key:'protein',max:300},{name:'Carbs',key:'carbs',max:500},{name:'Fat',key:'fat',max:200}]">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-[10px] uppercase">
+                                <span class="text-zinc-500 font-bold font-sans" x-text="macro.name + ' (g)'"></span>
+                                <span class="text-cyan-700 font-bold font-mono" x-text="$data[macro.key] + 'g'"></span>
+                            </div>
+                            <input type="range" :min="0" :max="macro.max" x-model="$data[macro.key]"
+                                   class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
+                        </div>
+                    </template>
+                </div>
+                <div class="text-center p-5 bg-zinc-50 border border-zinc-200 border-dashed">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 font-sans">Total_Kcal</p>
+                    <div class="text-4xl font-bold text-zinc-950 font-mono" x-text="kcal"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: CATEGORY ITEM ─── -->
+        <section id="m-category" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Category_Item</h2>
+            <div class="max-w-xl space-y-2">
+                <template x-for="(cat, i) in ['Ketogenic_Protocol', 'High_Protein_Plan', 'Balanced_Macro_Split']">
+                    <div class="bg-white border border-zinc-200 p-5 flex justify-between items-center group hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all">
+                        <div class="flex items-center gap-5">
+                            <span class="text-[10px] text-zinc-300 font-mono" x-text="'0' + (i+1)"></span>
+                            <h3 class="font-bold text-sm uppercase tracking-widest text-zinc-950 font-sans" x-text="cat"></h3>
+                        </div>
+                        <div class="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-cyan-600 transition-colors font-sans">Rename</button>
+                            <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-red-500 transition-colors font-sans">Delete</button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: MODAL ─── -->
+        <section id="m-modal" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Modal_Base</h2>
+            <button @click="modalOpen = true" class="px-6 py-3 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-colors shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] font-sans">
+                OPEN_MODAL
+            </button>
+            <!-- Modal overlay -->
+            <div x-show="modalOpen" @click.self="modalOpen = false" x-transition:enter="transition duration-150" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                 class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/25" style="display:none;">
+                <div class="bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)]">
+                    <div class="px-7 py-5 border-b border-zinc-100 flex justify-between items-center">
+                        <div><h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 font-sans">Confirm_Action</h3><p class="text-[8px] text-zinc-400 font-mono mt-1 uppercase">id: 00X-ALPH</p></div>
+                        <button @click="modalOpen = false" class="h-8 w-8 flex items-center justify-center border border-zinc-200 text-zinc-400 hover:bg-zinc-50 transition-colors">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <div class="p-7">
+                        <p class="text-sm text-zinc-500 font-sans mb-4">Confirm this destructive action? This cannot be undone.</p>
+                        <div class="bg-zinc-50 border-l-4 border-l-cyan-600 border border-zinc-200 p-4">
+                            <p class="text-[9px] text-zinc-500 font-mono uppercase">System_Note</p>
+                            <p class="text-xs text-zinc-700 mt-1 font-sans">All linked protocols will be archived automatically.</p>
+                        </div>
+                    </div>
+                    <div class="px-7 py-5 border-t border-zinc-100 flex justify-end gap-3">
+                        <button @click="modalOpen = false" class="px-5 py-2.5 text-[9px] font-bold uppercase tracking-widest border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-colors font-sans">CANCEL</button>
+                        <button class="px-5 py-2.5 text-[9px] font-bold uppercase tracking-widest bg-cyan-600 text-white hover:bg-cyan-700 transition-colors shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] font-sans">CONFIRM</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: TIMELINE ─── -->
+        <section id="m-timeline" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Protocol_Timeline_Item</h2>
+            <div class="max-w-2xl space-y-2">
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-zinc-50 border border-zinc-200 group hover:border-cyan-600 hover:bg-white hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all gap-4">
+                    <div class="flex items-center gap-4"><div class="h-2 w-2 bg-cyan-600"></div><div><p class="text-[10px] text-zinc-950 font-bold uppercase font-sans">Week_01 // Mon–Fri</p><p class="text-[8px] text-zinc-400 font-mono mt-0.5 uppercase">Calories: 1,840 kcal</p></div></div>
+                    <button class="px-5 py-2 text-[9px] text-cyan-600 font-bold uppercase border border-cyan-200 hover:bg-cyan-600 hover:text-white transition-colors font-sans">SELECT</button>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-white border-2 border-cyan-600 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] gap-4">
+                    <div class="flex items-center gap-4"><div class="h-2 w-2 bg-emerald-500"></div><div><p class="text-[10px] text-zinc-950 font-bold uppercase font-sans">Week_02 // Mon–Fri</p><p class="text-[8px] text-cyan-600 font-mono mt-0.5 uppercase font-bold">Active // In_Progress</p></div></div>
+                    <button class="px-5 py-2 text-[9px] text-white font-bold uppercase bg-cyan-600 hover:bg-cyan-700 transition-colors font-sans">CURRENT</button>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-zinc-50 border border-zinc-100 gap-4 opacity-50">
+                    <div class="flex items-center gap-4"><div class="h-2 w-2 bg-zinc-300"></div><div><p class="text-[10px] text-zinc-500 font-bold uppercase font-sans">Week_03 // Mon–Fri</p><p class="text-[8px] text-zinc-400 font-mono mt-0.5 uppercase">Locked</p></div></div>
+                    <button class="px-5 py-2 text-[9px] text-zinc-400 font-bold uppercase border border-zinc-200 cursor-not-allowed font-sans">LOCKED</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: RICH TEXT EDITOR ─── -->
+        <section id="m-editor" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Rich_Text_Editor</h2>
+            <div class="max-w-2xl bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
+                <div class="flex flex-wrap items-center bg-white border-b border-zinc-200">
+                    <div class="flex border-r border-zinc-200">
+                        <button onclick="document.execCommand('bold')" class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors" title="Bold">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/><path d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/></svg>
+                        </button>
+                        <button onclick="document.execCommand('italic')" class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors" title="Italic">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 4h-9m0 0l-4 16m4-16h9m-9 16h9" stroke-linecap="square"/></svg>
+                        </button>
+                        <button onclick="document.execCommand('underline')" class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors" title="Underline">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 3v7a6 6 0 006 6 6 6 0 006-6V3M4 21h16"/></svg>
+                        </button>
+                    </div>
+                    <div class="flex border-r border-zinc-200">
+                        <button onclick="document.execCommand('formatBlock',false,'H1')" class="h-10 px-3 text-[10px] font-bold text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors font-sans">H1</button>
+                        <button onclick="document.execCommand('formatBlock',false,'H2')" class="h-10 px-3 text-[10px] font-bold text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors font-sans">H2</button>
+                    </div>
+                    <div class="flex">
+                        <button onclick="document.execCommand('insertUnorderedList')" class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div contenteditable="true" class="p-6 min-h-[140px] text-sm font-sans text-zinc-900 leading-relaxed focus:outline-none">
+                    <p>Click here and start typing your protocol content...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: WEIGHT CHART ─── -->
+        <section id="m-clientchart" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Client_Weight_Progress</h2>
+            <div class="max-w-xl bg-white border border-zinc-200 p-7 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
+                <div class="flex justify-between items-start mb-7">
+                    <div><h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 font-sans">Body_Efficiency_Progress</h3><p class="text-[10px] text-cyan-600 mt-1 uppercase tracking-widest font-mono font-bold">Current: 82.4 kg</p></div>
+                    <div class="flex items-center gap-1.5 text-[8px] font-mono uppercase font-bold"><span class="h-1.5 w-1.5 bg-cyan-600"></span><span class="text-zinc-400">Weight_KG</span></div>
+                </div>
+                <div class="relative h-[180px]"><canvas id="weightChart"></canvas></div>
+                <div class="mt-5 grid grid-cols-3 gap-4 border-t border-zinc-100 pt-5">
+                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Start</p><p class="text-lg font-bold text-zinc-900 font-mono">84.2<span class="text-[9px] text-zinc-400 ml-0.5">kg</span></p></div>
+                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Current</p><p class="text-lg font-bold text-cyan-600 font-mono">82.4<span class="text-[9px] text-zinc-400 ml-0.5">kg</span></p></div>
+                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Lost</p><p class="text-lg font-bold text-emerald-600 font-mono">-1.8<span class="text-[9px] text-zinc-400 ml-0.5">kg</span></p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: SYSTEM LOAD CHART ─── -->
+        <section id="m-adminchart" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Admin_System_Load</h2>
+            <div class="max-w-xl bg-white border border-zinc-200 p-7 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
+                <div class="flex justify-between items-start mb-7">
+                    <div><h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 font-sans">System_Performance_Metrics</h3><p class="text-[8px] text-zinc-400 mt-1 uppercase tracking-widest font-mono">Diagnostic: Active // Buffer_Freq: 120ms</p></div>
+                    <div class="flex items-center gap-4 text-[8px] font-mono uppercase font-bold">
+                        <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-cyan-600"></span><span class="text-zinc-500">CPU</span></div>
+                        <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-zinc-400"></span><span class="text-zinc-500">MEM</span></div>
+                    </div>
+                </div>
+                <div class="relative h-[180px]"><canvas id="sysChart"></canvas></div>
+                <div class="mt-5 grid grid-cols-3 gap-4 border-t border-zinc-100 pt-5">
+                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">CPU_Avg</p><p class="text-lg font-bold text-cyan-600 font-mono">50.5<span class="text-[9px] text-zinc-400">%</span></p></div>
+                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">MEM_Avg</p><p class="text-lg font-bold text-zinc-900 font-mono">33.7<span class="text-[9px] text-zinc-400">%</span></p></div>
+                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Status</p><p class="text-[10px] font-bold text-emerald-600 uppercase font-mono mt-1">Nominal</p></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ CHARTS INIT ═══ -->
+    <script>
+        window.addEventListener('load', () => {
+            // Weight Chart
+            const wCtx = document.getElementById('weightChart');
+            if (wCtx) {
+                const grad = wCtx.getContext('2d').createLinearGradient(0,0,0,180);
+                grad.addColorStop(0, 'rgba(8,145,178,0.08)');
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                new Chart(wCtx, { type:'line', data:{ labels:['W1','W2','W3','W4','W5','W6','W7'], datasets:[{ data:[84.2,83.8,83.5,83.6,82.9,83.1,82.4], borderColor:'#0891B2', borderWidth:2, tension:0, pointRadius:4, pointBackgroundColor:'#FFF', pointBorderColor:'#0891B2', pointBorderWidth:2, fill:true, backgroundColor:grad }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#09090B', titleFont:{family:'JetBrains Mono',size:10}, bodyFont:{family:'JetBrains Mono',size:10}, borderRadius:0, displayColors:false, padding:10, callbacks:{label:(c)=>c.parsed.y+' KG'} } }, scales:{ y:{grid:{display:false}, border:{display:false}, ticks:{color:'#A1A1AA',font:{family:'JetBrains Mono',size:8}}}, x:{grid:{display:true,color:'#F4F4F5',drawTicks:false}, border:{display:false}, ticks:{padding:8,color:'#A1A1AA',font:{family:'JetBrains Mono',size:8}}} } } });
+            }
+            // Sys Chart
+            const sCtx = document.getElementById('sysChart');
+            if (sCtx) {
+                new Chart(sCtx, { type:'line', data:{ labels:['00:00','04:00','08:00','12:00','16:00','20:00'], datasets:[ { label:'CPU', data:[45,52,38,65,48,55], borderColor:'#0891B2', borderWidth:2, tension:0, pointRadius:3, pointBackgroundColor:'#0891B2', fill:false }, { label:'MEM', data:[30,35,32,40,31,34], borderColor:'#A1A1AA', borderWidth:2, tension:0, pointRadius:3, pointBackgroundColor:'#A1A1AA', fill:false } ] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#09090B', titleFont:{family:'JetBrains Mono',size:10}, bodyFont:{family:'JetBrains Mono',size:10}, borderRadius:0, displayColors:false, padding:10, callbacks:{label:(c)=>c.dataset.label+': '+c.parsed.y+'%'} } }, scales:{ y:{grid:{display:true,color:'#F4F4F5',drawTicks:false}, border:{display:false}, ticks:{color:'#A1A1AA',font:{family:'JetBrains Mono',size:8},callback:(v)=>v+'%'}}, x:{grid:{display:false}, border:{display:false}, ticks:{color:'#A1A1AA',font:{family:'JetBrains Mono',size:8}}} } } });
+            }
+        });
+    </script>
+
+</body>
+</html>

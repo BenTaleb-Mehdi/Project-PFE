@@ -4,123 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories | AntiGravity V3.0</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Preline UI -->
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-zinc-50 antialiased" x-data="{ 
-    sidebarOpen: false, 
-    categories: ['Ftor', 'Gheda', 'Cas-croûte', 'Acha'],
-    isModalOpen: false,
-    editingIndex: null,
-    tempName: '',
-    
-    openModal(index = null) {
-        this.editingIndex = index;
-        this.tempName = index !== null ? this.categories[index] : '';
-        this.isModalOpen = true;
-    },
-    
-    saveCategory() {
-        if (this.tempName.trim() === '') return;
-        if (this.editingIndex !== null) {
-            this.categories[this.editingIndex] = this.tempName;
-        } else {
-            this.categories.push(this.tempName);
+<body class="bg-zinc-50 antialiased font-sans" 
+      x-data="{ 
+        activePage: 'categories',
+        isSidebarOpen: false, 
+        isLargeScreen: window.innerWidth >= 1024,
+        categories: ['Ftor', 'Gheda', 'Cas-croûte', 'Acha'],
+        isModalOpen: false,
+        editingIndex: null,
+        tempName: '',
+        
+        openModal(index = null) {
+            this.editingIndex = index;
+            this.tempName = index !== null ? this.categories[index] : '';
+            this.isModalOpen = true;
+        },
+        
+        saveCategory() {
+            if (this.tempName.trim() === '') return;
+            if (this.editingIndex !== null) {
+                this.categories[this.editingIndex] = this.tempName;
+            } else {
+                this.categories.push(this.tempName);
+            }
+            this.isModalOpen = false;
         }
-        this.isModalOpen = false;
-    }
-}">
+      }"
+      x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
 
-    <!-- Mobile Header -->
-    <header class="lg:hidden fixed top-0 left-0 w-full bg-white ag-border border-l-0 border-r-0 border-t-0 p-4 flex justify-between items-center z-50">
-        <div class="flex items-center space-x-3">
-            <div class="h-5 w-5 bg-cyan-600"></div>
-            <span class="font-mono font-bold text-sm uppercase tracking-tighter">AntiGravity</span>
-        </div>
-        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-500">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-        </button>
+    <!-- Header (Mobile) -->
+    <!-- Molecule: components/header.html -->
+    <header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-sans">
+        <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
+            <div class="flex items-center space-x-2">
+                <div class="h-5 w-5 bg-cyan-600"></div>
+                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">AntiGravity</span>
+            </div>
+            
+            <button type="button" 
+                    @click.stop="isSidebarOpen = true"
+                    class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
+                <span class="sr-only">Toggle Navigation</span>
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+            </button>
+        </nav>
     </header>
 
+    <!-- Mobile Backdrop -->
+    <div x-show="isSidebarOpen" 
+         x-transition.opacity
+         @click="isSidebarOpen = false"
+         class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-50 lg:hidden"
+         style="display: none;"></div>
+
     <!-- Sidebar -->
-    <aside 
-        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
-        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+    <!-- Molecule: components/sidebar.html -->
+    <aside id="application-sidebar" 
+           :class="isSidebarOpen || isLargeScreen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-zinc-200 transition-all duration-300 transform lg:translate-x-0 font-sans"
+           @click.away="isSidebarOpen = false">
+        
+        <!-- Mobile Close Trigger -->
+        <div class="lg:hidden absolute top-4 right-4 z-50">
+            <button type="button" 
+                    @click.stop="isSidebarOpen = false"
+                    class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all font-mono">
+                <span class="sr-only">Close Sidebar</span>
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+
         <div class="p-6">
             <div class="flex items-center space-x-3 mb-12">
                 <div class="h-6 w-6 bg-cyan-600"></div>
-                <span class="font-mono font-bold text-lg uppercase tracking-tighter">AntiGravity</span>
-            </div>
-            <nav class="space-y-1">
-                <a href="dashboard.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Dashboard</a>
-                <div class="py-2">
-                    <p class="px-4 text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Nutrition_Engine</p>
-                    <a href="categories.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">Categories</a>
-                    <a href="nutrition.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Nutrition</a>
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg tracking-tighter uppercase leading-none text-zinc-900">AntiGravity</span>
+                    <span class="text-[8px] text-cyan-700 uppercase tracking-widest mt-1 font-mono">Light_Engine_V3.0</span>
                 </div>
-                <a href="clients.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Clients</a>
+            </div>
+
+            <nav class="p-0 w-full flex flex-col flex-wrap">
+                <ul class="space-y-1">
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 focus:outline-none transition-all" href="dashboard.html">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li x-data="{ open: true }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-cyan-700 uppercase tracking-widest border-l-2 border-cyan-600 bg-cyan-50 transition-all">
+                            Nutrition_Engine
+                            <svg class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-cyan-700 uppercase tracking-widest border-l-2 border-cyan-600 bg-cyan-50" href="categories.html">
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="nutrition.html">
+                                        Nutrition
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="clients.html">
+                            Clients
+                        </a>
+                    </li>
+                </ul>
             </nav>
+        </div>
+
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200">
+            <div class="flex items-center space-x-3">
+                <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-xs font-mono">A</div>
+                <div>
+                    <p class="text-[10px] font-bold text-zinc-900 uppercase font-sans">Achraf_Perf</p>
+                    <p class="text-[8px] text-cyan-700 uppercase font-mono">Master_Admin</p>
+                </div>
+            </div>
         </div>
     </aside>
 
-    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12">
-        <header class="mb-10">
-            <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Category_Management</h1>
-            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-widest">Step_01: Define Meal Sequences</p>
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-12">
+        <header class="mb-10 font-sans">
+            <h1 class="text-3xl font-bold tracking-tighter uppercase text-zinc-900">Category_Management</h1>
+            <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-widest font-mono">Step_01: Define Meal Sequences</p>
         </header>
 
-        <div class="max-w-4xl space-y-4">
+        <div class="max-w-4xl space-y-4 font-mono">
             <template x-for="(cat, index) in categories" :key="index">
-                <div class="ag-card p-6 bg-white flex justify-between items-center group">
+                <div class="ag-card p-6 bg-white flex justify-between items-center group hover:border-cyan-600 transition-all">
                     <div class="flex items-center space-x-6">
-                        <span class="text-[10px] font-mono text-zinc-300" x-text="'0' + (index + 1)"></span>
-                        <h3 class="font-mono font-bold text-sm uppercase tracking-widest text-zinc-900" x-text="cat"></h3>
+                        <span class="text-[10px] text-zinc-300" x-text="'0' + (index + 1)"></span>
+                        <h3 class="font-bold text-sm uppercase tracking-widest text-zinc-950" x-text="cat"></h3>
                     </div>
                     <div class="flex items-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button @click="openModal(index)" class="text-[8px] font-mono uppercase tracking-widest text-zinc-400 hover:text-cyan-600">Rename</button>
-                        <button @click="categories = categories.filter(c => c !== cat)" class="text-[8px] font-mono uppercase tracking-widest text-zinc-400 hover:text-red-500">Delete</button>
+                        <button @click="openModal(index)" class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-cyan-600 transition-colors">Rename</button>
+                        <button @click="categories = categories.filter(c => c !== cat)" class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-red-500 transition-colors">Delete</button>
                     </div>
                 </div>
             </template>
 
             <button @click="openModal()" 
-                    class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 font-mono text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all">
+                    class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all">
                 + Add_New_Sequence_Slot
             </button>
         </div>
     </main>
 
-    <!-- Edit/Add Modal -->
+    <!-- Preline Modal can be integrated here, but for now we keep Alpine logic with Preline structure -->
     <div x-show="isModalOpen" 
-         class="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-zinc-900/10 backdrop-blur-sm"
-         x-transition:enter="fade-in-100"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/20 backdrop-blur-sm"
+         x-transition:enter="transition ease-out duration-100"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
          style="display: none;">
         <div @click.outside="isModalOpen = false" 
-             class="bg-white w-full max-w-lg ag-border shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] overflow-hidden">
+             class="bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] overflow-hidden font-mono">
             <div class="px-8 py-6 border-b border-zinc-100 flex justify-between items-center">
-                <h3 class="text-xs font-mono font-bold uppercase tracking-widest text-zinc-900" x-text="editingIndex !== null ? 'Rename_Category' : 'New_Sequence_Slot'"></h3>
-                <button @click="isModalOpen = false" class="text-zinc-400 hover:text-zinc-900">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950" x-text="editingIndex !== null ? 'Rename_Category' : 'New_Sequence_Slot'"></h3>
+                <button @click="isModalOpen = false" class="text-zinc-400 hover:text-zinc-950 transition-colors">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
             <div class="p-8">
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Category_Name</label>
+                        <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category_Name</label>
                         <input type="text" 
                                x-model="tempName" 
                                @keydown.enter="saveCategory()"
                                placeholder="e.g. BREAKFAST_ENGINE" 
-                               class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border outline-none focus:border-cyan-600">
+                               class="w-full bg-zinc-50 px-4 py-3 text-xs uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors">
                     </div>
                     <div class="flex flex-col space-y-3">
                         <button @click="saveCategory()" 
-                                class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-all">
+                                class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99]">
                             Finalize_Configuration
                         </button>
                         <button @click="isModalOpen = false" 
-                                class="w-full py-4 text-[10px] font-mono uppercase text-zinc-400 hover:text-zinc-900 transition-colors">
+                                class="w-full py-4 text-[10px] uppercase text-zinc-400 hover:text-zinc-950 transition-colors">
                             Abandon_Changes
                         </button>
                     </div>

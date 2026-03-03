@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrition Engine | AntiGravity V3.0</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Preline UI -->
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
         [contenteditable]:empty:before {
@@ -15,191 +19,334 @@
         }
     </style>
 </head>
-<body class="bg-zinc-50 antialiased" x-data="{ 
-    sidebarOpen: false, 
-    activeTab: 'meals',
-    // Meal State
-    p: 30, c: 20, f: 10,
-    get kcal() { return (this.p * 4) + (this.c * 4) + (this.f * 9) },
-    exec(cmd, val = null) { document.execCommand(cmd, false, val) },
-    // Program State
-    programView: 'list'
-}">
+<body class="bg-zinc-50 antialiased font-sans" 
+      x-data="{ 
+        activeTab: 'meals',
+        isSidebarOpen: false, 
+        isLargeScreen: window.innerWidth >= 1024,
+        // Meal State
+        p: 30, c: 20, f: 10,
+        get kcal() { return (this.p * 4) + (this.c * 4) + (this.f * 9) },
+        // Program State
+        programView: 'list'
+      }"
+      x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
+
+    <!-- Header (Mobile) -->
+    <!-- Molecule: components/header.html -->
+    <header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-mono">
+        <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
+            <div class="flex items-center space-x-2">
+                <div class="h-5 w-5 bg-cyan-600"></div>
+                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-950">AntiGravity</span>
+            </div>
+            
+            <button type="button" 
+                    @click.stop="isSidebarOpen = true"
+                    class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
+                <span class="sr-only">Toggle Navigation</span>
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Backdrop -->
+    <div x-show="isSidebarOpen" 
+         x-transition.opacity
+         @click="isSidebarOpen = false"
+         class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-50 lg:hidden"
+         style="display: none;"></div>
 
     <!-- Sidebar -->
-    <aside class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+    <!-- Molecule: components/sidebar.html -->
+    <aside id="application-sidebar" 
+           :class="isSidebarOpen || isLargeScreen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-zinc-200 transition-all duration-300 transform lg:translate-x-0 font-mono"
+           @click.away="isSidebarOpen = false">
+        
+        <!-- Mobile Close Trigger -->
+        <div class="lg:hidden absolute top-4 right-4 z-50">
+            <button type="button" 
+                    @click.stop="isSidebarOpen = false"
+                    class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all">
+                <span class="sr-only">Close Sidebar</span>
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+
         <div class="p-6">
             <div class="flex items-center space-x-3 mb-12">
                 <div class="h-6 w-6 bg-cyan-600"></div>
-                <span class="font-mono font-bold text-lg uppercase tracking-tighter">AntiGravity</span>
-            </div>
-            <nav class="space-y-1">
-                <a href="dashboard.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Dashboard</a>
-                <div class="py-2">
-                    <p class="px-4 text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Nutrition_Engine</p>
-                    <a href="categories.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Categories</a>
-                    <a href="nutrition.html" class="flex items-center px-4 py-2 text-xs font-mono uppercase tracking-widest bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">Nutrition</a>
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg tracking-tighter uppercase leading-none text-zinc-950">AntiGravity</span>
+                    <span class="text-[8px] text-zinc-400 uppercase tracking-widest mt-1">Light_Engine_V3.0</span>
                 </div>
-                <a href="clients.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">Clients</a>
+            </div>
+
+            <nav class="hs-accordion-group p-0 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+                <ul class="space-y-1.5">
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="dashboard.html">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="hs-accordion" id="nutrition-accordion">
+                        <button type="button" class="hs-accordion-toggle hs-accordion-active:text-cyan-600 w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 bg-cyan-50 text-xs font-bold text-cyan-700 uppercase tracking-widest border-r-2 border-cyan-600 focus:outline-none" aria-expanded="true">
+                            Nutrition_Engine
+                            <svg class="hs-accordion-active:block ms-auto hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                            <svg class="hs-accordion-active:hidden ms-auto block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+
+                        <div id="nutrition-accordion-content" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="nutrition-accordion">
+                            <ul class="pt-2 ps-2">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="categories.html">
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-cyan-700 uppercase tracking-widest" href="nutrition.html">
+                                        Nutrition
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="clients.html">
+                            Clients
+                        </a>
+                    </li>
+                </ul>
             </nav>
+        </div>
+
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200">
+            <div class="flex items-center space-x-3">
+                <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-600 font-bold text-xs">A</div>
+                <div>
+                    <p class="text-[10px] font-bold text-zinc-950 uppercase">Achraf_Perf</p>
+                    <p class="text-[8px] text-cyan-600 uppercase">Master_Admin</p>
+                </div>
+            </div>
         </div>
     </aside>
 
-    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12">
-        <header class="mb-10 flex justify-between items-end">
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-12">
+        <!-- Page Header -->
+        <header class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6 font-sans">
             <div>
-                <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Nutrition_Engine</h1>
+                <h1 class="text-3xl font-bold tracking-tighter uppercase text-zinc-900">Nutrition_Engine</h1>
                 <div class="flex space-x-6 mt-4">
                     <button @click="activeTab = 'meals'" 
                             :class="activeTab === 'meals' ? 'text-cyan-600 border-cyan-600' : 'text-zinc-400 border-transparent'"
-                            class="text-[10px] font-mono font-bold uppercase tracking-widest border-b-2 pb-1 transition-all">
+                            class="text-[10px] font-bold uppercase tracking-widest border-b-2 pb-1 transition-all hover:text-cyan-600 font-mono">
                         Meal_Creator
                     </button>
                     <button @click="activeTab = 'programs'" 
                             :class="activeTab === 'programs' ? 'text-cyan-600 border-cyan-600' : 'text-zinc-400 border-transparent'"
-                            class="text-[10px] font-mono font-bold uppercase tracking-widest border-b-2 pb-1 transition-all">
+                            class="text-[10px] font-bold uppercase tracking-widest border-b-2 pb-1 transition-all hover:text-cyan-600 font-mono">
                         Program_Manager
                     </button>
                 </div>
             </div>
             <div x-show="activeTab === 'programs'">
                 <button @click="programView = (programView === 'list' ? 'create' : 'list')" 
-                        class="px-6 py-3 bg-zinc-900 text-white text-[10px] font-mono uppercase font-bold tracking-widest hover:bg-black transition-all">
+                        class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] font-mono">
                     <span x-text="programView === 'list' ? 'Create_New_Protocol' : 'Return_to_List'"></span>
                 </button>
             </div>
         </header>
 
         <!-- MEAL CREATOR TAB -->
-        <div x-show="activeTab === 'meals'" x-transition class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div x-show="activeTab === 'meals'" x-transition class="grid grid-cols-1 lg:grid-cols-3 gap-8 font-mono">
             <div class="lg:col-span-2 space-y-6">
-                <!-- Base Info -->
-                <div class="ag-card p-8">
-                    <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-6">Meal_Identity</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div x-data="{ 
-                            open: false, 
-                            selected: 'Ftor',
-                            options: ['Ftor', 'Gheda', 'Acha']
-                        }" class="relative">
-                            <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Category</label>
-                            <button @click="open = !open" 
-                                    class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border flex items-center justify-between outline-none focus:border-cyan-600">
-                                <span x-text="selected"></span>
-                                <svg class="h-4 w-4 text-zinc-400 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Molecule: Meal Identity -->
+                <div x-data="{ 
+                    categoryOpen: false, 
+                    selectedCategory: 'Ftor',
+                    categories: ['Ftor', 'Gheda', 'Acha'],
+                    mealName: ''
+                }" class="ag-card p-8 bg-white">
+                    <h3 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Meal_Identity</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="relative">
+                            <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category</label>
+                            <button @click="categoryOpen = !categoryOpen" 
+                                    class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 flex items-center justify-between outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700">
+                                <span x-text="selectedCategory"></span>
+                                <svg class="h-4 w-4 text-zinc-400 transition-transform" :class="categoryOpen ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            <div x-show="open" @click.outside="open = false" x-transition:enter="fade-in-100" class="absolute left-0 mt-1 w-full ag-dropdown-surface z-[9000]">
-                                <template x-for="option in options" :key="option">
-                                    <div @click="selected = option; open = false" class="ag-dropdown-item" :class="selected === option ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
-                                        <div class="flex items-center space-x-3">
-                                            <svg x-show="option === 'Ftor'" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
-                                            <svg x-show="option === 'Gheda'" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                                            <svg x-show="option === 'Acha'" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                                            <span x-text="option"></span>
-                                        </div>
+                            <!-- Portal Pattern-inspired Dropdown -->
+                            <div x-show="categoryOpen" 
+                                 @click.outside="categoryOpen = false" 
+                                 x-transition:enter="transition ease-out duration-100"
+                                 x-transition:enter-start="opacity-0 translate-y-2"
+                                 x-transition:enter-end="opacity-100 translate-y-0"
+                                 class="absolute left-0 mt-1 w-full bg-white border border-zinc-200 z-[100] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]">
+                                <template x-for="option in categories" :key="option">
+                                    <div @click="selectedCategory = option; categoryOpen = false" 
+                                         class="px-4 py-3 text-[10px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer transition-all border-l-2 border-transparent hover:border-cyan-600 flex items-center justify-between group"
+                                         :class="selectedCategory === option ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
+                                        <span x-text="option"></span>
+                                        <span x-show="selectedCategory === option" class="text-cyan-600">
+                                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+                                        </span>
                                     </div>
                                 </template>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Meal_Name</label>
-                            <input type="text" placeholder="Salmon_Bowl_V3" class="w-full bg-zinc-50 px-4 py-3 text-xs font-mono uppercase ag-border outline-none focus:border-cyan-600">
+                            <label class="block text-[8px] text-zinc-900 font-bold uppercase tracking-widest mb-2 font-sans">Meal_Name</label>
+                            <input type="text" x-model="mealName" placeholder="Salmon_Bowl_V3" 
+                                   class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-zinc-900 placeholder:opacity-30">
                         </div>
                     </div>
                 </div>
 
-                <!-- AntiGravity RichText Engine V3.0 -->
+                <!-- Molecule: RichText Editor -->
                 <div class="ag-card bg-white overflow-hidden">
                     <div class="ag-editor-toolbar">
-                        <button @click="exec('bold')" class="ag-editor-btn" title="Bold"><strong>B</strong></button>
-                        <button @click="exec('italic')" class="ag-editor-btn" title="Italic"><em>I</em></button>
-                        <button @click="exec('formatBlock', 'H1')" class="ag-editor-btn">H1</button>
-                        <button @click="exec('insertUnorderedList')" class="ag-editor-btn"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16" /></svg></button>
-                        <div class="w-[1px] h-6 bg-zinc-100 mx-1"></div>
-                        <button @click="exec('formatBlock', 'PRE')" class="ag-editor-btn"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg></button>
+                        <button onclick="document.execCommand('bold', false, null)" class="ag-editor-btn">B</button>
+                        <button onclick="document.execCommand('italic', false, null)" class="ag-editor-btn italic">I</button>
+                        <button onclick="document.execCommand('underline', false, null)" class="ag-editor-btn underline">U</button>
                     </div>
-                    <div contenteditable="true" placeholder="Enter_Repa_Description_Protocol..." class="ag-editor-content prose prose-zinc max-w-none focus:outline-none leading-relaxed font-sans"></div>
+                    <div contenteditable="true" 
+                         placeholder="Enter_Repa_Description_Protocol..." 
+                         class="ag-editor-content focus:outline-none min-h-[300px] p-8 text-sm normal-case font-sans"></div>
                 </div>
             </div>
 
-            <!-- Macros Panel -->
+            <!-- Molecule: Macros Analyst -->
             <div class="space-y-6">
-                <div class="ag-card p-8 sticky top-24">
-                    <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4">Matrix_Analysis</h3>
+                <div class="ag-card p-8 bg-white sticky top-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4">Matrix_Analysis</h3>
                     <div class="space-y-8 mb-12">
                         <div class="space-y-3">
-                            <div class="flex justify-between text-[10px] font-mono uppercase"><span class="text-zinc-500">Protein (g)</span><span class="text-cyan-600 font-bold" x-text="p"></span></div>
-                            <input type="number" x-model.number="p" class="w-full bg-zinc-50 px-3 py-2 text-xs font-mono ag-border outline-none">
+                            <div class="flex justify-between text-[10px] uppercase font-sans">
+                                <span class="text-zinc-400">Protein (g)</span>
+                                <span class="text-cyan-700 font-bold font-mono" x-text="p"></span>
+                            </div>
+                            <input type="range" min="0" max="300" x-model.number="p" 
+                                   class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
                         </div>
                         <div class="space-y-3">
-                            <div class="flex justify-between text-[10px] font-mono uppercase"><span class="text-zinc-500">Carbs (g)</span><span class="text-zinc-900 font-bold" x-text="c"></span></div>
-                            <input type="number" x-model.number="c" class="w-full bg-zinc-50 px-3 py-2 text-xs font-mono ag-border outline-none">
+                            <div class="flex justify-between text-[10px] uppercase font-sans">
+                                <span class="text-zinc-400">Carbs (g)</span>
+                                <span class="text-zinc-900 font-bold font-mono" x-text="c"></span>
+                            </div>
+                            <input type="range" min="0" max="500" x-model.number="c" 
+                                   class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-zinc-900">
                         </div>
                         <div class="space-y-3">
-                            <div class="flex justify-between text-[10px] font-mono uppercase"><span class="text-zinc-500">Fats (g)</span><span class="text-emerald-600 font-bold" x-text="f"></span></div>
-                            <input type="number" x-model.number="f" class="w-full bg-zinc-50 px-3 py-2 text-xs font-mono ag-border outline-none">
+                            <div class="flex justify-between text-[10px] uppercase font-sans">
+                                <span class="text-zinc-400">Fats (g)</span>
+                                <span class="text-emerald-700 font-bold font-mono" x-text="f"></span>
+                            </div>
+                            <input type="range" min="0" max="200" x-model.number="f" 
+                                   class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-emerald-600">
                         </div>
                     </div>
-                    <div class="text-center p-6 bg-zinc-50 ag-border">
-                        <p class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Total_Kcal</p>
-                        <div class="text-4xl font-mono font-bold text-zinc-900" x-text="kcal"></div>
+                    <div class="text-center p-6 bg-zinc-50 border border-zinc-200 border-dashed">
+                        <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 font-sans">Total_Kcal</p>
+                        <div class="text-4xl font-bold text-zinc-900 font-mono" x-text="kcal"></div>
                     </div>
-                    <button class="w-full py-4 mt-8 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-all">Register_Meal</button>
+                    <button class="w-full py-4 mt-8 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99]">
+                        Register_Meal
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- PROGRAM MANAGER TAB -->
-        <div x-show="activeTab === 'programs'" x-transition class="space-y-6">
-            <!-- List View -->
-            <div x-show="programView === 'list'" class="ag-card overflow-hidden">
-                <table class="w-full text-left font-mono text-[10px]">
-                    <thead class="bg-zinc-50 border-b border-zinc-100 text-zinc-400 uppercase">
-                        <tr>
-                            <th class="px-6 py-4 font-bold tracking-widest">Protocol_Name</th>
-                            <th class="px-6 py-4 font-bold tracking-widest">Meals_Count</th>
-                            <th class="px-6 py-4 font-bold tracking-widest">Avg_Kcal</th>
-                            <th class="px-6 py-4 font-bold tracking-widest text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-zinc-100 uppercase">
-                        <tr class="hover:bg-zinc-50 transition-colors">
-                            <td class="px-6 py-4 font-bold text-zinc-900">Shred_X_Lite</td>
-                            <td class="px-6 py-4 text-zinc-500">4 Slots</td>
-                            <td class="px-6 py-4 text-cyan-600 font-bold">1,850 kcal</td>
-                            <td class="px-6 py-4 text-right space-x-2">
-                                <button class="text-zinc-300 hover:text-cyan-600 uppercase">Edit</button>
-                                <button class="text-zinc-300 hover:text-red-500 uppercase">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div x-show="activeTab === 'programs'" x-transition class="space-y-8 font-mono">
+            <!-- Molecule: Protocol List -->
+            <div x-show="programView === 'list'" class="ag-card bg-white overflow-hidden shadow-sm">
+                <div class="px-6 py-4 border-b border-zinc-100 bg-zinc-50">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Active_Protocols</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-[10px]">
+                        <thead class="bg-white border-b border-zinc-100 text-zinc-400 uppercase">
+                            <tr>
+                                <th class="px-6 py-4 font-bold tracking-widest">Protocol_Name</th>
+                                <th class="px-6 py-4 font-bold tracking-widest">Meals_Count</th>
+                                <th class="px-6 py-4 font-bold tracking-widest">Avg_Kcal</th>
+                                <th class="px-6 py-4 font-bold tracking-widest text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-100 uppercase">
+                            <tr class="hover:bg-cyan-50/30 transition-colors group">
+                                <td class="px-6 py-4 font-bold text-zinc-950 group-hover:text-cyan-700">Shred_X_Lite</td>
+                                <td class="px-6 py-4 text-zinc-500">4 Slots</td>
+                                <td class="px-6 py-4 text-cyan-700 font-bold">1,850 kcal</td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="inline-flex items-center space-x-4">
+                                        <button class="text-zinc-400 hover:text-cyan-600 transition-colors">Edit</button>
+                                        <button class="text-zinc-400 hover:text-red-500 transition-colors">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Create View -->
+            <!-- Timline Builder -->
             <div x-show="programView === 'create'" class="max-w-4xl mx-auto space-y-6">
-                <div class="ag-card p-8 bg-white">
-                    <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-10 border-b border-zinc-100 pb-4">Protocol_Timeline_Builder</h3>
-                    <div class="space-y-6">
+                <div class="ag-card p-8 bg-white shadow-sm">
+                    <div class="flex items-center justify-between mb-10 border-b border-zinc-100 pb-4">
+                        <h3 class="text-xs font-bold uppercase tracking-widest">Protocol_Timeline_Builder</h3>
+                        <span class="text-[8px] text-cyan-600 bg-cyan-50 px-2 py-1 uppercase font-bold">Draft_Mode</span>
+                    </div>
+                    <div class="space-y-4" x-data="{ 
+                        selectedMeals: { 'Ftor': '', 'Gheda': '', 'Cas-croûte': '', 'Acha': '' },
+                        mealOptions: ['Oatmeal_System', 'Salmon_Bowl_V3', 'Protein_Shake_X', 'Beef_Rice_Log']
+                    }">
                         <template x-for="cat in ['Ftor', 'Gheda', 'Cas-croûte', 'Acha']" :key="cat">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-50 ag-border group hover:border-cyan-200 transition-all">
-                                <span class="text-[10px] font-mono text-zinc-400 uppercase w-24" x-text="cat"></span>
-                                <div x-data="{ open: false, selected: '', options: [{ id: 1, name: 'Oatmeal_Power_V3' }, { id: 2, name: 'Salmon_Bowl_V3' }] }" class="relative min-w-[300px]">
-                                    <button @click="open = !open" class="flex items-center justify-between w-full bg-transparent text-xs font-mono uppercase py-2 border-b border-zinc-100 hover:border-cyan-600">
-                                        <span x-text="selected ? options.find(o => o.id == selected).name : 'SELECT_MEAL'" :class="!selected ? 'text-zinc-400' : ''"></span>
-                                        <svg class="h-3 w-3"><path d="M19 9l-7 7-7-7" /></svg>
+                            <div x-data="{ open: false }" class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-50 border border-zinc-200 group hover:border-cyan-400 hover:bg-white transition-all relative">
+                                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                                    <div class="h-2 w-2 rounded-full bg-cyan-600"></div>
+                                    <span class="text-[10px] text-zinc-950 font-bold uppercase w-24" x-text="cat"></span>
+                                    <template x-if="selectedMeals[cat]">
+                                        <span class="text-[10px] text-cyan-600 font-bold bg-cyan-50 px-2 py-1" x-text="selectedMeals[cat]"></span>
+                                    </template>
+                                </div>
+                                
+                                <div class="relative w-full md:w-auto">
+                                    <button @click="open = !open" 
+                                            class="w-full md:w-48 px-4 py-2 text-[10px] text-cyan-700 font-mono font-bold uppercase border border-zinc-200 bg-zinc-50 hover:bg-white transition-all flex items-center justify-between">
+                                        <span x-text="selectedMeals[cat] ? 'Change_Meal' : 'Select_Meal'"></span>
+                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" /></svg>
                                     </button>
-                                    <div x-show="open" @click.outside="open = false" class="absolute left-0 mt-1 w-full ag-dropdown-surface z-[100]">
-                                        <template x-for="option in options" :key="option.id">
-                                            <div @click="selected = option.id; open = false" class="ag-dropdown-item"><span x-text="option.name"></span></div>
+
+                                    <!-- Portal Spec Dropdown -->
+                                    <div x-show="open" 
+                                         @click.outside="open = false"
+                                         x-transition:enter="transition ease-out duration-100"
+                                         x-transition:enter-start="opacity-0"
+                                         x-transition:enter-end="opacity-100"
+                                         class="absolute right-0 mt-1 w-full bg-white border border-zinc-200 z-[100] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]">
+                                        <template x-for="meal in mealOptions" :key="meal">
+                                            <div @click="selectedMeals[cat] = meal; open = false" 
+                                                 class="px-4 py-3 text-[10px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer border-l-2 border-transparent hover:border-cyan-600 flex items-center justify-between"
+                                                 :class="selectedMeals[cat] === meal ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
+                                                <span x-text="meal"></span>
+                                            </div>
                                         </template>
                                     </div>
                                 </div>
-                                <button class="text-[10px] font-mono text-cyan-600 font-bold uppercase">Preview</button>
                             </div>
                         </template>
+                    </div>
+                    <div class="mt-10 flex justify-end">
+                        <button class="px-8 py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
+                            Finalize_Protocol
+                        </button>
                     </div>
                 </div>
             </div>

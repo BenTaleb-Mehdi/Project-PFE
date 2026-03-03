@@ -1,3 +1,8 @@
+---
+name: anti-gravity
+description: Specialized skills for building the AntiGravity Nutrition Management System.
+---
+
 # 🧠 ANTI-GRAVITY AGENT SKILLS
 
 ## 📁 MODULAR ARCHITECTURE

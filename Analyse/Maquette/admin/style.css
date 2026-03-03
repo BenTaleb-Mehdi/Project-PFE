@@ -17,6 +17,11 @@ body {
     color: var(--text-primary);
 }
 
+/* GLOBAL RESET: Hard Edges Only */
+* {
+    border-radius: 0 !important;
+}
+
 .ag-border {
     border: 1px solid var(--border-zinc);
 }
@@ -30,11 +35,15 @@ body {
 .ag-card:hover {
     border-color: var(--accent-cyan);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.05);
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.05); /* Hard Elevation per Rules */
 }
 
 .font-mono {
-    font-family: var(--font-mono);
+    font-family: var(--font-mono) !important;
+}
+
+.font-sans {
+    font-family: 'Inter', sans-serif !important;
 }
 
 /* Scrollbar Light */
@@ -101,6 +110,26 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* SIDEBAR TRANSITIONS (Alpine.js Driven) */
+#application-sidebar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 60;
+}
+
+@media (max-width: 1023px) {
+    #application-sidebar:not([class*='translate-x-0']) {
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    #application-sidebar {
+        transform: translateX(0) !important;
+        display: block !important;
+    }
 }
 
 /* EDITOR SPEC: RICH TEXT ENGINE */
