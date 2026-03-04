@@ -4,7 +4,6 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 ' Actors
-actor "Visiteur (Public)" as Visitor
 actor "Client " as Client
 actor "Co-coach (Staff)" as Staff
 actor "Coach (Admin)" as Admin
@@ -14,10 +13,7 @@ Staff <|-- Admin
 
 rectangle "Coach Management System" {
   
-  package "Plateforme Publique (Vitrine)" {
-    usecase "Consulter les tarifs & services" as ViewPublic
-    usecase "S'inscrire (Nouveau Coach)" as Signup
-  }
+
 
   package "Authentification & Sécurité" {
     usecase "S'authentifier (Login)" as Login
@@ -56,9 +52,6 @@ rectangle "Coach Management System" {
   }
 }
 
-' Connections
-Visitor -- ViewPublic
-Visitor -- Signup
 
 ' Client access split by platform
 Client -- ViewProg : "(Via Mobile)"

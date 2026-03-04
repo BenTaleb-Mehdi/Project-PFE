@@ -33,7 +33,8 @@
       x-data="{
         sidebarOpen: false,
         isLarge: window.innerWidth >= 1024,
-        active: 'general',
+        active: 'a-typo',
+        viewportMode: 'desktop',
         modalOpen: false,
         macroOpen: false,
         dropdownOpen: false, dropdownVal: 'FTOR',
@@ -84,52 +85,87 @@
             <nav class="space-y-0.5">
                 <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 font-mono">Atoms_Library</p>
                 <template x-for="item in [
-                    { id:'a-typo',     label:'01 // Typography'     },
-                    { id:'a-palette',  label:'02 // Palette'        },
-                    { id:'a-buttons',  label:'03 // Buttons'        },
-                    { id:'a-inputs',   label:'04 // Inputs'         },
-                    { id:'a-select',   label:'05 // Select'         },
-                    { id:'a-controls', label:'06 // Controls'       },
-                    { id:'a-badges',   label:'07 // Badges'         },
-                    { id:'a-kpi',      label:'08 // KPI_Metrics'    },
-                    { id:'a-avatars',  label:'09 // Avatars'        },
-                    { id:'a-nav',      label:'10 // Nav_Atoms'      },
-                    { id:'a-feedback', label:'11 // Feedback'       },
-                    { id:'alerts',     label:'12 // Alerts'         }
+                    { id:'a-typo',     label:'01 // Typography',    href:'atoms-general.html' },
+                    { id:'a-palette',  label:'02 // Palette',       href:'atoms-general.html' },
+                    { id:'a-buttons',  label:'03 // Buttons',       href:'atoms-buttons.html' },
+                    { id:'a-inputs',   label:'04 // Inputs',        href:'atoms-inputs.html'  },
+                    { id:'a-select',   label:'05 // Select',        href:'atoms-inputs.html'  },
+                    { id:'a-controls', label:'06 // Controls',      href:'atoms-inputs.html'  },
+                    { id:'a-badges',   label:'07 // Badges',        href:'atoms-intel.html'   },
+                    { id:'a-kpi',      label:'08 // KPI_Metrics',   href:'atoms-intel.html'   },
+                    { id:'a-avatars',  label:'09 // Avatars',       href:'atoms-general.html' },
+                    { id:'a-nav',      label:'10 // Nav_Atoms',      href:'atoms-general.html' },
+                    { id:'a-feedback', label:'11 // Feedback',      href:'atoms-intel.html'   },
+                    { id:'alerts',     label:'12 // Alerts',        href:'atoms-intel.html'   },
+                    { id:'a-tables',   label:'13 // Tables',        href:'atoms-intel.html'   }
                 ]">
                     <div class="flex items-center">
-                        <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
-                            <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        </a>
+                        <template x-if="item.href">
+                            <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
+                                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                        </template>
                         <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
                            :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
-                           class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
-                    </div>
-                </template>
+                            <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
+                               :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
+                               class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
+                        </div>
+                    </template>
 
-                <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 pt-5 font-mono">Molecules</p>
-                <template x-for="item in [
-                    { id:'m-navbar',      label:'Navbar',                href:'../molecules/navbar.html'                   },
-                    { id:'m-navitem',     label:'Nav_Item',              href:'../molecules/nav-item.html'                 },
-                    { id:'m-kpi',         label:'KPI_Card',              href:'../molecules/kpi-card.html'                 },
-                    { id:'m-macro',       label:'Macro_Analyst',         href:'../molecules/macro-analyst.html'            },
-                    { id:'m-category',    label:'Category_Item',         href:'../molecules/category-item.html'            },
-                    { id:'m-modal',       label:'Modal_Base',            href:'../molecules/modal-base.html'               },
-                    { id:'m-timeline',    label:'Timeline_Item',         href:'../molecules/protocol-timeline-item.html'   },
-                    { id:'m-editor',      label:'Rich_Text_Editor',      href:'../molecules/rich-text-toolbar.html'        },
-                    { id:'m-clientchart', label:'Weight_Progress',       href:'../molecules/client-weight-progress.html'   },
-                    { id:'m-adminchart',  label:'System_Load',           href:'../molecules/admin-system-load.html'        }
-                ]">
-                    <div class="flex items-center">
-                        <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
-                            <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        </a>
-                        <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
-                           :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
-                           class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
-                    </div>
-                </template>
-            </nav>
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 pt-5 font-mono">Molecules</p>
+                    <template x-for="item in [
+                        { id:'m-navbar',      label:'Navbar',                href:'../molecules/navbar.html'                   },
+                        { id:'m-navitem',     label:'Nav_Item',              href:'../molecules/nav-item.html'                 },
+                        { id:'m-kpi',         label:'KPI_Card',              href:'../molecules/kpi-card.html'                 },
+                        { id:'m-macro',       label:'Macro_Analyst',         href:'../molecules/macro-analyst.html'            },
+                        { id:'m-category',    label:'Category_Item',         href:'../molecules/category-item.html'            },
+                        { id:'m-modal',       label:'Modal_Base',            href:'../molecules/modal-base.html'               },
+                        { id:'m-timeline',    label:'Timeline_Builder',      href:'../molecules/protocol-timeline-item.html'   },
+                        { id:'m-editor',      label:'Rich_Text_Editor',      href:'../molecules/rich-text-toolbar.html'        },
+                        { id:'m-clientchart', label:'Weight_Progress',       href:'../molecules/client-weight-progress.html'   },
+                        { id:'m-adminchart',  label:'System_Load',           href:'../molecules/admin-system-load.html'        }
+                    ]">
+                        <div class="flex items-center">
+                            <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
+                                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                            <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
+                               :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
+                               class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
+                        </div>
+                    </template>
+
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 pt-5 font-mono">Auth_Pages</p>
+                    <template x-for="item in [
+                        { id:'p-login',  label:'Secure_Login',   href:'../../auth/login.html' },
+                        { id:'p-signup', label:'Request_Access', href:'../../auth/signup.html' }
+                    ]">
+                        <div class="flex items-center">
+                            <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open Page">
+                                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                            <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
+                               :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
+                               class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
+                        </div>
+                    </template>
+
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 pt-5 font-mono">Prototypes</p>
+                    <template x-for="item in [
+                        { id:'p-admin',  label:'Admin_Dashboard', href:'../../admin/dashboard.html' },
+                        { id:'p-client', label:'Client_Portal',   href:'../../client/portal.html'  }
+                    ]">
+                        <div class="flex items-center">
+                            <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open Page">
+                                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                            <a :href="'#' + item.id" @click="active = item.id; sidebarOpen = false"
+                               :class="active === item.id ? 'border-l-cyan-600 bg-cyan-50 text-cyan-700' : 'border-l-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'"
+                               class="flex-1 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition-colors" x-text="item.label"></a>
+                        </div>
+                    </template>
+                </nav>
         </div>
 
         <!-- Footer badge -->
@@ -138,7 +174,7 @@
                 <div class="h-7 w-7 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-[9px] font-mono">V3</div>
                 <div>
                     <p class="text-[9px] font-bold text-zinc-900 uppercase font-sans">Graphic_Showcase</p>
-                    <p class="text-[8px] text-cyan-700 uppercase font-mono">8 Sections</p>
+                    <p class="text-[8px] text-cyan-700 uppercase font-mono">15+ Sections</p>
                 </div>
             </div>
         </div>
@@ -147,11 +183,29 @@
     <!-- ═══ MAIN ═══ -->
     <main class="lg:ml-64 min-h-screen p-6 lg:p-10">
 
-        <!-- Page Header -->
-        <header class="mb-14 border-b-2 border-zinc-900 pb-8">
-            <h1 class="text-3xl font-bold tracking-tighter uppercase text-zinc-900">Atomic_Graphic_Showcase</h1>
-            <p class="text-[10px] text-cyan-700 mt-3 font-bold uppercase tracking-widest font-mono">Protocol: Graphic.md // Agent_Engine_V3.0 // 12 Atoms + Alerts + Molecules</p>
+        <!-- Page Header (Sticky) -->
+        <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b-2 border-zinc-900 -mx-6 lg:-mx-10 px-6 lg:px-10 py-6 mb-12 transition-all">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tighter uppercase text-zinc-900">AntiGravity_Library_V3</h1>
+                    <p class="text-[10px] text-cyan-700 mt-3 font-bold uppercase tracking-widest font-mono">Protocol: FULL_SHOWCASE // Agent_Engine_V3.0 // Atoms + Molecules + Pages</p>
+                </div>
+
+                <!-- Viewport Resizer -->
+                <div class="flex flex-wrap items-center bg-white border border-zinc-200 p-1 self-start md:self-auto">
+                    <button @click="viewportMode = 'mobile'" 
+                            :class="viewportMode === 'mobile' ? 'bg-zinc-900 text-white' : 'text-zinc-400 hover:text-zinc-900'"
+                            class="px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all font-mono">Mobile</button>
+                    <button @click="viewportMode = 'tablet'" 
+                            :class="viewportMode === 'tablet' ? 'bg-zinc-900 text-white' : 'text-zinc-400 hover:text-zinc-900'"
+                            class="px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all font-mono border-x border-zinc-100">Tablet</button>
+                    <button @click="viewportMode = 'desktop'" 
+                            :class="viewportMode === 'desktop' ? 'bg-zinc-900 text-white' : 'text-zinc-400 hover:text-zinc-900'"
+                            class="px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all font-mono">Desktop</button>
+                </div>
+            </div>
         </header>
+
 
         <!-- ─── 01: TYPOGRAPHY ─── -->
         <section id="a-typo" class="section-anchor mb-20">
@@ -571,186 +625,10 @@
 
 
 
-                <!-- NavToggle -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">NavToggle</span>
-                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Navigation</span>
-                    </div>
-                    <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 text-sm font-medium shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
-                    </button>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Hamburger button for mobile menu.</p>
-                </div>
-
-            </div>
-
-            <!-- ── GROUP: Data ── -->
-            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Data</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-
-                <!-- KpiValue -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">KpiValue</span>
-                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
-                    </div>
-                    <span class="text-3xl font-bold font-mono text-zinc-950 uppercase tracking-tighter">1,842</span>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Large bold numeric display for metrics.</p>
-                </div>
-
-                <!-- KpiLabel -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">KpiLabel</span>
-                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
-                    </div>
-                    <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">ACTIVE_ENERGY</span>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Small uppercase label for metrics.</p>
-                </div>
-
-                <!-- Badge -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">Badge</span>
-                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="inline-flex items-center gap-1.5 py-1 px-3 border border-emerald-100 bg-emerald-50 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">STATUS_ACTIVE</span>
-                        <span class="inline-flex items-center gap-1.5 py-1 px-3 border border-cyan-100 bg-cyan-50 text-[10px] font-bold text-cyan-600 uppercase tracking-widest">LIVE</span>
-                        <span class="inline-flex items-center gap-1.5 py-1 px-3 border border-zinc-200 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">DRAFT</span>
-                    </div>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Status indicator badge.</p>
-                </div>
-
-                <!-- StatusLabel -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">StatusLabel</span>
-                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <span class="text-[8px] text-cyan-600 bg-cyan-50 px-2 py-1 uppercase font-bold self-start">STATUS_ACTIVE</span>
-                        <span class="text-[8px] text-emerald-600 bg-emerald-50 px-2 py-1 uppercase font-bold self-start">SYNC_DONE</span>
-                        <span class="text-[8px] text-zinc-500 bg-zinc-100 px-2 py-1 uppercase font-bold self-start">OFFLINE</span>
-                    </div>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Small status indicator label.</p>
-                </div>
-
-            </div>
-
-            <!-- ── GROUP: Forms ── -->
-            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Forms</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-
-                <!-- InputMono -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">InputMono</span>
-                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
-                    </div>
-                    <input type="text" placeholder="TERMINAL_INPUT..."
-                           class="w-full h-11 bg-zinc-50 border border-zinc-200 px-4 font-mono text-xs text-zinc-950 uppercase placeholder:text-zinc-300 focus:outline-none focus:border-cyan-600 transition-all">
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Monospaced data entry field.</p>
-                </div>
-
-                <!-- MacroSlider -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">MacroSlider</span>
-                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-[10px] uppercase">
-                            <span class="text-zinc-400">Protein (g)</span>
-                            <span class="text-cyan-600 font-bold">140</span>
-                        </div>
-                        <input type="range" min="0" max="300" value="140" class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
-                    </div>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Range input for nutrient tracking.</p>
-                </div>
-
-                <!-- EditorButton -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">EditorButton</span>
-                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
-                    </div>
-                    <div class="flex gap-1 border border-zinc-200 p-1 w-fit">
-                        <button class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors border-b-2 border-cyan-600 bg-cyan-50 text-cyan-700">B</button>
-                        <button class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors italic">I</button>
-                        <button class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors underline">U</button>
-                        <button class="h-8 px-2 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors">H1</button>
-                        <button class="h-8 px-2 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors">H2</button>
-                    </div>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Formatting button for rich text editor.</p>
-                </div>
-
-                <!-- SequenceSlotButton -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">SequenceSlotButton</span>
-                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
-                    </div>
-                    <button class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all">
-                        + Add_New_Sequence_Slot
-                    </button>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Dashed border button for adding sequence slots.</p>
-                </div>
-
-            </div>
-
-            <!-- ── GROUP: Users ── -->
-            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Users</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-
-                <!-- AvatarInitials -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">AvatarInitials</span>
-                        <span class="text-[7px] border border-emerald-100 bg-emerald-50 text-emerald-600 px-1.5 py-0.5 font-mono uppercase">Users</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-xs font-bold text-cyan-600 font-mono uppercase">JD</div>
-                        <div class="h-10 w-10 flex items-center justify-center bg-zinc-900 border border-zinc-800 text-xs font-bold text-white font-mono uppercase">AP</div>
-                        <div class="h-10 w-10 flex items-center justify-center bg-cyan-600 text-white text-xs font-bold font-mono uppercase">MK</div>
-                    </div>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Square user avatar with initials.</p>
-                </div>
-
-            </div>
-
-            <!-- ── GROUP: Interactions ── -->
-            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Interactions</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
-
-                <!-- ActionButton -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[8px] text-zinc-300 font-mono uppercase">ActionButton</span>
-                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Interactions</span>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <button class="px-6 py-2.5 bg-cyan-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-[4px_4px_0px_0px_rgba(8,145,178,0.2)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
-                            ACTION_TRIGGER
-                        </button>
-                        <button class="px-6 py-2.5 bg-zinc-950 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
-                            FINAL_EXECUTE
-                        </button>
-                        <button class="px-6 py-2.5 bg-white border border-zinc-200 text-zinc-600 font-bold text-[10px] uppercase tracking-widest hover:bg-zinc-50 transition-all">
-                            DISCARD_LOG
-                        </button>
-                    </div>
-                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Primary action button with shadow pulse.</p>
-                </div>
-
-            </div>
-        </section>
 
         <!-- ─── SECTION: ALERTS ─── -->
         <section id="alerts" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">05 // Alert_System_Colors</h2>
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">12 // Alert_System_Colors</h2>
 
             <!-- Row 1: Solid variants -->
             <p class="text-[8px] text-zinc-300 font-mono uppercase mb-3 tracking-widest">Solid_Variants</p>
@@ -908,6 +786,42 @@
             </div>
         </section>
 
+        <!-- ─── SECTION: TABLES ─── -->
+        <section id="a-tables" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">13 // Data_Tables</h2>
+            
+            <div class="bg-white border border-zinc-200 overflow-x-auto shadow-[4px_4px_0_0_rgba(0,0,0,0.02)]">
+                <table class="min-w-full divide-y divide-zinc-200">
+                    <thead class="bg-zinc-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">ID // Ref</th>
+                            <th class="px-6 py-3 text-left text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Subject_Name</th>
+                            <th class="px-6 py-3 text-left text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Status_Code</th>
+                            <th class="px-6 py-3 text-right text-[9px] font-bold text-zinc-500 uppercase tracking-widest font-mono">Efficiency</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-100">
+                        <tr class="hover:bg-zinc-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-[10px] font-mono text-zinc-400 uppercase">#8A2-X</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-[11px] font-bold text-zinc-900 uppercase">Ketogenic_Protocol_A</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2 py-0.5 border border-cyan-100 bg-cyan-50 text-[9px] font-bold text-cyan-600 uppercase tracking-widest">ACTIVE</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-[10px] font-mono font-bold text-zinc-950">94.2%</td>
+                        </tr>
+                        <tr class="hover:bg-zinc-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-[10px] font-mono text-zinc-400 uppercase">#3F1-Y</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-[11px] font-bold text-zinc-900 uppercase">Hypertrophy_Phase_1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2 py-0.5 border border-zinc-200 bg-zinc-50 text-[9px] font-bold text-zinc-400 uppercase tracking-widest">DRAFT</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-[10px] font-mono font-bold text-zinc-950">--.-%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <!-- ─── MOLECULE: NAVBAR ─── -->
         <section id="m-navbar" class="section-anchor mb-20">
             <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Navbar</h2>
@@ -1055,10 +969,21 @@
             </div>
         </section>
 
-        <!-- ─── MOLECULE: TIMELINE ─── -->
         <section id="m-timeline" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Protocol_Timeline_Item</h2>
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Protocol_Timeline_Builder</h2>
             <div class="max-w-2xl space-y-2">
+                <!-- Draft Mode -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-white border border-zinc-200 border-dashed group hover:border-cyan-600 transition-all gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="h-2 w-2 bg-zinc-200"></div>
+                        <div>
+                            <p class="text-[10px] text-zinc-400 font-bold uppercase font-sans">Draft_Mode // Unset_Schedule</p>
+                            <p class="text-[8px] text-zinc-300 font-mono mt-0.5 uppercase tracking-widest">Protocol_Pending</p>
+                        </div>
+                    </div>
+                    <button class="px-5 py-2 text-[9px] text-zinc-400 font-bold uppercase border border-zinc-200 hover:bg-zinc-50 transition-colors font-sans">EDIT_DRAFT</button>
+                </div>
+
                 <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-zinc-50 border border-zinc-200 group hover:border-cyan-600 hover:bg-white hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all gap-4">
                     <div class="flex items-center gap-4"><div class="h-2 w-2 bg-cyan-600"></div><div><p class="text-[10px] text-zinc-950 font-bold uppercase font-sans">Week_01 // Mon–Fri</p><p class="text-[8px] text-zinc-400 font-mono mt-0.5 uppercase">Calories: 1,840 kcal</p></div></div>
                     <button class="px-5 py-2 text-[9px] text-cyan-600 font-bold uppercase border border-cyan-200 hover:bg-cyan-600 hover:text-white transition-colors font-sans">SELECT</button>
@@ -1143,6 +1068,54 @@
             </div>
         </section>
 
+        <!-- Viewport Container (Pages Only) -->
+        <div :class="{
+            'w-full': viewportMode === 'desktop',
+            'max-w-[768px] mx-auto border-x border-dashed border-zinc-200 bg-white/50 px-6 py-10': viewportMode === 'tablet',
+            'max-w-[375px] mx-auto border-x border-dashed border-zinc-200 bg-white/50 px-4 py-8': viewportMode === 'mobile'
+        }" class="transition-all duration-300">
+
+        <!-- ─── PAGE: LOGIN ─── -->
+        <section id="p-login" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Auth_Login</h2>
+            <div class="bg-white border border-zinc-200 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden">
+                <div class="relative w-full aspect-[16/10] min-h-[600px] bg-zinc-100">
+                    <iframe src="../../auth/login.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: SIGNUP ─── -->
+        <section id="p-signup" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Auth_Signup</h2>
+            <div class="bg-white border border-zinc-200 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden">
+                <div class="relative w-full aspect-[16/10] min-h-[600px] bg-zinc-100">
+                    <iframe src="../../auth/signup.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: ADMIN DASHBOARD ─── -->
+        <section id="p-admin" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Admin_Dashboard</h2>
+            <div class="bg-white border border-zinc-200 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden">
+                <div class="relative w-full aspect-[16/10] min-h-[600px] bg-zinc-100">
+                    <iframe src="../../admin/dashboard.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: CLIENT PORTAL ─── -->
+        <section id="p-client" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Client_Portal</h2>
+            <div class="bg-white border border-zinc-200 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden">
+                <div class="relative w-full aspect-[16/10] min-h-[600px] bg-zinc-100">
+                    <iframe src="../../client/portal.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        </div> <!-- End Viewport Container -->
     </main>
 
     <!-- ═══ CHARTS INIT ═══ -->

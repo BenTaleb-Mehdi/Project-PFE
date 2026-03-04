@@ -1,0 +1,69 @@
+classDiagram
+    direction LR
+
+    %% Héritage des Utilisateurs
+    Utilisateur <|-- Client
+    Utilisateur <|-- Staff
+    Staff <|-- Admin
+
+    class Utilisateur {
+        #int id
+        #string nom
+        #string email
+        #string motDePasse
+        +login()
+    }
+
+    class Client {
+        -float poidsObjectif
+        -string niveauActuel
+        +mettreAJourStats()
+        +consulterProgramme()
+    }
+
+    class Staff {
+        -string specialite
+        +gererDossierClient(clientId)
+        +concevoirProgramme()
+    }
+
+    class Admin {
+        +gererEquipe()
+        +validerPaiements()
+    }
+
+    %% Classes Métier
+    class Programme {
+        -int id
+        -string nom
+        -date dateCreation
+        +ajouterExercice()
+    }
+
+    class MacroNutriments {
+        -int calories
+        -int proteines
+        -int glucides
+        -int lipides
+        +calculerMacros()
+    }
+
+    class Progression {
+        -date dateReleve
+        -float poids
+        -string photoUrl
+        +genererGraphique()
+    }
+
+    class Paiement {
+        -float montant
+        -date dateTransaction
+        -string statut
+    }
+
+    %% Relations et Associations
+    Client "1" -- "*" Progression : enregistre >
+    Client "1" -- "*" Paiement : effectue >
+    Staff "1" -- "*" Client : coache >
+    Staff "1" -- "*" Programme : cree >
+    Programme "1" *-- "1" MacroNutriments : definit >
