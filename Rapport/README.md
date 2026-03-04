@@ -286,3 +286,6 @@ Surtout, l'application crée un **pont direct** entre l'effort du client (saisie
 ![Cas d’Utilisation du Sprint 2](Images/sprint2-usecase.png)
 
 ---
+
+## Maquette 
+![Maquette](Images/maquette.png)
