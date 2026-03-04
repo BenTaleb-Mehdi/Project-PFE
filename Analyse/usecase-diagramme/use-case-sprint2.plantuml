@@ -3,41 +3,39 @@ left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-actor "Coach (Achraf)" as Admin
-actor "Co-Coach (Assistant)" as Staff
+' Actors
 actor "Client" as Client
+actor "Co-coach (Staff)" as Staff
+actor "Coach (Admin)" as Admin
 
-' Héritage : Le Coach a accès à toutes les fonctions de l'assistant
-Admin -up-|> Staff
+' Hierarchy
+Staff <|-- Admin
 
-rectangle "Sprint 2 - Automation & Collaboration" {
+rectangle "Sprint 2 - Automation & Expérience Mobile" {
 
-  package "Automatisation & Gestion (Équipe)" {
-    Staff -- (Créer template programme)
-    Staff -- (Générer programme depuis template)
-    Staff -- (Calculer macros en temps réel)
-    (Générer programme depuis template) ..> (Calculer macros en temps réel) : <<include>>
+  package "Espace Client (Mobile App)" {
+    usecase "Consulter son programme assigné" as ViewProg
   }
 
-  package "Suivi Interactif (Performance)" {
-    ' Actions du Client pour alimenter le système
-    Client -- (Ajouter poids & mensurations)
-    Client -- (Télécharger photos de progression)
-    
-    ' Actions du Staff pour analyser les résultats
-    Staff -- (Consulter historique poids)
-    Staff -- (Visualiser galerie photos)
+  package "Suivi & Performance (Web)" {
+    usecase "Mettre à jour poids & photos" as UpdateStats
+    usecase "Visualiser sa progression détaillée" as ViewProgress
   }
 
-  package "Contrôle Business" {
-    Admin -- (Enregistrer paiement)
-    Admin -- (Gérer l'équipe de Co-Coachs)
-  }
-
-  package "Espace Client" {
-    Client -- (Se connecter)
-    Client -- (Consulter programme)
-    Client -- (Voir progression graphique)
+  package "Gestion Avancée (Staff/Admin)" {
+    usecase "Calculer les Macros" as CalcMacros
+    usecase "Gérer l'équipe" as ManageStaff
+    usecase "Gérer les paiements" as ManageMoney
   }
 }
+
+' Relations
+Client -- ViewProg : "(Via Mobile)"
+Client -- UpdateStats : "(Via Web)"
+Client -- ViewProgress : "(Via Web)"
+
+Staff -- CalcMacros
+Admin -- ManageStaff
+Admin -- ManageMoney
+
 @enduml

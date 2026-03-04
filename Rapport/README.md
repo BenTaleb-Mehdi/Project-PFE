@@ -173,31 +173,32 @@ La logique centrale est : **"Créer une fois, assigner indéfiniment."** Il ne s
 Le système repose sur une interaction dynamique entre trois acteurs, structurés par une hiérarchie de permissions stricte.
 
 ### 6.1 Les Acteurs et leurs Rôles
-* **Le Coach (Achraf) :** Administrateur principal. Contrôle total sur le business (paiements) et l'équipe.
-* **Le Co-Coach (Assistant) :** Manager opérationnel. Gère les clients et la création de programmes.
-* **Le Client  :** Utilisateur final. Consomme les programmes et alimente le suivi.
+* **Le Coach (Achraf) :** Administrateur principal. Il possède un contrôle total sur le business (paiements) et la gestion de l'équipe.
+* **Le Co-Coach (Assistant) :** Manager opérationnel. Il gère les dossiers clients et la conception technique des programmes.
+* **Le Client :** Utilisateur final. Il consomme ses programmes via mobile et alimente son suivi de progression via l'interface Web.
 
 ### 6.2 Détail des Cas d'Utilisation
 
 #### A. Équipe d'Encadrement (Héritage : Coach & Co-Coach)
 Les fonctionnalités partagées pour la gestion quotidienne :
-* **S’authentifier :** Accès sécurisé à l'interface.
+* **S’authentifier :** Accès sécurisé à l'interface via un login.
 * **Gérer les clients :** Administration complète (Ajout, modification, filtres).
-* **Ingénierie Nutritionnelle :** Création de templates avec calculateur de macros-nutriments en temps réel.
-* **Assignation de Programme :** Attribution rapide via la bibliothèque.
-* **Contrôle du Suivi :** Analyse des courbes de poids et galerie photos (Avant/Après).
+* **Ingénierie Nutritionnelle :** Création de repas et gestion des catégories avec calcul automatique des macros-nutriments.
+* **Contrôle du Suivi :** Analyse des données de progression soumises par les clients.
 
 #### B. Privilèges Exclusifs du Coach (Achraf)
-* **Gérer l'équipe :** Administration des comptes Co-Coach.
-* **Gestion Financière :** Suivi des paiements, abonnements et revenus.
-* **Dashboard Stratégique :** Statistiques globales pour le pilotage de l'activité.
+* **Gérer l'équipe :** Administration des comptes et accès des Co-Coachs.
+* **Gestion Financière :** Monitoring des paiements et des abonnements.
 
 #### C. Pour le Client (Utilisateur Final)
-* **S’authentifier :** Accès à l'espace personnel.
-* **Consulter son programme :** Visualisation interactive (Ftor, Gheda, etc.).
-* **Actualiser son Journal de bord :** Saisie du poids et upload des photos de progression.
+* **Consulter son programme :** Accès direct via l'application Mobile.
+* **Actualiser son Journal de bord :** Saisie du poids et upload des photos de progression via le Web.
 
 ---
+
+## 6.3 Cas d’Utilisation Global
+
+Ce diagramme présente l'architecture logicielle complète et la séparation des plateformes (Web vs Mobile).
 
 ## 6.3 Cas d’Utilisation Global
 
@@ -207,14 +208,14 @@ Les fonctionnalités partagées pour la gestion quotidienne :
 
 ## 7. Planification du Projet : Approche Agile
 
-Le projet est développé selon une approche **itérative et incrémentale** basée sur des Sprints. Chaque itération vise à livrer un ensemble de fonctionnalités testables, garantissant une évolution fluide du système.
+Le projet est développé selon une approche **itérative et incrémentale** basée sur la méthodologie Agile. Chaque itération (Sprint) vise à livrer un ensemble de fonctionnalités testables, garantissant une évolution fluide et une adaptation constante aux besoins du métier.
 
 ---
 
 ### 7.1 Stratégie de Développement
 L’objectif est de structurer le développement autour de la valeur métier :
-1.  **MVP (Minimum Viable Product) :** Mise en place des fondations de gestion.
-2.  **Incréments :** Ajout de l'intelligence nutritionnelle et du suivi interactif.
+1.  **MVP (Minimum Viable Product) :** Mise en place des fondations de gestion et du back-office.
+2.  **Incréments de Valeur :** Ajout de l'intelligence nutritionnelle, de l'expérience mobile et du suivi interactif.
 
 ---
 
@@ -225,16 +226,11 @@ L’objectif est de structurer le développement autour de la valeur métier :
 
 | Catégorie | ID | Cas d’Utilisation | Description |
 | :--- | :--- | :--- | :--- |
-| **Authentification** | UC1 | Se connecter | Accès sécurisé à l'interface Coach. |
-| | UC2 | Se déconnecter | Fermeture de session. |
-| **Gestion Clients** | UC3 | Ajouter un client | Saisie des objectifs, poids de départ et infos. |
-| | UC4 | Modifier un client | Mise à jour des données de profil. |
-| | UC5 | Supprimer un client | Archivage ou suppression du profil. |
-| | UC6 | Liste globale | Vue d'ensemble filtrable de tous les élèves. |
-| **Base Alimentaire** | UC7 | Catégories de repas | Organisation (Petit-déjeuner, Déjeuner, etc.). |
-| | UC8 | Création de repas | Définition du nom et des ingrédients. |
-| | UC9 | Apports nutritionnels | Saisie des Macros (P/G/L/Kcal) par repas. |
-
+| **Authentification** | UC1 | Se connecter | Accès sécurisé à l'interface Coach/Staff. |
+| **Gestion Clients** | UC2 | CRUD Clients | Ajouter, modifier, supprimer et lister les élèves (objectifs, poids, etc.). |
+| **Base Alimentaire** | UC3 | Catégories de repas | Organisation (Petit-déjeuner, Déjeuner, etc.). |
+| **Base Alimentaire** | UC4 | Création de repas | Définition du nom et des ingrédients. |
+| **Nutrition** | UC5 | Saisir Macros | *<<include>>* Saisie des apports (P/G/L/Kcal) par repas. |
 
 
 #### B. Résultat Attendu du Sprint 1
@@ -250,40 +246,41 @@ L’objectif est de structurer le développement autour de la valeur métier :
 
 ### 7.3 Sprint 2 : Intelligence, Automatisation et Suivi Interactif
 
-**Objectif :** Optimiser le temps de l'équipe d'encadrement grâce à l'automatisation (Templates) et instaurer un système de suivi interactif. Le client alimente sa propre progression, permettant au coach un pilotage précis des résultats et des revenus.
+**Objectif :** Optimiser la productivité de l'équipe via l'automatisation (Templates) et lancer l'expérience client sur Mobile. Le système devient un écosystème collaboratif où le client alimente sa progression, permettant un pilotage précis des résultats et des revenus.
 
 ---
 
 #### A. Cas d’Utilisation du Sprint 2 (Backlog)
 
-| Axe Stratégique | ID | Cas d’Utilisation | Description |
-| :--- | :--- | :--- | :--- |
-| **Automatisation** | UC10 | Créer des Templates | Modèles réutilisables pour standardiser les bases. |
-| | UC11 | Générer un programme | Création instantanée d'un plan pour un client. |
-| | UC12 | **Calculateur Macros** | *<< include >>* Somme automatique (P/C/F/Kcal). |
-| **Suivi Client** | UC13 | Saisie Journal de bord | Ajout du poids et des mensurations par l'élève. |
-| | UC14 | Upload Photos | Envoi sécurisé des clichés (Face/Profil/Dos). |
-| **Analyse Staff** | UC15 | Historique de poids | Analyse des courbes d'évolution des clients. |
-| | UC16 | Galerie Photos | Comparaison visuelle pour ajuster la stratégie. |
-| **Contrôle Business** | UC17 | Gestion Paiements | Monitoring du statut financier et des revenus. |
-| | UC18 | Gestion Équipe | Administration des accès des Co-Coachs. |
-| **Espace Élève** | UC19 | Connexion Client | Accès sécurisé à l'interface personnelle. |
-| | UC20 | Consultation Diète | Vue interactive de la répartition par repas. |
-| | UC21 | Graphiques Perso | Visualisation des statistiques de progression. |
+**Axe : Expérience Mobile (Espace Client)**
+* **UC19 | Connexion Client :** Accès sécurisé à l'interface personnelle.
+* **UC20 | Consultation Diète & Training :** Vue interactive de la répartition par repas et des entraînements.
+
+**Axe : Suivi & Performance (Interface Web Client)**
+* **UC13 | Saisie Journal de bord :** Ajout du poids et des mensurations par l'élève.
+* **UC14 | Upload Photos :** Envoi sécurisé des clichés (Face/Profil/Dos).
+* **UC21 | Graphiques Perso :** Visualisation des statistiques de progression.
+
+**Axe : Automatisation (Staff / Admin)**
+* **UC10 | Créer des Templates :** Modèles réutilisables pour standardiser les bases.
+* **UC11 | Générer un programme :** Création instantanée d'un plan pour un client.
+* **UC12 | Calculateur Macros :** *<< include >>* Somme automatique (P/C/F/Kcal).
+
+**Axe : Analyse Staff (Staff / Admin)**
+* **UC15 | Historique de poids :** Analyse des courbes d'évolution des clients.
+* **UC16 | Galerie Photos :** Comparaison visuelle pour ajuster la stratégie.
+
+**Axe : Contrôle Business (Admin)**
+* **UC17 | Gestion Paiements :** Monitoring du statut financier et des revenus.
+* **UC18 | Gestion Équipe :** Administration des accès des Co-Coachs.
 
 ---
-
-
 
 #### B. Résultat Final du Sprint 2
 
 Le système devient un véritable **écosystème collaboratif**. La création de programmes est automatisée, libérant le coach des tâches répétitives. 
 
-Surtout, l'application crée un **pont direct** entre l'effort du client (saisie des données) et l'expertise du coach (analyse des résultats), garantissant un suivi **"Premium"** et une gestion financière rigoureuse.
-
-
----
-
+Surtout, l'application crée un **pont direct** entre l'effort du client (saisie des données) et l'expertise du coach (analyse des résultats), garantissant un suivi **"Premium"** et une gestion
 ## 6.5 Cas d’Utilisation du Sprint 2
 
 ![Cas d’Utilisation du Sprint 2](Images/sprint2-usecase.png)

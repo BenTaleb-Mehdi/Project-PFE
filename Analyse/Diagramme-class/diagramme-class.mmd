@@ -1,69 +1,78 @@
 classDiagram
-    direction LR
+    direction TB
 
-    %% Héritage des Utilisateurs
-    Utilisateur <|-- Client
-    Utilisateur <|-- Staff
-    Staff <|-- Admin
-
-    class Utilisateur {
-        #int id
-        #string nom
-        #string email
-        #string motDePasse
-        +login()
+    %% --- Bibliothèque Maîtresse (Master Data) ---
+    class MasterLibrary {
+        +getTemplate(id)
+        +searchByCategory(tags)
     }
 
-    class Client {
-        -float poidsObjectif
-        -string niveauActuel
-        +mettreAJourStats()
-        +consulterProgramme()
+    class ProgramTemplate {
+        -string title
+        -string goalType (Sèche/Prise)
+        -string richTextDescription
+        -json metadata
+        +cloneToClient(clientId)
     }
 
+    class MealTemplate {
+        -string mealName (Ftor/Gheda/...)
+        -string richTextInstructions
+        -float targetCalories
+        -float targetProtein
+        -float targetCarbs
+        -float targetFats
+    }
+
+    %% --- Profil Client Unique (Single Source of Truth) ---
+    class ClientProfile {
+        -int clientId
+        -string currentStatus
+        +getFullTimeline()
+        +assignProgram(templateId)
+    }
+
+    class ActiveProgram {
+        -date assignedDate
+        -bool isArchived
+        -string specificAdjustments
+    }
+
+    %% --- Historique & Timeline ---
+    class TimelineEvent {
+        <<abstract>>
+        -datetime timestamp
+        -string eventType
+    }
+
+    class BiometricRecord {
+        -float weight
+        -float caloriesConsumed
+        -float bodyFat
+    }
+
+    class ProgressPhoto {
+        -string imageUrl
+        -string poseTag (Front/Side/Back)
+    }
+
+    %% --- Relations ---
+    MasterLibrary "1" *-- "0..*" ProgramTemplate : contient
+    ProgramTemplate "1" *-- "1..*" MealTemplate : composé de
+
+    ClientProfile "1" -- "1" ActiveProgram : suit actuellement
+    ClientProfile "1" -- "0..*" ProgramTemplate : historique des plans (archives)
+    
+    ClientProfile "1" *-- "0..*" TimelineEvent : centralise
+    TimelineEvent <|-- BiometricRecord
+    TimelineEvent <|-- ProgressPhoto
+    TimelineEvent <|-- ActiveProgram : (Log d'assignation)
+
+    %% --- Accès Staff ---
     class Staff {
-        -string specialite
-        +gererDossierClient(clientId)
-        +concevoirProgramme()
+        +string role (Coach/Assistant)
+        +accessClientDashboard(id)
     }
 
-    class Admin {
-        +gererEquipe()
-        +validerPaiements()
-    }
-
-    %% Classes Métier
-    class Programme {
-        -int id
-        -string nom
-        -date dateCreation
-        +ajouterExercice()
-    }
-
-    class MacroNutriments {
-        -int calories
-        -int proteines
-        -int glucides
-        -int lipides
-        +calculerMacros()
-    }
-
-    class Progression {
-        -date dateReleve
-        -float poids
-        -string photoUrl
-        +genererGraphique()
-    }
-
-    class Paiement {
-        -float montant
-        -date dateTransaction
-        -string statut
-    }
-
-    %% Relations et Associations
-    Client "1" -- "*" Progression : enregistre >
-    Client "1" -- "*" Paiement : effectue >
-    Staff "1" -- "*" Client : coache >
-    Staff "1" -- "*" Programme : cree >
-    Programme "1" *-- "1" MacroNutriments : definit >
+    Staff "1..*" -- "1" MasterLibrary : gère
+    Staff "1..*" -- "0..*" ClientProfile : supervise
