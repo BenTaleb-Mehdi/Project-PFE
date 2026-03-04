@@ -282,7 +282,7 @@ style: |
 
 <h3>Modélisation des données</h3>
 <div class="img-container">
-  <img src="images/mld-diagram.png" class="img-usecase" alt="MLD Diagram">
+  <img src="images/diagramme-class.png" class="img-usecase" alt="MLD Diagram">
 </div>
 
 ---

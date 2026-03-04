@@ -1,6 +1,7 @@
 @startuml
 left to right direction
 skinparam packageStyle rectangle
+skinparam shadowing false
 
 actor "Coach (Achraf)" as Coach
 
@@ -16,17 +17,16 @@ rectangle "Sprint 1: Gestion des Ressources" {
   package "Structure Alimentaire" {
     (Gérer les Catégories) as (Cat)
     (Créer un Repas) as (AddM)
-    (Saisir Description & Macros) as (Macro)
+    (Saisir Macros-nutriments) as (Macro)
     
     (AddM) ..> (Macro) : <<include>>
-    (AddM) ..> (Cat) : <<uses>>
+    (AddM) ..> (Cat) : <<include>>
   }
 
   Coach -- (AddC)
   Coach -- (EditC)
   Coach -- (DelC)
   Coach -- (ListC)
-  
   Coach -- (Cat)
   Coach -- (AddM)
 }
