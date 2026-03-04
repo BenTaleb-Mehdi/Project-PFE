@@ -97,7 +97,9 @@
                     { id:'a-nav',      label:'10 // Nav_Atoms',      href:'atoms-general.html' },
                     { id:'a-feedback', label:'11 // Feedback',      href:'atoms-intel.html'   },
                     { id:'alerts',     label:'12 // Alerts',        href:'atoms-intel.html'   },
-                    { id:'a-tables',   label:'13 // Tables',        href:'atoms-intel.html'   }
+                    { id:'a-tables',   label:'13 // Tables',        href:'atoms-intel.html'   },
+                    { id:'a-discovery',label:'14 // Discovery_Atoms', href:'#' },
+                    { id:'a-expansion',label:'15 // Expansion_Toggle',href:'#' }
                 ]">
                     <div class="flex items-center">
                         <template x-if="item.href">
@@ -124,7 +126,10 @@
                         { id:'m-timeline',    label:'Timeline_Builder',      href:'../molecules/protocol-timeline-item.html'   },
                         { id:'m-editor',      label:'Rich_Text_Editor',      href:'../molecules/rich-text-toolbar.html'        },
                         { id:'m-clientchart', label:'Weight_Progress',       href:'../molecules/client-weight-progress.html'   },
-                        { id:'m-adminchart',  label:'System_Load',           href:'../molecules/admin-system-load.html'        }
+                        { id:'m-adminchart',  label:'System_Load',           href:'../molecules/admin-system-load.html'        },
+                        { id:'m-discovery',   label:'Discovery_Bar',         href:'../molecules/discovery-bar.html'            },
+                        { id:'m-intel',       label:'Intelligence_Feed',     href:'../molecules/client-intelligence-feed.html' },
+                        { id:'m-coach',       label:'Coach_Directives',      href:'../molecules/coach-instruction-block.html'  }
                     ]">
                         <div class="flex items-center">
                             <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
@@ -822,6 +827,48 @@
             </div>
         </section>
 
+        <!-- ─── ATOM: DISCOVERY ATOMS ─── -->
+        <section id="a-discovery" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Atom // Discovery_Search</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white border border-zinc-200 p-8 flex flex-col gap-4">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Search_Input_Standard</span>
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search_Query..." class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                        <div class="absolute left-3.5 top-3 text-zinc-400">
+                            <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-8 flex flex-col gap-4">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Filter_Trigger</span>
+                    <button class="w-full flex justify-between items-center bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors">
+                        <span>FILTER_LABEL</span>
+                        <svg class="size-3 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── ATOM: EXPANSION TOGGLE ─── -->
+        <section id="a-expansion" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Atom // Expansion_Toggle</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col items-center gap-4 group">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">State: Closed</span>
+                    <div class="text-zinc-300">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col items-center gap-4 group">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">State: Open</span>
+                    <div class="text-cyan-600 rotate-180">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ─── MOLECULE: NAVBAR ─── -->
         <section id="m-navbar" class="section-anchor mb-20">
             <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Navbar</h2>
@@ -1048,22 +1095,92 @@
             </div>
         </section>
 
-        <!-- ─── MOLECULE: SYSTEM LOAD CHART ─── -->
-        <section id="m-adminchart" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Admin_System_Load</h2>
-            <div class="max-w-xl bg-white border border-zinc-200 p-7 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
-                <div class="flex justify-between items-start mb-7">
-                    <div><h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 font-sans">System_Performance_Metrics</h3><p class="text-[8px] text-zinc-400 mt-1 uppercase tracking-widest font-mono">Diagnostic: Active // Buffer_Freq: 120ms</p></div>
-                    <div class="flex items-center gap-4 text-[8px] font-mono uppercase font-bold">
-                        <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-cyan-600"></span><span class="text-zinc-500">CPU</span></div>
-                        <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-zinc-400"></span><span class="text-zinc-500">MEM</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: DISCOVERY BAR ─── -->
+        <section id="m-discovery" class="section-anchor mb-20" x-data="{ searchQuery: '', filterVal: 'ALL' }">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Discovery_Bar_V3</h2>
+            <div class="ag-card p-4 bg-white border border-zinc-200 flex flex-col md:flex-row gap-4 items-center shadow-[4px_4px_0_0_rgba(0,0,0,0.02)]">
+                <div class="relative flex-1 w-full">
+                    <input type="text" x-model="searchQuery" placeholder="Search_Query..." class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                    <div class="absolute left-3.5 top-3 text-zinc-400">
+                        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </div>
                 </div>
-                <div class="relative h-[180px]"><canvas id="sysChart"></canvas></div>
-                <div class="mt-5 grid grid-cols-3 gap-4 border-t border-zinc-100 pt-5">
-                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">CPU_Avg</p><p class="text-lg font-bold text-cyan-600 font-mono">50.5<span class="text-[9px] text-zinc-400">%</span></p></div>
-                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">MEM_Avg</p><p class="text-lg font-bold text-zinc-900 font-mono">33.7<span class="text-[9px] text-zinc-400">%</span></p></div>
-                    <div><p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Status</p><p class="text-[10px] font-bold text-emerald-600 uppercase font-mono mt-1">Nominal</p></div>
+                <div class="relative w-full md:w-64" x-data="{open:false}">
+                    <button @click="open=!open" class="w-full h-10 bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors flex justify-between items-center">
+                        <span x-text="filterVal === 'ALL' ? 'FILTER_STATUS' : 'STATUS: ' + filterVal"></span>
+                        <svg class="size-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div x-show="open" @click.outside="open=false" class="absolute inset-x-0 mt-1 bg-white border border-zinc-200 shadow-xl z-50">
+                        <template x-for="opt in ['ALL','ACTIVE','ARCHIVE','PENDING']">
+                            <div @click="filterVal=opt; open=false" class="px-4 py-2 text-[9px] font-mono uppercase hover:bg-zinc-50 cursor-pointer" x-text="opt"></div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: INTELLIGENCE FEED ─── -->
+        <section id="m-intel" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Intelligence_Feed</h2>
+            <div class="ag-card bg-white border border-zinc-200 overflow-hidden shadow-[4px_4px_0_0_rgba(0,0,0,0.02)]">
+                <div class="p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                        <div class="lg:col-span-2">
+                            <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Bio_Metrics_Intelligence</h5>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="ag-card bg-zinc-50/50 p-4 border border-zinc-100">
+                                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest">Weight</p>
+                                    <p class="text-xl font-mono font-bold text-zinc-900 mt-1">84.5_KG</p>
+                                </div>
+                                <div class="ag-card bg-zinc-50/50 p-4 border border-zinc-100">
+                                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest">Body_Fat</p>
+                                    <p class="text-xl font-mono font-bold text-zinc-900 mt-1">14.2_%</p>
+                                </div>
+                                <div class="ag-card bg-zinc-50/50 p-4 border border-zinc-100">
+                                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest">LBM</p>
+                                    <p class="text-xl font-mono font-bold text-zinc-900 mt-1">72.3_KG</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Intelligence_Feed</h5>
+                            <div class="space-y-4">
+                                <template x-for="log in [
+                                    { event: 'Weight_Update_Logged', time: '08:30', color: 'bg-emerald-500' },
+                                    { event: 'Protocol_A_Assigned', time: 'Yesterday', color: 'bg-cyan-500' }
+                                ]">
+                                    <div class="flex items-start space-x-3 text-[9px] font-mono">
+                                        <div :class="log.color" class="h-2 w-2 rounded-full mt-1"></div>
+                                        <div>
+                                            <p class="text-zinc-900 uppercase" x-text="log.event"></p>
+                                            <p class="text-zinc-400 mt-0.5" x-text="'2026-03-04 // ' + log.time"></p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MOLECULE: COACH DIRECTIVES ─── -->
+        <section id="m-coach" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Molecule // Coach_Directives (Rich_Text)</h2>
+            <div class="max-w-xl mx-auto">
+                <div class="space-y-4 pt-8 border-t border-zinc-50">
+                    <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em]">Coach_Directives_V3.0</h5>
+                    <div class="ag-card p-5 bg-zinc-50 border border-zinc-100 text-[10px] text-zinc-600 font-sans leading-relaxed">
+                        <ul class="space-y-2">
+                            <li>- Mix <span class="text-cyan-700 font-bold">50g Oats</span> with 200ml Almond Milk.</li>
+                            <li>- Microwave for <span class="text-zinc-900 font-bold underline">2 minutes</span>.</li>
+                            <li>- Top with fresh blueberries and optional honey.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>

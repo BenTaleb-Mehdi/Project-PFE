@@ -6,6 +6,8 @@
     <title>Nutrition Engine | AntiGravity V3.0</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Preline UI -->
@@ -17,6 +19,7 @@
             color: #a1a1aa;
             font-style: italic;
         }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 <body class="bg-zinc-50 antialiased font-sans" 
@@ -28,7 +31,8 @@
         p: 30, c: 20, f: 10,
         get kcal() { return (this.p * 4) + (this.c * 4) + (this.f * 9) },
         // Program State
-        programView: 'list'
+        programView: 'list',
+        searchProtocol: ''
       }"
       x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
 
@@ -115,9 +119,31 @@
                     </li>
 
                     <li>
-                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="clients.html">
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="clients.html">
                             Clients
                         </a>
+                    </li>
+
+                    <li x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                            Strategic_Control
+                            <svg class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="team.html">
+                                        Team
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="finance.html">
+                                        Finance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -272,8 +298,18 @@
         <div x-show="activeTab === 'programs'" x-transition class="space-y-8 font-mono">
             <!-- Molecule: Protocol List -->
             <div x-show="programView === 'list'" class="ag-card bg-white overflow-hidden shadow-sm">
-                <div class="px-6 py-4 border-b border-zinc-100 bg-zinc-50">
+                <div class="px-6 py-4 border-b border-zinc-100 bg-zinc-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Active_Protocols</h3>
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-64">
+                        <input type="text" 
+                               x-model="searchProtocol"
+                               placeholder="Search_Protocols..." 
+                               class="w-full bg-white border border-zinc-200 px-8 py-1.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                        <div class="absolute left-2.5 top-2 text-zinc-400">
+                            <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-[10px]">
@@ -286,7 +322,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-zinc-100 uppercase">
-                            <tr class="hover:bg-cyan-50/30 transition-colors group">
+                            <tr class="hover:bg-cyan-50/30 transition-colors group"
+                                x-show="searchProtocol === '' || 'Shred_X_Lite'.toLowerCase().includes(searchProtocol.toLowerCase())">
                                 <td class="px-6 py-4 font-bold text-zinc-950 group-hover:text-cyan-700">Shred_X_Lite</td>
                                 <td class="px-6 py-4 text-zinc-500">4 Slots</td>
                                 <td class="px-6 py-4 text-cyan-700 font-bold">1,850 kcal</td>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program History | AntiGravity V3.0</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="../admin/style.css">
+    <style>
+        [x-cloak] { display: none !important; }
+        .ag-border { border: 1px solid #e4e4e7; }
+    </style>
+</head>
+<body class="bg-zinc-50 antialiased" x-data="{ 
+    sidebarOpen: false, 
+    searchQuery: '',
+    filterStatus: 'ALL_STATUSES',
+    expandedIds: [],
+    programs: [
+        { id: 101, name: 'Shred_X_Lite', status: 'Active', start: '2026-02-01', end: 'Present', kcal: 1850, meals: [
+            { cat: 'Ftor', name: 'Oatmeal_Power_X1', kcal: 450, p: 35, c: 40, f: 12 },
+            { cat: 'Gheda', name: 'Salmon_Bowl_V3', kcal: 620, p: 45, c: 50, f: 20 },
+            { cat: 'Acha', name: 'Grilled_Chicken_Salad', kcal: 500, p: 50, c: 10, f: 15 }
+        ]},
+        { id: 100, name: 'Bulk_Power_V2', status: 'Archive', start: '2025-12-15', end: '2026-01-20', kcal: 3200, meals: [
+            { cat: 'Ftor', name: 'Beef_Rice_Heavy', kcal: 1200, p: 60, c: 150, f: 30 },
+            { cat: 'Gheda', name: 'Pasta_Tuna_Max', kcal: 1000, p: 50, c: 120, f: 25 },
+            { cat: 'Acha', name: 'Steak_Potato_Elite', kcal: 1000, p: 70, c: 80, f: 35 }
+        ]},
+        { id: 99, name: 'Maintain_Core', status: 'Completed', start: '2025-10-01', end: '2025-11-30', kcal: 2400, meals: [] }
+    ],
+    toggleExpand(id) {
+        if (this.expandedIds.includes(id)) {
+            this.expandedIds = this.expandedIds.filter(i => i !== id);
+        } else {
+            this.expandedIds.push(id);
+        }
+    }
+}">
+
+    <!-- Mobile Header -->
+    <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600"></div>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My_AntiGravity</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </header>
+
+    <!-- Sidebar -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-12">
+                <div class="h-6 w-6 bg-cyan-600"></div>
+                <div class="flex flex-col">
+                    <span class="font-mono font-bold text-lg tracking-tight uppercase leading-none">AntiGravity</span>
+                    <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mt-1">Pupil_Portal_V3.0</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="portal.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Dashboard
+                </a>
+                <a href="evolution.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Evolution
+                </a>
+                <a href="program-view.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    My_Programs
+                </a>
+                <a href="history.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">
+                    Program_History
+                </a>
+            </nav>
+        </div>
+
+        <!-- Pupil Indicator -->
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 ag-border border-x-0 border-b-0">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-600 font-mono text-xs font-bold">M</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi_B</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active_Pupil</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
+                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                Terminate_Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Backdrop -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12">
+        <header class="mb-10 lg:flex lg:justify-between lg:items-end">
+            <div>
+                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Program_History</h1>
+                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Historical_Intelligence // Protocol_Archive</p>
+            </div>
+        </header>
+
+        <!-- Discovery Bar -->
+        <div class="ag-card p-4 bg-white mb-8 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center">
+            <!-- Search -->
+            <div class="relative flex-1 w-full">
+                <input type="text" 
+                       x-model="searchQuery"
+                       placeholder="Search_Protocols (Name, ID)..." 
+                       class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                <div class="absolute left-3.5 top-3 text-zinc-400">
+                    <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+            </div>
+
+            <!-- Filter Status -->
+            <div class="relative w-full md:w-64" x-data="{ open: false }">
+                <button @click="open = !open" 
+                        @click.away="open = false"
+                        x-ref="filterBtn"
+                        class="w-full flex justify-between items-center bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors">
+                    <span x-text="filterStatus.replace('_', ' ')"></span>
+                    <svg class="size-3 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+
+                <template x-teleport="body">
+                    <div x-show="open" 
+                         x-cloak
+                         x-anchor.bottom-start.offset.1="$refs.filterBtn"
+                         class="z-[100] bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-[256px]">
+                        <div class="py-1">
+                            <template x-for="opt in ['ALL_STATUSES', 'Archive', 'Active', 'Completed']">
+                                <button @click="filterStatus = opt; open = false" 
+                                        class="w-full text-left px-4 py-2 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all font-mono"
+                                        :class="filterStatus === opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                    <span x-text="opt.replace('_', ' ')"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- History Table -->
+        <div class="ag-card bg-white border border-zinc-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse font-mono">
+                    <thead class="bg-zinc-50 border-b border-zinc-200 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                        <tr>
+                            <th class="px-6 py-4">Protocol_ID</th>
+                            <th class="px-6 py-4">Name</th>
+                            <th class="px-6 py-4">Range</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-100 uppercase text-[10px]">
+                        <template x-for="program in programs" :key="program.id">
+                            <template x-if="(searchQuery === '' || program.name.toLowerCase().includes(searchQuery.toLowerCase())) && (filterStatus === 'ALL_STATUSES' || program.status === filterStatus)">
+                                <tr @click="toggleExpand(program.id)" 
+                                    class="group hover:bg-zinc-50 transition-colors cursor-pointer">
+                                    <td class="px-6 py-4 text-zinc-400" x-text="'#' + program.id"></td>
+                                    <td class="px-6 py-4 font-bold text-zinc-900" x-text="program.name"></td>
+                                    <td class="px-6 py-4 text-zinc-500" x-text="program.start + ' // ' + program.end"></td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 border" 
+                                              :class="{
+                                                'border-emerald-200 bg-emerald-50 text-emerald-600': program.status === 'Active',
+                                                'border-zinc-200 bg-zinc-100 text-zinc-400': program.status === 'Archive',
+                                                'border-cyan-200 bg-cyan-50 text-cyan-600': program.status === 'Completed'
+                                              }" x-text="program.status"></span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <div class="text-zinc-300 transition-all transform"
+                                             :class="expandedIds.includes(program.id) ? 'rotate-180 text-cyan-600' : 'group-hover:text-zinc-950'">
+                                            <svg class="h-4 w-4 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m19 9-7 7-7-7" /></svg>
+                                        </div>
+                                    </td>
+                                    
+                                    <!-- Expandable Details -->
+                                    <template x-if="expandedIds.includes(program.id)">
+                                        <tr class="bg-zinc-50/30">
+                                            <td colspan="5" class="px-0 py-0">
+                                                <div x-show="expandedIds.includes(program.id)" x-collapse x-cloak>
+                                                    <div class="p-8 border-t border-dashed border-zinc-200">
+                                                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                                            <!-- Meal Matrix -->
+                                                            <div>
+                                                                <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Meal_Matrix_Sequence</h5>
+                                                                <div class="ag-card bg-white border border-zinc-200 overflow-hidden">
+                                                                    <table class="w-full text-left text-[9px]">
+                                                                        <thead class="bg-zinc-50 border-b border-zinc-200 text-zinc-400 uppercase font-bold">
+                                                                            <tr>
+                                                                                <th class="px-4 py-2">Seq</th>
+                                                                                <th class="px-4 py-2">Item_Label</th>
+                                                                                <th class="px-4 py-2 text-right">Kcal</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody class="divide-y divide-zinc-100">
+                                                                            <template x-for="meal in program.meals">
+                                                                                <tr class="hover:bg-cyan-50/30 transition-colors">
+                                                                                    <td class="px-4 py-2 font-bold text-zinc-400" x-text="meal.cat"></td>
+                                                                                    <td class="px-4 py-2 text-zinc-900" x-text="meal.name"></td>
+                                                                                    <td class="px-4 py-2 text-right font-bold text-cyan-700" x-text="meal.kcal"></td>
+                                                                                </tr>
+                                                                            </template>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Macro Splitting -->
+                                                            <div>
+                                                                <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Macro_Distribution_Archive</h5>
+                                                                <div class="grid grid-cols-3 gap-4">
+                                                                    <div class="ag-card bg-white p-4 border border-zinc-200 text-center">
+                                                                        <p class="text-[8px] text-zinc-400 uppercase tracking-widest">Protein</p>
+                                                                        <p class="text-lg font-bold text-emerald-600 mt-1">165g</p>
+                                                                    </div>
+                                                                    <div class="ag-card bg-white p-4 border border-zinc-200 text-center">
+                                                                        <p class="text-[8px] text-zinc-400 uppercase tracking-widest">Carbs</p>
+                                                                        <p class="text-lg font-bold text-cyan-600 mt-1">210g</p>
+                                                                    </div>
+                                                                    <div class="ag-card bg-white p-4 border border-zinc-200 text-center">
+                                                                        <p class="text-[8px] text-zinc-400 uppercase tracking-widest">Fats</p>
+                                                                        <p class="text-lg font-bold text-orange-600 mt-1">55g</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mt-6 p-4 ag-card bg-white border border-zinc-200">
+                                                                    <div class="flex justify-between items-center mb-2">
+                                                                        <span class="text-[8px] font-bold text-zinc-900 uppercase">Target_Efficiency</span>
+                                                                        <span class="text-[8px] font-bold text-emerald-600 uppercase">92%</span>
+                                                                    </div>
+                                                                    <div class="w-full h-1 bg-zinc-100">
+                                                                        <div class="h-full bg-emerald-500 w-[92%]"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
