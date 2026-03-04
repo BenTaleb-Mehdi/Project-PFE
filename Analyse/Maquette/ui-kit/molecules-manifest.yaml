@@ -77,5 +77,31 @@ items:
     documentation: "Graphic.md#Client_Progress_Agent"
     dependencies: []
 
+  - name: "DiscoveryBar"
+    category: "Navigation"
+    path: "./molecules/discovery-bar.html"
+    status: "validated"
+    description: "High-density search and filter bar."
+    documentation: "Custom"
+    dependencies:
+      - "DiscoverySearch"
+      - "FilterDropdown"
+
+  - name: "CoachInstructionBlock"
+    category: "Content"
+    path: "./molecules/coach-instruction-block.html"
+    status: "validated"
+    description: "Rich-text block for coach directives."
+    documentation: "Custom"
+    dependencies: []
+
+  - name: "ClientIntelligenceFeed"
+    category: "Analytics"
+    path: "./molecules/client-intelligence-feed.html"
+    status: "validated"
+    description: "Expandable metrics and activity feed."
+    documentation: "Custom"
+    dependencies: []
+
 
 

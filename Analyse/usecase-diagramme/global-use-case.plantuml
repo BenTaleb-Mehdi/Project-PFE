@@ -12,8 +12,6 @@ actor "Coach (Admin)" as Admin
 Staff <|-- Admin
 
 rectangle "Coach Management System" {
-  
-
 
   package "Authentification & Sécurité" {
     usecase "S'authentifier (Login)" as Login
@@ -36,10 +34,12 @@ rectangle "Coach Management System" {
   package "Gestion Opérationnelle (Web Staff)" {
     usecase "Gérer les dossiers Clients" as ManageClients
     usecase "Concevoir des Programmes" as DesignProgs
+    usecase "Gérer les Catégories de Repas" as ManageCats
     usecase "Calculer les Macros" as CalcMacros
     
     ManageClients ..> Login : <<include>>
     DesignProgs ..> Login : <<include>>
+    ManageCats ..> Login : <<include>>
     DesignProgs ..> CalcMacros : <<include>>
   }
 
@@ -52,7 +52,6 @@ rectangle "Coach Management System" {
   }
 }
 
-
 ' Client access split by platform
 Client -- ViewProg : "(Via Mobile)"
 Client -- UpdateStats : "(Via Web)"
@@ -61,6 +60,7 @@ Client -- ViewProgress : "(Via Web)"
 ' Staff & Admin
 Staff -- ManageClients
 Staff -- DesignProgs
+Staff -- ManageCats
 
 Admin -- ManageStaff
 Admin -- ManageMoney

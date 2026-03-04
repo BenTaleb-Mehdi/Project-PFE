@@ -6,11 +6,17 @@
     <title>Clients | AntiGravity V3.0</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Preline UI -->
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 <body class="bg-zinc-50 antialiased font-sans" 
       x-data="{ 
@@ -26,7 +32,10 @@
         // Modal Dropdown State
         protocolOpen: false,
         selectedProtocol: 'Select_Nutrition_Protocol',
-        protocols: ['SHRED_X_V2 (Achraf_Perf)', 'BULK_POWER_HYBRID', 'OATMEAL_SYSTEM_LITE']
+        protocols: ['SHRED_X_V2 (Achraf_Perf)', 'BULK_POWER_HYBRID', 'OATMEAL_SYSTEM_LITE'],
+        searchQuery: '',
+        filterStatus: 'ALL_STATUSES',
+        expandedClientIds: []
       }"
       x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
 
@@ -113,9 +122,31 @@
                     </li>
 
                     <li>
-                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-cyan-50 text-xs font-bold text-cyan-700 uppercase tracking-widest border-r-2 border-cyan-600 focus:outline-none" href="clients.html">
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="clients.html">
                             Clients
                         </a>
+                    </li>
+
+                    <li x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                            Strategic_Control
+                            <svg class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="team.html">
+                                        Team
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="finance.html">
+                                        Finance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -149,30 +180,146 @@
             </button>
         </header>
 
+        <!-- Discovery Bar -->
+        <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center">
+            <!-- Search Input -->
+            <div class="relative flex-1 w-full">
+                <input type="text" 
+                       x-model="searchQuery"
+                       placeholder="Search_Pupils (Name, ID)..." 
+                       class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                <div class="absolute left-3.5 top-3 text-zinc-400">
+                    <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+            </div>
+
+            <!-- Filter Dropdown: Status -->
+            <div class="relative w-full md:w-64" x-data="{ open: false }">
+                <button @click="open = !open" 
+                        @click.away="open = false"
+                        x-ref="filterBtn"
+                        class="w-full flex justify-between items-center bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors">
+                    <span x-text="filterStatus.replace('_', ' ')"></span>
+                    <svg class="size-3 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+
+                <template x-teleport="body">
+                    <div x-show="open" 
+                         x-cloak
+                         x-anchor.bottom-start.offset.1="$refs.filterBtn"
+                         class="z-[100] bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-[256px]">
+                        <div class="py-1">
+                            <template x-for="opt in ['ALL_STATUSES', 'Active', 'Pending']">
+                                <button @click="filterStatus = opt; open = false" 
+                                        class="w-full text-left px-4 py-2 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all"
+                                        :class="filterStatus === opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                    <span x-text="opt.replace('_', ' ')"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
         <!-- Client List -->
         <div class="grid grid-cols-1 gap-4 font-sans">
             <template x-for="client in clients" :key="client.id">
-                <div class="ag-card p-6 bg-white flex flex-col md:flex-row md:items-center justify-between group">
-                    <div class="flex items-center space-x-6">
-                        <div class="h-10 w-10 border border-zinc-200 flex items-center justify-center font-bold text-cyan-600 bg-cyan-50 font-mono" x-text="client.name[0]"></div>
-                        <div>
-                            <h4 class="text-xs font-bold uppercase text-zinc-900" x-text="client.name"></h4>
-                            <p class="text-[10px] text-zinc-400 uppercase mt-1">
-                                <span class="font-mono text-cyan-700" x-text="'ID: #' + client.id"></span>
-                                <span class="mx-2 opacity-50">//</span>
-                                <span x-text="'Goal: ' + client.goal"></span>
-                            </p>
+                <div class="ag-card bg-white overflow-hidden group transition-all"
+                     :class="expandedClientIds.includes(client.id) ? 'border-cyan-600 ring-1 ring-cyan-600/10' : 'border-zinc-200'"
+                     x-show="(searchQuery === '' || client.name.toLowerCase().includes(searchQuery.toLowerCase()) || client.id.toLowerCase().includes(searchQuery.toLowerCase())) && (filterStatus === 'ALL_STATUSES' || client.status === filterStatus)">
+                    
+                    <!-- Main Row -->
+                    <div @click="expandedClientIds.includes(client.id) ? expandedClientIds = expandedClientIds.filter(id => id !== client.id) : expandedClientIds.push(client.id)"
+                         class="p-6 flex flex-col md:flex-row md:items-center justify-between cursor-pointer hover:bg-zinc-50/50 transition-colors">
+                        <div class="flex items-center space-x-6">
+                            <div class="h-10 w-10 border border-zinc-200 flex items-center justify-center font-bold text-cyan-600 bg-cyan-50 font-mono" x-text="client.name[0]"></div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase text-zinc-900" x-text="client.name"></h4>
+                                <p class="text-[10px] text-zinc-400 uppercase mt-1">
+                                    <span class="font-mono text-cyan-700" x-text="'ID: #' + client.id"></span>
+                                    <span class="mx-2 opacity-50">//</span>
+                                    <span x-text="'Goal: ' + client.goal"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 md:mt-0 flex items-center space-x-6">
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[8px] font-bold uppercase tracking-widest border border-emerald-100 font-mono" x-text="client.status"></span>
+                            <button @click.stop="selectedClient = client; showAssignModal = true" 
+                                    class="px-4 py-2 text-[10px] uppercase text-cyan-600 font-bold hover:underline font-mono">
+                                Assign_Program
+                            </button>
+                            <div class="text-zinc-300 transition-all duration-200 transform"
+                                 :class="expandedClientIds.includes(client.id) ? 'rotate-180 text-cyan-600' : 'group-hover:text-zinc-950'">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
                         </div>
                     </div>
-                    <div class="mt-4 md:mt-0 flex items-center space-x-6">
-                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[8px] font-bold uppercase tracking-widest border border-emerald-100 font-mono" x-text="client.status"></span>
-                        <button @click="selectedClient = client; showAssignModal = true" 
-                                class="px-4 py-2 text-[10px] uppercase text-cyan-600 font-bold hover:underline font-mono">
-                            Assign_Program
-                        </button>
-                        <button class="text-zinc-300 hover:text-zinc-950 transition-colors">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                        </button>
+
+                    <!-- Details Pane -->
+                    <div x-show="expandedClientIds.includes(client.id)" 
+                         x-collapse
+                         x-cloak
+                         class="border-t border-dashed border-zinc-100 bg-zinc-50/50">
+                        <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- Bio_Metrics -->
+                            <div class="space-y-4">
+                                <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Bio_Metrics_Core</h5>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">Weight</p>
+                                        <p class="text-xs font-mono font-bold text-zinc-900">78.4 KG</p>
+                                    </div>
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">Bodyfat</p>
+                                        <p class="text-xs font-mono font-bold text-cyan-600">14.2%</p>
+                                    </div>
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">BMI</p>
+                                        <p class="text-xs font-mono font-bold text-zinc-900">24.1</p>
+                                    </div>
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">Trend</p>
+                                        <p class="text-xs font-mono font-bold text-emerald-600">-0.8 KG</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Program_Status -->
+                            <div class="space-y-4">
+                                <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Current_Assignment</h5>
+                                <div class="bg-white p-4 border border-zinc-200">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-[10px] font-bold text-zinc-900 uppercase">Shred_X_V2</span>
+                                        <span class="text-[8px] font-mono text-cyan-700">Day_12/30</span>
+                                    </div>
+                                    <div class="w-full h-1 bg-zinc-100 overflow-hidden">
+                                        <div class="h-full bg-cyan-600 w-[40%] text-white"></div>
+                                    </div>
+                                    <p class="text-[8px] text-zinc-400 mt-3 uppercase tracking-widest">Consistency: <span class="text-zinc-900 font-bold">94%</span></p>
+                                </div>
+                            </div>
+
+                            <!-- Quick_Logs -->
+                            <div class="space-y-4">
+                                <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Intelligence_Feed</h5>
+                                <div class="space-y-2">
+                                    <div class="flex items-center space-x-3 text-[9px] uppercase">
+                                        <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                                        <span class="text-zinc-400 font-mono">2026-03-03 //</span>
+                                        <span class="text-zinc-900 font-bold">Weight_Check_In_Logged</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3 text-[9px] uppercase">
+                                        <div class="h-1.5 w-1.5 rounded-full bg-cyan-500"></div>
+                                        <span class="text-zinc-400 font-mono">2026-03-02 //</span>
+                                        <span class="text-zinc-900 font-bold">Protocol_X_Adherence_100%</span>
+                                    </div>
+                                </div>
+                                <button class="w-full py-2 bg-zinc-900 text-white text-[8px] uppercase font-bold tracking-widest hover:bg-black transition-all">
+                                    Access_Full_Data_Matrix
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>
