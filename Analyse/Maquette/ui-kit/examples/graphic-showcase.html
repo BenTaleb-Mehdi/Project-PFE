@@ -82,12 +82,20 @@
 
             <!-- Nav groups -->
             <nav class="space-y-0.5">
-                <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 font-mono">General_Atoms</p>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 font-mono">Atoms_Library</p>
                 <template x-for="item in [
-                    { id:'general',   label:'01 // Branding',       href:'atoms-general.html'  },
-                    { id:'buttons',   label:'02 // Buttons',         href:'atoms-buttons.html'  },
-                    { id:'inputs',    label:'03 // Inputs',          href:'atoms-inputs.html'   },
-                    { id:'intel',     label:'04 // Intel_Cards',     href:'atoms-intel.html'    }
+                    { id:'a-typo',     label:'01 // Typography'     },
+                    { id:'a-palette',  label:'02 // Palette'        },
+                    { id:'a-buttons',  label:'03 // Buttons'        },
+                    { id:'a-inputs',   label:'04 // Inputs'         },
+                    { id:'a-select',   label:'05 // Select'         },
+                    { id:'a-controls', label:'06 // Controls'       },
+                    { id:'a-badges',   label:'07 // Badges'         },
+                    { id:'a-kpi',      label:'08 // KPI_Metrics'    },
+                    { id:'a-avatars',  label:'09 // Avatars'        },
+                    { id:'a-nav',      label:'10 // Nav_Atoms'      },
+                    { id:'a-feedback', label:'11 // Feedback'       },
+                    { id:'alerts',     label:'12 // Alerts'         }
                 ]">
                     <div class="flex items-center">
                         <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open standalone">
@@ -129,8 +137,8 @@
             <div class="flex items-center gap-3">
                 <div class="h-7 w-7 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-[9px] font-mono">V3</div>
                 <div>
-                    <p class="text-[9px] font-bold text-zinc-900 uppercase font-sans">Molecule_Showcase</p>
-                    <p class="text-[8px] text-cyan-700 uppercase font-mono">10 Components</p>
+                    <p class="text-[9px] font-bold text-zinc-900 uppercase font-sans">Graphic_Showcase</p>
+                    <p class="text-[8px] text-cyan-700 uppercase font-mono">8 Sections</p>
                 </div>
             </div>
         </div>
@@ -142,129 +150,761 @@
         <!-- Page Header -->
         <header class="mb-14 border-b-2 border-zinc-900 pb-8">
             <h1 class="text-3xl font-bold tracking-tighter uppercase text-zinc-900">Atomic_Graphic_Showcase</h1>
-            <p class="text-[10px] text-cyan-700 mt-3 font-bold uppercase tracking-widest font-mono">Protocol: Graphic.md // Agent_Engine_V3.0 // 10 Molecules</p>
+            <p class="text-[10px] text-cyan-700 mt-3 font-bold uppercase tracking-widest font-mono">Protocol: Graphic.md // Agent_Engine_V3.0 // 12 Atoms + Alerts + Molecules</p>
         </header>
 
-        <!-- ─── SECTION: GENERAL ─── -->
-        <section id="general" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">01 // Branding_And_Navigation</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white border border-zinc-200 p-8 flex flex-col items-center gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Brand_Identity</span>
-                    <div class="flex items-center gap-3"><div class="h-7 w-7 bg-cyan-600"></div><span class="font-bold text-base uppercase tracking-tighter text-zinc-900">AntiGravity</span></div>
+        <!-- ─── 01: TYPOGRAPHY ─── -->
+        <section id="a-typo" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">01 // Typography</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                <!-- Headings -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all col-span-1 md:col-span-2">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Heading_Scale</span>
+                    <h1 class="text-4xl font-bold tracking-tighter text-zinc-950 font-sans">H1 // Display_Title</h1>
+                    <h2 class="text-2xl font-bold tracking-tight text-zinc-900 font-sans">H2 // Section_Header</h2>
+                    <h3 class="text-xl font-bold tracking-tight text-zinc-800 font-sans">H3 // Card_Title</h3>
+                    <h4 class="text-base font-bold uppercase tracking-widest text-zinc-700 font-sans">H4 // Sub_Label</h4>
+                    <h5 class="text-sm font-bold uppercase tracking-widest text-zinc-500 font-sans">H5 // Meta_Label</h5>
+                    <h6 class="text-xs font-bold uppercase tracking-widest text-zinc-400 font-sans">H6 // Caption_Label</h6>
                 </div>
-                <div class="bg-white border border-zinc-200 p-8 flex flex-col items-center gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Avatar_Unit</span>
-                    <div class="h-12 w-12 flex items-center justify-center bg-zinc-50 border border-zinc-200 text-sm font-bold text-cyan-700 font-mono">A_P</div>
+
+                <!-- Body & Mono -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Body_And_Mono</span>
+                    <p class="text-sm text-zinc-700 font-sans leading-relaxed">Body text. Inter font. Used for prose content, descriptions, and UI labels in normal reading weight.</p>
+                    <p class="text-xs text-zinc-500 font-sans">Small body — secondary text</p>
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">MONO_LABEL // 10PX</p>
+                    <code class="text-xs font-mono bg-zinc-900 text-cyan-400 px-3 py-2 block">const engine = new Protocol();</code>
                 </div>
-                <div class="bg-white border border-zinc-200 p-8 flex flex-col items-center gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Nav_Toggle</span>
-                    <button class="h-11 w-11 flex flex-col items-center justify-center gap-1.5 border border-zinc-200 hover:bg-zinc-50 transition-colors">
-                        <div class="h-0.5 w-5 bg-zinc-900"></div><div class="h-0.5 w-5 bg-zinc-900"></div>
+
+                <!-- Type tokens -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Type_Tokens</span>
+                    <div class="space-y-2">
+                        <div class="flex items-baseline gap-3"><span class="text-[8px] text-zinc-300 font-mono w-24">tracking-widest</span><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-900">ACTIVE</span></div>
+                        <div class="flex items-baseline gap-3"><span class="text-[8px] text-zinc-300 font-mono w-24">tracking-tight</span><span class="text-base font-bold tracking-tight text-zinc-900">Protocol</span></div>
+                        <div class="flex items-baseline gap-3"><span class="text-[8px] text-zinc-300 font-mono w-24">tracking-tighter</span><span class="text-xl font-bold tracking-tighter text-zinc-900">AntiGravity</span></div>
+                        <div class="flex items-baseline gap-3"><span class="text-[8px] text-zinc-300 font-mono w-24">font-mono</span><span class="text-sm font-mono text-cyan-700">1,842 Kcal</span></div>
+                    </div>
+                </div>
+
+                <!-- Text colors -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Text_Colors</span>
+                    <div class="space-y-2">
+                        <p class="text-sm font-bold text-zinc-950 font-sans">zinc-950 // Primary</p>
+                        <p class="text-sm font-bold text-zinc-700 font-sans">zinc-700 // Body</p>
+                        <p class="text-sm font-bold text-zinc-400 font-sans">zinc-400 // Muted</p>
+                        <p class="text-sm font-bold text-cyan-600 font-sans">cyan-600 // Accent</p>
+                        <p class="text-sm font-bold text-emerald-600 font-sans">emerald-600 // Success</p>
+                        <p class="text-sm font-bold text-red-500 font-sans">red-500 // Danger</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 02: PALETTE ─── -->
+        <section id="a-palette" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">02 // Color_Palette</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- Cyan scale -->
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Cyan_Scale // Primary</span>
+                    <div class="flex gap-1">
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-50"></div><span class="text-[7px] font-mono text-zinc-400">50</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-100"></div><span class="text-[7px] font-mono text-zinc-400">100</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-200"></div><span class="text-[7px] font-mono text-zinc-400">200</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-300"></div><span class="text-[7px] font-mono text-zinc-400">300</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-400"></div><span class="text-[7px] font-mono text-zinc-400">400</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-500"></div><span class="text-[7px] font-mono text-zinc-400">500</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-600 ring-2 ring-offset-1 ring-cyan-600"></div><span class="text-[7px] font-mono text-cyan-700 font-bold">600✓</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-700"></div><span class="text-[7px] font-mono text-zinc-400">700</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-800"></div><span class="text-[7px] font-mono text-zinc-400">800</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-900"></div><span class="text-[7px] font-mono text-zinc-400">900</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-cyan-950"></div><span class="text-[7px] font-mono text-zinc-400">950</span></div>
+                    </div>
+                </div>
+
+                <!-- Zinc scale -->
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Zinc_Scale // Neutral</span>
+                    <div class="flex gap-1">
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-50 border border-zinc-100"></div><span class="text-[7px] font-mono text-zinc-400">50</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-100"></div><span class="text-[7px] font-mono text-zinc-400">100</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-200"></div><span class="text-[7px] font-mono text-zinc-400">200</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-300"></div><span class="text-[7px] font-mono text-zinc-400">300</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-400"></div><span class="text-[7px] font-mono text-zinc-400">400</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-500"></div><span class="text-[7px] font-mono text-zinc-400">500</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-600"></div><span class="text-[7px] font-mono text-zinc-400">600</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-700"></div><span class="text-[7px] font-mono text-zinc-400">700</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-800"></div><span class="text-[7px] font-mono text-zinc-400">800</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-900"></div><span class="text-[7px] font-mono text-zinc-400">900</span></div>
+                        <div class="flex-1 flex flex-col gap-1 items-center"><div class="h-8 w-full bg-zinc-950"></div><span class="text-[7px] font-mono text-zinc-400">950</span></div>
+                    </div>
+                </div>
+
+                <!-- Semantic colours -->
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all col-span-1 md:col-span-2">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Semantic_Colors</span>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="flex flex-col gap-1 items-center"><div class="h-10 w-20 bg-cyan-600"></div><span class="text-[8px] font-mono text-cyan-700">Info</span></div>
+                        <div class="flex flex-col gap-1 items-center"><div class="h-10 w-20 bg-emerald-600"></div><span class="text-[8px] font-mono text-emerald-700">Success</span></div>
+                        <div class="flex flex-col gap-1 items-center"><div class="h-10 w-20 bg-amber-500"></div><span class="text-[8px] font-mono text-amber-700">Warning</span></div>
+                        <div class="flex flex-col gap-1 items-center"><div class="h-10 w-20 bg-red-600"></div><span class="text-[8px] font-mono text-red-700">Danger</span></div>
+                        <div class="flex flex-col gap-1 items-center"><div class="h-10 w-20 bg-zinc-900"></div><span class="text-[8px] font-mono text-zinc-500">Primary</span></div>
+                        <div class="flex flex-col gap-1 items-center"><div class="h-10 w-20 bg-white border border-zinc-200"></div><span class="text-[8px] font-mono text-zinc-400">Surface</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 03: BUTTONS ─── -->
+        <section id="a-buttons" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">03 // Buttons</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Solid_Variants</span>
+                    <button class="w-full py-2.5 bg-zinc-950 text-white text-[9px] font-bold uppercase tracking-widest hover:bg-black transition shadow-[4px_4px_0_0_rgba(0,0,0,0.1)]">PRIMARY</button>
+                    <button class="w-full py-2.5 bg-cyan-600 text-white text-[9px] font-bold uppercase tracking-widest hover:bg-cyan-700 transition shadow-[4px_4px_0_0_rgba(8,145,178,0.2)]">ACCENT</button>
+                    <button class="w-full py-2.5 bg-emerald-600 text-white text-[9px] font-bold uppercase tracking-widest hover:bg-emerald-700 transition">SUCCESS</button>
+                    <button class="w-full py-2.5 bg-red-600 text-white text-[9px] font-bold uppercase tracking-widest hover:bg-red-700 transition">DANGER</button>
+                    <button class="w-full py-2.5 bg-amber-500 text-white text-[9px] font-bold uppercase tracking-widest hover:bg-amber-600 transition">WARNING</button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Outline_Variants</span>
+                    <button class="w-full py-2.5 border-2 border-zinc-900 text-zinc-900 text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-900 hover:text-white transition">OUTLINE_DARK</button>
+                    <button class="w-full py-2.5 border-2 border-cyan-600 text-cyan-600 text-[9px] font-bold uppercase tracking-widest hover:bg-cyan-600 hover:text-white transition">OUTLINE_CYAN</button>
+                    <button class="w-full py-2.5 border border-zinc-200 text-zinc-500 text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-50 transition">GHOST</button>
+                    <button class="w-full py-2.5 border border-red-300 text-red-500 text-[9px] font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white hover:border-red-600 transition">OUTLINE_DANGER</button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Size_Scale</span>
+                    <button class="w-full py-1 bg-cyan-600 text-white text-[8px] font-bold uppercase tracking-widest">XS</button>
+                    <button class="w-full py-1.5 bg-cyan-600 text-white text-[9px] font-bold uppercase tracking-widest">SM</button>
+                    <button class="w-full py-2.5 bg-cyan-600 text-white text-[10px] font-bold uppercase tracking-widest">MD</button>
+                    <button class="w-full py-3.5 bg-cyan-600 text-white text-xs font-bold uppercase tracking-widest">LG</button>
+                    <button class="w-full py-4 bg-cyan-600 text-white text-sm font-bold uppercase tracking-widest">XL</button>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">States_And_Icons</span>
+                    <button disabled class="w-full py-2.5 bg-zinc-100 text-zinc-300 text-[9px] font-bold uppercase tracking-widest cursor-not-allowed">DISABLED</button>
+                    <button class="w-full py-2.5 bg-cyan-600 text-white text-[9px] font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        <svg class="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"/><path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8v8z"/></svg>LOADING
                     </button>
-                </div>
-                <div class="bg-white border border-zinc-200 p-8 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Palette</span>
                     <div class="flex gap-2">
-                        <div class="h-9 w-9 bg-cyan-600 border border-zinc-200"></div>
-                        <div class="h-9 w-9 bg-zinc-900 border border-zinc-200"></div>
-                        <div class="h-9 w-9 bg-white border border-zinc-300"></div>
-                        <div class="h-9 w-9 bg-emerald-600 border border-zinc-200"></div>
+                        <button class="h-10 w-10 flex items-center justify-center border border-zinc-200 hover:bg-zinc-50 transition"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg></button>
+                        <button class="h-10 w-10 flex items-center justify-center bg-cyan-600 text-white hover:bg-cyan-700 transition"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></button>
+                        <button class="h-10 w-10 flex items-center justify-center border border-zinc-200 text-red-400 hover:bg-red-50 transition"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ─── SECTION: BUTTONS ─── -->
-        <section id="buttons" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">02 // Action_Protocols_Buttons</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Primary</span>
-                    <button class="w-full py-3 bg-zinc-950 text-white font-bold text-[9px] uppercase tracking-widest hover:bg-black transition-colors shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] font-sans">FINAL_EXECUTE</button>
+        <!-- ─── 04: INPUTS ─── -->
+        <section id="a-inputs" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">04 // Inputs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Text_Inputs</span>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-zinc-400 uppercase tracking-widest">Label</label><input type="text" placeholder="Default..." class="h-10 w-full bg-zinc-50 border border-zinc-200 px-3 font-mono text-xs focus:outline-none focus:border-cyan-600 transition placeholder:text-zinc-300"></div>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-zinc-400 uppercase tracking-widest">Email</label><input type="email" placeholder="user@domain.com" class="h-10 w-full bg-zinc-50 border border-zinc-200 px-3 font-mono text-xs focus:outline-none focus:border-cyan-600 transition placeholder:text-zinc-300"></div>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-zinc-400 uppercase tracking-widest">Password</label><input type="password" placeholder="••••••••" class="h-10 w-full bg-zinc-50 border border-zinc-200 px-3 font-mono text-xs focus:outline-none focus:border-cyan-600 transition"></div>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-zinc-400 uppercase tracking-widest">Number</label><input type="number" value="140" class="h-10 w-full bg-zinc-50 border border-zinc-200 px-3 font-mono text-xs focus:outline-none focus:border-cyan-600 transition"></div>
                 </div>
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Accent</span>
-                    <button class="w-full py-3 bg-cyan-600 text-white font-bold text-[9px] uppercase tracking-widest hover:bg-cyan-700 transition-colors shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] font-sans">SYNC_METRICS</button>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">States</span>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-cyan-600 uppercase tracking-widest">Focus</label><input type="text" value="VALUE_IN_FOCUS" class="h-10 w-full bg-white border-2 border-cyan-600 px-3 font-mono text-xs outline-none"></div>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-red-500 uppercase tracking-widest">Error</label><input type="text" value="INVALID_VALUE" class="h-10 w-full bg-red-50 border border-red-400 px-3 font-mono text-xs focus:outline-none text-red-700"><span class="text-[8px] text-red-500 font-sans">Field is required.</span></div>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-emerald-600 uppercase tracking-widest">Valid</label><input type="text" value="VALID_VALUE" class="h-10 w-full bg-emerald-50 border border-emerald-400 px-3 font-mono text-xs focus:outline-none text-emerald-700"></div>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-zinc-300 uppercase tracking-widest">Disabled</label><input type="text" value="DISABLED" disabled class="h-10 w-full bg-zinc-50 border border-zinc-100 px-3 font-mono text-xs text-zinc-300 cursor-not-allowed"></div>
                 </div>
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Outline</span>
-                    <button class="w-full py-3 bg-white border border-zinc-200 text-zinc-500 font-bold text-[9px] uppercase tracking-widest hover:bg-zinc-50 transition-colors font-sans">DISCARD_LOG</button>
-                </div>
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Icons</span>
-                    <div class="flex gap-2">
-                        <button class="h-10 w-10 flex items-center justify-center border border-zinc-200 hover:bg-zinc-50 transition-colors"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg></button>
-                        <button class="h-10 w-10 flex items-center justify-center bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></button>
-                        <button class="h-10 w-10 flex items-center justify-center border border-zinc-200 text-red-400 hover:bg-red-50 transition-colors"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
-                    </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Textarea_And_Range</span>
+                    <div class="flex flex-col gap-1"><label class="text-[8px] text-zinc-400 uppercase tracking-widest">Textarea</label><textarea rows="3" placeholder="Protocol notes..." class="w-full bg-zinc-50 border border-zinc-200 px-3 py-2 font-mono text-xs focus:outline-none focus:border-cyan-600 transition resize-none placeholder:text-zinc-300"></textarea></div>
+                    <div class="flex flex-col gap-2"><label class="text-[8px] text-zinc-400 uppercase tracking-widest">Range Slider</label><div class="flex justify-between text-[9px] font-mono text-zinc-400"><span>0g</span><span class="text-cyan-600 font-bold">140g</span><span>300g</span></div><input type="range" min="0" max="300" value="140" class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600"></div>
                 </div>
             </div>
         </section>
 
-        <!-- ─── SECTION: INPUTS ─── -->
-        <section id="inputs" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">03 // Input_Channels</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- Text input -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Standard_Input</span>
-                    <label class="text-[8px] text-zinc-400 uppercase tracking-widest">Channel_Label</label>
-                    <input type="text" placeholder="VALUE_ENTRY..." class="w-full h-10 bg-zinc-50 border border-zinc-200 px-3 font-mono text-[10px] uppercase focus:outline-none focus:border-cyan-600 transition-colors placeholder:opacity-30">
-                </div>
-                <!-- Range -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Macro_Range</span>
-                    <div class="flex justify-between text-[10px] uppercase"><span class="text-zinc-500 font-bold font-sans">Protein</span><span class="text-cyan-700 font-bold font-mono">140G</span></div>
-                    <input type="range" class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
-                </div>
-                <!-- Portal Select -->
-                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all" x-data="{open:false, val:'FTOR'}">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Portal_Select</span>
+        <!-- ─── 05: SELECT ─── -->
+        <section id="a-select" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">05 // Select_Dropdown</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all" x-data="{open:false,val:'FTOR'}">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Portal_Select (Alpine)</span>
                     <div class="relative">
-                        <button @click="open = !open" class="w-full h-10 bg-zinc-50 border border-zinc-200 px-3 font-mono text-[10px] text-cyan-700 flex items-center justify-between uppercase hover:border-cyan-600 transition-colors">
+                        <button @click="open=!open" class="w-full h-10 bg-zinc-50 border border-zinc-200 px-3 font-mono text-[10px] text-cyan-700 flex items-center justify-between uppercase hover:border-cyan-600 transition">
                             <span x-text="val"></span>
-                            <svg class="h-3.5 w-3.5 transition-transform" :class="open?'rotate-180':''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" stroke-width="2"/></svg>
+                            <svg class="h-3 w-3 transition-transform" :class="open?'rotate-180':''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" stroke-width="2"/></svg>
                         </button>
-                        <div x-show="open" @click.outside="open=false" x-transition:enter="transition duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                             class="absolute inset-x-0 mt-1 bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] z-50" style="display:none;">
-                            <template x-for="opt in ['FTOR','GHEDA','ACHA']">
-                                <div @click="val=opt; open=false" class="px-4 py-2.5 font-mono text-[9px] uppercase text-zinc-500 border-l-2 border-l-transparent hover:bg-zinc-50 hover:text-cyan-600 hover:border-l-cyan-600 cursor-pointer transition-colors" x-text="opt"></div>
+                        <div x-show="open" @click.outside="open=false" x-transition:enter="transition duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="absolute inset-x-0 mt-1 bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] z-50" style="display:none;">
+                            <template x-for="opt in ['FTOR','GHEDA','ACHA','STANDARD']">
+                                <div @click="val=opt;open=false" class="px-4 py-2.5 font-mono text-[9px] uppercase text-zinc-500 border-l-2 border-l-transparent hover:bg-zinc-50 hover:text-cyan-600 hover:border-l-cyan-600 cursor-pointer transition" x-text="opt"></div>
                             </template>
                         </div>
                     </div>
                 </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Native_Select</span>
+                    <select class="h-10 w-full bg-zinc-50 border border-zinc-200 px-3 font-mono text-[10px] text-zinc-700 uppercase focus:outline-none focus:border-cyan-600 transition">
+                        <option>PROTOCOL_A</option><option>PROTOCOL_B</option><option>PROTOCOL_C</option>
+                    </select>
+                    <select disabled class="h-10 w-full bg-zinc-50 border border-zinc-100 px-3 font-mono text-[10px] text-zinc-300 uppercase cursor-not-allowed">
+                        <option>DISABLED</option>
+                    </select>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all" x-data="{tags:['KETOGENIC','HIGH_PROTEIN'],input:''}">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Tag_Input (Alpine)</span>
+                    <div class="flex flex-wrap gap-1 p-2 border border-zinc-200 bg-zinc-50 min-h-[40px]">
+                        <template x-for="(tag, i) in tags" :key="i">
+                            <span class="flex items-center gap-1 py-0.5 px-2 bg-cyan-50 border border-cyan-200 text-[8px] font-mono text-cyan-700 uppercase">
+                                <span x-text="tag"></span>
+                                <button @click="tags.splice(i,1)" class="text-cyan-400 hover:text-cyan-700 leading-none">&times;</button>
+                            </span>
+                        </template>
+                        <input x-model="input" @keydown.enter.prevent="if(input.trim()){tags.push(input.trim().toUpperCase());input=''}" type="text" placeholder="+ ADD..." class="flex-1 min-w-[80px] bg-transparent font-mono text-[9px] uppercase focus:outline-none placeholder:text-zinc-300">
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans">Press Enter to add a tag.</p>
+                </div>
             </div>
         </section>
 
-        <!-- ─── SECTION: INTEL ─── -->
-        <section id="intel" class="section-anchor mb-20">
-            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">04 // Intel_Output_Metrics</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">KPI_Unit</span>
-                    <span class="text-3xl font-bold tracking-tighter text-zinc-900">1,842<span class="text-cyan-600 text-xs ml-1 font-mono">Kcal</span></span>
-                    <p class="text-[9px] text-zinc-400 uppercase mt-2 tracking-widest font-sans">Active_Energy</p>
+        <!-- ─── 06: CONTROLS ─── -->
+        <section id="a-controls" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">06 // Controls</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Checkboxes</span>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" checked class="w-4 h-4 accent-cyan-600"><span class="text-[10px] font-sans text-zinc-700 uppercase tracking-widest">Checked</span></label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-cyan-600"><span class="text-[10px] font-sans text-zinc-700 uppercase tracking-widest">Unchecked</span></label>
+                    <label class="flex items-center gap-3 cursor-not-allowed opacity-40"><input type="checkbox" disabled class="w-4 h-4"><span class="text-[10px] font-sans text-zinc-400 uppercase tracking-widest">Disabled</span></label>
                 </div>
-                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Status_Badges</span>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Radio_Buttons</span>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="r1" checked class="w-4 h-4 accent-cyan-600"><span class="text-[10px] font-sans text-zinc-700 uppercase tracking-widest">Option_A</span></label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="r1" class="w-4 h-4 accent-cyan-600"><span class="text-[10px] font-sans text-zinc-700 uppercase tracking-widest">Option_B</span></label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="r1" class="w-4 h-4 accent-cyan-600"><span class="text-[10px] font-sans text-zinc-700 uppercase tracking-widest">Option_C</span></label>
+                    <label class="flex items-center gap-3 cursor-not-allowed opacity-40"><input type="radio" name="r1" disabled class="w-4 h-4"><span class="text-[10px] font-sans text-zinc-400 uppercase tracking-widest">Disabled</span></label>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-5 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Toggle_Switch (Alpine)</span>
+                    <template x-for="t in [{label:'Notifications',on:true},{label:'Dark_Mode',on:false},{label:'Auto_Sync',on:true},{label:'Engine_Lock',on:false}]">
+                        <div x-data="{on: t.on}" class="flex items-center justify-between">
+                            <span class="text-[10px] font-sans uppercase tracking-widest" :class="on?'text-zinc-700':'text-zinc-400'" x-text="t.label"></span>
+                            <button @click="on=!on" :class="on?'bg-cyan-600':'bg-zinc-200'" class="relative w-10 h-5 transition-colors duration-200 flex items-center">
+                                <span :class="on?'translate-x-5':'translate-x-0'" class="absolute left-0.5 h-4 w-4 bg-white border border-zinc-200 transition-transform duration-200 shadow-sm"></span>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 07: BADGES ─── -->
+        <section id="a-badges" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">07 // Badges_And_Tags</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Semantic_Badges</span>
                     <div class="flex flex-wrap gap-2">
-                        <span class="py-1 px-2.5 border border-emerald-200 bg-emerald-50 text-[8px] font-bold text-emerald-700 uppercase font-mono">Sync_Done</span>
-                        <span class="py-1 px-2.5 border border-cyan-200 bg-cyan-50 text-[8px] font-bold text-cyan-700 uppercase font-mono">Live</span>
-                        <span class="py-1 px-2.5 border border-zinc-200 text-[8px] font-bold text-zinc-400 uppercase font-mono">Draft</span>
+                        <span class="py-1 px-3 border border-cyan-200 bg-cyan-50 text-[9px] font-bold text-cyan-700 uppercase font-mono">Info</span>
+                        <span class="py-1 px-3 border border-emerald-200 bg-emerald-50 text-[9px] font-bold text-emerald-700 uppercase font-mono">Success</span>
+                        <span class="py-1 px-3 border border-amber-200 bg-amber-50 text-[9px] font-bold text-amber-700 uppercase font-mono">Warning</span>
+                        <span class="py-1 px-3 border border-red-200 bg-red-50 text-[9px] font-bold text-red-700 uppercase font-mono">Danger</span>
+                        <span class="py-1 px-3 border border-zinc-200 bg-zinc-50 text-[9px] font-bold text-zinc-500 uppercase font-mono">Neutral</span>
+                        <span class="py-1 px-3 bg-zinc-900 text-[9px] font-bold text-white uppercase font-mono">Dark</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="py-0.5 px-2 bg-cyan-600 text-white text-[8px] font-bold uppercase font-mono">LIVE</span>
+                        <span class="py-0.5 px-2 bg-emerald-600 text-white text-[8px] font-bold uppercase font-mono">ACTIVE</span>
+                        <span class="py-0.5 px-2 bg-zinc-400 text-white text-[8px] font-bold uppercase font-mono">DRAFT</span>
+                        <span class="py-0.5 px-2 bg-red-600 text-white text-[8px] font-bold uppercase font-mono">EXPIRED</span>
                     </div>
                 </div>
-                <div class="bg-cyan-50/30 border border-cyan-100 p-6 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-cyan-700 font-mono uppercase block mb-3">Alert</span>
-                    <p class="text-xs text-zinc-900 leading-relaxed font-sans">Analytical engine detected potential <span class="font-bold underline decoration-cyan-400">Protein deficiency</span>.</p>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Dot_Indicators</span>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3"><span class="h-2 w-2 bg-cyan-600"></span><span class="text-[10px] uppercase font-mono text-zinc-600">System_Online</span></div>
+                        <div class="flex items-center gap-3"><span class="h-2 w-2 bg-emerald-600"></span><span class="text-[10px] uppercase font-mono text-zinc-600">Sync_Complete</span></div>
+                        <div class="flex items-center gap-3"><span class="h-2 w-2 bg-amber-500"></span><span class="text-[10px] uppercase font-mono text-zinc-600">Pending_Review</span></div>
+                        <div class="flex items-center gap-3"><span class="h-2 w-2 bg-red-600"></span><span class="text-[10px] uppercase font-mono text-zinc-600">Engine_Error</span></div>
+                        <div class="flex items-center gap-3"><span class="h-2 w-2 bg-zinc-300"></span><span class="text-[10px] uppercase font-mono text-zinc-400">Offline</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 08: KPI METRICS ─── -->
+        <section id="a-kpi" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">08 // KPI_Metrics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-3 font-sans">Active_Energy</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-cyan-700 font-mono">1,842</span><span class="text-xs text-zinc-400 uppercase font-sans">Kcal</span></div>
+                    <div class="mt-3 flex items-center gap-1 text-[9px] text-emerald-600 uppercase font-sans"><svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2"/></svg>+4.2% vs prev</div>
+                    <div class="mt-3 h-1 bg-zinc-100"><div class="h-1 bg-cyan-600" style="width:73%"></div></div>
                 </div>
                 <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
-                    <span class="text-[8px] text-zinc-300 font-mono uppercase block mb-4">Growth</span>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-2xl font-bold font-mono text-emerald-600">+12%</span>
-                        <span class="text-[9px] text-zinc-400 uppercase font-sans">vs_last</span>
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-3 font-sans">Clients_Active</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-zinc-900 font-mono">24</span><span class="text-xs text-zinc-400 uppercase font-sans">Users</span></div>
+                    <p class="mt-3 text-[9px] text-zinc-400 uppercase font-sans">Stable // No_Change</p>
+                    <div class="mt-3 h-1 bg-zinc-100"><div class="h-1 bg-zinc-400" style="width:48%"></div></div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-3 font-sans">Body_Weight</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-zinc-900 font-mono">82.4</span><span class="text-xs text-zinc-400 uppercase font-sans">kg</span></div>
+                    <div class="mt-3 flex items-center gap-1 text-[9px] text-emerald-600 uppercase font-sans">-1.8kg Lost</div>
+                    <div class="mt-3 h-1 bg-zinc-100"><div class="h-1 bg-emerald-500" style="width:88%"></div></div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-3 font-sans">Protocol_Score</p>
+                    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-red-500 font-mono">-12%</span></div>
+                    <div class="mt-3 flex items-center gap-1 text-[9px] text-red-500 uppercase font-sans"><svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 17H5m0 0l8-8 4 4 6-6" stroke-width="2"/></svg>Below target</div>
+                    <div class="mt-3 h-1 bg-zinc-100"><div class="h-1 bg-red-500" style="width:33%"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 09: AVATARS ─── -->
+        <section id="a-avatars" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">09 // Avatars</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Size_Variants</span>
+                    <div class="flex items-end gap-3">
+                        <div class="h-7 w-7 flex items-center justify-center bg-cyan-50 border border-cyan-200 text-[8px] font-bold text-cyan-600 font-mono">JD</div>
+                        <div class="h-9 w-9 flex items-center justify-center bg-cyan-50 border border-cyan-200 text-xs font-bold text-cyan-600 font-mono">JD</div>
+                        <div class="h-11 w-11 flex items-center justify-center bg-cyan-600 text-white text-sm font-bold font-mono">JD</div>
+                        <div class="h-14 w-14 flex items-center justify-center bg-zinc-900 text-white text-base font-bold font-mono">JD</div>
                     </div>
                 </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Status_Dots</span>
+                    <div class="flex items-center gap-4">
+                        <div class="relative"><div class="h-11 w-11 flex items-center justify-center bg-cyan-600 text-white text-sm font-bold font-mono">JD</div><span class="absolute bottom-0 right-0 h-3 w-3 bg-emerald-500 border-2 border-white"></span></div>
+                        <div class="relative"><div class="h-11 w-11 flex items-center justify-center bg-zinc-900 text-white text-sm font-bold font-mono">AP</div><span class="absolute bottom-0 right-0 h-3 w-3 bg-zinc-400 border-2 border-white"></span></div>
+                        <div class="relative"><div class="h-11 w-11 flex items-center justify-center bg-white border border-zinc-200 text-cyan-600 text-sm font-bold font-mono">MK</div><span class="absolute bottom-0 right-0 h-3 w-3 bg-amber-500 border-2 border-white"></span></div>
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Group_Stack</span>
+                    <div class="flex -space-x-2">
+                        <div class="h-11 w-11 flex items-center justify-center bg-cyan-600 text-white text-sm font-bold font-mono border-2 border-white z-30">JD</div>
+                        <div class="h-11 w-11 flex items-center justify-center bg-zinc-900 text-white text-sm font-bold font-mono border-2 border-white z-20">AP</div>
+                        <div class="h-11 w-11 flex items-center justify-center bg-white border-2 border-zinc-200 text-cyan-600 text-sm font-bold font-mono z-10">MK</div>
+                        <div class="h-11 w-11 flex items-center justify-center bg-zinc-100 text-zinc-500 text-[9px] font-bold font-mono border-2 border-white">+5</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 10: NAV ATOMS ─── -->
+        <section id="a-nav" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">10 // Nav_Atoms</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-2 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all" x-data="{nav:'dashboard'}">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase mb-2">Sidebar_Nav_Item</span>
+                    <template x-for="item in [{id:'dashboard',label:'Dashboard'},{id:'clients',label:'Clients'},{id:'nutrition',label:'Nutrition'},{id:'reports',label:'Reports'}]">
+                        <a href="#" @click.prevent="nav=item.id" :class="nav===item.id?'border-l-cyan-600 bg-cyan-50 text-cyan-700':'border-l-transparent text-zinc-500 hover:bg-zinc-50'" class="flex items-center py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 transition" x-text="item.label"></a>
+                    </template>
+                    <a class="flex items-center py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest border-l-2 border-l-transparent text-zinc-300 cursor-not-allowed">Locked</a>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-2 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all" x-data="{tab:'dashboard'}">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase mb-2">Tab_Nav_Item</span>
+                    <div class="flex border-b border-zinc-200">
+                        <template x-for="item in [{id:'dashboard',label:'Dashboard'},{id:'clients',label:'Clients'},{id:'analytics',label:'Analytics'}]">
+                            <a href="#" @click.prevent="tab=item.id" :class="tab===item.id?'text-cyan-600 border-b-2 border-cyan-600 -mb-px':'text-zinc-400 border-b-2 border-transparent hover:text-zinc-900'" class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition" x-text="item.label"></a>
+                        </template>
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-3 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Brand_And_Toggle</span>
+                    <div class="flex items-center gap-3"><div class="h-6 w-6 bg-cyan-600"></div><div><p class="font-bold text-xs tracking-tighter uppercase text-zinc-950">AntiGravity</p><p class="text-[8px] text-cyan-700 font-mono uppercase tracking-widest">V3.0</p></div></div>
+                    <button type="button" class="py-2 px-3 self-start inline-flex items-center gap-2 bg-white border border-zinc-200 text-zinc-800 text-xs font-medium shadow-sm hover:bg-zinc-50">
+                        <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg> Menu
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── 11: FEEDBACK ─── -->
+        <section id="a-feedback" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">11 // Feedback_Atoms</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 items-start hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Spinners</span>
+                    <svg class="h-8 w-8 animate-spin text-cyan-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+                    <svg class="h-8 w-8 animate-spin text-zinc-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+                    <div class="flex gap-1"><div class="h-2 w-2 bg-cyan-600 animate-bounce" style="animation-delay:0ms"></div><div class="h-2 w-2 bg-cyan-600 animate-bounce" style="animation-delay:150ms"></div><div class="h-2 w-2 bg-cyan-600 animate-bounce" style="animation-delay:300ms"></div></div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Progress_Bars</span>
+                    <div class="space-y-3 w-full">
+                        <div><div class="flex justify-between text-[8px] font-mono text-zinc-400 mb-1"><span>PROTEIN</span><span class="text-cyan-600">73%</span></div><div class="h-1.5 bg-zinc-100"><div class="h-1.5 bg-cyan-600" style="width:73%"></div></div></div>
+                        <div><div class="flex justify-between text-[8px] font-mono text-zinc-400 mb-1"><span>CARBS</span><span class="text-emerald-600">45%</span></div><div class="h-1.5 bg-zinc-100"><div class="h-1.5 bg-emerald-600" style="width:45%"></div></div></div>
+                        <div><div class="flex justify-between text-[8px] font-mono text-zinc-400 mb-1"><span>FAT</span><span class="text-amber-500">88%</span></div><div class="h-1.5 bg-zinc-100"><div class="h-1.5 bg-amber-500" style="width:88%"></div></div></div>
+                        <div><div class="flex justify-between text-[8px] font-mono text-zinc-400 mb-1"><span>HYDRATION</span><span class="text-red-500">22%</span></div><div class="h-1.5 bg-zinc-100"><div class="h-1.5 bg-red-500" style="width:22%"></div></div></div>
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Dividers</span>
+                    <div class="space-y-4">
+                        <hr class="border-zinc-200">
+                        <div class="flex items-center gap-3"><div class="flex-1 h-px bg-zinc-200"></div><span class="text-[8px] font-mono text-zinc-400 uppercase">SECTION</span><div class="flex-1 h-px bg-zinc-200"></div></div>
+                        <hr class="border-cyan-200">
+                        <div class="flex items-center gap-3"><div class="flex-1 h-px bg-cyan-200"></div><div class="h-1 w-1 bg-cyan-600"></div><div class="flex-1 h-px bg-cyan-200"></div></div>
+                        <hr class="border-dashed border-zinc-200">
+                    </div>
+                </div>
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <span class="text-[8px] text-zinc-300 font-mono uppercase">Tooltip_And_Slot</span>
+                    <div x-data="{show:false}" class="relative self-start">
+                        <button @mouseenter="show=true" @mouseleave="show=false" class="px-4 py-2 bg-zinc-900 text-white text-[9px] font-bold uppercase tracking-widest hover:bg-black transition">Hover_Me</button>
+                        <div x-show="show" class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-zinc-950 text-zinc-50 text-[9px] font-mono px-3 py-1.5 whitespace-nowrap shadow-md z-50">TOOLTIP_CONTENT<div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-zinc-950"></div></div>
+                    </div>
+                    <button class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition">+ Add_Sequence_Slot</button>
+                </div>
+            </div>
+        </section>
+
+
+
+                <!-- NavToggle -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">NavToggle</span>
+                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Navigation</span>
+                    </div>
+                    <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 text-sm font-medium shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+                    </button>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Hamburger button for mobile menu.</p>
+                </div>
+
+            </div>
+
+            <!-- ── GROUP: Data ── -->
+            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Data</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+
+                <!-- KpiValue -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">KpiValue</span>
+                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
+                    </div>
+                    <span class="text-3xl font-bold font-mono text-zinc-950 uppercase tracking-tighter">1,842</span>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Large bold numeric display for metrics.</p>
+                </div>
+
+                <!-- KpiLabel -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">KpiLabel</span>
+                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
+                    </div>
+                    <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">ACTIVE_ENERGY</span>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Small uppercase label for metrics.</p>
+                </div>
+
+                <!-- Badge -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">Badge</span>
+                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center gap-1.5 py-1 px-3 border border-emerald-100 bg-emerald-50 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">STATUS_ACTIVE</span>
+                        <span class="inline-flex items-center gap-1.5 py-1 px-3 border border-cyan-100 bg-cyan-50 text-[10px] font-bold text-cyan-600 uppercase tracking-widest">LIVE</span>
+                        <span class="inline-flex items-center gap-1.5 py-1 px-3 border border-zinc-200 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">DRAFT</span>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Status indicator badge.</p>
+                </div>
+
+                <!-- StatusLabel -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">StatusLabel</span>
+                        <span class="text-[7px] border border-cyan-100 bg-cyan-50 text-cyan-600 px-1.5 py-0.5 font-mono uppercase">Data</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="text-[8px] text-cyan-600 bg-cyan-50 px-2 py-1 uppercase font-bold self-start">STATUS_ACTIVE</span>
+                        <span class="text-[8px] text-emerald-600 bg-emerald-50 px-2 py-1 uppercase font-bold self-start">SYNC_DONE</span>
+                        <span class="text-[8px] text-zinc-500 bg-zinc-100 px-2 py-1 uppercase font-bold self-start">OFFLINE</span>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Small status indicator label.</p>
+                </div>
+
+            </div>
+
+            <!-- ── GROUP: Forms ── -->
+            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Forms</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+
+                <!-- InputMono -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">InputMono</span>
+                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
+                    </div>
+                    <input type="text" placeholder="TERMINAL_INPUT..."
+                           class="w-full h-11 bg-zinc-50 border border-zinc-200 px-4 font-mono text-xs text-zinc-950 uppercase placeholder:text-zinc-300 focus:outline-none focus:border-cyan-600 transition-all">
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Monospaced data entry field.</p>
+                </div>
+
+                <!-- MacroSlider -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">MacroSlider</span>
+                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-[10px] uppercase">
+                            <span class="text-zinc-400">Protein (g)</span>
+                            <span class="text-cyan-600 font-bold">140</span>
+                        </div>
+                        <input type="range" min="0" max="300" value="140" class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Range input for nutrient tracking.</p>
+                </div>
+
+                <!-- EditorButton -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">EditorButton</span>
+                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
+                    </div>
+                    <div class="flex gap-1 border border-zinc-200 p-1 w-fit">
+                        <button class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors border-b-2 border-cyan-600 bg-cyan-50 text-cyan-700">B</button>
+                        <button class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors italic">I</button>
+                        <button class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors underline">U</button>
+                        <button class="h-8 px-2 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors">H1</button>
+                        <button class="h-8 px-2 flex items-center justify-center hover:bg-zinc-100 text-xs font-bold transition-colors">H2</button>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Formatting button for rich text editor.</p>
+                </div>
+
+                <!-- SequenceSlotButton -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">SequenceSlotButton</span>
+                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Forms</span>
+                    </div>
+                    <button class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all">
+                        + Add_New_Sequence_Slot
+                    </button>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Dashed border button for adding sequence slots.</p>
+                </div>
+
+            </div>
+
+            <!-- ── GROUP: Users ── -->
+            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Users</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+
+                <!-- AvatarInitials -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">AvatarInitials</span>
+                        <span class="text-[7px] border border-emerald-100 bg-emerald-50 text-emerald-600 px-1.5 py-0.5 font-mono uppercase">Users</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-xs font-bold text-cyan-600 font-mono uppercase">JD</div>
+                        <div class="h-10 w-10 flex items-center justify-center bg-zinc-900 border border-zinc-800 text-xs font-bold text-white font-mono uppercase">AP</div>
+                        <div class="h-10 w-10 flex items-center justify-center bg-cyan-600 text-white text-xs font-bold font-mono uppercase">MK</div>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Square user avatar with initials.</p>
+                </div>
+
+            </div>
+
+            <!-- ── GROUP: Interactions ── -->
+            <p class="text-[8px] text-zinc-400 font-mono uppercase tracking-widest mb-3">Category // Interactions</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
+
+                <!-- ActionButton -->
+                <div class="bg-white border border-zinc-200 p-6 flex flex-col gap-4 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[8px] text-zinc-300 font-mono uppercase">ActionButton</span>
+                        <span class="text-[7px] border border-zinc-200 bg-zinc-50 text-zinc-500 px-1.5 py-0.5 font-mono uppercase">Interactions</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <button class="px-6 py-2.5 bg-cyan-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-[4px_4px_0px_0px_rgba(8,145,178,0.2)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
+                            ACTION_TRIGGER
+                        </button>
+                        <button class="px-6 py-2.5 bg-zinc-950 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
+                            FINAL_EXECUTE
+                        </button>
+                        <button class="px-6 py-2.5 bg-white border border-zinc-200 text-zinc-600 font-bold text-[10px] uppercase tracking-widest hover:bg-zinc-50 transition-all">
+                            DISCARD_LOG
+                        </button>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-sans leading-relaxed">Primary action button with shadow pulse.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ─── SECTION: ALERTS ─── -->
+        <section id="alerts" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">05 // Alert_System_Colors</h2>
+
+            <!-- Row 1: Solid variants -->
+            <p class="text-[8px] text-zinc-300 font-mono uppercase mb-3 tracking-widest">Solid_Variants</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+
+                <!-- INFO -->
+                <div class="bg-cyan-600 border border-cyan-700 p-5 flex items-start gap-4 shadow-[4px_4px_0_0_rgba(0,0,0,0.08)]">
+                    <svg class="h-4 w-4 text-white mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-white uppercase tracking-widest font-mono mb-1">INFO // Signal</p>
+                        <p class="text-[10px] text-cyan-100 font-sans leading-relaxed">New protocol sync completed. Engine running nominal.</p>
+                    </div>
+                </div>
+
+                <!-- SUCCESS -->
+                <div class="bg-emerald-600 border border-emerald-700 p-5 flex items-start gap-4 shadow-[4px_4px_0_0_rgba(0,0,0,0.08)]">
+                    <svg class="h-4 w-4 text-white mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-white uppercase tracking-widest font-mono mb-1">SUCCESS // Confirmed</p>
+                        <p class="text-[10px] text-emerald-100 font-sans leading-relaxed">Client session saved. All macros logged correctly.</p>
+                    </div>
+                </div>
+
+                <!-- WARNING -->
+                <div class="bg-amber-500 border border-amber-600 p-5 flex items-start gap-4 shadow-[4px_4px_0_0_rgba(0,0,0,0.08)]">
+                    <svg class="h-4 w-4 text-white mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-white uppercase tracking-widest font-mono mb-1">WARNING // Caution</p>
+                        <p class="text-[10px] text-amber-50 font-sans leading-relaxed">Caloric target deviation detected. Review macros.</p>
+                    </div>
+                </div>
+
+                <!-- DANGER -->
+                <div class="bg-red-600 border border-red-700 p-5 flex items-start gap-4 shadow-[4px_4px_0_0_rgba(0,0,0,0.08)]">
+                    <svg class="h-4 w-4 text-white mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-white uppercase tracking-widest font-mono mb-1">DANGER // Critical</p>
+                        <p class="text-[10px] text-red-100 font-sans leading-relaxed">Protocol engine fault. Immediate intervention required.</p>
+                    </div>
+                </div>
+
+                <!-- NEUTRAL -->
+                <div class="bg-zinc-900 border border-zinc-800 p-5 flex items-start gap-4 shadow-[4px_4px_0_0_rgba(0,0,0,0.08)]">
+                    <svg class="h-4 w-4 text-zinc-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01"/><circle cx="12" cy="12" r="10"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-zinc-300 uppercase tracking-widest font-mono mb-1">NEUTRAL // System</p>
+                        <p class="text-[10px] text-zinc-400 font-sans leading-relaxed">Maintenance window scheduled. Off-peak: 02:00–04:00.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Row 2: Subtle variants -->
+            <p class="text-[8px] text-zinc-300 font-mono uppercase mb-3 mt-8 tracking-widest">Subtle_Variants</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+
+                <!-- INFO subtle -->
+                <div class="bg-cyan-50 border border-cyan-200 border-l-4 border-l-cyan-600 p-5 flex items-start gap-4">
+                    <svg class="h-4 w-4 text-cyan-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-cyan-700 uppercase tracking-widest font-mono mb-1">INFO // Signal</p>
+                        <p class="text-[10px] text-zinc-600 font-sans leading-relaxed">New protocol sync completed. Engine running nominal.</p>
+                    </div>
+                </div>
+
+                <!-- SUCCESS subtle -->
+                <div class="bg-emerald-50 border border-emerald-200 border-l-4 border-l-emerald-600 p-5 flex items-start gap-4">
+                    <svg class="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-emerald-700 uppercase tracking-widest font-mono mb-1">SUCCESS // Confirmed</p>
+                        <p class="text-[10px] text-zinc-600 font-sans leading-relaxed">Client session saved. All macros logged correctly.</p>
+                    </div>
+                </div>
+
+                <!-- WARNING subtle -->
+                <div class="bg-amber-50 border border-amber-200 border-l-4 border-l-amber-500 p-5 flex items-start gap-4">
+                    <svg class="h-4 w-4 text-amber-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-amber-700 uppercase tracking-widest font-mono mb-1">WARNING // Caution</p>
+                        <p class="text-[10px] text-zinc-600 font-sans leading-relaxed">Caloric target deviation detected. Review macros.</p>
+                    </div>
+                </div>
+
+                <!-- DANGER subtle -->
+                <div class="bg-red-50 border border-red-200 border-l-4 border-l-red-600 p-5 flex items-start gap-4">
+                    <svg class="h-4 w-4 text-red-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-red-700 uppercase tracking-widest font-mono mb-1">DANGER // Critical</p>
+                        <p class="text-[10px] text-zinc-600 font-sans leading-relaxed">Protocol engine fault. Immediate intervention required.</p>
+                    </div>
+                </div>
+
+                <!-- NEUTRAL subtle -->
+                <div class="bg-zinc-50 border border-zinc-200 border-l-4 border-l-zinc-500 p-5 flex items-start gap-4">
+                    <svg class="h-4 w-4 text-zinc-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01"/><circle cx="12" cy="12" r="10"/></svg>
+                    <div>
+                        <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-widest font-mono mb-1">NEUTRAL // System</p>
+                        <p class="text-[10px] text-zinc-500 font-sans leading-relaxed">Maintenance window scheduled. Off-peak: 02:00–04:00.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Row 3: Dismissible -->
+            <p class="text-[8px] text-zinc-300 font-mono uppercase mb-3 mt-8 tracking-widest">Dismissible_With_Action</p>
+            <div class="space-y-3 max-w-2xl">
+
+                <!-- Dismissible Info -->
+                <div x-data="{show:true}" x-show="show" x-transition:leave="transition duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                     class="bg-cyan-50 border border-cyan-200 border-l-4 border-l-cyan-600 p-4 flex items-start justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                        <svg class="h-4 w-4 text-cyan-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+                        <div>
+                            <p class="text-[9px] font-bold text-cyan-700 uppercase tracking-widest font-mono mb-1">INFO // Dismissible</p>
+                            <p class="text-[10px] text-zinc-600 font-sans">Sync complete. 12 new records indexed by the engine.</p>
+                        </div>
+                    </div>
+                    <button @click="show=false" class="h-6 w-6 flex items-center justify-center text-cyan-400 hover:text-cyan-700 hover:bg-cyan-100 transition-colors shrink-0">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Dismissible Success with action -->
+                <div x-data="{show:true}" x-show="show" x-transition:leave="transition duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                     class="bg-emerald-50 border border-emerald-200 border-l-4 border-l-emerald-600 p-4 flex items-start justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                        <svg class="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div>
+                            <p class="text-[9px] font-bold text-emerald-700 uppercase tracking-widest font-mono mb-1">SUCCESS // With_Action</p>
+                            <p class="text-[10px] text-zinc-600 font-sans mb-2">Protocol published successfully. Clients have been notified.</p>
+                            <button class="text-[8px] font-bold uppercase tracking-widest text-emerald-700 border border-emerald-300 px-3 py-1 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-colors font-sans">VIEW_PROTOCOL</button>
+                        </div>
+                    </div>
+                    <button @click="show=false" class="h-6 w-6 flex items-center justify-center text-emerald-400 hover:text-emerald-700 hover:bg-emerald-100 transition-colors shrink-0">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Dismissible Danger with action -->
+                <div x-data="{show:true}" x-show="show" x-transition:leave="transition duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                     class="bg-red-50 border border-red-200 border-l-4 border-l-red-600 p-4 flex items-start justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                        <svg class="h-4 w-4 text-red-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+                        <div>
+                            <p class="text-[9px] font-bold text-red-700 uppercase tracking-widest font-mono mb-1">DANGER // With_Action</p>
+                            <p class="text-[10px] text-zinc-600 font-sans mb-2">Auth token expired. Session will terminate in 05:00 min.</p>
+                            <button class="text-[8px] font-bold uppercase tracking-widest text-red-700 border border-red-300 px-3 py-1 hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors font-sans">RENEW_SESSION</button>
+                        </div>
+                    </div>
+                    <button @click="show=false" class="h-6 w-6 flex items-center justify-center text-red-400 hover:text-red-700 hover:bg-red-100 transition-colors shrink-0">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
             </div>
         </section>
 
