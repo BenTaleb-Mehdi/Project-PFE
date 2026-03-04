@@ -26,7 +26,7 @@
     <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
         <div class="flex items-center space-x-2">
             <div class="h-5 w-5 bg-cyan-600"></div>
-            <span class="font-mono font-bold text-sm tracking-tighter uppercase">My_AntiGravity</span>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My_AntiGravity</span>
         </div>
         <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,7 +44,7 @@
             <div class="flex items-center space-x-3 mb-12">
                 <div class="h-6 w-6 bg-cyan-600"></div>
                 <div class="flex flex-col">
-                    <span class="font-mono font-bold text-lg tracking-tighter uppercase leading-none">AntiGravity</span>
+                    <span class="font-mono font-bold text-lg tracking-tight uppercase leading-none">AntiGravity</span>
                     <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mt-1">Pupil_Portal_V3.0</span>
                 </div>
             </div>
@@ -67,13 +67,19 @@
 
         <!-- Pupil Indicator -->
         <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 ag-border border-x-0 border-b-0">
-            <div class="flex items-center space-x-3">
-                <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-600 font-mono text-xs font-bold">M</div>
-                <div>
-                    <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi_B</p>
-                    <p class="text-[8px] font-mono text-cyan-600 uppercase">Active_Pupil</p>
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-600 font-mono text-xs font-bold">M</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi_B</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active_Pupil</p>
+                    </div>
                 </div>
             </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
+                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                Terminate_Session
+            </a>
         </div>
     </aside>
 
@@ -85,7 +91,7 @@
         <!-- DASHBOARD VIEW -->
         <div x-show="activeView === 'dashboard'" class="space-y-12">
             <header class="mb-12">
-                <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Dashboard</h1>
+                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Dashboard</h1>
                 <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Pupil_Intel // Progress_Sync_Active</p>
             </header>
 
@@ -138,7 +144,7 @@
         <!-- PROGRAMS LIST VIEW -->
         <div x-show="activeView === 'programs'" class="space-y-12">
             <header class="mb-12">
-                <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900">My_Programs</h1>
+                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">My_Programs</h1>
                 <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Protocol_Library // Dietary_Assigned</p>
             </header>
 
@@ -146,7 +152,7 @@
                 <template x-for="prog in programs" :key="prog.id">
                     <div class="ag-card p-8 bg-white flex flex-col md:flex-row md:items-center justify-between group hover:border-cyan-200 transition-all">
                         <div class="flex items-center space-x-6">
-                            <div class="h-12 w-12 ag-border border-zinc-100 flex items-center justify-center font-mono font-bold text-cyan-600 bg-cyan-50" x-text="'P'+prog.id"></div>
+                            <div class="h-12 w-12 ag-border border-zinc-100 flex items-center justify-center font-mono font-bold text-cyan-700 bg-cyan-50" x-text="'P'+prog.id"></div>
                             <div>
                                 <h4 class="text-sm font-mono font-bold uppercase text-zinc-900" x-text="prog.name"></h4>
                                 <p class="text-[10px] font-mono text-zinc-400 uppercase mt-1" x-text="prog.kcal + ' Kcal // Target_Daily'"></p>
@@ -173,7 +179,7 @@
                         <svg class="h-3 w-3 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
                         Back_to_Library
                     </button>
-                    <h1 class="text-3xl font-mono font-bold tracking-tighter uppercase text-zinc-900" x-text="selectedProgram?.name"></h1>
+                    <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900" x-text="selectedProgram?.name"></h1>
                     <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]" x-text="'Target: ' + selectedProgram?.kcal + ' Kcal // Protocol_Drill_Down'"></p>
                 </div>
                 <div class="px-4 py-2 bg-cyan-50 text-cyan-600 text-[10px] font-mono font-bold uppercase tracking-widest ag-border border-cyan-100">
@@ -193,7 +199,7 @@
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-[9px] font-mono text-zinc-400 uppercase">Protein</span>
-                                <span class="text-xs font-mono font-bold text-cyan-600" x-text="meal.p + 'g'"></span>
+                                <span class="text-xs font-mono font-bold text-cyan-700" x-text="meal.p + 'g'"></span>
                             </div>
                         </div>
                     </div>

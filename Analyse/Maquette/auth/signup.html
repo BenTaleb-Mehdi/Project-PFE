@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AntiGravity // Request_Access</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        * { border-radius: 0 !important; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="h-full bg-white text-zinc-900 font-sans selection:bg-cyan-100 selection:text-cyan-900">
+
+    <div class="min-h-screen flex flex-col md:flex-row-reverse">
+        <!-- Brand / Identity -->
+        <div class="md:w-1/2 bg-zinc-950 flex flex-col justify-between p-8 md:p-12 text-white relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-10">
+                    <div class="h-8 w-8 bg-cyan-600"></div>
+                    <span class="text-xl font-bold tracking-tight uppercase font-sans">AntiGravity</span>
+                </div>
+                <h1 class="text-3xl sm:text-3xl md:text-5xl font-bold tracking-tight uppercase leading-none max-w-sm break-all md:break-normal">
+                    Initialize_Your_Metabolic_Profile
+                </h1>
+                <p class="mt-6 text-zinc-400 text-sm font-mono uppercase tracking-widest">Protocol: ACCOUNT_PROVISIONING_V3.0</p>
+            </div>
+
+            <!-- Decorative system lines (mirrored) -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-1/4 left-0 w-full h-[1px] bg-cyan-500"></div>
+                <div class="absolute top-1/2 left-0 w-full h-[1px] bg-cyan-500"></div>
+                <div class="absolute top-3/4 left-0 w-full h-[1px] bg-cyan-500"></div>
+                <div class="absolute right-1/4 top-0 h-full w-[1px] bg-cyan-500"></div>
+                <div class="absolute right-1/2 top-0 h-full w-[1px] bg-cyan-500"></div>
+                <div class="absolute right-3/4 top-0 h-full w-[1px] bg-cyan-500"></div>
+            </div>
+
+            <div class="relative z-10 border-t border-zinc-800 pt-8 mt-12 md:mt-0 text-right">
+                <p class="text-[10px] text-zinc-500 font-mono uppercase tracking-[0.2em]">Build // 00X-ALPHA-26</p>
+                <p class="text-[10px] text-zinc-500 font-mono uppercase tracking-[0.2em] mt-1">Status // SYSTEM_READY</p>
+            </div>
+        </div>
+
+        <!-- Auth Form -->
+        <div class="md:w-1/2 flex items-center justify-center p-8 bg-white" x-data="{ terms: false, loading: false }">
+            <div class="w-full max-w-sm">
+                <div class="mb-10">
+                    <h2 class="sm:text-2xl font-bold tracking-tight uppercase text-zinc-900">Provision_New_Account</h2>
+                    <p class="text-xs text-zinc-400 mt-2 uppercase tracking-widest font-mono">Registration_Matrix // OPEN</p>
+                </div>
+
+                <form class="space-y-5" @submit.prevent="loading = true; setTimeout(() => loading = false, 2000)">
+                    <!-- Name -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Full_Identity</label>
+                        <input type="text" placeholder="John Doe" 
+                               class="w-full h-12 bg-white border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 transition-all font-sans">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">System_Email</label>
+                        <input type="email" placeholder="agent@antigravity.io" 
+                               class="w-full h-12 bg-white border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 transition-all font-sans">
+                    </div>
+
+                    <!-- Password Group -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Security_Key</label>
+                            <input type="password" placeholder="••••••••" 
+                                   class="w-full h-12 bg-white border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 transition-all font-sans">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Confirm_Key</label>
+                            <input type="password" placeholder="••••••••" 
+                                   class="w-full h-12 bg-white border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 transition-all font-sans">
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="flex items-start gap-3 py-3 cursor-pointer group" @click="terms = !terms">
+                        <div class="h-5 min-w-[20px] border border-zinc-200 flex items-center justify-center transition-colors group-hover:border-cyan-600 mt-0.5"
+                             :class="terms ? 'bg-cyan-600 border-cyan-600' : 'bg-white'">
+                            <svg x-show="terms" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <p class="text-[10px] text-zinc-500 uppercase tracking-widest font-mono font-bold leading-relaxed">
+                            Accept_System
+                        </p>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" 
+                            class="w-full h-12 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-all flex items-center justify-center gap-3 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
+                            :disabled="loading || !terms">
+                        <span x-show="!loading">PROVISION_ACCOUNT</span>
+                        <div x-show="loading" class="h-4 w-4 border-2 border-white/20 border-t-white animate-spin"></div>
+                        <span x-show="loading">ESTABLISHING...</span>
+                    </button>
+                </form>
+
+                <div class="mt-10 pt-8 border-t border-zinc-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p class="text-[10px] text-zinc-400 uppercase tracking-widest font-mono">Already_Authorized?</p>
+                    <a href="login.html" class="px-5 py-2 border border-zinc-200 text-[9px] font-bold text-zinc-900 uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all font-sans">
+                        Secure_Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
