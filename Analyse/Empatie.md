@@ -21,7 +21,7 @@
 
 ---
 
-## 2. Profil : L'Élève / Client (L'Utilisateur Final)
+## 2. Profil : Client
 *La personne qui achète le service pour obtenir une transformation physique/mentale.*
 
 ### Douleurs et Frustrations (Pains)

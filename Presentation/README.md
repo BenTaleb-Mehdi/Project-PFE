@@ -269,7 +269,7 @@ style: |
   <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
     <h4>Front-end & Outils</h4>
     <ul>
-      <li><strong>Styling :</strong> Tailwind CSS</li>
+      <li><strong>Styling :</strong> Tailwind CSS & Preline UI</li>
       <li><strong>Dynamic :</strong> Alpine.js & AJAX</li>
       <li><strong>Icons :</strong> Lucide / <strong>Build :</strong> Vite</li>
     </ul>
