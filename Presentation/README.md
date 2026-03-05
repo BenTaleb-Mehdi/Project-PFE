@@ -132,21 +132,15 @@ style: |
   <div class="sommaire-item"><div class="sommaire-num">3</div><div class="sommaire-text">Branche Fonctionnelle</div></div>
   <div class="sommaire-item"><div class="sommaire-num">4</div><div class="sommaire-text">Branche Technique</div></div>
   <div class="sommaire-item"><div class="sommaire-num">5</div><div class="sommaire-text">Conception</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Démonstration</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">7</div><div class="sommaire-text">Conclusion</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Conclusion</div></div>
 </div>
 
 ---
 ## 1. Contexte du projet
-<div class="dt-card" style="border-top-color: #f39c12;">
-  <h4>Contexte : </h4>
-  <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
-    "Coach Achraf is an experienced fitness coach who helps clients achieve their physical goals through personalized training and nutrition plans.
-    However, despite his strong expertise, he faces difficulties in managing administrative tasks such as organizing workout programs, tracking client progress, and handling payments. Most of his work is done manually, which consumes time and reduces efficiency."
-  </blockquote>
-</div>
 
-> This project focuses on analyzing Coach Amin’s needs in order to propose solutions that improve his organization, optimize his workflow, and enhance his professional performance.
+<div class="img-container">
+  <img src="images/context_project.png" class="img-methodo" alt="Contexte du projet">
+</div>
 
 ---
 
@@ -166,30 +160,7 @@ style: |
 
 ---
 
-## 3. Branche Fonctionnelle : Design Thinking
-### Empathie
-
-<div class="sommaire-grid">
-  <div class="dt-card" style="margin-top:0; border-top-color: #f39c12;">
-    <h4> Ce que le Coach ressent :</h4>
-    <ul>
-      <li><strong>Frustration :</strong> Perte de temps sur WhatsApp/Excel.</li>
-      <li><strong>Confusion :</strong> Difficulté à retrouver "ce PDF".</li>
-      <li><strong>Surcharge :</strong> Gestion manuelle des paiements.</li>
-    </ul>
-  </div>
-
-  <div class="dt-card" style="margin-top:0; border-top-color: #3498db;">
-    <h4> L'opportunité digitale :</h4>
-    <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px; font-size: 0.9em;">
-      "Passer d'une gestion artisanale à un <b>Moteur de Nutrition Unifié</b> pour libérer 95% du temps du coach."
-    </blockquote>
-  </div>
-</div>
-
----
-
-## Branche Fonctionnelle : Carte Empathie
+## 3. Branche Fonctionnelle : Carte Empathie
 
 <div class="img-container">
   <img src="images/image-carte-empatie.png" class="img-methodo" alt="Carte Empathie">
@@ -197,25 +168,13 @@ style: |
 
 ---
 
-## Branche Fonctionnelle : 2. DÉFINITION
+## Branche Fonctionnelle : DÉFINITION
 
 <div class="dt-card" style="border-top-color: #f39c12;">
   <h4>Cadrage du problème</h4>
   <blockquote style="font-style: italic; background: white; padding: 15px; border-radius: 8px;">
     "Ses tâches sont réalisées manuellement via des outils dispersés comme WhatsApp et Excel, ce qui entraîne une perte de temps, un manque d’efficacité et une image professionnelle qui ne reflète pas son véritable niveau d’expertise."
   </blockquote>
-</div>
-
----
-
-## Branche Fonctionnelle : 3. IDÉATION
-
-<div class="dt-card" style="border-top-color: #f39c12;">
-  <h4>Plateforme digitale centralisée :</h4>
-  <p>• Gestion des clients & programmes nutrition</p>
-  <p>• Suivi de progression & automatisation des paiements</p>
-  <h4>Objectif de l’Idéation</h4>
-  > Transformer une gestion manuelle en un système structuré et professionnel.
 </div>
 
 ---
@@ -240,7 +199,7 @@ style: |
 
 ## Branche Fonctionnelle : Cas d'utilisation
 
-### Sprint 2 : Nutrition & Training
+### Sprint 2 : Nutrition
 <div class="img-container">
   <img src="images/sprint2-usecase.png" class="img-usecase" alt="Sprint 2 Use Case">
 </div>
@@ -283,27 +242,6 @@ style: |
 <h3>Modélisation des données</h3>
 <div class="img-container">
   <img src="images/diagramme-class.png" class="img-usecase" alt="MLD Diagram">
-</div>
-
----
-
-## 6. Démonstration : Outils
-
-<div class="sommaire-grid">
-  <div class="dt-card" style="margin-top:0;">
-    <h4>Développement</h4>
-    <ul>
-      <li><strong>IDE :</strong> VS Code</li>
-      <li><strong>DB :</strong> MySQL Workbench</li>
-    </ul>
-  </div>
-  <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
-    <h4>Gestion & Versioning</h4>
-    <ul>
-      <li><strong>Git :</strong> GitHub</li>
-      <li><strong>UML :</strong> Mermaid / PlantUML</li>
-    </ul>
-  </div>
 </div>
 
 ---
