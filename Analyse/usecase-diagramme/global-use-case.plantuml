@@ -4,17 +4,27 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 ' Actors
-actor "Client " as Client
+actor "Client" as Client
 actor "Co-coach (Staff)" as Staff
 actor "Coach (Admin)" as Admin
+
+' New Actor: Mobile App (API Consumer)
+actor "Mobile Application" as MobileApp <<System>>
 
 ' Hierarchy
 Staff <|-- Admin
 
-rectangle "Coach Management System" {
+rectangle "Coach Management System (API)" {
 
   package "Authentification & Sécurité" {
     usecase "S'authentifier (Login)" as Login
+  }
+
+  package "Espace Client" {
+    usecase "Consulter son programme assigné" as ViewProg
+    
+    ' Connect API to Use Case
+    ViewProg ..> Login : <<include>>
   }
 
   package "Espace Client (Web/Desktop)" {
@@ -23,12 +33,6 @@ rectangle "Coach Management System" {
     
     UpdateStats ..> Login : <<include>>
     ViewProgress ..> Login : <<include>>
-  }
-
-  package "Espace Client (Mobile App)" {
-    usecase "Consulter son programme assigné" as ViewProg
-    
-    ViewProg ..> Login : <<include>>
   }
 
   package "Gestion Opérationnelle (Web Staff)" {
@@ -52,10 +56,13 @@ rectangle "Coach Management System" {
   }
 }
 
-' Client access split by platform
-Client -- ViewProg : "(Via Mobile)"
-Client -- UpdateStats : "(Via Web)"
-Client -- ViewProgress : "(Via Web)"
+' Relations
+Client -- ViewProg
+Client -- UpdateStats
+Client -- ViewProgress
+
+' Link Mobile App Actor to the Use Case it consumes via API
+MobileApp -- ViewProg : "Consomme l'API"
 
 ' Staff & Admin
 Staff -- ManageClients

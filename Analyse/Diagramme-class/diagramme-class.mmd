@@ -1,78 +1,114 @@
 classDiagram
-    direction TB
+    direction LR
 
-    %% --- Bibliothèque Maîtresse (Master Data) ---
-    class MasterLibrary {
-        +getTemplate(id)
-        +searchByCategory(tags)
+    %% --- Authorization (Spatie RBAC) ---
+    class Role {
+        -int id
+        -String name
+        -String guard_name
     }
 
-    class ProgramTemplate {
-        -string title
-        -string goalType (Sèche/Prise)
-        -string richTextDescription
-        -json metadata
-        +cloneToClient(clientId)
+    class Permission {
+        -int id
+        -String name
+        -String guard_name
     }
 
-    class MealTemplate {
-        -string mealName (Ftor/Gheda/...)
-        -string richTextInstructions
-        -float targetCalories
-        -float targetProtein
-        -float targetCarbs
-        -float targetFats
-    }
-
-    %% --- Profil Client Unique (Single Source of Truth) ---
-    class ClientProfile {
-        -int clientId
-        -string currentStatus
-        +getFullTimeline()
-        +assignProgram(templateId)
-    }
-
-    class ActiveProgram {
-        -date assignedDate
-        -bool isArchived
-        -string specificAdjustments
-    }
-
-    %% --- Historique & Timeline ---
-    class TimelineEvent {
+    %% --- Les Acteurs (Auth & Hierarchy) ---
+    class User {
         <<abstract>>
-        -datetime timestamp
-        -string eventType
+        #int id
+        #String nom
+        #String email
     }
 
-    class BiometricRecord {
+    class Client {
+        -full name
+        -phone number
+        -email
+        -status
+        -float goal
+        -String Weight
+        -String Height
+        +updateStats()
+    }
+
+    class Staff {
+        -String full name
+        -String email
+        -String role
+        -String password
+        -String specialite
+        +createMeal()
+        +generateProgram()
+    }
+
+    class Admin {
+        +addCoCoach()
+        +managePayments()
+    }
+
+    %% Hierarchy
+    User <|-- Client
+    User <|-- Staff
+    Staff <|-- Admin
+
+    %% --- Nutrition & Logic (The Workflow) ---
+    class MealCategory {
+        -int id
+        -String name
+    }
+
+    class Meal {
+        -int id
+        -String name
+        -String details
+        -float protein 
+        -float carbs
+        -float fats 
+    }
+
+    class Program {
+        -int id
+        -String title
+    }
+
+    class ProgramItem {
+        -int id
+        -int mealId
+        -int categoryId
+    }
+
+    %% --- Records ---
+    class Evolution {
         -float weight
-        -float caloriesConsumed
-        -float bodyFat
+        -String bodyImgUrl
     }
 
-    class ProgressPhoto {
-        -string imageUrl
-        -string poseTag (Front/Side/Back)
+    class Payment {
+        -double amount
+        -Date date
+        -String status
     }
 
     %% --- Relations ---
-    MasterLibrary "1" *-- "0..*" ProgramTemplate : contient
-    ProgramTemplate "1" *-- "1..*" MealTemplate : composé de
-
-    ClientProfile "1" -- "1" ActiveProgram : suit actuellement
-    ClientProfile "1" -- "0..*" ProgramTemplate : historique des plans (archives)
     
-    ClientProfile "1" *-- "0..*" TimelineEvent : centralise
-    TimelineEvent <|-- BiometricRecord
-    TimelineEvent <|-- ProgressPhoto
-    TimelineEvent <|-- ActiveProgram : (Log d'assignation)
+    %% Spatie Relations
+    User "*" -- "*" Role : "model_has_roles"
+    User "*" -- "*" Permission : "model_has_permissions"
+    Role "*" -- "*" Permission : "role_has_permissions"
 
-    %% --- Accès Staff ---
-    class Staff {
-        +string role (Coach/Assistant)
-        +accessClientDashboard(id)
-    }
+    %% 1. Creation Flow
+    Staff "1" --> "*" Meal : "crée"
+    Staff "1" --> "*" Program : "génère"
+    
+    %% 2. Program Structure
+    MealCategory "1" -- "*" Meal : "contient"
+    Program "1" *-- "*" ProgramItem : "composition"
+    ProgramItem "n" -- "1" Meal : "sélectionne"
 
-    Staff "1..*" -- "1" MasterLibrary : gère
-    Staff "1..*" -- "0..*" ClientProfile : supervise
+    %% 3. Client Flow
+    Client "1" -- "0..1" Program : "suit"
+    Client "1" *-- "*" Evolution : "logs"
+    Client "1" -- "*" Payment : "paie"
+    Admin "1" -- "*" Staff : "gère"
