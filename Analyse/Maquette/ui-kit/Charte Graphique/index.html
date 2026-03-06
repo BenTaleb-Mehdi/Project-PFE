@@ -46,8 +46,7 @@
     <!-- ═══ MOBILE HEADER ═══ -->
     <header class="lg:hidden sticky top-0 z-[48] bg-white border-b border-zinc-200 px-4 py-3 flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <div class="h-5 w-5 bg-cyan-600"></div>
-            <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">AntiGravity</span>
+            <img src="../../images/logo.png" alt="AntiGravity Logo" class="h-6 w-auto object-contain">
         </div>
         <button @click="sidebarOpen = true" class="h-10 w-10 flex items-center justify-center border border-zinc-200 hover:bg-zinc-50">
             <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -74,8 +73,8 @@
         <div class="flex-1 overflow-y-auto p-5">
             <!-- Brand -->
             <div class="flex items-center gap-3 mb-10">
-                <div class="h-6 w-6 bg-cyan-600"></div>
-                <div>
+                <img src="../../images/logo.png" alt="AntiGravity Logo" class="h-8 w-auto object-contain">
+                <div class="hidden">
                     <p class="font-bold text-sm tracking-tighter uppercase text-zinc-900">AntiGravity</p>
                     <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono">Molecule_Showcase_V3</p>
                 </div>
@@ -159,7 +158,11 @@
                     <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-2 px-2 pt-5 font-mono">Prototypes</p>
                     <template x-for="item in [
                         { id:'p-admin',  label:'Admin_Dashboard', href:'../../admin/dashboard.html' },
-                        { id:'p-client', label:'Client_Portal',   href:'../../client/portal.html'  }
+                        { id:'p-client', label:'Client_Portal',   href:'../../client/portal.html'  },
+                        { id:'p-mobile-dashboard', label:'Client_Mobile_Dashboard', href:'../../client (mobile)/dashboard-mobile.html' },
+                        { id:'p-mobile-program', label:'Client_Mobile_Program', href:'../../client (mobile)/programmes-mobile.html' },
+                        { id:'p-mobile-login', label:'Client_Mobile_Login', href:'../../client (mobile)/login-mobile.html' },
+                        { id:'p-mobile-signup', label:'Client_Mobile_Signup', href:'../../client (mobile)/signup-mobile.html' }
                     ]">
                         <div class="flex items-center">
                             <a :href="item.href" target="_blank" class="p-2 text-zinc-300 hover:text-cyan-600 transition-colors shrink-0" title="Open Page">
@@ -1228,6 +1231,46 @@
             <div class="bg-white border border-zinc-200 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden">
                 <div class="relative w-full aspect-[16/10] min-h-[600px] bg-zinc-100">
                     <iframe src="../../client/portal.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: MOBILE DASHBOARD ─── -->
+        <section id="p-mobile-dashboard" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Client_Mobile_Dashboard</h2>
+            <div class="bg-zinc-950 border border-zinc-800 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden max-w-[430px] mx-auto rounded-3xl relative p-4">
+                <div class="relative w-full aspect-[9/19] bg-zinc-100 rounded-[2rem] overflow-hidden border-4 border-zinc-900">
+                    <iframe src="../../client (mobile)/dashboard-mobile.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: MOBILE PROGRAM ─── -->
+        <section id="p-mobile-program" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Client_Mobile_Program</h2>
+            <div class="bg-zinc-950 border border-zinc-800 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden max-w-[430px] mx-auto rounded-3xl relative p-4">
+                <div class="relative w-full aspect-[9/19] bg-zinc-100 rounded-[2rem] overflow-hidden border-4 border-zinc-900">
+                    <iframe src="../../client (mobile)/programmes-mobile.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: MOBILE LOGIN ─── -->
+        <section id="p-mobile-login" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Client_Mobile_Login</h2>
+            <div class="bg-zinc-950 border border-zinc-800 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden max-w-[430px] mx-auto rounded-3xl relative p-4">
+                <div class="relative w-full aspect-[9/19] bg-zinc-100 rounded-[2rem] overflow-hidden border-4 border-zinc-900">
+                    <iframe src="../../client (mobile)/login-mobile.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PAGE: MOBILE SIGNUP ─── -->
+        <section id="p-mobile-signup" class="section-anchor mb-20">
+            <h2 class="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mb-8 border-b border-zinc-100 pb-3 font-mono">Page // Client_Mobile_Signup</h2>
+            <div class="bg-zinc-950 border border-zinc-800 shadow-[8px_8px_0_0_rgba(0,0,0,0.05)] overflow-hidden max-w-[430px] mx-auto rounded-3xl relative p-4">
+                <div class="relative w-full aspect-[9/19] bg-zinc-100 rounded-[2rem] overflow-hidden border-4 border-zinc-900">
+                    <iframe src="../../client (mobile)/signup-mobile.html" class="absolute inset-0 w-full h-full border-none" loading="lazy"></iframe>
                 </div>
             </div>
         </section>

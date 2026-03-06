@@ -1,0 +1,91 @@
+<!-- Component: MobileBottomSheet -->
+<!-- Documentation: Alpine.js Offcanvas -->
+<div x-show="detailModalOpen" style="display: none;" class="fixed inset-0 z-[100]">
+        
+    <!-- Backdrop -->
+    <div x-show="detailModalOpen"
+            x-transition:enter="transition-opacity ease-linear duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity ease-linear duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            @click="detailModalOpen = false" 
+            class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+    <!-- Sheet / Bottom Up Modal -->
+    <div x-show="detailModalOpen"
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="translate-y-full"
+            x-transition:enter-end="translate-y-0"
+            x-transition:leave="transition ease-in duration-200 transform"
+            x-transition:leave-start="translate-y-0"
+            x-transition:leave-end="translate-y-full"
+            class="absolute inset-x-0 bottom-0 bg-white border-t border-zinc-200 rounded-none h-[85vh] flex flex-col shadow-[0px_-8px_16px_0px_rgba(0,0,0,0.05)]">
+        
+        <!-- Drag Handle Area -->
+        <div class="w-full flex justify-center pt-3 pb-2 cursor-pointer" @click="detailModalOpen = false">
+            <div class="w-12 h-1 bg-zinc-200 rounded-none"></div>
+        </div>
+
+        <!-- Header -->
+        <div class="px-5 pb-5 border-b border-zinc-100 flex justify-between items-start mt-2">
+            <div>
+                <span class="text-[9px] font-mono font-bold text-cyan-600 bg-cyan-50 px-2 py-1 uppercase tracking-widest" x-text="selectedMeal?.time + ' / ' + selectedMeal?.cat"></span>
+                <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tight leading-tight mt-3" x-text="selectedMeal?.menu"></h2>
+            </div>
+            <button @click="detailModalOpen = false" class="p-2 bg-zinc-50 text-zinc-400 hover:text-zinc-900 transition-colors border border-zinc-200 focus:outline-none">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <!-- Content Area - Scrollable -->
+        <div class="flex-1 overflow-y-auto px-5 py-6 space-y-8">
+            
+            <!-- Yield -->
+            <div class="bg-zinc-50 border border-zinc-200 p-5">
+                <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Total_Yield</p>
+                <p class="text-2xl font-mono font-bold text-cyan-700 tracking-tight" x-text="selectedMeal?.kcal + ' KCAL'"></p>
+            </div>
+
+            <!-- Macros -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="border border-zinc-200 p-4 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-cyan-600"></div>
+                    <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Pro</span>
+                    <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.p + 'g'"></span>
+                </div>
+                <div class="border border-zinc-200 p-4 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-zinc-900"></div>
+                    <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Car</span>
+                    <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.c + 'g'"></span>
+                </div>
+                <div class="border border-zinc-200 p-4 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-zinc-400"></div>
+                    <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Fat</span>
+                    <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.f + 'g'"></span>
+                </div>
+            </div>
+
+            <!-- Directives -->
+            <div class="pt-2 pb-6">
+                <h5 class="text-[9px] font-mono text-zinc-900 font-bold uppercase tracking-widest mb-4 flex items-center">
+                    <svg class="h-3 w-3 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Execution_Protocol
+                </h5>
+                <div class="text-[11px] text-zinc-600 font-sans border-l-2 border-cyan-600 pl-4" 
+                     x-html="selectedMeal?.details">
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Bottom Action -->
+        <div class="p-5 border-t border-zinc-200 bg-white">
+            <button class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-colors flex items-center justify-center space-x-2">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                <span>Log_Completion</span>
+            </button>
+        </div>
+        
+    </div>
+</div>

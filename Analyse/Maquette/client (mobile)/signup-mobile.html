@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-slate-900 border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mobile Signup | AntiGravity V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        /* Hide scrollbar for cleaner mobile look */
+        ::-webkit-scrollbar { display: none; }
+        * { border-radius: 0 !important; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-zinc-950 flex flex-col h-full antialiased font-sans text-white overflow-y-auto selection:bg-cyan-100 selection:text-cyan-900 relative">
+
+    <!-- Decorative system lines (Background) -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-0 w-full h-[1px] bg-cyan-500"></div>
+        <div class="absolute top-1/2 left-0 w-full h-[1px] bg-cyan-500"></div>
+        <div class="absolute top-3/4 left-0 w-full h-[1px] bg-cyan-500"></div>
+        <div class="absolute right-1/4 top-0 h-full w-[1px] bg-cyan-500"></div>
+        <div class="absolute right-1/2 top-0 h-full w-[1px] bg-cyan-500"></div>
+        <div class="absolute right-3/4 top-0 h-full w-[1px] bg-cyan-500"></div>
+    </div>
+
+    <main class="flex-1 flex flex-col justify-center px-5 relative z-10 w-full py-8">
+        
+        <!-- Header Section -->
+        <div class="mb-8 text-center pt-safe">
+            <div class="flex justify-center mb-6">
+                <img src="../images/logo.png" alt="Logo" class="h-10 w-auto object-contain">
+            </div>
+            <p class="text-cyan-500 text-[10px] font-mono uppercase tracking-[0.2em]">Registration_Matrix // OPEN</p>
+        </div>
+
+        <!-- Auth Form Container -->
+        <div class="bg-white text-zinc-900 p-5 border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]" x-data="{ terms: false, loading: false }">
+            
+            <form class="space-y-5" @submit.prevent="loading = true; setTimeout(() => loading = false, 2000)">
+                <!-- Name -->
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Full_Identity</label>
+                    <input type="text" placeholder="John Doe" 
+                           class="w-full h-11 bg-zinc-50 border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:bg-white transition-all font-sans">
+                </div>
+
+                <!-- Email -->
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">System_Email</label>
+                    <input type="email" placeholder="agent@antigravity.io" 
+                           class="w-full h-11 bg-zinc-50 border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:bg-white transition-all font-sans">
+                </div>
+
+                <!-- Password Group -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-2">
+                        <label class="text-[9px] font-bold text-zinc-400 uppercase tracking-tight font-mono">Security_Key</label>
+                        <input type="password" placeholder="••••••••" 
+                               class="w-full h-11 bg-zinc-50 border border-zinc-200 px-3 text-sm focus:outline-none focus:border-cyan-600 focus:bg-white transition-all font-sans">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[9px] font-bold text-zinc-400 uppercase tracking-tight font-mono">Confirm_Key</label>
+                        <input type="password" placeholder="••••••••" 
+                               class="w-full h-11 bg-zinc-50 border border-zinc-200 px-3 text-sm focus:outline-none focus:border-cyan-600 focus:bg-white transition-all font-sans">
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="flex items-start gap-3 py-2 cursor-pointer group" @click="terms = !terms">
+                    <div class="h-4 min-w-[16px] border border-zinc-200 flex items-center justify-center transition-colors group-hover:border-cyan-600 mt-0.5"
+                         :class="terms ? 'bg-cyan-600 border-cyan-600' : 'bg-white'">
+                        <svg x-show="terms" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                            <path d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <p class="text-[9px] text-zinc-500 uppercase tracking-widest font-mono font-bold leading-relaxed">
+                        Accept_System_Protocol
+                    </p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                        onclick="setTimeout(() => window.location.href='dashboard-mobile.html', 2000)"
+                        class="w-full h-12 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
+                        :disabled="loading || !terms">
+                    <span x-show="!loading">PROVISION_ACCOUNT</span>
+                    <div x-show="loading" class="h-4 w-4 border-2 border-white/20 border-t-white animate-spin"></div>
+                    <span x-show="loading" class="text-cyan-500">ESTABLISHING...</span>
+                </button>
+            </form>
+
+            <div class="mt-6 pt-5 border-t border-zinc-100 flex flex-col items-center gap-4">
+                <p class="text-[9px] text-zinc-400 uppercase tracking-widest font-mono text-center">Already_Authorized?</p>
+                <a href="login-mobile.html" class="w-full text-center py-3 border border-zinc-200 text-[10px] font-bold text-zinc-900 uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-colors font-sans bg-zinc-50">
+                    Secure_Login
+                </a>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>
