@@ -57,4 +57,12 @@ items:
     dependencies:
       - "ActionButton"
 
+  - name: "BottomNavMobile"
+    category: "Layout"
+    path: "./components/bottom-nav-mobile.html"
+    status: "validated"
+    description: "Sticky bottom navigation for mobile clients."
+    documentation: "Custom"
+    dependencies: []
+
 
