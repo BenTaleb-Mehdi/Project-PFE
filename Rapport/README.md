@@ -289,3 +289,10 @@ Surtout, l'application crée un **pont direct** entre l'effort du client (saisie
 
 ## Maquette 
 ![Maquette](Images/maquette.png)
+
+
+--- 
+
+## 8. Diagramme de Classe
+
+![Diagramme de Classe](Images/diagramme-class.png)
