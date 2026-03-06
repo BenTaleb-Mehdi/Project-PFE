@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+skinparam shadowing false
+
+actor "Client" as Client
+actor "Mobile Application" as MobileApp <<System>>
+
+rectangle "Espace Client" {
+    usecase "S'authentifier" as Login
+    usecase "Consulter son programme" as ViewProg
+    usecase "Mettre à jour poids & photos" as UpdateStats
+    usecase "Visualiser sa progression" as ViewProgress
+    
+    ViewProg ..> Login : <<include>>
+    UpdateStats ..> Login : <<include>>
+    ViewProgress ..> Login : <<include>>
+}
+
+Client -- ViewProg
+Client -- UpdateStats
+Client -- ViewProgress
+MobileApp -- ViewProg : "Consomme l'API"
+@enduml

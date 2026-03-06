@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+skinparam shadowing false
+
+actor "Co-coach (Staff)" as Staff
+actor "Coach (Admin)" as Admin
+
+Staff <|-- Admin
+
+rectangle "Administration" {
+    usecase "S'authentifier" as Login
+    usecase "Gérer l'équipe" as ManageStaff
+    usecase "Gérer les paiements" as ManageMoney
+    
+    ManageStaff ..> Login : <<include>>
+    ManageMoney ..> Login : <<include>>
+}
+
+Admin -- ManageStaff
+Admin -- ManageMoney
+@enduml

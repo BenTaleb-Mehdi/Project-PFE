@@ -139,7 +139,7 @@ style: |
 ## 1. Contexte du projet
 
 <div class="img-container">
-  <img src="images/context_project.png" class="img-methodo" alt="Contexte du projet">
+  <img src="images/context.webp" class="img-methodo" alt="Contexte du projet">
 </div>
 
 ---
@@ -181,9 +181,24 @@ style: |
 
 ## Branche Fonctionnelle : Cas d'utilisation
 
-### Global Use Case
+
+### Global Use Case Parte Client
 <div class="img-container">
-  <img src="images/usecase-global.png" class="img-usecase" alt="Global Use Case">
+  <img src="images/global-usecase-client.png" class="img-usecase" alt="Global Use Case">
+</div>
+
+---
+
+### Global Use Case Parte Staff
+<div class="img-container">
+  <img src="images/usecase-global-staff.png" class="img-usecase" alt="Global Use Case">
+</div>
+
+---
+
+### Global Use Case Parte Admin
+<div class="img-container">
+  <img src="images/global-usecase-admin.png" class="img-usecase" alt="Global Use Case">
 </div>
 
 ---
@@ -217,26 +232,38 @@ style: |
 ## 4. Branche Technique : Tech Stack
 
 <div class="sommaire-grid">
-  <div class="dt-card" style="margin-top:0;">
-    <h4>Back-end & Architecture</h4>
-    <ul>
-      <li><strong>DB :</strong> MySQL / <strong>Framework :</strong> Laravel 12</li>
+  
+  <div class="dt-card" style="margin-top:0; border-top-color: #029fcaff;">
+    <h4 style="text-align: center; border-bottom: 2px solid #029fcaff; padding-bottom: 8px;">Back-end & Architecture</h4>
+    <div style="text-align: center; margin: 30px 0;">
+        <p style="font-size: 1.2em; font-weight: bold; color: #444; letter-spacing: 1px;">
+            PHP <span style="color: #029fcaff;">•</span> Laravel <span style="color: #029fcaff;">•</span> MySQL
+        </p>
+    </div>
+    <ul style="list-style: none; padding: 15px 0 0 0; font-size: 0.9em; border-top: 1px solid #eee;">
       <li><strong>Architecture :</strong> N-Tiers (Service Layer)</li>
       <li><strong>Spatie :</strong> Rôles & Permissions</li>
+      <li><strong>Moteur :</strong> Eloquent ORM</li>
     </ul>
   </div>
+
   <div class="dt-card" style="margin-top:0; border-top-color: #27ae60;">
-    <h4>Front-end & Outils</h4>
-    <ul>
-      <li><strong>Styling :</strong> Tailwind CSS & Preline UI</li>
-      <li><strong>Dynamic :</strong> Alpine.js & AJAX</li>
-      <li><strong>Icons :</strong> Lucide / <strong>Build :</strong> Vite</li>
+    <h4 style="text-align: center; border-bottom: 2px solid #27ae60; padding-bottom: 8px;">Front-end & Outils</h4> 
+    <div style="text-align: center; margin: 30px 0;">
+        <p style="font-size: 1.2em; font-weight: bold; color: #444; letter-spacing: 1px;">
+            Tailwind CSS <span style="color: #27ae60;">•</span> Alpine.js <span style="color: #27ae60;">•</span> Vite
+        </p>
+    </div>
+    <ul style="list-style: none; padding: 15px 0 0 0; font-size: 0.9em; border-top: 1px solid #eee;">
+      <li><strong>UI :</strong> Preline UI & Lucide Icons</li>
+      <li><strong>Communication :</strong> AJAX / Axios</li>
+      <li><strong>Assets :</strong> Vite Bundler</li>
     </ul>
   </div>
+
 </div>
 
 ---
-
 ## 5. Conception : MLD
 
 <h3>Modélisation des données</h3>
