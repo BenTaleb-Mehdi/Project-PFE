@@ -14,37 +14,33 @@ classDiagram
         -String guard_name
     }
 
-    %% --- Les Acteurs (Auth & Hierarchy) ---
+    %% --- Actors ---
     class User {
         <<abstract>>
         #int id
-        #String nom
+        #String name
         #String email
+        #String password
     }
 
     class Client {
-        -full name
-        -phone number
-        -email
-        -status
-        -float goal
-        -String Weight
-        -String Height
+        -String phone_number
+        -String status
+        -float target_goal
+        -float current_weight
+        -float height
         +updateStats()
     }
 
     class Staff {
-        -String full name
-        -String email
-        -String role
-        -String password
-        -String specialite
+        -String specialty
+        -String bio
         +createMeal()
         +generateProgram()
     }
 
     class Admin {
-        +addCoCoach()
+        +manageStaff()
         +managePayments()
     }
 
@@ -53,7 +49,7 @@ classDiagram
     User <|-- Staff
     Staff <|-- Admin
 
-    %% --- Nutrition & Logic (The Workflow) ---
+    %% --- Nutrition Logic ---
     class MealCategory {
         -int id
         -String name
@@ -61,31 +57,42 @@ classDiagram
 
     class Meal {
         -int id
+        -int category_id
         -String name
         -String details
         -float protein 
         -float carbs
         -float fats 
+        -int calories
     }
 
     class Program {
         -int id
+        -int created_by_staff_id
         -String title
+        -Date created_at
     }
 
     class ProgramItem {
         -int id
-        -int mealId
-        -int categoryId
+        -int program_id
+        -int meal_id
+        -String day_of_week
+        -String time_slot
     }
 
     %% --- Records ---
     class Evolution {
+        -int id
+        -int client_id
         -float weight
-        -String bodyImgUrl
+        -String body_img_url
+        -Date recorded_at
     }
 
     class Payment {
+        -int id
+        -int client_id
         -double amount
         -Date date
         -String status
@@ -93,22 +100,20 @@ classDiagram
 
     %% --- Relations ---
     
-    %% Spatie Relations
-    User "*" -- "*" Role : "model_has_roles"
-    User "*" -- "*" Permission : "model_has_permissions"
-    Role "*" -- "*" Permission : "role_has_permissions"
+    %% Spatie Logic
+    User "*" -- "*" Role
+    Role "*" -- "*" Permission
 
-    %% 1. Creation Flow
-    Staff "1" --> "*" Meal : "crée"
-    Staff "1" --> "*" Program : "génère"
+    %% Nutrition Structure
+    MealCategory "1" -- "*" Meal : classifies
+    Program "1" *-- "*" ProgramItem : contains
+    Meal "1" -- "*" ProgramItem : assigned_to
     
-    %% 2. Program Structure
-    MealCategory "1" -- "*" Meal : "contient"
-    Program "1" *-- "*" ProgramItem : "composition"
-    ProgramItem "n" -- "1" Meal : "sélectionne"
+    %% Staff Actions
+    Staff "1" --> "*" Meal : creates
+    Staff "1" --> "*" Program : designs
 
-    %% 3. Client Flow
-    Client "1" -- "0..1" Program : "suit"
-    Client "1" *-- "*" Evolution : "logs"
-    Client "1" -- "*" Payment : "paie"
-    Admin "1" -- "*" Staff : "gère"
+    %% Client Tracking
+    Client "1" -- "0..1" Program : follows
+    Client "1" *-- "*" Evolution : tracks
+    Client "1" -- "*" Payment : makes
