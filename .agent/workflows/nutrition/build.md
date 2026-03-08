@@ -9,9 +9,9 @@ description: Nutrition Hierarchy & Logic Build
 - Use `font-mono` numbering (e.g., 01, 02).
 
 ## Phase 2: Meal & Macro Logic
-- Implement real-time `(P*4 + C*4 + F*9)` calculator.
+- Implement real-time `(P*4 + C*4 + F*9)` calculator using Alpine.js.
 - Use `Cyan-700` for the total KCAL result.
-- Ensure 100% monospaced display for numeric inputs.
+- Ensure 100% monospaced display for **numeric inputs** (replacing sliders).
 
 ## Phase 3: Protocol Timeline
 - Build sequential meal timelines.

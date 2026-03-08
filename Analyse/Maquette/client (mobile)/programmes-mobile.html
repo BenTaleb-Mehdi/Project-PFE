@@ -7,13 +7,49 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
-    <link rel="stylesheet" href="../admin/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ag-bg': '#F4F4F5',      /* Light Zinc */
+                        'ag-cyan': '#45B6C5',    /* Cyan */
+                        'ag-black': '#18181B',
+                        'ag-text-dark': '#27272A',
+                        'ag-grey': '#A1A1AA',
+                        'ag-light-grey': '#E4E4E7'
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Hide scrollbar for cleaner mobile look */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+        
+        body { font-family: 'JetBrains Mono', monospace; }
+
         ::-webkit-scrollbar { display: none; }
+        
+        .cut-corner {
+            position: relative;
+        }
+        .cut-corner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 20px 20px 0;
+            border-style: solid;
+            border-color: #F4F4F5 #F4F4F5 transparent transparent;
+            display: block;
+            width: 0;
+        }
     </style>
 </head>
-<body class="bg-zinc-50 flex flex-col h-full antialiased font-sans text-zinc-900 overflow-x-hidden selection:bg-cyan-100 selection:text-cyan-900 relative" x-data="{ 
+<body class="bg-ag-bg flex flex-col h-full antialiased text-ag-black overflow-x-hidden selection:bg-cyan-100 selection:text-cyan-900 relative" x-data="{ 
     detailModalOpen: false,
     selectedMeal: null,
     dailyMacros: { kcal: 1850, p: 185, c: 140, f: 60 }
@@ -176,47 +212,48 @@
             </a>
 
         </div>
-    </nav
+    </nav>
 
     <!-- Detail Modal Popup (Full Screen Slide Up for Mobile) -->
-    <div x-show="detailModalOpen" style="display: none;" class="fixed inset-0 z-[100]">
+    <div x-show="detailModalOpen" style="display: none;" class="fixed inset-0 z-[100] flex justify-center pointer-events-none">
         
-        <!-- Backdrop -->
-        <div x-show="detailModalOpen"
-             x-transition:enter="transition-opacity ease-linear duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition-opacity ease-linear duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             @click="detailModalOpen = false" 
-             class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+        <div class="relative w-full max-w-[430px] h-full pointer-events-auto overflow-hidden">
+            <!-- Backdrop -->
+            <div x-show="detailModalOpen"
+                 x-transition:enter="transition-opacity ease-linear duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-opacity ease-linear duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="detailModalOpen = false" 
+                 class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
-        <!-- Sheet / Bottom Up Modal -->
-        <div x-show="detailModalOpen"
-             x-transition:enter="transition ease-out duration-300 transform"
-             x-transition:enter-start="translate-y-full"
-             x-transition:enter-end="translate-y-0"
-             x-transition:leave="transition ease-in duration-200 transform"
-             x-transition:leave-start="translate-y-0"
-             x-transition:leave-end="translate-y-full"
-             class="absolute inset-x-0 bottom-0 bg-white border-t border-zinc-200 rounded-none h-[85vh] flex flex-col shadow-[0px_-8px_16px_0px_rgba(0,0,0,0.05)]">
-            
-            <!-- Drag Handle Area -->
-            <div class="w-full flex justify-center pt-3 pb-2 cursor-pointer" @click="detailModalOpen = false">
-                <div class="w-12 h-1 bg-zinc-200 rounded-none"></div>
-            </div>
-
-            <!-- Header -->
-            <div class="px-5 pb-5 border-b border-zinc-100 flex justify-between items-start mt-2">
-                <div>
-                    <span class="text-[9px] font-mono font-bold text-cyan-600 bg-cyan-50 px-2 py-1 uppercase tracking-widest" x-text="selectedMeal?.time + ' / ' + selectedMeal?.cat"></span>
-                    <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tight leading-tight mt-3" x-text="selectedMeal?.menu"></h2>
+            <!-- Sheet / Bottom Up Modal -->
+            <div x-show="detailModalOpen"
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="translate-y-full"
+                 x-transition:enter-end="translate-y-0"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="translate-y-0"
+                 x-transition:leave-end="translate-y-full"
+                 class="absolute inset-x-0 bottom-0 bg-white border-t border-zinc-200 rounded-none h-[85vh] flex flex-col shadow-[0px_-8px_16px_0px_rgba(0,0,0,0.05)]">
+                
+                <!-- Drag Handle Area -->
+                <div class="w-full flex justify-center pt-3 pb-2 cursor-pointer" @click="detailModalOpen = false">
+                    <div class="w-12 h-1 bg-zinc-200 rounded-none"></div>
                 </div>
-                <button @click="detailModalOpen = false" class="p-2 bg-zinc-50 text-zinc-400 hover:text-zinc-900 transition-colors border border-zinc-200 focus:outline-none">
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
+
+                <!-- Header -->
+                <div class="px-5 pb-5 border-b border-zinc-100 flex justify-between items-start mt-2">
+                    <div>
+                        <span class="text-[9px] font-mono font-bold text-ag-cyan bg-cyan-50 px-2 py-1 uppercase tracking-widest" x-text="selectedMeal?.time + ' / ' + selectedMeal?.cat"></span>
+                        <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tight leading-tight mt-3" x-text="selectedMeal?.menu"></h2>
+                    </div>
+                    <button @click="detailModalOpen = false" class="p-2 bg-zinc-50 text-zinc-400 hover:text-zinc-900 transition-colors border border-zinc-200 focus:outline-none">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
 
             <!-- Content Area - Scrollable -->
             <div class="flex-1 overflow-y-auto px-5 py-6 space-y-8">
@@ -267,6 +304,7 @@
             
         </div>
     </div>
+</div>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 ---
 name: v3-visual-engine
-description: Specialized skills for Enforcing MT Graphic Charter V3.0.
+description: Specialized skills for Enforcing MT Graphic Charter V3.0 with Preline UI & Alpine.js.
 ---
 
 # 🎨 V3 VISUAL ENGINE SKILLS
@@ -14,3 +14,8 @@ description: Specialized skills for Enforcing MT Graphic Charter V3.0.
 - **Headers:** Force `tracking-tight` on all uppercase H1/H2.
 - **Metrics:** Force `font-mono` and `Cyan-700` for all numeric values.
 - **Accents:** Intelligent use of `Cyan-600` for primary branding.
+
+## 🧩 COMPONENT ARCHITECTURE (PRELINE UI)
+- **Integration:** Use Preline UI's semantic classes for layouts and accessibility.
+- **Modularity:** Wrap all Preline components into "Molecules" using Alpine.js for internal state.
+- **State:** Use `x-data` for local UI states (dropdowns, modals, tabs).

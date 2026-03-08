@@ -1,7 +1,8 @@
 # 💧 ADVANCED DROPDOWNS (THE PORTAL SPEC)
 
 ## Architecture
-- Must use a **Portal pattern** (Radix UI / Headless UI / Alpine Teleport) to bypass parent overflow containers.
+- Must use **Preline UI Dropdowns** with Alpine.js enhancements for custom logic.
+- Ensure "Portal pattern" (via Alpine Teleport if needed) to bypass parent overflow containers.
 
 ## Surface
 - **Styling:** `bg-white`, `border-1px`, `border-zinc-200`, `rounded-none`.

@@ -287,8 +287,14 @@ Surtout, l'application crée un **pont direct** entre l'effort du client (saisie
 
 ---
 
-## Maquette 
+## Maquette web
 ![Maquette](Images/maquette.png)
+
+
+--- 
+
+## Maquette Mobile
+![Maquette](Images/mobile.png)
 
 
 --- 
