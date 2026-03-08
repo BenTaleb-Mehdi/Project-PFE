@@ -25,33 +25,33 @@
 
         <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4 font-sans text-zinc-900">Matrix_Analysis</h3>
 
-        <div class="space-y-8 mb-10">
+        <div class="space-y-6 mb-10">
             <!-- Protein -->
             <div class="space-y-2">
-                <div class="flex justify-between text-[10px] uppercase font-sans">
-                    <span class="text-zinc-500 font-bold">Protein (g)</span>
-                    <span class="text-cyan-700 font-bold font-mono" x-text="protein + 'g'"></span>
+                <label class="block text-[8px] text-zinc-400 uppercase tracking-widest font-mono">Protein_Entry (g)</label>
+                <div class="relative group">
+                    <input type="number" min="0" max="999" x-model.number="protein" 
+                           class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-xs font-mono font-bold text-cyan-700 outline-none focus:border-cyan-600 focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-zinc-300 font-mono pointer-events-none group-focus-within:text-cyan-600 transition-colors">PRO</div>
                 </div>
-                <input type="range" min="0" max="300" x-model="protein"
-                       class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
             </div>
             <!-- Carbs -->
             <div class="space-y-2">
-                <div class="flex justify-between text-[10px] uppercase font-sans">
-                    <span class="text-zinc-500 font-bold">Carbs (g)</span>
-                    <span class="text-cyan-700 font-bold font-mono" x-text="carbs + 'g'"></span>
+                <label class="block text-[8px] text-zinc-400 uppercase tracking-widest font-mono">Carbs_Entry (g)</label>
+                <div class="relative group">
+                    <input type="number" min="0" max="999" x-model.number="carbs" 
+                           class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-xs font-mono font-bold text-zinc-900 outline-none focus:border-zinc-900 focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-zinc-300 font-mono pointer-events-none group-focus-within:text-zinc-900 transition-colors">CAR</div>
                 </div>
-                <input type="range" min="0" max="500" x-model="carbs"
-                       class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
             </div>
             <!-- Fat -->
             <div class="space-y-2">
-                <div class="flex justify-between text-[10px] uppercase font-sans">
-                    <span class="text-zinc-500 font-bold">Fat (g)</span>
-                    <span class="text-cyan-700 font-bold font-mono" x-text="fat + 'g'"></span>
+                <label class="block text-[8px] text-zinc-400 uppercase tracking-widest font-mono">Fats_Entry (g)</label>
+                <div class="relative group">
+                    <input type="number" min="0" max="999" x-model.number="fat" 
+                           class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-xs font-mono font-bold text-emerald-600 outline-none focus:border-emerald-600 focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-zinc-300 font-mono pointer-events-none group-focus-within:text-emerald-600 transition-colors">FAT</div>
                 </div>
-                <input type="range" min="0" max="200" x-model="fat"
-                       class="w-full h-1.5 bg-zinc-100 appearance-none cursor-pointer accent-cyan-600">
             </div>
         </div>
 

@@ -221,10 +221,18 @@ style: |
 
 ---
 
-## Branche Fonctionnelle : Maquettes (UI/UX)
+## Branche Fonctionnelle : Maquettes (UI/UX) web
 
 <div class="img-container">
   <img src="images/maquette.png" class="img-methodo" alt="Maquettes UI">
+</div>
+
+---
+
+## Branche Fonctionnelle : Maquettes (UI/UX) Mobile
+
+<div class="img-container">
+  <img src="images/mobile.png" class="img-methodo" alt="Maquettes UI">
 </div>
 
 ---

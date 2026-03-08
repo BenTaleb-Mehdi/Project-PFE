@@ -1,7 +1,8 @@
 # 🚀 ANTI-GRAVITY MASTER INSTRUCTIONS
 
 ## Technical Protocol
-- **Folder Structure:** Force separation of `/admin`, `/client`, and `/auth`.
+- **Source Files:** Main project source is located in `Analyse/Maquette/`.
+- **Folder Structure:** Force separation of `/admin`, `/client`, and `/auth` within the maquette directory.
 - **Responsiveness:** 100% Fluid. `grid-cols-1` (Mobile) -> `grid-cols-3` (Desktop).
 - **Logic:** Adhere to UML Coach -> Staff -> Client relationships.
 - **UI Interaction:** Alpine.js for dropdowns, modals, and data binding.

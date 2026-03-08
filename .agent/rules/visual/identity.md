@@ -5,7 +5,7 @@
 - **Offset:** Zinc-50 `#FAFAFA`.
 
 ## Borders
-- **Strict:** 1px solid `#E4E4E7` (Zinc-200).
+- **Strict:** 1px solid `#E4E4E7` (Zinc-200). Fully compatible with Preline's default Zinc palette.
 - **Geometry:** **NO ROUNDED CORNERS** (`rounded-none`). Global hard-edge reset.
 
 ## Accents
