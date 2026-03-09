@@ -302,3 +302,41 @@ Surtout, l'application crée un **pont direct** entre l'effort du client (saisie
 ## 8. Diagramme de Classe
 
 ![Diagramme de Classe](Images/diagramme-class.png)
+
+## 9. Technologies Utilisées
+
+
+
+## 8. Technologies Utilisées
+
+Le choix des technologies pour ce projet repose sur une volonté de performance, de maintenabilité et de rapidité de développement. L'architecture s'appuie principalement sur la **TALL Stack**, une combinaison moderne parfaitement adaptée aux applications web réactives.
+
+---
+
+### 8.1 Stack Technique Principale (TALL)
+
+| Technologie | Rôle dans le Projet |
+| :--- | :--- |
+| **Tailwind CSS** | Design minimaliste, responsive et "Pixel-Perfect". |
+| **Alpine.js** | Micro-interactions dynamiques côté client (modales, dropdowns). |
+| **Laravel 12** | Cœur du système, gestion de la logique métier et sécurité. |
+
+
+
+
+---
+
+### 8.2 Backend & Persistance des Données
+
+* **PHP 8.2+ :** Utilisation des dernières fonctionnalités (Readonly properties, Types) pour un code robuste.
+* **MySQL :** Gestion relationnelle pour structurer les profils clients, les macros-nutriments et les historiques de poids.
+### 8.3 Frontend & Expérience Utilisateur (UI/UX)
+
+* **Preline UI :** Bibliothèque de composants Tailwind pour une interface professionnelle "Out-of-the-box".
+* **Lucide Icons :** Pack d'icônes vectorielles pour une navigation intuitive et épurée.
+
+### 8.4 Outils de Développement & Conception
+
+* **StarUML :** Modélisation des diagrammes de cas d'utilisation et de classe.
+* **Git / GitHub :** Gestion du versionnage et déploiement continu.
+
