@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program History | AntiGravity V3.0</title>
+    <title>Program History | Coach V3.0</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Alpine.js Plugins -->
@@ -11,6 +11,8 @@
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../admin/style.css">
     <style>
         [x-cloak] { display: none !important; }
@@ -24,14 +26,14 @@
     expandedIds: [],
     programs: [
         { id: 101, name: 'Shred_X_Lite', status: 'Active', start: '2026-02-01', end: 'Present', kcal: 1850, meals: [
-            { cat: 'Ftor', name: 'Oatmeal_Power_X1', kcal: 450, p: 35, c: 40, f: 12 },
-            { cat: 'Gheda', name: 'Salmon_Bowl_V3', kcal: 620, p: 45, c: 50, f: 20 },
-            { cat: 'Acha', name: 'Grilled_Chicken_Salad', kcal: 500, p: 50, c: 10, f: 15 }
+            { cat: 'Breakfast', name: 'Oatmeal_Power_X1', kcal: 450, p: 35, c: 40, f: 12 },
+            { cat: 'Lunch', name: 'Salmon_Bowl_V3', kcal: 620, p: 45, c: 50, f: 20 },
+            { cat: 'Dinner', name: 'Grilled_Chicken_Salad', kcal: 500, p: 50, c: 10, f: 15 }
         ]},
         { id: 100, name: 'Bulk_Power_V2', status: 'Archive', start: '2025-12-15', end: '2026-01-20', kcal: 3200, meals: [
-            { cat: 'Ftor', name: 'Beef_Rice_Heavy', kcal: 1200, p: 60, c: 150, f: 30 },
-            { cat: 'Gheda', name: 'Pasta_Tuna_Max', kcal: 1000, p: 50, c: 120, f: 25 },
-            { cat: 'Acha', name: 'Steak_Potato_Elite', kcal: 1000, p: 70, c: 80, f: 35 }
+            { cat: 'Breakfast', name: 'Beef_Rice_Heavy', kcal: 1200, p: 60, c: 150, f: 30 },
+            { cat: 'Lunch', name: 'Pasta_Tuna_Max', kcal: 1000, p: 50, c: 120, f: 25 },
+            { cat: 'Dinner', name: 'Steak_Potato_Elite', kcal: 1000, p: 70, c: 80, f: 35 }
         ]},
         { id: 99, name: 'Maintain_Core', status: 'Completed', start: '2025-10-01', end: '2025-11-30', kcal: 2400, meals: [] }
     ],
@@ -48,12 +50,10 @@
     <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
         <div class="flex items-center space-x-2">
             <div class="h-5 w-5 bg-cyan-600"></div>
-            <span class="font-mono font-bold text-sm tracking-tight uppercase">My_AntiGravity</span>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My_Coach</span>
         </div>
         <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <i data-lucide="menu" class="h-6 w-6"></i>
         </button>
     </header>
 
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
-                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                <i data-lucide="log-out" class="size-3"></i>
                 Terminate_Session
             </a>
         </div>
@@ -121,7 +121,7 @@
                        placeholder="Search_Protocols (Name, ID)..." 
                        class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
                 <div class="absolute left-3.5 top-3 text-zinc-400">
-                    <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <i data-lucide="search" class="size-3.5"></i>
                 </div>
             </div>
 
@@ -132,7 +132,7 @@
                         x-ref="filterBtn"
                         class="w-full flex justify-between items-center bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors">
                     <span x-text="filterStatus.replace('_', ' ')"></span>
-                    <svg class="size-3 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                    <i data-lucide="chevron-down" class="size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                 </button>
 
                 <template x-teleport="body">
@@ -187,7 +187,7 @@
                                     <td class="px-6 py-4 text-right">
                                         <div class="text-zinc-300 transition-all duration-300 transform"
                                              :class="expandedIds.includes(program.id) ? 'rotate-180 text-cyan-600' : 'group-hover:text-zinc-950'">
-                                            <svg class="h-4 w-4 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m19 9-7 7-7-7" /></svg>
+                                            <i data-lucide="chevron-down" class="h-4 w-4 ml-auto"></i>
                                         </div>
                                     </td>
                                 </tr>
@@ -297,5 +297,8 @@
         </div>
     </main>
 
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

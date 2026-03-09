@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Mobile Signup | AntiGravity V3.0</title>
+    <title>Mobile Signup | Coach V3.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <script>
@@ -19,6 +19,8 @@
         }
     </script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* Hide scrollbar for cleaner mobile look */
         ::-webkit-scrollbar { display: none; }
@@ -62,7 +64,7 @@
                 <!-- Email -->
                 <div class="space-y-2">
                     <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">System_Email</label>
-                    <input type="email" placeholder="agent@antigravity.io" 
+                    <input type="email" placeholder="agent@coach.io" 
                            class="w-full h-11 bg-zinc-50 border border-zinc-200 px-4 text-sm focus:outline-none focus:border-cyan-600 focus:bg-white transition-all font-sans">
                 </div>
 
@@ -84,9 +86,7 @@
                 <div class="flex items-start gap-3 py-2 cursor-pointer group" @click="terms = !terms">
                     <div class="h-4 min-w-[16px] border border-zinc-200 flex items-center justify-center transition-colors group-hover:border-cyan-600 mt-0.5"
                          :class="terms ? 'bg-cyan-600 border-cyan-600' : 'bg-white'">
-                        <svg x-show="terms" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
-                            <path d="M5 13l4 4L19 7" />
-                        </svg>
+                        <i x-show="terms" data-lucide="check" class="h-3 w-3 text-white"></i>
                     </div>
                     <p class="text-[9px] text-zinc-500 uppercase tracking-widest font-mono font-bold leading-relaxed">
                         Accept_System_Protocol
@@ -113,5 +113,8 @@
         </div>
 
     </main>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

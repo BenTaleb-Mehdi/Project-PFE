@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrition Engine | AntiGravity V3.0</title>
+    <title>Coach | Nutrition Engine</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Alpine.js Plugins -->
@@ -12,6 +12,8 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Preline UI -->
     <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
     <style>
         [contenteditable]:empty:before {
@@ -32,7 +34,29 @@
         get kcal() { return (this.p * 4) + (this.c * 4) + (this.f * 9) },
         // Program State
         programView: 'list',
-        searchProtocol: ''
+        searchProtocol: '',
+        currentProtocol: {
+            name: '',
+            meals: { 'Breakfast': '', 'Lunch': '', 'Snack': '', 'Dinner': '' }
+        },
+        isEditing: false,
+        resetProtocol() {
+            this.currentProtocol = { name: '', meals: { 'Breakfast': '', 'Lunch': '', 'Snack': '', 'Dinner': '' } };
+            this.isEditing = false;
+            this.programView = 'create';
+        },
+        editProgram(p) {
+            this.currentProtocol = JSON.parse(JSON.stringify(p));
+            this.isEditing = true;
+            this.programView = 'create';
+        },
+        // Delete Confirmation Logic
+        isDeleteModalOpen: false,
+        protocolToDelete: null,
+        confirmDelete(p) {
+            this.protocolToDelete = p;
+            this.isDeleteModalOpen = true;
+        }
       }"
       x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
 
@@ -42,14 +66,14 @@
         <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
             <div class="flex items-center space-x-2">
                 <div class="h-5 w-5 bg-cyan-600"></div>
-                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-950">AntiGravity</span>
+                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">Coach</span>
             </div>
             
             <button type="button" 
                     @click.stop="isSidebarOpen = true"
                     class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
                 <span class="sr-only">Toggle Navigation</span>
-                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+                <i data-lucide="menu" class="size-4"></i>
             </button>
         </nav>
     </header>
@@ -74,13 +98,13 @@
                     @click.stop="isSidebarOpen = false"
                     class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all">
                 <span class="sr-only">Close Sidebar</span>
-                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <i data-lucide="x" class="size-4"></i>
             </button>
         </div>
 
         <div class="p-6">
             <div class="flex items-center mb-12">
-                <img src="../images/logo.png" alt="Achraf Logo" class="h-14 w-auto object-contain">
+                <img src="../images/logo.png" alt="Coach Logo" class="h-14 w-auto object-contain">
             </div>
 
             <nav class="hs-accordion-group p-0 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
@@ -148,10 +172,10 @@
         <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200 font-sans">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
-                    <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-600 font-bold text-xs">A</div>
+                    <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-600 font-bold text-xs">C</div>
                     <div>
-                        <p class="text-[10px] font-bold text-zinc-950 uppercase">Achraf_Perf</p>
-                        <p class="text-[8px] text-cyan-600 uppercase">Master_Admin</p>
+                        <p class="text-[10px] font-bold text-zinc-950 uppercase">Coach_Admin</p>
+                        <p class="text-[8px] text-cyan-600 uppercase">Master_System</p>
                     </div>
                 </div>
             </div>
@@ -181,7 +205,7 @@
                 </div>
             </div>
             <div x-show="activeTab === 'programs'">
-                <button @click="programView = (programView === 'list' ? 'create' : 'list')" 
+                <button @click="if(programView === 'list') { resetProtocol() } else { programView = 'list' }" 
                         class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] font-mono">
                     <span x-text="programView === 'list' ? 'Create_New_Protocol' : 'Return_to_List'"></span>
                 </button>
@@ -194,11 +218,13 @@
                 <!-- Molecule: Meal Identity -->
                 <div x-data="{ 
                     categoryOpen: false, 
-                    selectedCategory: 'Ftor',
-                    categories: ['Ftor', 'Gheda', 'Acha'],
+                    selectedCategory: 'Breakfast',
+                    categories: ['Breakfast', 'Lunch', 'Snack', 'Dinner'],
                     mealName: ''
-                }" class="ag-card p-8 bg-white">
-                    <h3 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Meal_Identity</h3>
+                }" 
+                class="ag-card p-8 bg-white relative"
+                :class="categoryOpen ? 'z-[60]' : ''">
+                    <h3 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Meal_Configuration</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="relative">
                             <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category</label>
@@ -308,7 +334,7 @@
                                placeholder="Search_Protocols..." 
                                class="w-full bg-white border border-zinc-200 px-8 py-1.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
                         <div class="absolute left-2.5 top-2 text-zinc-400">
-                            <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <i data-lucide="search" class="size-3"></i>
                         </div>
                     </div>
                 </div>
@@ -330,8 +356,14 @@
                                 <td class="px-6 py-4 text-cyan-700 font-bold">1,850 kcal</td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="inline-flex items-center space-x-4">
-                                        <button class="text-zinc-400 hover:text-cyan-600 transition-colors">Edit</button>
-                                        <button class="text-zinc-400 hover:text-red-500 transition-colors">Delete</button>
+                                        <button @click="editProgram({ name: 'Shred_X_Lite', meals: { 'Breakfast': 'Oatmeal_System', 'Lunch': 'Salmon_Bowl_V3', 'Snack': 'Protein_Shake_X', 'Dinner': 'Beef_Rice_Log' } })" 
+                                                class="text-zinc-400 hover:text-cyan-600 transition-colors flex items-center gap-x-1">
+                                            <i data-lucide="edit-3" class="size-3"></i>
+                                        </button>
+                                        <button @click="confirmDelete('Shred_X_Lite')" 
+                                                class="text-zinc-400 hover:text-red-500 transition-colors flex items-center gap-x-1">
+                                            <i data-lucide="trash-2" class="size-3"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -357,35 +389,36 @@
             <div x-show="programView === 'create'" class="max-w-4xl mx-auto space-y-6">
                 <div class="ag-card p-8 bg-white shadow-sm">
                     <div class="flex items-center justify-between mb-10 border-b border-zinc-100 pb-4">
-                        <h3 class="text-xs font-bold uppercase tracking-widest">Protocol_Timeline_Builder</h3>
-                        <span class="text-[8px] text-cyan-600 bg-cyan-50 px-2 py-1 uppercase font-bold">Draft_Mode</span>
+                        <h3 class="text-xs font-bold uppercase tracking-widest" x-text="isEditing ? 'Protocol_Editor' : 'Protocol_Timeline_Builder'"></h3>
+                        <span class="text-[8px] text-cyan-600 bg-cyan-50 px-2 py-1 uppercase font-bold" x-text="isEditing ? 'Editing_Mode' : 'Draft_Mode'"></span>
                     </div>
 
                     <!-- Protocol Name Input -->
                     <div class="mb-8">
                         <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2 font-sans">Protocol_Name</label>
-                        <input type="text" placeholder="e.g. Summer Shred Phase 1" 
+                        <input type="text" x-model="currentProtocol.name" placeholder="e.g. Summer Shred Phase 1" 
                                class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-zinc-900 placeholder:normal-case placeholder:text-zinc-400">
                     </div>
 
                     <div class="space-y-4" x-data="{ 
-                        selectedMeals: { 'Ftor': '', 'Gheda': '', 'Cas-croûte': '', 'Acha': '' },
                         mealOptions: ['Oatmeal_System', 'Salmon_Bowl_V3', 'Protein_Shake_X', 'Beef_Rice_Log']
                     }">
-                        <template x-for="cat in ['Ftor', 'Gheda', 'Cas-croûte', 'Acha']" :key="cat">
-                            <div x-data="{ open: false }" class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-50 border border-zinc-200 group hover:border-cyan-400 hover:bg-white transition-all relative">
+                        <template x-for="cat in ['Breakfast', 'Lunch', 'Snack', 'Dinner']" :key="cat">
+                            <div x-data="{ open: false }" 
+                                 class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-50 border border-zinc-200 group hover:border-cyan-400 hover:bg-white transition-all relative"
+                                 :class="open ? 'z-[50]' : ''">
                                 <div class="flex items-center space-x-4 mb-4 md:mb-0">
                                     <div class="h-2 w-2 bg-cyan-600"></div>
                                     <span class="text-[10px] text-zinc-950 font-bold uppercase w-24" x-text="cat"></span>
-                                    <template x-if="selectedMeals[cat]">
-                                        <span class="text-[10px] text-cyan-600 font-bold bg-cyan-50 px-2 py-1" x-text="selectedMeals[cat]"></span>
+                                    <template x-if="currentProtocol.meals[cat]">
+                                        <span class="text-[10px] text-cyan-600 font-bold bg-cyan-50 px-2 py-1" x-text="currentProtocol.meals[cat]"></span>
                                     </template>
                                 </div>
                                 
                                 <div class="relative w-full md:w-auto">
                                     <button @click="open = !open" 
                                             class="w-full md:w-48 px-4 py-2 text-[10px] text-cyan-700 font-mono font-bold uppercase border border-zinc-200 bg-zinc-50 hover:bg-white transition-all flex items-center justify-between">
-                                        <span x-text="selectedMeals[cat] ? 'Change_Meal' : 'Select_Meal'"></span>
+                                        <span x-text="currentProtocol.meals[cat] ? 'Change_Meal' : 'Select_Meal'"></span>
                                         <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" /></svg>
                                     </button>
 
@@ -397,9 +430,9 @@
                                          x-transition:enter-end="opacity-100"
                                          class="absolute right-0 mt-1 w-full bg-white border border-zinc-200 z-[100] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]">
                                         <template x-for="meal in mealOptions" :key="meal">
-                                            <div @click="selectedMeals[cat] = meal; open = false" 
+                                            <div @click="currentProtocol.meals[cat] = meal; open = false" 
                                                  class="px-4 py-3 text-[10px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer border-l-2 border-transparent hover:border-cyan-600 flex items-center justify-between"
-                                                 :class="selectedMeals[cat] === meal ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
+                                                 :class="currentProtocol.meals[cat] === meal ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
                                                 <span x-text="meal"></span>
                                             </div>
                                         </template>
@@ -410,12 +443,60 @@
                     </div>
                     <div class="mt-10 flex justify-end">
                         <button class="px-8 py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
-                            Finalize_Protocol
+                            <span x-text="isEditing ? 'Update_Protocol' : 'Finalize_Protocol'"></span>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <!-- Modal: Delete Confirmation -->
+    <template x-teleport="body">
+        <div x-show="isDeleteModalOpen" 
+             class="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <!-- Backdrop -->
+            <div x-show="isDeleteModalOpen" 
+                 x-transition.opacity
+                 @click="isDeleteModalOpen = false"
+                 class="absolute inset-0 bg-zinc-950/20 backdrop-blur-sm"></div>
+            
+            <!-- Modal Content -->
+            <div x-show="isDeleteModalOpen" 
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="scale-95 opacity-0"
+                 x-transition:enter-end="scale-100 opacity-100"
+                 class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-8">
+                
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="h-10 w-10 bg-red-50 flex items-center justify-center text-red-600 border border-red-100">
+                        <i data-lucide="trash-2" class="size-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-950">Confirm Deletion</h3>
+                        <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-mono mt-0.5">IRREVERSIBLE_ACTION // DATA_PURGE_WARNING</p>
+                    </div>
+                </div>
+
+                <p class="text-[10px] text-zinc-500 leading-relaxed mb-8 uppercase font-mono tracking-wider">
+                   You are about to permanently remove <span class="text-zinc-900 font-bold" x-text="protocolToDelete"></span> from the system. All associated data will be lost. Do you wish to proceed?
+                </p>
+
+                <div class="flex space-x-4">
+                    <button @click="isDeleteModalOpen = false" 
+                            class="flex-1 h-11 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 transition-all border border-red-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
+                        Confirm_Delete
+                    </button>
+                    <button @click="isDeleteModalOpen = false" 
+                            class="px-6 h-11 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all border border-zinc-200">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
