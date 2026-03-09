@@ -3,7 +3,7 @@ items:
     category: "Branding"
     path: "./atoms/brand-logo.html"
     status: "validated"
-    description: "Cyan square icon with AntiGravity text."
+    description: "Cyan square icon with Coach text."
     documentation: "https://preline.co/docs/navbar.html"
   
   - name: "NavToggle"
@@ -101,3 +101,10 @@ items:
     status: "validated"
     description: "Rotating arrow for expandable sections."
     documentation: "Custom"
+
+  - name: "Icon"
+    category: "Imagery"
+    path: "./atoms/icon.html"
+    status: "validated"
+    description: "Lucide icon wrapper for UI actions."
+    documentation: "https://lucide.dev/"
