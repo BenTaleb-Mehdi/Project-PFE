@@ -127,24 +127,16 @@ style: |
 ## Sommaire
 
 <div class="sommaire-grid">
-  <div class="sommaire-item"><div class="sommaire-num">1</div><div class="sommaire-text">Contexte du projet</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">2</div><div class="sommaire-text">Méthodologie de travail</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">3</div><div class="sommaire-text">Branche Fonctionnelle</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">4</div><div class="sommaire-text">Branche Technique</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">5</div><div class="sommaire-text">Conception</div></div>
-  <div class="sommaire-item"><div class="sommaire-num">6</div><div class="sommaire-text">Conclusion</div></div>
-</div>
-
----
-## 1. Contexte du projet
-
-<div class="img-container">
-  <img src="images/context.webp" class="img-methodo" alt="Contexte du projet">
+  <div class="sommaire-item"><div class="sommaire-num">1</div><div class="sommaire-text">Méthodologie de travail</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">2</div><div class="sommaire-text">Branche Fonctionnelle</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">3</div><div class="sommaire-text">Branche Technique</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">4</div><div class="sommaire-text">Conception</div></div>
+  <div class="sommaire-item"><div class="sommaire-num">5</div><div class="sommaire-text">Conclusion</div></div>
 </div>
 
 ---
 
-## 2. Méthodologie : Design Thinking
+## Méthodologie : Design Thinking
 
 <div class="img-container">
   <img src="images/designThinking.png" class="img-methodo" alt="Design Thinking">
@@ -160,13 +152,6 @@ style: |
 
 ---
 
-## 3. Branche Fonctionnelle : Carte Empathie
-
-<div class="img-container">
-  <img src="images/image-carte-empatie.png" class="img-methodo" alt="Carte Empathie">
-</div>
-
----
 
 ## Branche Fonctionnelle : DÉFINITION
 
@@ -237,7 +222,7 @@ style: |
 
 ---
 
-## 4. Branche Technique : Tech Stack
+## Branche Technique : Tech Stack
 
 <div class="sommaire-grid">
   
@@ -272,7 +257,7 @@ style: |
 </div>
 
 ---
-## 5. Conception : MLD
+## Conception : MLD
 
 <h3>Modélisation des données</h3>
 <div class="img-container">
@@ -281,7 +266,7 @@ style: |
 
 ---
 
-## 7. Conclusion
+## Conclusion
 
 ### Merci pour votre attention !
 **Questions ?**
