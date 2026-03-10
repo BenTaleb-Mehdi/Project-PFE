@@ -29,25 +29,17 @@ classDiagram
         -float target_goal
         -float current_weight
         -float height
-        +updateStats()
     }
 
     class Staff {
         -String specialty
         -String bio
-        +createMeal()
-        +generateProgram()
-    }
 
-    class Admin {
-        +manageStaff()
-        +managePayments()
     }
 
     %% Hierarchy
     User <|-- Client
     User <|-- Staff
-    Staff <|-- Admin
 
     %% --- Nutrition Logic ---
     class MealCategory {
