@@ -15,10 +15,8 @@ class ClientRegistryService {
     }
 
     public function calculateBioMetrics(Client $client) {
-        $latest = $client->evolutions->first();
+        $latest = $client->evolutions->sortByDesc('recorded_at')->first();
         if (!$latest) return null;
-
-        // Logic dial BMI: weight / (height^2)
         return [
             'bmi' => round($latest->weight / ($client->height ** 2), 1),
             'trend' => $this->getWeightTrend($client)
@@ -26,7 +24,7 @@ class ClientRegistryService {
     }
 
     private function getWeightTrend($client) {
-        $lastTwo = $client->evolutions->take(2);
+        $lastTwo = $client->evolutions->sortByDesc('recorded_at')->take(2)->values();
         if ($lastTwo->count() < 2) return 0;
         return $lastTwo[0]->weight - $lastTwo[1]->weight;
     }
