@@ -13,6 +13,7 @@ Manages the categories of meals available in the system.
 
 ### 2. [ClientRegistryService](file:///c:/Solicode/PFE-Project-26/Project-PFE/PFE-Project/app/Services/ClientRegistryService.php)
 Handles detailed client information and health metrics.
+- **Client CRUD Operations:** Supports creating, updating, and deleting clients with integrated user management and transactional safety.
 - **Detailed Registry:** Retrieves clients with their associated user data and evolution history, supporting searching by name.
 - **Biometric Calculations:** 
     - **BMI:** Calculated using the latest weight from `Evolution` and the client's static height.
