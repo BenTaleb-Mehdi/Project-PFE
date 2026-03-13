@@ -42,7 +42,6 @@ class CategoryService
             $category = MealCategory::withCount('meals')->findOrFail($id);
 
             if ($category->meals_count > 0) {
-                // Tqder t-throwi custom exception hna bach t-afichiha f l-UI
                 throw new \Exception("Cannot delete category: Contains " . $category->meals_count . " meals.");
             }
 
