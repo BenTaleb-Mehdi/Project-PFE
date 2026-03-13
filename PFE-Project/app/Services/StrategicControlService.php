@@ -5,12 +5,10 @@ use App\Models\Staff;
 use App\Models\Payment;
 
 class StrategicControlService {
-    // Team Registry Logic
     public function getTeamManifest() {
         return Staff::with('user')->withCount('clients')->get();
     }
 
-    // Financial Flows Logic
     public function getTransactionLogs($filter = 'all') {
         $query = Payment::with('client.user')->latest();
         

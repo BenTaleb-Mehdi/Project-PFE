@@ -87,4 +87,49 @@ class ClientRegistryServiceTest extends TestCase
         $biometrics = $this->service->calculateBioMetrics($client->fresh(['evolutions']));
         $this->assertEquals(-3, $biometrics['trend']);
     }
+
+    public function test_it_can_add_a_client()
+    {
+        $data = [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'secret123',
+            'phone_number' => '123456789',
+            'status' => 'active',
+            'target_goal' => 75.0,
+            'current_weight' => 85.0,
+            'height' => 1.80
+        ];
+
+        $client = $this->service->addClient($data);
+
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertDatabaseHas('users', ['email' => 'john@example.com']);
+        $this->assertDatabaseHas('clients', ['phone_number' => '123456789', 'target_goal' => 75.0]);
+    }
+
+    public function test_it_can_update_a_client()
+    {
+        $client = Client::first();
+        $data = [
+            'name' => 'Updated Name',
+            'phone_number' => '999999999'
+        ];
+
+        $updatedClient = $this->service->updateClient($client->id, $data);
+
+        $this->assertEquals('Updated Name', $updatedClient->user->name);
+        $this->assertEquals('999999999', $updatedClient->phone_number);
+    }
+
+    public function test_it_can_delete_a_client()
+    {
+        $client = Client::first();
+        $userId = $client->user_id;
+
+        $this->service->deleteClient($client->id);
+
+        $this->assertDatabaseMissing('clients', ['id' => $client->id]);
+        $this->assertDatabaseMissing('users', ['id' => $userId]);
+    }
 }

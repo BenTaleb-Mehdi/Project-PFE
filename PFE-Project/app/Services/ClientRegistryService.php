@@ -2,6 +2,9 @@
 namespace App\Services;
 
 use App\Models\Client;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ClientRegistryService {
     public function getDetailedRegistry($search = null) {
@@ -12,6 +15,49 @@ class ClientRegistryService {
         }
 
         return $query->paginate(10);
+    }
+
+    public function addClient(array $data) {
+        return DB::transaction(function () use ($data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password'] ?? 'password123'),
+            ]);
+
+            return $user->client()->create([
+                'phone_number' => $data['phone_number'] ?? null,
+                'status' => $data['status'] ?? 'active',
+                'target_goal' => $data['target_goal'] ?? null,
+                'current_weight' => $data['current_weight'] ?? null,
+                'height' => $data['height'] ?? null,
+            ]);
+        });
+    }
+
+    public function updateClient(int $id, array $data) {
+        return DB::transaction(function () use ($id, $data) {
+            $client = Client::findOrFail($id);
+            $client->update($data);
+
+            if (isset($data['name']) || isset($data['email'])) {
+                $client->user->update(array_filter([
+                    'name' => $data['name'] ?? null,
+                    'email' => $data['email'] ?? null,
+                ]));
+            }
+
+            return $client->fresh(['user']);
+        });
+    }
+
+    public function deleteClient(int $id) {
+        return DB::transaction(function () use ($id) {
+            $client = Client::findOrFail($id);
+            $user = $client->user;
+            $client->delete();
+            return $user->delete();
+        });
     }
 
     public function calculateBioMetrics(Client $client) {
