@@ -6,12 +6,11 @@ use Tests\TestCase;
 use App\Models\MealCategory;
 use App\Models\Meal;
 use App\Services\CategoryService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\MealCategorySeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CategoryServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected $service;
 
@@ -19,7 +18,6 @@ class CategoryServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new CategoryService();
-        $this->seed(MealCategorySeeder::class);
     }
 
     public function test_it_can_get_all_sequence_slots()
@@ -66,8 +64,7 @@ class CategoryServiceTest extends TestCase
 
     public function test_it_throws_exception_when_deleting_category_with_meals()
     {
-        // Seeder already ran in setUp
-        $category = MealCategory::first();
+        $category = MealCategory::create(['name' => 'Category With Meals']);
         
         Meal::create([
             'name' => 'Test Meal',
