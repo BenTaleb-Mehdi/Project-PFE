@@ -7,15 +7,13 @@ use App\Models\Meal;
 use App\Models\Program;
 use App\Models\MealCategory;
 use App\Services\NutritionService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\MealCategorySeeder;
-use Database\Seeders\MealSeeder;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class NutritionServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected $service;
 
@@ -24,10 +22,6 @@ class NutritionServiceTest extends TestCase
         parent::setUp();
         $this->service = new NutritionService();
         
-        $this->seed(MealCategorySeeder::class);
-        $this->seed(MealSeeder::class);
-        
-        // Mock authentication for finalizeProtocol
         $user = User::factory()->create();
         Auth::login($user);
     }

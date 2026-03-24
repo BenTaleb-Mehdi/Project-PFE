@@ -7,14 +7,11 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\Evolution;
 use App\Services\ClientRegistryService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\ClientSeeder;
-use Database\Seeders\EvolutionSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ClientRegistryServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected $service;
 
@@ -22,10 +19,6 @@ class ClientRegistryServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new ClientRegistryService();
-        
-        $this->seed(UserSeeder::class);
-        $this->seed(ClientSeeder::class);
-        $this->seed(EvolutionSeeder::class);
     }
 
     public function test_it_can_get_detailed_registry_without_search()

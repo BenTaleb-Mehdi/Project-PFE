@@ -6,15 +6,11 @@ use Tests\TestCase;
 use App\Models\Staff;
 use App\Models\Payment;
 use App\Services\StrategicControlService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\StaffSeeder;
-use Database\Seeders\ClientSeeder;
-use Database\Seeders\PaymentSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class StrategicControlServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected $service;
 
@@ -22,11 +18,6 @@ class StrategicControlServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new StrategicControlService();
-        
-        $this->seed(UserSeeder::class);
-        $this->seed(StaffSeeder::class);
-        $this->seed(ClientSeeder::class);
-        $this->seed(PaymentSeeder::class);
     }
 
     public function test_it_returns_team_manifest_with_client_counts()
