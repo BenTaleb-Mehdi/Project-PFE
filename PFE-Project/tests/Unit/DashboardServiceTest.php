@@ -6,14 +6,11 @@ use Tests\TestCase;
 use App\Models\Client;
 use App\Models\Payment;
 use App\Services\DashboardService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\ClientSeeder;
-use Database\Seeders\PaymentSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DashboardServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected $service;
 
@@ -21,10 +18,6 @@ class DashboardServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new DashboardService();
-        
-        $this->seed(UserSeeder::class);
-        $this->seed(ClientSeeder::class);
-        $this->seed(PaymentSeeder::class);
     }
 
     public function test_it_returns_correct_metrics()
