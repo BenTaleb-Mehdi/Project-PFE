@@ -2,16 +2,36 @@
 namespace App\Services;
 
 use App\Models\Client;
-use App\Models\Payment;
 use App\Models\Evolution;
 
 class DashboardService {
-    public function getMetrics() {
+
+    public function getClientMetrics(int $clientId)
+    {
+        $client = Client::with('user')->findOrFail($clientId);
+
+        $latestEvolution = Evolution::where('client_id', $clientId)
+                            ->latest()
+                            ->first();
+
+        $previousEvolution = Evolution::where('client_id', $clientId)
+                            ->latest()
+                            ->skip(1)
+                            ->first();
+
+        $weightChange = 0;
+        if ($latestEvolution && $previousEvolution) {
+            $weightChange = round($latestEvolution->weight - $previousEvolution->weight, 1);
+        }
+
         return [
-            'total_revenue' => Payment::whereMonth('date', now()->month)->sum('amount'),
-            'active_pupils' => Client::where('status', 'active')->count(),
-            'compliance_index' => 94.2, 
-            'system_stream' => Client::with('user')->latest()->limit(5)->get()
+            'client_id'      => $client->id,
+            'client_name'    => $client->user->name,
+            'status'         => $client->status,
+            'target_goal'    => $client->target_goal,
+            'current_weight' => $latestEvolution?->weight ?? $client->current_weight,
+            'weight_change'  => $weightChange,
+            'height'         => $client->height,
         ];
     }
 }
