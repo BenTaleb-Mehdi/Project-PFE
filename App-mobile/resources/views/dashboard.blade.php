@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-slate-900 border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
+<html lang="en" class="bg-white border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -43,19 +43,10 @@
     x-init="fetchMetrics()"
 >
 
-    <!-- Header -->
-    <header class="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-40 border-b border-zinc-100 shrink-0">
-        <div class="flex items-center justify-between px-5 py-4">
-            <span class="text-sm font-bold uppercase tracking-widest text-ag-black">ACHAT</span>
-            <button class="h-8 w-8 flex items-center justify-end text-zinc-400 relative hover:text-zinc-600 transition-colors">
-                <div class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-none border border-white z-10"></div>
-                <i data-lucide="bell" class="h-5 w-5"></i>
-            </button>
-        </div>
-    </header>
+    @include('components.header')
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto pt-[90px] pb-32 px-5 space-y-5">
+    <main class="flex-1 overflow-y-auto pt-[90px] pb-32 px-5 space-y-5 bg-ag-bg">
 
         {{-- LOADING --}}
         <div x-show="loading" x-cloak class="flex flex-col gap-4 mt-4 animate-pulse">
@@ -74,7 +65,7 @@
 
         {{-- DATA --}}
         <template x-if="metrics && !loading">
-            <div class="space-y-5">
+            <div class=" space-y-5">
 
                 {{-- Protocol Status Card --}}
                 <section>
@@ -138,7 +129,7 @@
 
     </main>
 
-    @include('components.navbar', ['clientId' => $clientId])
+    @include('components.menu', ['clientId' => $clientId])
 
     <script>lucide.createIcons();</script>
 </body>

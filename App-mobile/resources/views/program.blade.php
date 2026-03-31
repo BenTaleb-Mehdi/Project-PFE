@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-slate-900 border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
+<html lang="en" class="bg-white border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -57,20 +57,10 @@
       x-data="programData({{ $clientId }})"
       x-init="fetchProgram()">
 
-    <!-- Mobile Top App Bar -->
-    <header class="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-40 border-b border-zinc-200 shrink-0">
-        <div class="flex items-center justify-between px-5 h-16">
-            <div class="flex items-center space-x-3">
-                <span class="text-sm font-bold uppercase tracking-widest text-ag-black">PROGRAM</span>
-            </div>
-            <button class="h-8 w-8 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors">
-                <i data-lucide="settings" class="h-5 w-5"></i>
-            </button>
-        </div>
-    </header>
+    @include('components.header')
 
     <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto pt-20 pb-28 px-5">
+    <main class="flex-1 overflow-y-auto pt-20 pb-28 px-5 bg-ag-bg">
         
         {{-- LOADING --}}
         <div x-show="loading" x-cloak class="flex flex-col gap-4 mt-4 animate-pulse">
@@ -192,7 +182,7 @@
         </template>
     </main>
 
-    @include('components.navbar', ['clientId' => $clientId])
+    @include('components.menu', ['clientId' => $clientId])
 
     <!-- Detail Modal Popup -->
     <div x-show="detailModalOpen" x-cloak class="fixed inset-0 z-[100] flex justify-center pointer-events-none">
