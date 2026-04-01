@@ -11,7 +11,7 @@
                 @if($isDashboard)
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-0.5 sm:h-[3px] bg-cyan-600"></div>
                 @endif
-                <i data-lucide="layout-dashboard" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <x-lucide-layout-dashboard class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2" />
                 <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Dashboard</span>
             </a>
 
@@ -20,7 +20,7 @@
                 @if($isProgram)
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-0.5 sm:h-[3px] bg-cyan-600"></div>
                 @endif
-                <i data-lucide="utensils" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <x-lucide-utensils class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2" />
                 <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Program</span>
             </a>
         </div>

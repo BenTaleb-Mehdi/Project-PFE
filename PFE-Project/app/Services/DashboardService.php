@@ -34,4 +34,13 @@ class DashboardService {
             'height'         => $client->height,
         ];
     }
+
+    public function updateWeight(int $clientId, float $weight)
+    {
+        return Evolution::create([
+            'client_id' => $clientId,
+            'weight' => $weight,
+            'recorded_at' => now(),
+        ]);
+    }
 }
