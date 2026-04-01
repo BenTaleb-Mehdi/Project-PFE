@@ -1,7 +1,25 @@
 import './bootstrap';
+import Alpine from 'alpinejs';
+import 'preline';
+
 import './dashboard.js';
 import './program.js';
-import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
+
+Alpine.store('alert', {
+    visible: false,
+    message: '',
+    type: 'success',
+    show(message, type = 'success') {
+        this.message = message;
+        this.type = type;
+        this.visible = true;
+        setTimeout(() => this.visible = false, 4000);
+    }
+});
+
+// Dummy icons helper to prevent breakages in case manual calls exist
+window.createIcons = () => {};
+
 Alpine.start();

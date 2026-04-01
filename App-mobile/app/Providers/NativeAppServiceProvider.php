@@ -13,7 +13,7 @@ class NativeAppServiceProvider implements ProvidesAppServices
         Window::open()
             ->width(1200)
             ->height(800)
-            ->url(config('app.url'))
+            ->url(config('nativephp.start_url', '/'))
             ->rememberState();
 
         MenuBar::create()

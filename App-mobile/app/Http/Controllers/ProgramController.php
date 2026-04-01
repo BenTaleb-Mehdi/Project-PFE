@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
+use App\Http\Helpers\ApiHelper;
 
 class ProgramController extends Controller
 {
@@ -12,12 +12,12 @@ class ProgramController extends Controller
 
     public function api($id)
     {
-        $response = Http::get(env('WEB_A_API_URL') . "/client/{$id}/program");
+        $response = ApiHelper::fetchFromApi("/client/{$id}/program");
 
-        if ($response->failed()) {
+        if (!$response) {
             return response()->json([
                 'success' => false,
-                'message' => 'Cannot connect to Web A Dashboard'
+                'message' => 'Cannot connect to backend API'
             ], 500);
         }
 

@@ -75,12 +75,12 @@
         
         <!-- Daily Pulse / Macros -->
         <section class="mb-8">
-            <div class="bg-white border text-left border-zinc-200 p-5 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-16 h-16 bg-zinc-50 translate-x-8 -translate-y-8 rotate-45 border-l border-zinc-200"></div>
+            <div class="bg-white border text-left border-zinc-200 p-5 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-16 h-16 bg-zinc-50 translate-x-8 -translate-y-8 rotate-45 border-l border-zinc-200 rounded-bl-xl"></div>
                 
                 <div class="flex justify-between items-end mb-6 relative z-10">
                     <div>
-                        <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Energy_Targets</p>
+                        <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Energy Targets</p>
                         <span class="text-2xl font-mono font-bold text-zinc-900 tracking-tight" x-text="dailyMacros.kcal"></span>
                         <span class="text-xs font-mono text-cyan-700 ml-1">KCAL</span>
                     </div>
@@ -88,8 +88,8 @@
                 
                 <div class="space-y-4 relative z-10">
                     <div class="grid grid-cols-[3fr_1fr] items-center gap-4">
-                        <div class="h-1.5 bg-zinc-100 rounded-none overflow-hidden relative">
-                            <div class="absolute inset-y-0 left-0 bg-cyan-600 w-[85%]"></div>
+                        <div class="h-1.5 bg-zinc-100 rounded-full overflow-hidden relative">
+                            <div class="absolute inset-y-0 left-0 bg-cyan-600 w-[85%] rounded-full"></div>
                         </div>
                         <div class="flex justify-between items-baseline font-mono">
                             <span class="text-[9px] text-zinc-400 uppercase">PRO</span>
@@ -97,8 +97,8 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-[3fr_1fr] items-center gap-4">
-                        <div class="h-1.5 bg-zinc-100 rounded-none overflow-hidden relative">
-                            <div class="absolute inset-y-0 left-0 bg-zinc-900 w-[45%]"></div>
+                        <div class="h-1.5 bg-zinc-100 rounded-full overflow-hidden relative">
+                            <div class="absolute inset-y-0 left-0 bg-zinc-900 w-[45%] rounded-full"></div>
                         </div>
                         <div class="flex justify-between items-baseline font-mono">
                             <span class="text-[9px] text-zinc-400 uppercase">CAR</span>
@@ -106,8 +106,8 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-[3fr_1fr] items-center gap-4">
-                        <div class="h-1.5 bg-zinc-100 rounded-none overflow-hidden relative">
-                            <div class="absolute inset-y-0 left-0 bg-zinc-400 w-[25%]"></div>
+                        <div class="h-1.5 bg-zinc-100 rounded-full overflow-hidden relative">
+                            <div class="absolute inset-y-0 left-0 bg-zinc-400 w-[25%] rounded-full"></div>
                         </div>
                         <div class="flex justify-between items-baseline font-mono">
                             <span class="text-[9px] text-zinc-400 uppercase">FAT</span>
@@ -121,8 +121,8 @@
         <!-- Daily Sequence -->
         <section>
             <div class="flex items-center justify-between mb-5 border-b border-zinc-200 pb-3">
-                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-900">Sequence_Log</h4>
-                <p class="text-[9px] font-mono text-cyan-600 uppercase tracking-widest bg-cyan-50 px-2 py-0.5">3 Actions</p>
+                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-900">Sequence Log</h4>
+                <p class="text-[9px] font-mono text-cyan-600 uppercase tracking-widest bg-cyan-50 px-2 py-0.5 rounded-full">3 Actions</p>
             </div>
             
             <div class="space-y-4 relative">
@@ -138,11 +138,11 @@
                         
                         <!-- Timeline Node -->
                         <div class="w-8 flex-shrink-0 flex justify-center pt-1.5">
-                            <div class="w-2 h-2 bg-white border border-zinc-400 rounded-none group-hover:border-cyan-600 group-hover:bg-cyan-600 transition-colors z-10"></div>
+                            <div class="w-2 h-2 bg-white border border-zinc-400 rounded-full group-hover:border-cyan-600 group-hover:bg-cyan-600 transition-colors z-10"></div>
                         </div>
 
                         <!-- Card -->
-                        <div class="flex-1 bg-white border border-zinc-200 p-4 rounded-none hover:border-cyan-600 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] transition-all">
+                        <div class="flex-1 bg-white border border-zinc-200 p-4 rounded-xl hover:border-cyan-600 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] transition-all">
                             <div class="flex justify-between items-start mb-2">
                                 <div class="flex items-center space-x-2">
                                     <span class="text-[9px] font-mono font-bold bg-zinc-100 text-zinc-900 px-1.5 py-0.5 uppercase tracking-widest" x-text="meal.time"></span>
@@ -173,9 +173,9 @@
             </div>
             
             <div class="mt-8 pt-8 border-t border-zinc-200 flex justify-center">
-                 <div class="h-1 w-1 bg-zinc-200 rounded-none mr-2"></div>
-                 <div class="h-1 w-1 bg-zinc-300 rounded-none mr-2"></div>
-                 <div class="h-1 w-1 bg-zinc-200 rounded-none"></div>
+                 <div class="h-1 w-1 bg-zinc-200 rounded-full mr-2"></div>
+                 <div class="h-1 w-1 bg-zinc-300 rounded-full mr-2"></div>
+                 <div class="h-1 w-1 bg-zinc-200 rounded-full"></div>
             </div>
         </section>
 
@@ -198,11 +198,7 @@
                 <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Program</span>
             </a>
             
-            <!-- Profile Tab -->
-            <a href="#" class="flex flex-col items-center justify-center w-full h-full text-zinc-400 hover:text-zinc-900 transition-colors relative group">
-                <i data-lucide="user" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
-                <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Profile</span>
-            </a>
+           
 
         </div>
     </nav>
@@ -230,11 +226,11 @@
                  x-transition:leave="transition ease-in duration-200 transform"
                  x-transition:leave-start="translate-y-0"
                  x-transition:leave-end="translate-y-full"
-                 class="absolute inset-x-0 bottom-0 bg-white border-t border-zinc-200 rounded-none h-[85vh] flex flex-col shadow-[0px_-8px_16px_0px_rgba(0,0,0,0.05)]">
+                 class="absolute inset-x-0 bottom-0 bg-white border-t border-zinc-200 rounded-t-[2.5rem] h-[85vh] flex flex-col shadow-[0px_-8px_16px_0px_rgba(0,0,0,0.05)]">
                 
                 <!-- Drag Handle Area -->
-                <div class="w-full flex justify-center pt-3 pb-2 cursor-pointer" @click="detailModalOpen = false">
-                    <div class="w-12 h-1 bg-zinc-200 rounded-none"></div>
+                <div class="w-full flex justify-center pt-5 pb-2 cursor-pointer" @click="detailModalOpen = false">
+                    <div class="w-12 h-1 bg-zinc-200 rounded-full"></div>
                 </div>
 
                 <!-- Header -->
@@ -243,7 +239,7 @@
                         <span class="text-[9px] font-mono font-bold text-ag-cyan bg-cyan-50 px-2 py-1 uppercase tracking-widest" x-text="selectedMeal?.time + ' / ' + selectedMeal?.cat"></span>
                         <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tight leading-tight mt-3" x-text="selectedMeal?.menu"></h2>
                     </div>
-                    <button @click="detailModalOpen = false" class="p-2 bg-zinc-50 text-zinc-400 hover:text-zinc-900 transition-colors border border-zinc-200 focus:outline-none">
+                    <button @click="detailModalOpen = false" class="p-2 bg-zinc-50 text-zinc-400 hover:text-zinc-900 transition-colors border border-zinc-200 focus:outline-none rounded-xl">
                         <i data-lucide="x" class="h-4 w-4"></i>
                     </button>
                 </div>
@@ -252,25 +248,25 @@
             <div class="flex-1 overflow-y-auto px-5 py-6 space-y-8">
                 
                 <!-- Yield -->
-                <div class="bg-zinc-50 border border-zinc-200 p-5">
-                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Total_Yield</p>
+                <div class="bg-zinc-50 border border-zinc-200 p-5 rounded-xl">
+                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Total Yield</p>
                     <p class="text-2xl font-mono font-bold text-cyan-700 tracking-tight" x-text="selectedMeal?.kcal + ' KCAL'"></p>
                 </div>
 
                 <!-- Macros -->
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="border border-zinc-200 p-4 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-cyan-600"></div>
+                    <div class="border border-zinc-200 p-4 relative overflow-hidden rounded-xl">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-cyan-600 rounded-full"></div>
                         <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Pro</span>
                         <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.p + 'g'"></span>
                     </div>
-                    <div class="border border-zinc-200 p-4 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-900"></div>
+                    <div class="border border-zinc-200 p-4 relative overflow-hidden rounded-xl">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-900 rounded-full"></div>
                         <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Car</span>
                         <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.c + 'g'"></span>
                     </div>
-                    <div class="border border-zinc-200 p-4 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-400"></div>
+                    <div class="border border-zinc-200 p-4 relative overflow-hidden rounded-xl">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-400 rounded-full"></div>
                         <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Fat</span>
                         <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.f + 'g'"></span>
                     </div>
@@ -280,7 +276,7 @@
                 <div class="pt-2 pb-6">
                     <h5 class="text-[9px] font-mono text-zinc-900 font-bold uppercase tracking-widest mb-4 flex items-center">
                         <i data-lucide="check-circle" class="h-3 w-3 mr-2"></i>
-                        Execution_Protocol
+                        Execution Protocol
                     </h5>
                     <div class="text-[11px] text-zinc-600 font-sans border-l-2 border-cyan-600 pl-4" 
                          x-html="selectedMeal?.details">
@@ -289,9 +285,9 @@
             </div>
             <!-- Sticky Bottom Action -->
             <div class="p-5 border-t border-zinc-200 bg-white">
-                <button class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-colors flex items-center justify-center space-x-2">
+                <button class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-colors flex items-center justify-center space-x-2 rounded-xl">
                     <i data-lucide="check" class="h-4 w-4"></i>
-                    <span>Log_Completion</span>
+                    <span>Log Completion</span>
                 </button>
             </div>
             
