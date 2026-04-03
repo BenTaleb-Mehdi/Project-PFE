@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-slate-900 border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mobile Dashboard | Coach V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ag-bg': '#F4F4F5',      /* Light Zinc */
+                        'ag-cyan': '#45B6C5',    /* Cyan */
+                        'ag-black': '#18181B',
+                        'ag-text-dark': '#27272A',
+                        'ag-grey': '#A1A1AA',
+                        'ag-light-grey': '#E4E4E7'
+                    },
+                    fontFamily: {
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+        
+        body { font-family: 'JetBrains Mono', monospace; }
+
+        ::-webkit-scrollbar { display: none; }
+        
+        .cut-corner {
+            position: relative;
+        }
+        .cut-corner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 20px 20px 0;
+            border-style: solid;
+            border-color: #F4F4F5 #F4F4F5 transparent transparent;
+            display: block;
+            width: 0;
+        }
+    </style>
+</head>
+<body class="bg-ag-bg flex flex-col h-full antialiased text-ag-black overflow-x-hidden selection:bg-cyan-100 selection:text-cyan-900 relative">
+
+    <!-- Header App Bar -->
+    <header class="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-40 border-b border-zinc-100 shrink-0">
+        <div class="flex items-center justify-between px-5 py-4">
+            <div class="flex items-center space-x-4">
+                <img src="../images/logo.png" alt="Logo" class="h-9 w-auto object-contain">
+            </div>
+            <!-- Sync / Notifications Icon -->
+            <button class="h-8 w-8 flex items-center justify-end text-zinc-400 relative hover:text-zinc-600 transition-colors">
+                <div class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-none border border-white z-10"></div>
+                <i data-lucide="bell" class="h-5 w-5"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto pt-[90px] pb-32 px-5 space-y-5">
+        
+        <!-- Welcome / Quick Action Card -->
+        <section>
+            <div class="bg-ag-black border border-ag-black p-6 shadow-sm relative overflow-hidden group">
+                <div class="absolute right-0 bottom-0 opacity-10 blur-[1px]">
+                    <svg class="h-40 w-40 text-white transform translate-x-12 translate-y-12" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 22h20L12 2zm0 4.6l5.2 10.4H6.8L12 6.6z"></path>
+                    </svg>
+                </div>
+                
+                <p class="text-[9px] text-[#A1A1AA] uppercase tracking-widest mb-[6px] font-bold">Current_Status</p>
+                <div class="flex items-center justify-between mb-8 relative z-10">
+                    <div>
+                        <span class="text-xl font-bold text-white tracking-tight uppercase">Protocol_Active</span>
+                        <p class="text-[10px] text-ag-cyan uppercase tracking-widest mt-1 font-bold">Shred_X_Lite</p>
+                    </div>
+                </div>
+                
+                <a href="programmes-mobile.html" class="inline-flex items-center justify-between w-full bg-white text-ag-black py-3 px-4 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-100 transition-colors relative z-10">
+                    <span>Access_Daily_Sequence</span>
+                    <i data-lucide="chevron-right" class="h-3 w-3"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="grid grid-cols-2 gap-4">
+            
+            <!-- Weight Widget -->
+            <div class="bg-white border border-zinc-100 p-5 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-[8px] text-zinc-400 font-bold uppercase tracking-widest">Weight_Sync</span>
+                    <i data-lucide="scale" class="h-3 w-3 text-zinc-300"></i>
+                </div>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-2xl font-bold text-zinc-900 tracking-tight">83.1</span>
+                    <span class="text-[9px] font-bold text-ag-cyan tracking-widest">KG</span>
+                </div>
+                <p class="text-[8px] text-green-500 font-bold mt-2 uppercase tracking-widest flex items-center">
+                    <i data-lucide="trending-down" class="h-2 w-2 mr-1"></i>
+                    -1.2 KG
+                </p>
+            </div>
+
+            <!-- Adherence Widget -->
+            <div class="bg-white border text-left border-zinc-100 p-5 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-[8px] text-zinc-400 font-bold uppercase tracking-widest">Adherence</span>
+                    <i data-lucide="check-circle" class="h-3 w-3 text-zinc-300"></i>
+                </div>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-2xl font-bold text-zinc-900 tracking-tight">95</span>
+                    <span class="text-[9px] font-bold text-ag-cyan tracking-widest">%</span>
+                </div>
+                <p class="text-[8px] text-zinc-400 font-bold mt-2 uppercase tracking-widest">This_Week</p>
+            </div>
+
+        </section>
+
+       
+    </main>
+
+    <!-- Component: BottomNavMobile -->
+    <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-zinc-200 shadow-[0px_-4px_16px_rgba(0,0,0,0.02)] z-40 pb-safe shrink-0">
+        <div class="flex justify-around items-center h-16 sm:h-[80px] px-2">
+            
+            <!-- Dashboard Tab (Active) -->
+            <a href="dashboard-mobile.html" class="flex flex-col items-center justify-center w-full h-full text-cyan-700 relative group">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-0.5 sm:h-[3px] bg-cyan-600"></div>
+                <i data-lucide="layout-dashboard" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Dashboard</span>
+            </a>
+
+            <!-- Program Tab -->
+            <a href="programmes-mobile.html" class="flex flex-col items-center justify-center w-full h-full text-zinc-400 hover:text-zinc-900 transition-colors relative group">
+                <i data-lucide="utensils" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Program</span>
+            </a>
+            
+            <!-- Profile Tab -->
+            <a href="#" class="flex flex-col items-center justify-center w-full h-full text-zinc-400 hover:text-zinc-900 transition-colors relative group">
+                <i data-lucide="user" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Profile</span>
+            </a>
+
+        </div>
+    </nav>
+
+    </nav>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

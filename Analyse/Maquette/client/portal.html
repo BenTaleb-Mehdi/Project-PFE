@@ -27,8 +27,8 @@
     <!-- Mobile Header (Hamburger) -->
     <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
         <div class="flex items-center space-x-2">
-            <div class="h-5 w-5 bg-cyan-600"></div>
-            <span class="font-mono font-bold text-sm tracking-tight uppercase">My_Coach</span>
+            <div class="h-5 w-5 bg-cyan-600 rounded-lg"></div>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My Coach</span>
         </div>
         <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
             <i data-lucide="menu" class="h-6 w-6"></i>
@@ -56,11 +56,11 @@
                 </a>
                 <a href="program-view.html" 
                    class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
-                    My_Programs
+                    My Programs
                 </a>
                 <a href="history.html" 
                    class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
-                    Program_History
+                    Program History
                 </a>
             </nav>
         </div>
@@ -71,14 +71,14 @@
                 <div class="flex items-center space-x-3">
                     <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-600 font-mono text-xs font-bold">M</div>
                     <div>
-                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi_B</p>
-                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active_Pupil</p>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi B</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active Pupil</p>
                     </div>
                 </div>
             </div>
             <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
                 <i data-lucide="log-out" class="size-3"></i>
-                Terminate_Session
+                Terminate Session
             </a>
         </div>
     </aside>
@@ -92,12 +92,12 @@
         <div x-show="activeView === 'dashboard'" class="space-y-12">
             <header class="mb-12">
                 <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Dashboard</h1>
-                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Pupil_Intel // Progress_Sync_Active</p>
+                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Pupil Intel // Progress Sync Active</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <div class="ag-card p-8 bg-white">
-                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Morning_Weight</p>
+                <div class="ag-card p-8 bg-white rounded-xl">
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Morning Weight</p>
                     <div class="flex items-baseline space-x-2">
                         <span class="text-3xl font-mono font-bold text-cyan-700">82.4</span>
                         <span class="text-xs font-mono text-zinc-400 uppercase">KG</span>
@@ -108,8 +108,8 @@
                     </div>
                 </div>
                 
-                <div class="ag-card p-8 bg-white">
-                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Weekly_Compliance</p>
+                <div class="ag-card p-8 bg-white rounded-xl">
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Weekly Compliance</p>
                     <div class="flex items-baseline space-x-2">
                         <span class="text-3xl font-mono font-bold text-zinc-900">98%</span>
                     </div>
@@ -118,8 +118,8 @@
                     </div>
                 </div>
 
-                <div class="ag-card p-8 bg-white border-emerald-100">
-                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Streak_Status</p>
+                <div class="ag-card p-8 bg-white border-emerald-100 rounded-xl">
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Streak Status</p>
                     <div class="flex items-baseline space-x-2">
                         <span class="text-3xl font-mono font-bold text-emerald-600">14_Days</span>
                     </div>
@@ -127,14 +127,14 @@
                 </div>
             </div>
 
-            <div class="ag-card p-8 bg-white">
-                <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-4">Weight_Update_Pulse</h3>
+            <div class="ag-card p-8 bg-white rounded-xl">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-4">Weight Update Pulse</h3>
                 <div class="flex items-end space-x-4">
                     <div class="flex-1">
-                        <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">New_Measurement (KG)</label>
-                        <input type="number" step="0.1" placeholder="82.0" class="w-full bg-zinc-50 px-4 py-4 text-xl font-mono font-bold ag-border outline-none focus:border-cyan-600 transition-all">
+                        <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">New Measurement (KG)</label>
+                        <input type="number" step="0.1" placeholder="82.0" class="w-full bg-zinc-50 px-4 py-4 text-xl font-mono font-bold ag-border rounded-xl outline-none focus:border-cyan-600 transition-all">
                     </div>
-                    <button class="px-8 py-5 bg-cyan-600 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-700 transition-all">
+                    <button class="px-8 py-5 bg-cyan-600 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-700 rounded-xl transition-all">
                         Update
                     </button>
                 </div>
@@ -144,8 +144,8 @@
         <!-- PROGRAMS LIST VIEW -->
         <div x-show="activeView === 'programs'" class="space-y-12">
             <header class="mb-12">
-                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">My_Programs</h1>
-                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Protocol_Library // Dietary_Assigned</p>
+                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">My Programs</h1>
+                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Protocol Library // Dietary Assigned</p>
             </header>
 
             <div class="grid grid-cols-1 gap-6">
@@ -162,8 +162,8 @@
                             <span class="px-3 py-1 text-[8px] font-mono font-bold uppercase tracking-widest ag-border" 
                                   :class="prog.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-zinc-50 text-zinc-400 border-zinc-100'"
                                   x-text="prog.status"></span>
-                            <button @click="selectedProgram = prog; activeView = 'program-details'" class="px-6 py-3 bg-zinc-900 text-white text-[10px] font-mono uppercase font-bold tracking-widest hover:bg-black transition-all">
-                                View_Details
+                            <button @click="selectedProgram = prog; activeView = 'program-details'" class="px-6 py-3 bg-zinc-900 text-white text-[10px] font-mono uppercase font-bold tracking-widest hover:bg-black rounded-xl transition-all">
+                                View Details
                             </button>
                         </div>
                     </div>
