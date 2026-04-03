@@ -2,8 +2,8 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import 'preline';
 
-import './dashboard.js';
-import './program.js';
+import './components/dashboard.js';
+import './components/program.js';
 
 window.Alpine = Alpine;
 

@@ -21,10 +21,11 @@ Handles detailed client information and health metrics.
 - **Optimization:** Automatically sorts evolutions by `recorded_at` to ensure accuracy regardless of data entry order.
 
 ### 3. [DashboardService](file:///c:/Solicode/PFE-Project-26/Project-PFE/PFE-Project/app/Services/DashboardService.php)
-Aggregates high-level metrics for the administrator/coach dashboard.
-- **Revenue:** Sums all `completed` payments.
-- **Active Pupils:** Counts clients with an `active` status.
+Aggregates high-level metrics and individual client progress.
+- **High-Level Statistics:** Aggregates monthly revenue, active pupil counts, and a "Compliance Index" for the coach.
 - **System Stream:** Retrieves the most recent clients added to the system for real-time monitoring.
+- **Client-Specific Metrics:** Calculates individual progress including current weight and weight change between the two most recent recorded evolutions.
+- **Progress Tracking:** Provides a unified interface for recording new weight entries (`Evolution`) for clients.
 
 ### 4. [NutritionService](file:///c:/Solicode/PFE-Project-26/Project-PFE/PFE-Project/app/Services/NutritionService.php)
 Handles the meal planning and protocol logic.
