@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Client;
 use App\Models\Evolution;
+use App\Models\Payment;
 
 class DashboardService {
 
@@ -32,6 +33,16 @@ class DashboardService {
             'current_weight' => $latestEvolution?->weight ?? $client->current_weight,
             'weight_change'  => $weightChange,
             'height'         => $client->height,
+        ];
+    }
+
+    public function getMetrics()
+    {
+        return [
+            'total_revenue'    => Payment::whereMonth('date', now()->month)->sum('amount'),
+            'active_pupils'    => Client::where('status', 'active')->count(),
+            'compliance_index' => 85, // Placeholder for business logic
+            'system_stream'    => Client::latest()->take(5)->get(),
         ];
     }
 
