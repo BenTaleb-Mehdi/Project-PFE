@@ -20,7 +20,7 @@
              x-show="galleryFilter === 'all' || item.category === galleryFilter"
              @click="openLightbox(idx)">
           <div class="w-full h-full flex items-center justify-center p-6 transition-transform duration-700 hover:scale-110"
-               :style="'background:' + item.bg">
+               :style="lightMode ? 'background:var(--bg)' : 'background:' + item.bg">
             <div class="text-center">
               <div class="font-display text-2xl md:text-3xl leading-none mb-1"
                    :class="item.category === 'mindset' ? 'text-dark' : 'text-acid'"
@@ -60,7 +60,7 @@
     </button>
     <template x-if="galleryItems.length > 0">
       <div class="max-w-3xl w-full mx-20 t-card t-border border rounded-sm overflow-hidden" @click.stop>
-        <div class="aspect-video flex items-center justify-center" :style="'background:' + galleryItems[lightboxIdx].bg">
+        <div class="aspect-video flex items-center justify-center" :style="lightMode ? 'background:var(--bg-mid)' : 'background:' + galleryItems[lightboxIdx].bg">
           <div class="text-center px-8">
             <div class="font-display text-5xl text-acid mb-2" x-text="galleryItems[lightboxIdx].title"></div>
             <div class="font-cond text-xs tracking-widest uppercase t-muted" x-text="galleryItems[lightboxIdx].sub"></div>
