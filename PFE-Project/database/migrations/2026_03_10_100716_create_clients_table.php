@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('phone_number');
-            $table->string('status');
-            $table->float('target_goal');
-            $table->float('current_weight');
-            $table->float('height');
+            $table->string('phone_number')->nullable();
+            $table->string('status')->default('active');
+            $table->float('target_goal')->nullable();
+            $table->float('current_weight')->nullable();
+            $table->float('height')->nullable();
             $table->timestamps();
         });
     }
