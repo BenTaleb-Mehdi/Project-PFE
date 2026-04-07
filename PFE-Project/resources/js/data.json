@@ -1,0 +1,93 @@
+{
+  "info": {
+    "title": "IRONCOACH — Build Your Champion Body",
+    "description": "IRONCOACH is a fitness platform that helps you achieve your fitness goals through personalized training plans, nutrition guidance, and expert coaching."
+  },
+  "hero": {
+    "title": "Build Your Champion Body",
+    "subtitle": "IRONCOACH",
+    "desc": "Transform your physique with world-class training, nutrition, and mindset coaching. Join the elite."
+  },
+  "infocoach":{
+    "name":"Achraf",
+    "role":"Professional Bodybuilder",
+    "desc":"I'm a professional bodybuilder with 10 years of experience in the fitness industry. I've helped hundreds of clients achieve their fitness goals through personalized training plans, nutrition guidance, and expert coaching.",
+    "image":""
+  },
+  "heroStats": {
+    "clients": 57,
+    "years": 12,
+    "rate": 97
+  },
+  "brands": [
+    "GYMGANG",
+    "WORLCAMP",
+    "CampTrain",
+    "WorkKids",
+    "USPECROWN",
+    "GYMGANG",
+    "WORLCAMP",
+    "CampTrain",
+    "WorkKids",
+    "USPECROWN"
+  ],
+  "services": [
+    {
+      "title": "Free Food & Drinks",
+      "desc": "We provide varieties of snacks and drinking water to keep you fueled during training sessions."
+    },
+    {
+      "title": "Choose Your Trainer",
+      "desc": "You can select any fitness trainer you feel comfortable with or matches your training style."
+    },
+    {
+      "title": "Fast Service",
+      "desc": "We ensure that every customer receives excellent service with minimal wait times and maximum attention."
+    },
+    {
+      "title": "Cool & Clean Rest Room",
+      "desc": "We always maintain our premium facilities in perfect condition for your comfort and recovery."
+    }
+  ],
+  "skills": [
+    { "name": "Strength Training", "pct": 92 },
+    { "name": "Nutrition Planning", "pct": 88 },
+    { "name": "Cardio & Endurance", "pct": 95 },
+    { "name": "Mental Conditioning", "pct": 80 }
+  ],
+  "stats": [
+    { "label": "Happy Clients", "display": "57K", "target": 57 },
+    { "label": "Pro Champions", "display": "241K", "target": 241 },
+    { "label": "Online Champions", "display": "36K", "target": 36 },
+    { "label": "Years Active", "display": "7+", "target": 7 }
+  ],
+  "reasons": [
+    { "title": "Goal-Oriented Premium Plans", "desc": "Each plan is individually customized to match your personal fitness goals and performance baseline." },
+    { "title": "Unlimited Consultation", "desc": "There is a one-on-one unlimited facility for members who want to improve faster with personal guidance." },
+    { "title": "Community Access", "desc": "Follow a collection of like-minded individuals who share the same passion for living a healthier life." },
+    { "title": "Yoga Area for Mindfulness", "desc": "Dedicated zone for members who want to stress free and focus on mental resilience alongside physical training." }
+  ],
+ 
+  "testimonials": [
+    { "name": "Marcus King", "role": "Professional Athlete", "text": "IronCoach completely transformed how I train. The structured approach and personalized attention helped me break every plateau I had. Best investment I've ever made in myself." },
+    { "name": "Sarah Williams", "role": "Fitness Enthusiast", "text": "The online program is incredible. Within 6 weeks I had already noticed major improvements in both strength and endurance. The coaches actually care about your progress." },
+    { "name": "David Torres", "role": "Amateur Boxer", "text": "I came in as a complete beginner and left feeling like a champion. The community here pushes you to your limits in the best way possible." }
+  ],
+  "socials": [
+    { "name": "Instagram", "url": "#", "icon": "<svg class=\"w-4 h-4\" fill=\"currentColor\" viewBox=\"0 0 24 24\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.162S15.403 5.838 12 5.838zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg>" },
+    { "name": "Twitter", "url": "#", "icon": "<svg class=\"w-4 h-4\" fill=\"currentColor\" viewBox=\"0 0 24 24\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z\"/></svg>" },
+    { "name": "YouTube", "url": "#", "icon": "<svg class=\"w-4 h-4\" fill=\"currentColor\" viewBox=\"0 0 24 24\"><path d=\"M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z\"/></svg>" }
+  ],
+  "galleryItems": [
+    { "title": "Power",     "sub": "Strength Session",       "category": "strength", "bg": "linear-gradient(135deg,#1a2a0a,#0a0a0a)" },
+    { "title": "57K",       "sub": "Happy Members",          "category": "cardio",   "bg": "linear-gradient(135deg,#0a1a2a,#0a0a0a)" },
+    { "title": "Equipment", "sub": "Premium Gear",           "category": "strength", "bg": "linear-gradient(135deg,#1a0a1a,#0a0a0a)" },
+    { "title": "Cardio",    "sub": "Endurance Zone",         "category": "cardio",   "bg": "linear-gradient(135deg,#0d1a0d,#060606)" },
+    { "title": "No Limits", "sub": "Mindset",                "category": "mindset",  "bg": "#B5FF2D" },
+    { "title": "Nutrition", "sub": "Science-Backed Plans",   "category": "online",   "bg": "linear-gradient(135deg,#1a1400,#0a0a0a)" },
+    { "title": "241K",      "sub": "Champions",              "category": "strength", "bg": "linear-gradient(135deg,#0a0a1a,#0a0a0a)" },
+    { "title": "Online",    "sub": "E-Books + Videos",       "category": "online",   "bg": "linear-gradient(135deg,#1a0a0a,#060606)" },
+    { "title": "Yoga",      "sub": "Mind & Body",            "category": "mindset",  "bg": "linear-gradient(135deg,#0d1a1a,#0a0a0a)" },
+    { "title": "12+",       "sub": "Years Elite Coaching",   "category": "online",   "bg": "linear-gradient(180deg,rgba(181,255,45,.1),#0a0a0a)" }
+  ]
+}
