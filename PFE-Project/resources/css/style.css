@@ -101,8 +101,8 @@ body::before {
   color: var(--clr-dark);
 }
 .light .atom-btn-premium {
-  background: var(--acid-bg-over);
-  color: var(--acid-text-over);
+  background: var(--clr-acid);
+  color: var(--clr-dark);
 }
 .atom-btn-premium:hover {
   transform: scale(1.06);
@@ -477,4 +477,26 @@ body::before {
 
 /* Alpine cloak */
 [x-cloak] { display: none !important; }
+
+/* ═══════════════════════════════════════════
+   LIGHT MODE OVERRIDES FOR HARDCODED TAILWIND
+   ═══════════════════════════════════════════ */
+/* Fix invisible text where text-acid is used on white backgrounds */
+.light .text-acid { color: var(--acid-over) !important; }
+.light .hover\:text-acid:hover { color: var(--acid-over) !important; }
+.light .group:hover .group-hover\:text-acid { color: var(--acid-over) !important; }
+
+/* The text modifiers */
+.light .text-white\/5 { color: #000000 !important; opacity: 0.05 !important; }
+.light .text-acid\/20 { color: #000000 !important; opacity: 0.15 !important; }
+
+/* Input focus */
+.light .focus\:border-acid:focus { border-color: var(--acid-over) !important; }
+
+/* Hardcoded dark backgrounds that should be white/gray in light mode */
+.light .bg-dark { background-color: var(--bg) !important; }
+.light .bg-mid { background-color: var(--bg-mid) !important; }
+.light .hover\:bg-dark:hover { background-color: var(--bg-darker) !important; }
+.light .border-border { border-color: var(--border) !important; }
+.light .hover\:border-border:hover { border-color: var(--border) !important; }
 

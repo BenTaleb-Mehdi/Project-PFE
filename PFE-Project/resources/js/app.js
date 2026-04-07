@@ -10,9 +10,19 @@
 
 import Alpine from 'alpinejs'
 import { appData } from './landingpage.js'
+import 'preline'
+import { createIcons, icons } from 'lucide'
 
+// Initialize Lucide Icons
+window.addEventListener('DOMContentLoaded', () => {
+    createIcons({ icons });
+});
 
+// Re-initialize for Alpine and dynamic content
 Alpine.data('app', appData)
+Alpine.effect(() => {
+    createIcons({ icons });
+});
 
 window.Alpine = Alpine
 Alpine.start()
