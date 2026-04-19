@@ -58,6 +58,60 @@
             <h1 class="text-3xl font-bold tracking-tight uppercase text-zinc-900">@yield('header_title', 'Dashboard')</h1>
             <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-[0.2em] font-mono">@yield('header_subtitle', 'Operational_Intel // System_Sync_Active')</p>
         </header>
+        
+        <!-- Global Alerts Hub -->
+        @if(session('success'))
+            <div x-data="{ show: true }" 
+                 x-show="show" 
+                 x-init="setTimeout(() => show = false, 5000)"
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="translate-x-full opacity-0"
+                 x-transition:enter-end="translate-x-0 opacity-100"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="translate-x-0 opacity-100"
+                 x-transition:leave-end="translate-x-full opacity-0"
+                 class="fixed top-8 right-8 z-[200] bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] p-6 min-w-[320px] pointer-events-auto"
+                 x-cloak>
+                <div class="flex items-start gap-x-4">
+                    <div class="h-10 w-1 bg-cyan-600 flex-shrink-0"></div>
+                    <div class="flex-1">
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase tracking-widest mb-1">Status: Success_Sync</p>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase tracking-wider">{{ session('success') }}</p>
+                    </div>
+                    <button @click="show = false" class="text-zinc-400 hover:text-zinc-900 transition-colors">
+                        <i data-lucide="x" class="size-4"></i>
+                    </button>
+                </div>
+            </div>
+        @endif
+
+        @if(session('error') || $errors->any())
+            <div x-data="{ show: true }" 
+                 x-show="show" 
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="translate-x-full opacity-0"
+                 x-transition:enter-end="translate-x-0 opacity-100"
+                 class="fixed top-8 right-8 z-[200] bg-white border border-red-200 shadow-[8px_8px_0px_0px_rgba(220,38,38,0.05)] p-6 min-w-[320px] pointer-events-auto"
+                 x-cloak>
+                <div class="flex items-start gap-x-4">
+                    <div class="h-10 w-1 bg-red-600 flex-shrink-0"></div>
+                    <div class="flex-1">
+                        <p class="text-[8px] font-mono text-red-600 uppercase tracking-widest mb-1">Status: Error_Conflict</p>
+                        <ul class="text-[10px] font-bold text-zinc-900 uppercase tracking-wider space-y-1">
+                            @if(session('error'))
+                                <li>{{ session('error') }}</li>
+                            @endif
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <button @click="show = false" class="text-zinc-400 hover:text-zinc-900 transition-colors">
+                        <i data-lucide="x" class="size-4"></i>
+                    </button>
+                </div>
+            </div>
+        @endif
 
         <!-- Dynamic Content -->
         @yield('content')

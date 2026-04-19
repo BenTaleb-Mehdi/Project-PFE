@@ -45,13 +45,19 @@ class ClientRegistryService {
     public function updateClient(int $id, array $data) {
         return DB::transaction(function () use ($id, $data) {
             $client = Client::findOrFail($id);
-            $client->update($data);
+            
+            // Separate User data from Client data
+            $userData = array_intersect_key($data, array_flip(['name', 'email']));
+            $clientData = array_diff_key($data, array_flip(['name', 'email']));
 
-            if (isset($data['name']) || isset($data['email'])) {
-                $client->user->update(array_filter([
-                    'name' => $data['name'] ?? null,
-                    'email' => $data['email'] ?? null,
-                ]));
+            // Update Client record
+            if (!empty($clientData)) {
+                $client->update($clientData);
+            }
+
+            // Update associated User record
+            if (!empty($userData)) {
+                $client->user->update($userData);
             }
 
             return $client->fresh(['user']);

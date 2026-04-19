@@ -13,11 +13,13 @@ class UpdateClientRequest extends FormRequest
 
     public function rules(): array
     {
-        $id = $this->route('client'); // Assuming the route parameter is 'client'
+        $clientId = $this->route('client');
+        $client = \App\Models\Client::findOrFail($clientId);
+        $userId = $client->user_id;
 
         return [
             'name' => ['string', 'max:255'],
-            'email' => ['string', 'email', 'max:255', 'unique:users,email,'.$id.',id'],
+            'email' => ['string', 'email', 'max:255', 'unique:users,email,'.$userId.',id'],
             'phone_number' => ['nullable', 'string', 'max:20'],
             'target_goal' => ['nullable', 'numeric', 'min:0'],
             'current_weight' => ['nullable', 'numeric', 'min:0'],
