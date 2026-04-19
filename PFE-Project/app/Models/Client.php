@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = ['user_id', 'phone_number', 'status', 'target_goal', 'current_weight', 'height'];
+    protected $fillable = [
+        'user_id', 
+        'phone_number', 
+        'status', 
+        'target_goal', 
+        'current_weight', 
+        'height',
+        'program_id',
+        'program_started_at',
+        'duration_weeks'
+    ];
 
     public function user()
     {
@@ -21,5 +31,10 @@ class Client extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
     }
 }

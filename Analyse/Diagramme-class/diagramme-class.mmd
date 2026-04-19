@@ -27,7 +27,9 @@ classDiagram
         -float target_goal
         -float current_weight
         -float height
-        -int? active_program_id
+        -int? program_id
+        -DateTime program_started_at
+        -int duration_weeks
     }
 
     class Staff {
@@ -70,9 +72,10 @@ classDiagram
         -int id
         -int client_id
         -float weight
-        -String body_img_url
+        -JSON images
         -DateTime recorded_at
     }
+
 
     %% --- Relations ---
     User "*" -- "*" Role

@@ -6,8 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Coach') }} | @yield('title', 'Admin Engine V3.0')</title>
     
-    <!-- Alpine.js Cloak -->
-    <style>[x-cloak] { display: none !important; }</style>
+    <!-- Fonts & Tokens -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+    <style>
+        :root {
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        * {
+            border-radius: 0 !important;
+        }
+        [x-cloak] { display: none !important; }
+        .ag-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E4E4E7;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ag-card:hover {
+            border-color: #0891B2;
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.05);
+        }
+        .font-mono { font-family: var(--font-mono) !important; }
+    </style>
 
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

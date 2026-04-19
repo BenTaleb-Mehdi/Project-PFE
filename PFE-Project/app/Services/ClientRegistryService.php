@@ -7,14 +7,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ClientRegistryService {
-    public function getDetailedRegistry($search = null) {
-        $query = Client::with(['user', 'evolutions' => fn($q) => $q->latest()]);
+    public function getDetailedRegistry($search = null, $status = 'ALL_STATUSES') {
+        $query = Client::with(['user', 'evolutions', 'program']);
 
         if ($search) {
-            $query->whereHas('user', fn($q) => $q->where('name', 'like', "%$search%"));
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', fn($sq) => $sq->where('name', 'like', "%$search%"))
+                  ->orWhere('id', 'like', "%$search%");
+            });
         }
 
-        return $query->paginate(10);
+        if ($status !== 'ALL_STATUSES') {
+            $query->where('status', $status);
+        }
+
+        return $query->latest()->paginate(15);
     }
 
     public function addClient(array $data) {
@@ -64,7 +71,7 @@ class ClientRegistryService {
         $latest = $client->evolutions->sortByDesc('recorded_at')->first();
         if (!$latest) return null;
         return [
-            'bmi' => round($latest->weight / ($client->height ** 2), 1),
+            'bmi' => round($latest->weight / (($client->height / 100) ** 2), 2),
             'trend' => $this->getWeightTrend($client)
         ];
     }
@@ -73,5 +80,13 @@ class ClientRegistryService {
         $lastTwo = $client->evolutions->sortByDesc('recorded_at')->take(2)->values();
         if ($lastTwo->count() < 2) return 0;
         return $lastTwo[0]->weight - $lastTwo[1]->weight;
+    }
+
+    /**
+     * Get all clients for selection dropdowns.
+     */
+    public function getAllClients()
+    {
+        return Client::with('user')->get();
     }
 }

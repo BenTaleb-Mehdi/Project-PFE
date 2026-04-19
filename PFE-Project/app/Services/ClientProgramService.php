@@ -17,7 +17,7 @@ class ClientProgramService
      */
     public function getClientProgramData(int $clientId): array
     {
-        $program = Program::with(['items.meal.category'])->latest()->first();
+        $program = Program::with(['items.meal.category'])->withCount('items')->latest()->first();
 
         if (!$program) {
             return $this->emptyProgramResponse();
@@ -51,6 +51,7 @@ class ClientProgramService
 
         return [
             'program_title' => $program->title,
+            'items_count'   => $program->items_count,
             'dailyMacros'   => [
                 'kcal' => $totalKcal,
                 'p'    => $totalP,
@@ -62,12 +63,21 @@ class ClientProgramService
     }
 
     /**
+     * Get all programs for the history archive view.
+     */
+    public function getAllPrograms()
+    {
+        return Program::with(['items.meal.category'])->withCount('items')->latest()->paginate(10);
+    }
+
+    /**
      * Return a default empty program structure when no program is found.
      */
     private function emptyProgramResponse(): array
     {
         return [
-            'program_title' => 'No Active Program',
+            'program_title' => 'NO_ACTIVE_PROTOCOL',
+            'items_count'   => 0,
             'dailyMacros'   => [
                 'kcal' => 0,
                 'p'    => 0,

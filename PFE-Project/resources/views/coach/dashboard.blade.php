@@ -25,12 +25,21 @@
         <div class="ag-card p-8 group transition-all duration-300">
             <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Total_Revenue_MTD</p>
             <div class="flex items-baseline space-x-2 font-mono">
-                <span class="text-3xl font-bold text-cyan-700">42,500</span>
+                <span class="text-3xl font-bold text-cyan-700">{{ $financeMetrics['total_revenue_mtd'] }}</span>
                 <span class="text-xs text-zinc-400 uppercase">MAD</span>
             </div>
-            <div class="mt-4 flex items-center text-[9px] text-emerald-600 uppercase font-mono">
-                <i data-lucide="trending-up" class="h-3 w-3 mr-1"></i>
-                +12.4% vs prev_month
+            <div class="mt-4 flex items-center text-[9px] uppercase font-mono">
+                @if(str_contains($financeMetrics['growth_mtd'], '+'))
+                    <span class="text-emerald-600 flex items-center">
+                        <i data-lucide="trending-up" class="h-3 w-3 mr-1"></i>
+                        {{ $financeMetrics['growth_mtd'] }} vs prev_month
+                    </span>
+                @else
+                    <span class="text-red-500 flex items-center">
+                        <i data-lucide="trending-down" class="h-3 w-3 mr-1"></i>
+                        {{ $financeMetrics['growth_mtd'] }} vs prev_month
+                    </span>
+                @endif
             </div>
         </div>
         
@@ -38,11 +47,11 @@
         <div class="ag-card p-8 group transition-all duration-300">
             <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Pupils_Performance_Cap</p>
             <div class="flex items-baseline space-x-2 font-mono">
-                <span class="text-3xl font-bold text-cyan-700">128</span>
-                <span class="text-xs text-zinc-400 uppercase">Active</span>
+                <span class="text-3xl font-bold text-cyan-700">{{ $activePupils }}</span>
+                <span class="text-xs text-zinc-400 uppercase">Active / {{ $totalPupils }}</span>
             </div>
             <div class="w-full bg-zinc-100 h-1 mt-6">
-                <div class="bg-cyan-600 h-1" style="width: 85%"></div>
+                <div class="bg-cyan-600 h-1 transition-all duration-500" style="width: {{ $pupilsPercent }}%"></div>
             </div>
         </div>
 
@@ -50,9 +59,9 @@
         <div class="ag-card p-8 group transition-all duration-300">
             <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Compliance_Index</p>
             <div class="flex items-baseline space-x-2 font-mono">
-                <span class="text-3xl font-bold text-emerald-600">94.2%</span>
+                <span class="text-3xl font-bold text-emerald-600">{{ $complianceIndex }}%</span>
             </div>
-            <p class="text-[8px] text-zinc-400 mt-4 uppercase font-mono">Calculated_Log_Sync</p>
+            <p class="text-[8px] text-zinc-400 mt-4 uppercase font-mono">Calculated_Log_Sync (7D)</p>
         </div>
     </div>
 
@@ -64,13 +73,21 @@
                 <span class="text-[8px] animate-pulse text-cyan-600">Live</span>
             </h3>
             <div class="space-y-6">
-                <div class="flex items-start space-x-4">
-                    <div class="w-2 h-2 bg-cyan-600 mt-1"></div>
-                    <div>
-                        <p class="text-xs uppercase font-bold">New_Registration</p>
-                        <p class="text-[10px] text-zinc-500 mt-1">Client #142 (Mehdi B.) joined Performance Engine.</p>
+                @forelse($systemStream as $event)
+                    <div class="flex items-start space-x-4">
+                        <div class="w-2 h-2 {{ $event['type'] === 'REGISTRATION' ? 'bg-cyan-600' : 'bg-emerald-600' }} mt-1"></div>
+                        <div>
+                            <p class="text-xs uppercase font-bold">{{ $event['title'] }}</p>
+                            <p class="text-[10px] text-zinc-500 mt-1">{{ $event['desc'] }}</p>
+                            <p class="text-[8px] text-zinc-400 mt-1 uppercase font-mono">{{ \Carbon\Carbon::parse($event['time'])->diffForHumans() }}</p>
+                        </div>
                     </div>
-                </div>
+                @empty
+                    <div class="flex flex-col items-center py-8 text-zinc-300">
+                        <i data-lucide="radio" class="size-6 mb-2 opacity-20"></i>
+                        <p class="text-[10px] uppercase font-mono">No_Recent_Traffic</p>
+                    </div>
+                @endforelse
             </div>
         </div>
 
