@@ -146,3 +146,76 @@
 .ag-editor-content:focus {
     outline: none;
 }
+
+/* =========================================
+   PDF EXPORT ENGINE (PRINT PROJECTION)
+   ========================================= */
+@media print {
+    /* Total Isolation Logic */
+    body, main { 
+        background: white !important; 
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Hide Layout Elements from dashboard.blade.php */
+    header.lg\:hidden, nav, #application-sidebar, main > header, .no-print { display: none !important; }
+    
+    /* Force Modal Parents to be visible & Remove Centering Constraints */
+    .print-modal-projection { 
+        visibility: visible !important; 
+        display: block !important; 
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: white !important;
+    }
+    .print-modal-projection * {
+        visibility: visible !important;
+    }
+    
+    /* The printable node selector */
+    .print-intelligence-node, #print-intelligence-node { 
+        display: block !important; 
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .print-intelligence-node, #print-intelligence-node, 
+    .print-intelligence-node *, #print-intelligence-node * { 
+        overflow: visible !important;
+        max-height: none !important;
+    }
+    
+    .print-intelligence-node, #print-intelligence-node {
+        position: relative !important; 
+        left: 0 !important; 
+        top: 0 !important; 
+        width: 100% !important; 
+        height: auto !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .no-print, header .modal-close, footer.bg-zinc-50, .print-intelligence-node header.bg-zinc-950 { display: none !important; }
+    
+    /* Reveal dense matrices ONLY during document extraction */
+    .print-matrix-expand, .print-matrix-expand * { display: block !important; }
+    
+    /* Branded Elements */
+    .print-only-branding { display: flex !important; }
+    
+    /* Layout Tuning */
+    .v3-editor-matrix { padding: 0 !important; border: none !important; background: transparent !important; }
+    .divide-y > div { page-break-inside: avoid !important; }
+    
+    @page { size: A4; margin: 1cm; }
+}

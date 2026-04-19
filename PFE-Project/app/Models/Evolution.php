@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evolution extends Model
 {
-    protected $fillable = ['client_id', 'weight', 'body_img_url', 'recorded_at'];
+    protected $fillable = ['client_id', 'weight', 'images', 'recorded_at'];
+
+    protected $casts = [
+        'images' => 'array',
+        'recorded_at' => 'date',
+    ];
+
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 }
+
