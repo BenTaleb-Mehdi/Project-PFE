@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import 'tailwindcss';
+@import './style.css';
+@import './v3-admin.css';
+
 /*
   FIX: Import order matters in Tailwind v4.
   1. tailwindcss first (generates utilities)
   2. custom theme overrides via @theme
   3. your own CSS last (can use Tailwind utilities inside)
+  Note: PostCSS requires ALL @imports to be at the top.
 */
-
-@import 'tailwindcss';
 
 /* ── Tailwind theme extension (replaces inline tailwind.config in <script>) ── */
 @theme {
@@ -27,7 +31,3 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
-
-/* ── Your custom UI kit ── */
-@import './style.css';
-@import './v3-admin.css';
