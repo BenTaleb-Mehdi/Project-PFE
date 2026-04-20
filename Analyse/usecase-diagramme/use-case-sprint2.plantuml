@@ -13,9 +13,7 @@ Staff <|-- Admin
 
 rectangle "Sprint 2 - Automation & Expérience Mobile" {
 
-  package "Espace Client (Mobile App)" {
-    usecase "Consulter son programme assigné" as ViewProg
-  }
+
 
   package "Suivi & Performance (Web)" {
     usecase "Mettre à jour poids & photos" as UpdateStats
@@ -30,7 +28,6 @@ rectangle "Sprint 2 - Automation & Expérience Mobile" {
 }
 
 ' Relations
-Client -- ViewProg : "(Via Mobile)"
 Client -- UpdateStats : "(Via Web)"
 Client -- ViewProgress : "(Via Web)"
 
