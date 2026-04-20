@@ -231,6 +231,8 @@ L’objectif est de structurer le développement autour de la valeur métier :
 | **Base Alimentaire** | UC3 | Catégories de repas | Organisation (Petit-déjeuner, Déjeuner, etc.). |
 | **Base Alimentaire** | UC4 | Création de repas | Définition du nom et des ingrédients. |
 | **Nutrition** | UC5 | Saisir Macros | *<<include>>* Saisie des apports (P/G/L/Kcal) par repas. |
+| **API Rest** | UC6 | Consommer les Ressources | *<<include>>* Afficher les données de l'API Rest. |
+
 
 
 #### B. Résultat Attendu du Sprint 1

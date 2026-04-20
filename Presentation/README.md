@@ -231,12 +231,14 @@ style: |
     <div style="text-align: center; margin: 30px 0;">
         <p style="font-size: 1.2em; font-weight: bold; color: #444; letter-spacing: 1px;">
             PHP <span style="color: #029fcaff;">•</span> Laravel <span style="color: #029fcaff;">•</span> MySQL
+            PHP <span style="color: #029fcaff;">•</span> Laravel <span style="color: #029fcaff;">•</span> PHPNative
         </p>
     </div>
     <ul style="list-style: none; padding: 15px 0 0 0; font-size: 0.9em; border-top: 1px solid #eee;">
       <li><strong>Architecture :</strong> N-Tiers (Service Layer)</li>
       <li><strong>Spatie :</strong> Rôles & Permissions</li>
       <li><strong>Moteur :</strong> Eloquent ORM</li>
+      <li><strong>Test :</strong> PHPUnit</li>
     </ul>
   </div>
 
