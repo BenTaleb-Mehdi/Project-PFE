@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rich Text Toolbar | Coach Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        * { border-radius: 0 !important; }
+        [contenteditable]:focus { outline: none; }
+    </style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: RichTextToolbar // AG_V3</p>
+
+    <div class="bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]" x-data="{ active: null }">
+        <!-- Toolbar -->
+        <div class="flex flex-wrap items-center bg-white border-b border-zinc-200 sticky top-0 z-10">
+            <!-- Text Style -->
+            <div class="flex border-r border-zinc-200">
+                <button onclick="document.execCommand('bold')"
+                        class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors"
+                        title="Bold (Ctrl+B)">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/><path d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/>
+                    </svg>
+                </button>
+                <button onclick="document.execCommand('italic')"
+                        class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors"
+                        title="Italic (Ctrl+I)">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path d="M19 4h-9m0 0l-4 16m4-16h9m-9 16h9" stroke-linecap="square"/>
+                    </svg>
+                </button>
+                <button onclick="document.execCommand('underline')"
+                        class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors"
+                        title="Underline (Ctrl+U)">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path d="M6 3v7a6 6 0 006 6 6 6 0 006-6V3M4 21h16"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Lists -->
+            <div class="flex border-r border-zinc-200">
+                <button onclick="document.execCommand('insertUnorderedList')"
+                        class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors"
+                        title="Bullet List">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+                    </svg>
+                </button>
+                <button onclick="document.execCommand('insertOrderedList')"
+                        class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors"
+                        title="Ordered List">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M10 6h11M10 12h11M10 18h11M4 6h1v4M4 10h2M4 18h3"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Headings -->
+            <div class="flex border-r border-zinc-200">
+                <button onclick="document.execCommand('formatBlock', false, 'H1')"
+                        class="h-10 px-3 flex items-center text-[10px] font-bold text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors font-sans">
+                    H1
+                </button>
+                <button onclick="document.execCommand('formatBlock', false, 'H2')"
+                        class="h-10 px-3 flex items-center text-[10px] font-bold text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors font-sans">
+                    H2
+                </button>
+                <button onclick="document.execCommand('formatBlock', false, 'blockquote')"
+                        class="h-10 w-10 flex items-center justify-center text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 transition-colors">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div contenteditable="true"
+             class="p-6 min-h-[200px] text-sm font-sans text-zinc-900 leading-relaxed focus:outline-none"
+             data-placeholder="Start writing your content here...">
+            <h1 style="font-family:Inter,sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-0.02em;color:#09090b;margin-bottom:0.75rem;">Protocol_Header</h1>
+            <p style="font-size:0.875rem;color:#52525b;line-height:1.75;">This is the content area. Start typing to build your protocol. You can format text with the toolbar above.</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-slate-900 border-x border-slate-200 shadow-2xl h-[100dvh] mx-auto w-full max-w-[430px] overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mobile Program | Coach V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ag-bg': '#F4F4F5',      /* Light Zinc */
+                        'ag-cyan': '#45B6C5',    /* Cyan */
+                        'ag-black': '#18181B',
+                        'ag-text-dark': '#27272A',
+                        'ag-grey': '#A1A1AA',
+                        'ag-light-grey': '#E4E4E7'
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+        
+        body { font-family: 'JetBrains Mono', monospace; }
+
+        ::-webkit-scrollbar { display: none; }
+        
+        .cut-corner {
+            position: relative;
+        }
+        .cut-corner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 20px 20px 0;
+            border-style: solid;
+            border-color: #F4F4F5 #F4F4F5 transparent transparent;
+            display: block;
+            width: 0;
+        }
+    </style>
+</head>
+<body class="bg-ag-bg flex flex-col h-full antialiased text-ag-black overflow-x-hidden selection:bg-cyan-100 selection:text-cyan-900 relative" x-data="{ 
+    detailModalOpen: false,
+    selectedMeal: null,
+    dailyMacros: { kcal: 1850, p: 185, c: 140, f: 60 }
+}">
+
+    <!-- Mobile Top App Bar -->
+    <header class="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-40 border-b border-zinc-200 shrink-0">
+        <div class="flex items-center justify-between px-5 h-16">
+            <div class="flex items-center space-x-3">
+                <img src="../images/logo.png" alt="Logo" class="h-8 w-auto object-contain">
+            </div>
+            <!-- Sync / Settings Icon -->
+            <button class="h-8 w-8 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors">
+                <i data-lucide="settings" class="h-5 w-5"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto pt-20 pb-28 px-5">
+        
+        <!-- Daily Pulse / Macros -->
+        <section class="mb-8">
+            <div class="bg-white border text-left border-zinc-200 p-5 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-16 h-16 bg-zinc-50 translate-x-8 -translate-y-8 rotate-45 border-l border-zinc-200 rounded-bl-xl"></div>
+                
+                <div class="flex justify-between items-end mb-6 relative z-10">
+                    <div>
+                        <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Energy Targets</p>
+                        <span class="text-2xl font-mono font-bold text-zinc-900 tracking-tight" x-text="dailyMacros.kcal"></span>
+                        <span class="text-xs font-mono text-cyan-700 ml-1">KCAL</span>
+                    </div>
+                </div>
+                
+                <div class="space-y-4 relative z-10">
+                    <div class="grid grid-cols-[3fr_1fr] items-center gap-4">
+                        <div class="h-1.5 bg-zinc-100 rounded-full overflow-hidden relative">
+                            <div class="absolute inset-y-0 left-0 bg-cyan-600 w-[85%] rounded-full"></div>
+                        </div>
+                        <div class="flex justify-between items-baseline font-mono">
+                            <span class="text-[9px] text-zinc-400 uppercase">PRO</span>
+                            <span class="text-xs font-bold text-zinc-900" x-text="dailyMacros.p + 'g'"></span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-[3fr_1fr] items-center gap-4">
+                        <div class="h-1.5 bg-zinc-100 rounded-full overflow-hidden relative">
+                            <div class="absolute inset-y-0 left-0 bg-zinc-900 w-[45%] rounded-full"></div>
+                        </div>
+                        <div class="flex justify-between items-baseline font-mono">
+                            <span class="text-[9px] text-zinc-400 uppercase">CAR</span>
+                            <span class="text-xs font-bold text-zinc-900" x-text="dailyMacros.c + 'g'"></span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-[3fr_1fr] items-center gap-4">
+                        <div class="h-1.5 bg-zinc-100 rounded-full overflow-hidden relative">
+                            <div class="absolute inset-y-0 left-0 bg-zinc-400 w-[25%] rounded-full"></div>
+                        </div>
+                        <div class="flex justify-between items-baseline font-mono">
+                            <span class="text-[9px] text-zinc-400 uppercase">FAT</span>
+                            <span class="text-xs font-bold text-zinc-900" x-text="dailyMacros.f + 'g'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Sequence -->
+        <section>
+            <div class="flex items-center justify-between mb-5 border-b border-zinc-200 pb-3">
+                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-900">Sequence Log</h4>
+                <p class="text-[9px] font-mono text-cyan-600 uppercase tracking-widest bg-cyan-50 px-2 py-0.5 rounded-full">3 Actions</p>
+            </div>
+            
+            <div class="space-y-4 relative">
+                <!-- Timeline Connection Line -->
+                <div class="absolute left-4 top-2 bottom-2 w-[1px] bg-zinc-200 z-0"></div>
+
+                <template x-for="meal in [
+                    { cat: 'Breakfast', time: '08:00', menu: 'Oatmeal_Power_V3', kcal: 450, p: 35, c: 50, f: 12, details: '<ul class=\'space-y-3\'><li><span class=\'text-cyan-700 font-bold block mb-1\'>1. BASE</span>Mix 50g Oats with 200ml Almond Milk.</li><li><span class=\'text-cyan-700 font-bold block mb-1\'>2. HEAT</span>Microwave for 2 mins exact.</li><li><span class=\'text-cyan-700 font-bold block mb-1\'>3. TOP</span>Add 30g Blueberries and 10g Honey.</li></ul>' },
+                    { cat: 'Lunch', time: '13:00', menu: 'Salmon_Bowl_V2', kcal: 650, p: 45, c: 55, f: 18, details: '<p class=\'leading-relaxed\'>Prepare <span class=\'text-cyan-700 font-bold\'>150g Grilled Salmon</span> seasoned with lemon and dill.<br><br>Serve over a bed of <span class=\'text-cyan-700 font-bold\'>Quinoa (100g)</span> and steamed broccoli.<br><br>Add 1tbsp olive oil.</p>' },
+                    { cat: 'Dinner', time: '20:00', menu: 'Chicken_Salad_V1', kcal: 400, p: 55, c: 10, f: 15, details: '<p class=\'leading-relaxed\'>Shred <span class=\'text-cyan-700 font-bold\'>150g Chicken Breast</span>.<br><br>Mix with green leaves, 50g cucumbers, and 1tbsp light vinegar dressing.</p>' }
+                ]">
+                    <div @click="selectedMeal = meal; detailModalOpen = true" class="relative z-10 flex cursor-pointer group">
+                        
+                        <!-- Timeline Node -->
+                        <div class="w-8 flex-shrink-0 flex justify-center pt-1.5">
+                            <div class="w-2 h-2 bg-white border border-zinc-400 rounded-full group-hover:border-cyan-600 group-hover:bg-cyan-600 transition-colors z-10"></div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="flex-1 bg-white border border-zinc-200 p-4 rounded-xl hover:border-cyan-600 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] transition-all">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-[9px] font-mono font-bold bg-zinc-100 text-zinc-900 px-1.5 py-0.5 uppercase tracking-widest" x-text="meal.time"></span>
+                                    <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest" x-text="meal.cat"></span>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold text-cyan-700" x-text="meal.kcal + ' KCAL'"></span>
+                            </div>
+                            <h3 class="text-xs font-mono font-bold text-zinc-900 uppercase tracking-tight mb-3" x-text="meal.menu"></h3>
+                            
+                            <!-- Mini Macro Bar Preview -->
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="border-t border-zinc-100 pt-1.5 flex flex-col">
+                                    <span class="text-[8px] font-mono text-zinc-400 uppercase">Pro</span>
+                                    <span class="text-[10px] font-mono font-bold text-zinc-900" x-text="meal.p + 'g'"></span>
+                                </div>
+                                <div class="border-t border-zinc-100 pt-1.5 flex flex-col">
+                                    <span class="text-[8px] font-mono text-zinc-400 uppercase">Car</span>
+                                    <span class="text-[10px] font-mono font-bold text-zinc-900" x-text="meal.c + 'g'"></span>
+                                </div>
+                                <div class="border-t border-zinc-100 pt-1.5 flex flex-col">
+                                    <span class="text-[8px] font-mono text-zinc-400 uppercase">Fat</span>
+                                    <span class="text-[10px] font-mono font-bold text-zinc-900" x-text="meal.f + 'g'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-zinc-200 flex justify-center">
+                 <div class="h-1 w-1 bg-zinc-200 rounded-full mr-2"></div>
+                 <div class="h-1 w-1 bg-zinc-300 rounded-full mr-2"></div>
+                 <div class="h-1 w-1 bg-zinc-200 rounded-full"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Component: BottomNavMobile -->
+    <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-zinc-200 shadow-[0px_-4px_16px_rgba(0,0,0,0.02)] z-40 pb-safe shrink-0">
+        <div class="flex justify-around items-center h-16 sm:h-[80px] px-2">
+            
+            <!-- Dashboard Tab -->
+            <a href="dashboard-mobile.html" class="flex flex-col items-center justify-center w-full h-full text-zinc-400 hover:text-zinc-900 transition-colors relative group">
+                <i data-lucide="layout-dashboard" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Dashboard</span>
+            </a>
+
+            <!-- Program Tab (Active) -->
+            <a href="programmes-mobile.html" class="flex flex-col items-center justify-center w-full h-full text-cyan-700 relative group">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-0.5 sm:h-[3px] bg-cyan-600"></div>
+                <i data-lucide="utensils" class="h-[22px] w-[22px] sm:h-5 sm:w-5 mb-1 sm:mb-2"></i>
+                <span class="text-[8px] font-mono uppercase tracking-widest font-bold">Program</span>
+            </a>
+            
+           
+
+        </div>
+    </nav>
+
+    <!-- Detail Modal Popup (Full Screen Slide Up for Mobile) -->
+    <div x-show="detailModalOpen" style="display: none;" class="fixed inset-0 z-[100] flex justify-center pointer-events-none">
+        
+        <div class="relative w-full max-w-[430px] h-full pointer-events-auto overflow-hidden">
+            <!-- Backdrop -->
+            <div x-show="detailModalOpen"
+                 x-transition:enter="transition-opacity ease-linear duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-opacity ease-linear duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="detailModalOpen = false" 
+                 class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+            <!-- Sheet / Bottom Up Modal -->
+            <div x-show="detailModalOpen"
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="translate-y-full"
+                 x-transition:enter-end="translate-y-0"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="translate-y-0"
+                 x-transition:leave-end="translate-y-full"
+                 class="absolute inset-x-0 bottom-0 bg-white border-t border-zinc-200 rounded-t-[2.5rem] h-[85vh] flex flex-col shadow-[0px_-8px_16px_0px_rgba(0,0,0,0.05)]">
+                
+                <!-- Drag Handle Area -->
+                <div class="w-full flex justify-center pt-5 pb-2 cursor-pointer" @click="detailModalOpen = false">
+                    <div class="w-12 h-1 bg-zinc-200 rounded-full"></div>
+                </div>
+
+                <!-- Header -->
+                <div class="px-5 pb-5 border-b border-zinc-100 flex justify-between items-start mt-2">
+                    <div>
+                        <span class="text-[9px] font-mono font-bold text-ag-cyan bg-cyan-50 px-2 py-1 uppercase tracking-widest" x-text="selectedMeal?.time + ' / ' + selectedMeal?.cat"></span>
+                        <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tight leading-tight mt-3" x-text="selectedMeal?.menu"></h2>
+                    </div>
+                    <button @click="detailModalOpen = false" class="p-2 bg-zinc-50 text-zinc-400 hover:text-zinc-900 transition-colors border border-zinc-200 focus:outline-none rounded-xl">
+                        <i data-lucide="x" class="h-4 w-4"></i>
+                    </button>
+                </div>
+
+            <!-- Content Area - Scrollable -->
+            <div class="flex-1 overflow-y-auto px-5 py-6 space-y-8">
+                
+                <!-- Yield -->
+                <div class="bg-zinc-50 border border-zinc-200 p-5 rounded-xl">
+                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Total Yield</p>
+                    <p class="text-2xl font-mono font-bold text-cyan-700 tracking-tight" x-text="selectedMeal?.kcal + ' KCAL'"></p>
+                </div>
+
+                <!-- Macros -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="border border-zinc-200 p-4 relative overflow-hidden rounded-xl">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-cyan-600 rounded-full"></div>
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Pro</span>
+                        <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.p + 'g'"></span>
+                    </div>
+                    <div class="border border-zinc-200 p-4 relative overflow-hidden rounded-xl">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-900 rounded-full"></div>
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Car</span>
+                        <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.c + 'g'"></span>
+                    </div>
+                    <div class="border border-zinc-200 p-4 relative overflow-hidden rounded-xl">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-400 rounded-full"></div>
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">Fat</span>
+                        <span class="text-lg font-mono font-bold text-zinc-900" x-text="selectedMeal?.f + 'g'"></span>
+                    </div>
+                </div>
+
+                <!-- Directives -->
+                <div class="pt-2 pb-6">
+                    <h5 class="text-[9px] font-mono text-zinc-900 font-bold uppercase tracking-widest mb-4 flex items-center">
+                        <i data-lucide="check-circle" class="h-3 w-3 mr-2"></i>
+                        Execution Protocol
+                    </h5>
+                    <div class="text-[11px] text-zinc-600 font-sans border-l-2 border-cyan-600 pl-4" 
+                         x-html="selectedMeal?.details">
+                    </div>
+                </div>
+            </div>
+            <!-- Sticky Bottom Action -->
+            <div class="p-5 border-t border-zinc-200 bg-white">
+                <button class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-colors flex items-center justify-center space-x-2 rounded-xl">
+                    <i data-lucide="check" class="h-4 w-4"></i>
+                    <span>Log Completion</span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

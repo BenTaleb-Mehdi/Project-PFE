@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar | Coach Molecule</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans" x-data="{ active: 'active' }">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: Navbar // AG_V3</p>
+
+    <nav class="bg-white border border-zinc-200 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] w-full overflow-x-auto">
+        <div class="flex items-center px-6">
+            <div class="flex gap-0 h-12">
+                <!-- Active Item -->
+                <a href="#" @click.prevent="active = 'active'"
+                   :class="active === 'active' ? 'text-cyan-600 border-b-2 border-cyan-600' : 'text-zinc-400 border-b-2 border-transparent hover:text-zinc-900'"
+                   class="flex items-center h-full px-4 text-[10px] font-bold uppercase tracking-widest transition-colors font-sans">
+                    Dashboard
+                    <span class="ml-2 px-1.5 py-0.5 bg-cyan-50 text-cyan-700 text-[9px] border border-cyan-100 font-mono">01</span>
+                </a>
+                <!-- Default Item -->
+                <a href="#" @click.prevent="active = 'clients'"
+                   :class="active === 'clients' ? 'text-cyan-600 border-b-2 border-cyan-600' : 'text-zinc-400 border-b-2 border-transparent hover:text-zinc-900'"
+                   class="flex items-center h-full px-4 text-[10px] font-bold uppercase tracking-widest transition-colors font-sans">
+                    Clients
+                    <span class="ml-2 px-1.5 py-0.5 bg-zinc-50 text-zinc-400 text-[9px] border border-zinc-200 font-mono">02</span>
+                </a>
+                <!-- Another Item -->
+                <a href="#" @click.prevent="active = 'nutrition'"
+                   :class="active === 'nutrition' ? 'text-cyan-600 border-b-2 border-cyan-600' : 'text-zinc-400 border-b-2 border-transparent hover:text-zinc-900'"
+                   class="flex items-center h-full px-4 text-[10px] font-bold uppercase tracking-widest transition-colors font-sans">
+                    Nutrition
+                    <span class="ml-2 px-1.5 py-0.5 bg-zinc-50 text-zinc-400 text-[9px] border border-zinc-200 font-mono">03</span>
+                </a>
+                <!-- Disabled -->
+                <a class="flex items-center h-full px-4 text-[10px] font-bold uppercase tracking-widest text-zinc-300 border-b-2 border-transparent cursor-not-allowed pointer-events-none font-sans">
+                    Reports
+                </a>
+            </div>
+        </div>
+    </nav>
+
+</body>
+</html>

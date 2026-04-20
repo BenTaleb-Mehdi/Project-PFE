@@ -1,0 +1,91 @@
+classDiagram
+    direction LR
+
+    %% --- Authorization (Spatie RBAC) ---
+    class Role {
+        -int id
+        -String name
+    }
+
+    class Permission {
+        -int id
+        -String name
+    }
+
+    %% --- Actors ---
+    class User {
+        <<abstract>>
+        #int id
+        #String name
+        #String email
+        #String password
+    }
+
+    class Client {
+        -String phone_number
+        -String status
+        -float target_goal
+        -float current_weight
+        -float height
+        -int? active_program_id
+    }
+
+    class Staff {
+        -String specialty
+        -String bio
+    }
+
+    User <|-- Client
+    User <|-- Staff
+
+    %% --- Nutrition Logic ---
+    class Meal {
+        -int id
+        -String name
+        -String details
+        -float protein 
+        -float carbs
+        -float fats 
+        -int calories
+        -int category_id
+    }
+
+    class Program {
+        -int id
+        -int created_by_staff_id
+        -String title
+        -DateTime created_at
+    }
+
+    class ProgramItem {
+        -int id
+        -int program_id
+        -int meal_id
+        -int day_of_week
+        -Time time_slot
+    }
+
+    %% --- Records ---
+    class Evolution {
+        -int id
+        -int client_id
+        -float weight
+        -String body_img_url
+        -DateTime recorded_at
+    }
+
+    %% --- Relations ---
+    User "*" -- "*" Role
+    Role "*" -- "*" Permission
+
+    %% Nutrition Structure
+    Meal "*" -- "1" MealCategory : belongs_to
+    Program "1" *-- "*" ProgramItem : composed_of
+    Meal "1" -- "*" ProgramItem : used_in
+    
+    %% Staff Actions
+    Staff "1" --> "*" Program : designs
+
+    %% Client Tracking
+    Client "1" -- "0..1" Program : follows
+    Client "1" *-- "*" Evolution : logs

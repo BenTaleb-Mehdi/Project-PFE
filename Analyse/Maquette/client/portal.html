@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portal | Coach V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../admin/style.css">
+</head>
+<body class="bg-zinc-50 antialiased" x-data="{ 
+    sidebarOpen: false, 
+    activeView: 'dashboard',
+    selectedProgram: null,
+    programs: [
+        { id: 1, name: 'Shred_X_Lite', status: 'Active', kcal: 1850, meals: [
+            { cat: 'Breakfast', name: 'Oatmeal_Power_X1', kcal: 450, p: 35 },
+            { cat: 'Lunch', name: 'Salmon_Bowl_V3', kcal: 620, p: 45 },
+            { cat: 'Dinner', name: 'Grilled_Chicken_Salad', kcal: 500, p: 50 }
+        ]},
+        { id: 2, name: 'Bulk_Power_V2', status: 'Archive', kcal: 3200, meals: [] }
+    ]
+}">
+
+    <!-- Mobile Header (Hamburger) -->
+    <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600 rounded-lg"></div>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My Coach</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
+            <i data-lucide="menu" class="h-6 w-6"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar / Drawer -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        
+        <div class="p-6">
+            <div class="flex items-center mb-12">
+                <img src="../images/logo.png" alt="Achraf Logo" class="h-14 w-auto object-contain">
+            </div>
+
+            <nav class="space-y-1">
+                <a href="portal.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">
+                    Dashboard
+                </a>
+                <a href="evolution.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Evolution
+                </a>
+                <a href="program-view.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    My Programs
+                </a>
+                <a href="history.html" 
+                   class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Program History
+                </a>
+            </nav>
+        </div>
+
+        <!-- Pupil Indicator -->
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 ag-border border-x-0 border-b-0">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-600 font-mono text-xs font-bold">M</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi B</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active Pupil</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
+                <i data-lucide="log-out" class="size-3"></i>
+                Terminate Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Backdrop (Mobile Only) -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12">
+        
+        <!-- DASHBOARD VIEW -->
+        <div x-show="activeView === 'dashboard'" class="space-y-12">
+            <header class="mb-12">
+                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Dashboard</h1>
+                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Pupil Intel // Progress Sync Active</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="ag-card p-8 bg-white rounded-xl">
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Morning Weight</p>
+                    <div class="flex items-baseline space-x-2">
+                        <span class="text-3xl font-mono font-bold text-cyan-700">82.4</span>
+                        <span class="text-xs font-mono text-zinc-400 uppercase">KG</span>
+                    </div>
+                    <div class="mt-4 flex items-center text-[9px] font-mono text-emerald-600 uppercase">
+                        <i data-lucide="trending-down" class="h-3 w-3 mr-1"></i>
+                        -1.2% vs prev_week
+                    </div>
+                </div>
+                
+                <div class="ag-card p-8 bg-white rounded-xl">
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Weekly Compliance</p>
+                    <div class="flex items-baseline space-x-2">
+                        <span class="text-3xl font-mono font-bold text-zinc-900">98%</span>
+                    </div>
+                    <div class="w-full bg-zinc-100 h-1 mt-6">
+                        <div class="bg-cyan-600 h-1" style="width: 98%"></div>
+                    </div>
+                </div>
+
+                <div class="ag-card p-8 bg-white border-emerald-100 rounded-xl">
+                    <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Streak Status</p>
+                    <div class="flex items-baseline space-x-2">
+                        <span class="text-3xl font-mono font-bold text-emerald-600">14_Days</span>
+                    </div>
+                    <p class="text-[8px] font-mono text-zinc-400 mt-4 uppercase">Unbroken_Record</p>
+                </div>
+            </div>
+
+            <div class="ag-card p-8 bg-white rounded-xl">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-4">Weight Update Pulse</h3>
+                <div class="flex items-end space-x-4">
+                    <div class="flex-1">
+                        <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-2">New Measurement (KG)</label>
+                        <input type="number" step="0.1" placeholder="82.0" class="w-full bg-zinc-50 px-4 py-4 text-xl font-mono font-bold ag-border rounded-xl outline-none focus:border-cyan-600 transition-all">
+                    </div>
+                    <button class="px-8 py-5 bg-cyan-600 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-700 rounded-xl transition-all">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROGRAMS LIST VIEW -->
+        <div x-show="activeView === 'programs'" class="space-y-12">
+            <header class="mb-12">
+                <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">My Programs</h1>
+                <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Protocol Library // Dietary Assigned</p>
+            </header>
+
+            <div class="grid grid-cols-1 gap-6">
+                <template x-for="prog in programs" :key="prog.id">
+                    <div class="ag-card p-8 bg-white flex flex-col md:flex-row md:items-center justify-between group hover:border-cyan-200 transition-all">
+                        <div class="flex items-center space-x-6">
+                            <div class="h-12 w-12 ag-border border-zinc-100 flex items-center justify-center font-mono font-bold text-cyan-700 bg-cyan-50" x-text="'P'+prog.id"></div>
+                            <div>
+                                <h4 class="text-sm font-mono font-bold uppercase text-zinc-900" x-text="prog.name"></h4>
+                                <p class="text-[10px] font-mono text-zinc-400 uppercase mt-1" x-text="prog.kcal + ' Kcal // Target_Daily'"></p>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-0 flex items-center space-x-8">
+                            <span class="px-3 py-1 text-[8px] font-mono font-bold uppercase tracking-widest ag-border" 
+                                  :class="prog.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-zinc-50 text-zinc-400 border-zinc-100'"
+                                  x-text="prog.status"></span>
+                            <button @click="selectedProgram = prog; activeView = 'program-details'" class="px-6 py-3 bg-zinc-900 text-white text-[10px] font-mono uppercase font-bold tracking-widest hover:bg-black rounded-xl transition-all">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- PROGRAM DETAILS VIEW -->
+        <div x-show="activeView === 'program-details'" class="space-y-12">
+            <header class="mb-12 flex justify-between items-end">
+                <div>
+                    <button @click="activeView = 'programs'" class="text-[10px] font-mono text-zinc-400 hover:text-cyan-600 uppercase tracking-widest mb-4 flex items-center">
+                        <i data-lucide="chevron-left" class="h-3 w-3 mr-2"></i>
+                        Back_to_Library
+                    </button>
+                    <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900" x-text="selectedProgram?.name"></h1>
+                    <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]" x-text="'Target: ' + selectedProgram?.kcal + ' Kcal // Protocol_Drill_Down'"></p>
+                </div>
+                <div class="px-4 py-2 bg-cyan-50 text-cyan-600 text-[10px] font-mono font-bold uppercase tracking-widest ag-border border-cyan-100">
+                    Sync_Active
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="meal in selectedProgram?.meals" :key="meal.cat">
+                    <div class="ag-card p-8 bg-white border-l-4 border-l-cyan-600">
+                        <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4" x-text="meal.cat"></p>
+                        <h4 class="text-sm font-mono font-bold text-zinc-900 uppercase mb-6" x-text="meal.name"></h4>
+                        <div class="space-y-4 pt-4 border-t border-zinc-100">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[9px] font-mono text-zinc-400 uppercase">Energy</span>
+                                <span class="text-xs font-mono font-bold text-zinc-900" x-text="meal.kcal + ' Kcal'"></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-[9px] font-mono text-zinc-400 uppercase">Protein</span>
+                                <span class="text-xs font-mono font-bold text-cyan-700" x-text="meal.p + 'g'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

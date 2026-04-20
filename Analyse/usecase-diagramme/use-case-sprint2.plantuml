@@ -1,0 +1,41 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+' Actors
+actor "Client" as Client
+actor "Co-coach (Staff)" as Staff
+actor "Coach (Admin)" as Admin
+
+' Hierarchy
+Staff <|-- Admin
+
+rectangle "Sprint 2 - Automation & Expérience Mobile" {
+
+  package "Espace Client (Mobile App)" {
+    usecase "Consulter son programme assigné" as ViewProg
+  }
+
+  package "Suivi & Performance (Web)" {
+    usecase "Mettre à jour poids & photos" as UpdateStats
+    usecase "Visualiser sa progression détaillée" as ViewProgress
+  }
+
+  package "Gestion Avancée (Staff/Admin)" {
+    usecase "Calculer les Macros" as CalcMacros
+    usecase "Gérer l'équipe" as ManageStaff
+    usecase "Gérer les paiements" as ManageMoney
+  }
+}
+
+' Relations
+Client -- ViewProg : "(Via Mobile)"
+Client -- UpdateStats : "(Via Web)"
+Client -- ViewProgress : "(Via Web)"
+
+Staff -- CalcMacros
+Admin -- ManageStaff
+Admin -- ManageMoney
+
+@enduml

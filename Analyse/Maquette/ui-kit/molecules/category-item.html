@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Item | Coach Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: CategoryItem // AG_V3</p>
+
+    <div class="space-y-2 max-w-xl">
+        <!-- Category Item -->
+        <div class="bg-white border border-zinc-200 p-5 flex justify-between items-center group hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all">
+            <div class="flex items-center gap-5">
+                <span class="text-[10px] text-zinc-300 font-mono">01</span>
+                <h3 class="font-bold text-sm uppercase tracking-widest text-zinc-950 font-sans">Ketogenic_Protocol</h3>
+            </div>
+            <div class="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-cyan-600 transition-colors font-sans">Rename</button>
+                <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-red-500 transition-colors font-sans">Delete</button>
+            </div>
+        </div>
+
+        <div class="bg-white border border-zinc-200 p-5 flex justify-between items-center group hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all">
+            <div class="flex items-center gap-5">
+                <span class="text-[10px] text-zinc-300 font-mono">02</span>
+                <h3 class="font-bold text-sm uppercase tracking-widest text-zinc-950 font-sans">High_Protein_Plan</h3>
+            </div>
+            <div class="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-cyan-600 transition-colors font-sans">Rename</button>
+                <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-red-500 transition-colors font-sans">Delete</button>
+            </div>
+        </div>
+
+        <div class="bg-white border border-zinc-200 p-5 flex justify-between items-center group hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all">
+            <div class="flex items-center gap-5">
+                <span class="text-[10px] text-zinc-300 font-mono">03</span>
+                <h3 class="font-bold text-sm uppercase tracking-widest text-zinc-950 font-sans">Balanced_Macro_Split</h3>
+            </div>
+            <div class="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-cyan-600 transition-colors font-sans">Rename</button>
+                <button class="text-[8px] uppercase tracking-widest text-zinc-400 hover:text-red-500 transition-colors font-sans">Delete</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

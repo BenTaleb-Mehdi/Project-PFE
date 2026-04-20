@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Timeline Item | Coach Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: ProtocolTimelineItem // AG_V3</p>
+
+    <div class="max-w-2xl space-y-2">
+        <!-- Slot: Available -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-zinc-50 border border-zinc-200 group hover:border-cyan-600 hover:bg-white hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.04)] transition-all gap-4">
+            <div class="flex items-center gap-4">
+                <div class="h-2 w-2 bg-cyan-600"></div>
+                <div>
+                    <span class="text-[10px] text-zinc-950 font-bold uppercase font-sans">Week_01 // Mon–Fri</span>
+                    <p class="text-[8px] text-zinc-400 font-mono mt-0.5 uppercase">Calories: 1,840 kcal</p>
+                </div>
+            </div>
+            <button class="px-5 py-2 text-[10px] text-cyan-600 font-bold uppercase border border-cyan-200 hover:bg-cyan-600 hover:text-white transition-colors font-sans self-start md:self-auto">
+                SELECT_ACTION
+            </button>
+        </div>
+
+        <!-- Slot: Active -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-white border-2 border-cyan-600 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] gap-4">
+            <div class="flex items-center gap-4">
+                <div class="h-2 w-2 bg-emerald-500"></div>
+                <div>
+                    <span class="text-[10px] text-zinc-950 font-bold uppercase font-sans">Week_02 // Mon–Fri</span>
+                    <p class="text-[8px] text-cyan-600 font-mono mt-0.5 uppercase font-bold">Active // In_Progress</p>
+                </div>
+            </div>
+            <button class="px-5 py-2 text-[10px] text-white font-bold uppercase bg-cyan-600 hover:bg-cyan-700 transition-colors font-sans self-start md:self-auto">
+                CURRENT
+            </button>
+        </div>
+
+        <!-- Slot: Locked -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between p-5 bg-zinc-50 border border-zinc-100 gap-4 opacity-50">
+            <div class="flex items-center gap-4">
+                <div class="h-2 w-2 bg-zinc-300"></div>
+                <div>
+                    <span class="text-[10px] text-zinc-500 font-bold uppercase font-sans">Week_03 // Mon–Fri</span>
+                    <p class="text-[8px] text-zinc-400 font-mono mt-0.5 uppercase">Locked // Pending</p>
+                </div>
+            </div>
+            <button class="px-5 py-2 text-[10px] text-zinc-400 font-bold uppercase border border-zinc-200 cursor-not-allowed pointer-events-none font-sans self-start md:self-auto">
+                LOCKED
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Progress | Coach V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../admin/style.css">
+</head>
+<body class="bg-zinc-50 antialiased font-sans" x-data="{ sidebarOpen: false, photos: [{ id: 1, date: '2026-03-02', weight: '83.1', type: 'FRONT' }, { id: 2, date: '2026-02-02', weight: '85.5', type: 'FRONT' }] }">
+    <!-- Mobile Header (Hamburger) -->
+    <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600"></div>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My_Coach</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
+            <i data-lucide="menu" class="h-6 w-6"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar / Drawer -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        
+        <div class="p-6">
+            <div class="flex items-center mb-12">
+                <img src="../images/logo.png" alt="Achraf Logo" class="h-14 w-auto object-contain">
+            </div>
+
+            <nav class="space-y-1">
+                <a href="portal.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Dashboard
+                </a>
+                <a href="evolution.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">
+                    Evolution
+                </a>
+                <a href="program-view.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    My_Programs
+                </a>
+                <a href="history.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Program_History
+                </a>
+            </nav>
+        </div>
+
+        <!-- Pupil Indicator -->
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 ag-border border-x-0 border-b-0">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-700 font-mono text-xs font-bold">M</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi_B</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active_Pupil</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
+                <i data-lucide="log-out" class="size-3"></i>
+                Terminate_Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Backdrop -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-24 lg:pt-12 max-w-2xl">
+        <header class="mb-10">
+            <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Evolution_Sync</h1>
+            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-widest">Action: Add_Progress_Image</p>
+        </header>
+
+        <div class="space-y-8">
+            <!-- Upload Zone -->
+            <div class="ag-card p-10 bg-white border-dashed border-2 border-zinc-200 flex flex-col items-center justify-center text-center group hover:border-cyan-600 transition-all cursor-pointer">
+                <div class="h-16 w-16 bg-zinc-50 flex items-center justify-center mb-6 group-hover:bg-cyan-50 transition-colors">
+                    <i data-lucide="plus" class="h-8 w-8 text-zinc-300 group-hover:text-cyan-600 transition-colors"></i>
+                </div>
+                <h3 class="text-xs font-mono font-bold uppercase tracking-widest text-zinc-900 mb-2">Deploy_New_Snapshot</h3>
+                <p class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em]">Front / Side / Back</p>
+                <input type="file" class="hidden">
+            </div>
+
+            <!-- Weight Input -->
+            <div class="ag-card p-6 bg-white">
+                <label class="block text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Current_Mass (Sync)</label>
+                <div class="flex items-end space-x-4">
+                    <input type="number" step="0.1" placeholder="83.1" class="text-3xl font-mono font-bold w-full bg-transparent outline-none focus:text-cyan-700">
+                    <span class="text-xs font-mono text-zinc-300 pb-2">KG</span>
+                </div>
+            </div>
+
+            <button class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black transition-all">
+                Finalize_Upload_Session
+            </button>
+
+            <!-- Simple History Header -->
+            <div class="pt-8 border-t border-zinc-100">
+                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-6">Recent_Syncs</h4>
+                
+                <div class="space-y-4">
+                    <template x-for="photo in photos" :key="photo.id">
+                        <div class="ag-card bg-white p-4 flex items-center space-x-4">
+                            <div class="h-12 w-12 bg-zinc-100 flex items-center justify-center">
+                                <i data-lucide="image" class="h-6 w-6 text-zinc-200"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-[10px] font-mono font-bold text-zinc-900" x-text="photo.date"></p>
+                                <p class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest" x-text="photo.weight + ' KG // ' + photo.type"></p>
+                            </div>
+                            <button class="text-zinc-300 hover:text-red-500">
+                                <i data-lucide="trash-2" class="h-4 w-4"></i>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

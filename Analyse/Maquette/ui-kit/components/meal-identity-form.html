@@ -1,0 +1,24 @@
+<!-- Component: MealIdentityForm -->
+<!-- Dependencies: InputMono -->
+<div class="ag-card p-8 bg-white">
+    <h3 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Meal_Identity</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Category Dropdown -->
+        <div class="relative">
+            <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category</label>
+            <button class="w-full bg-zinc-50 px-4 py-3 text-xs uppercase border border-zinc-200 flex items-center justify-between outline-none focus:border-cyan-600 transition-colors">
+                <span>Category_Name</span>
+                <svg class="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+        </div>
+        <!-- Meal Name Input -->
+        <div>
+            <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Meal_Name</label>
+            <!-- Atom: InputMono -->
+            <input type="text" placeholder="Meal_Name_Placeholder" 
+                   class="w-full bg-zinc-50 px-4 py-3 text-xs uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors">
+        </div>
+    </div>
+</div>

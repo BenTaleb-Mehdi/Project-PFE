@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin System Load | Coach Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: AdminSystemLoad // AG_V3</p>
+
+    <div class="max-w-xl bg-white border border-zinc-200 p-8 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
+        <!-- Header -->
+        <div class="flex justify-between items-start mb-8">
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 font-sans">System_Performance_Metrics</h3>
+                <p class="text-[8px] text-zinc-400 mt-1 uppercase tracking-widest font-mono">Diagnostic: Active // Buffer_Freq: 120ms</p>
+            </div>
+            <div class="flex items-center gap-4 text-[8px] uppercase font-bold tracking-widest font-mono">
+                <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-cyan-600"></span><span class="text-zinc-500">CPU_FREQ</span></div>
+                <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-zinc-400"></span><span class="text-zinc-500">MEM_DB</span></div>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="relative h-[220px]">
+            <canvas id="adminSystemChart"></canvas>
+        </div>
+
+        <!-- Summary row -->
+        <div class="mt-6 grid grid-cols-3 gap-4 border-t border-zinc-100 pt-6">
+            <div>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">CPU_Avg</p>
+                <p class="text-base font-bold text-cyan-600 font-mono">50.5<span class="text-[9px] text-zinc-400 ml-0.5">%</span></p>
+            </div>
+            <div>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">MEM_Avg</p>
+                <p class="text-base font-bold text-zinc-900 font-mono">33.7<span class="text-[9px] text-zinc-400 ml-0.5">%</span></p>
+            </div>
+            <div>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Status</p>
+                <p class="text-[10px] font-bold text-emerald-600 uppercase font-mono mt-1">Nominal</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const ctx = document.getElementById('adminSystemChart');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [
+                        {
+                            label: 'CPU_FREQ',
+                            data: [45, 52, 38, 65, 48, 55],
+                            borderColor: '#0891B2',
+                            borderWidth: 2,
+                            tension: 0,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#0891B2',
+                            fill: false
+                        },
+                        {
+                            label: 'MEM_DB',
+                            data: [30, 35, 32, 40, 31, 34],
+                            borderColor: '#A1A1AA',
+                            borderWidth: 2,
+                            tension: 0,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#A1A1AA',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: '#09090B',
+                            titleFont: { family: 'JetBrains Mono', size: 10 },
+                            bodyFont: { family: 'JetBrains Mono', size: 10 },
+                            borderRadius: 0,
+                            displayColors: false,
+                            padding: 10,
+                            callbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.parsed.y + '%' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: { display: true, color: '#F4F4F5', drawTicks: false },
+                            border: { display: false },
+                            ticks: { color: '#A1A1AA', font: { family: 'JetBrains Mono', size: 8 }, callback: (v) => v + '%' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            border: { display: false },
+                            ticks: { color: '#A1A1AA', font: { family: 'JetBrains Mono', size: 8 } }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

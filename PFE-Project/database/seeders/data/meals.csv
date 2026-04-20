@@ -1,0 +1,4 @@
+id,category_id,name,details,protein,carbs,fats,calories
+1,1,Omelette Avoine,3 œufs + 50g avoine,25.5,30.0,12.0,450
+2,2,Poulet Riz,150g poulet + 100g riz,35.0,45.0,5.0,550
+3,4,Amandes amères,30g amandes,6.0,4.0,15.0,200

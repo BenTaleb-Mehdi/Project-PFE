@@ -1,0 +1,24 @@
+<!-- Component: ProtocolTimelineBuilder -->
+<!-- Dependencies: ProtocolTimelineItem, StatusLabel -->
+<div class="ag-card p-8 bg-white shadow-sm">
+    <div class="flex items-center justify-between mb-10 border-b border-zinc-100 pb-4">
+        <h3 class="text-xs font-bold uppercase tracking-widest">Protocol_Timeline_Builder</h3>
+        <!-- Atom: StatusLabel -->
+        <span class="text-[8px] text-cyan-600 bg-cyan-50 px-2 py-1 uppercase font-bold">Draft_Mode</span>
+    </div>
+    <div class="space-y-4">
+        <!-- Molecule: ProtocolTimelineItem (Example) -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-50 border border-zinc-200 group hover:border-cyan-400 hover:bg-white transition-all">
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                <div class="h-2 w-2 rounded-full bg-cyan-600"></div>
+                <span class="text-[10px] text-zinc-950 font-bold uppercase w-24">Slot_Name</span>
+            </div>
+            <button class="mt-4 md:mt-0 px-4 py-2 text-[10px] text-cyan-600 font-bold uppercase border border-cyan-100 hover:bg-cyan-600 hover:text-white transition-all">SELECT_MEAL</button>
+        </div>
+    </div>
+    <div class="mt-10 flex justify-end">
+        <button class="px-8 py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
+            Finalize_Protocol
+        </button>
+    </div>
+</div>

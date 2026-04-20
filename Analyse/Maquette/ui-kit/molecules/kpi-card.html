@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI Card | Coach Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: KpiCard // AG_V3</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- KPI Card -->
+        <div class="bg-white border border-zinc-200 p-8 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+            <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-4 font-sans">Metric_Name</p>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold text-cyan-700 font-mono">1,842</span>
+                <span class="text-xs text-zinc-400 uppercase font-sans">Kcal</span>
+            </div>
+            <div class="mt-4 flex items-center text-[9px] text-emerald-600 uppercase font-sans gap-1">
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"/>
+                </svg>
+                +4.2% vs prev_period
+            </div>
+        </div>
+
+        <!-- KPI Card (neutral) -->
+        <div class="bg-white border border-zinc-200 p-8 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+            <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-4 font-sans">Active_Clients</p>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold text-zinc-900 font-mono">24</span>
+                <span class="text-xs text-zinc-400 uppercase font-sans">Users</span>
+            </div>
+            <div class="mt-4 flex items-center text-[9px] text-zinc-400 uppercase font-sans gap-1">
+                <span>Stable // No_Change</span>
+            </div>
+        </div>
+
+        <!-- KPI Card (metric) -->
+        <div class="bg-white border border-zinc-200 p-8 hover:border-cyan-600 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] transition-all">
+            <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-4 font-sans">Protocols_Synced</p>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold text-zinc-900 font-mono">138</span>
+                <span class="text-xs text-zinc-400 uppercase font-sans">Plans</span>
+            </div>
+            <p class="mt-4 text-[9px] text-cyan-600 uppercase font-sans">Engine_Active // Live</p>
+        </div>
+    </div>
+
+</body>
+</html>

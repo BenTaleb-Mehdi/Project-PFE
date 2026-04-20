@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Weight Progress | Coach Molecule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>* { border-radius: 0 !important; }</style>
+</head>
+<body class="bg-zinc-50 p-12 font-sans">
+
+    <p class="text-[8px] font-mono uppercase text-zinc-300 mb-6">Molecule: ClientWeightProgress // AG_V3</p>
+
+    <div class="max-w-xl bg-white border border-zinc-200 p-8 shadow-[4px_4px_0_0_rgba(0,0,0,0.04)]">
+        <div class="mb-8 flex justify-between items-start">
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 font-sans">Body_Efficiency_Progress</h3>
+                <p class="text-[10px] text-cyan-600 mt-1.5 uppercase tracking-widest font-mono font-bold">Current: 82.4 kg</p>
+            </div>
+            <div class="flex items-center gap-3 text-[8px] uppercase font-bold tracking-widest font-mono">
+                <div class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 bg-cyan-600"></span><span class="text-zinc-400">Weight_KG</span></div>
+            </div>
+        </div>
+
+        <div class="relative h-[220px]">
+            <canvas id="clientWeightChart"></canvas>
+        </div>
+
+        <!-- Stats row -->
+        <div class="mt-6 grid grid-cols-3 gap-4 border-t border-zinc-100 pt-6">
+            <div>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Start</p>
+                <p class="text-base font-bold text-zinc-900 font-mono">84.2<span class="text-[9px] text-zinc-400 ml-1">kg</span></p>
+            </div>
+            <div>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Current</p>
+                <p class="text-base font-bold text-cyan-600 font-mono">82.4<span class="text-[9px] text-zinc-400 ml-1">kg</span></p>
+            </div>
+            <div>
+                <p class="text-[8px] text-zinc-400 uppercase tracking-widest font-sans">Lost</p>
+                <p class="text-base font-bold text-emerald-600 font-mono">-1.8<span class="text-[9px] text-zinc-400 ml-1">kg</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const ctx = document.getElementById('clientWeightChart');
+            const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 220);
+            gradient.addColorStop(0, 'rgba(8, 145, 178, 0.08)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'],
+                    datasets: [{
+                        label: 'Weight',
+                        data: [84.2, 83.8, 83.5, 83.6, 82.9, 83.1, 82.4],
+                        borderColor: '#0891B2',
+                        borderWidth: 2,
+                        tension: 0,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#FFFFFF',
+                        pointBorderColor: '#0891B2',
+                        pointBorderWidth: 2,
+                        fill: true,
+                        backgroundColor: gradient
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: '#09090B',
+                            titleFont: { family: 'JetBrains Mono', size: 10 },
+                            bodyFont: { family: 'JetBrains Mono', size: 10 },
+                            borderRadius: 0,
+                            displayColors: false,
+                            padding: 10,
+                            callbacks: { label: (ctx) => ctx.parsed.y + ' KG' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            display: true,
+                            grid: { display: false },
+                            border: { display: false },
+                            ticks: { color: '#A1A1AA', font: { family: 'JetBrains Mono', size: 8 } }
+                        },
+                        x: {
+                            grid: { display: true, color: '#F4F4F5', drawTicks: false },
+                            border: { display: false },
+                            ticks: { padding: 10, color: '#A1A1AA', font: { family: 'JetBrains Mono', size: 8 } }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

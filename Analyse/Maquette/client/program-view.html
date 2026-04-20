@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Protocol | Coach V3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../admin/style.css">
+</head>
+<body class="bg-zinc-50 antialiased font-sans" x-data="{ 
+    sidebarOpen: false,
+    detailModalOpen: false,
+    selectedMeal: null,
+    dailyMacros: { kcal: 1850, p: 185, c: 140, f: 60 }
+}">
+    <!-- Mobile Header (Hamburger) -->
+    <header class="lg:hidden fixed top-0 w-full bg-white ag-border border-x-0 border-t-0 p-4 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600 rounded-lg"></div>
+            <span class="font-mono font-bold text-sm tracking-tight uppercase">My Coach</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-zinc-900">
+            <i data-lucide="menu" class="h-6 w-6"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar / Drawer -->
+    <aside 
+        class="fixed top-0 left-0 h-screen w-64 bg-white ag-border border-l-0 border-t-0 border-b-0 z-50 transition-transform duration-300 lg:translate-x-0"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        
+        <div class="p-6">
+            <div class="flex items-center mb-12">
+                <img src="../images/logo.png" alt="Achraf Logo" class="h-14 w-auto object-contain">
+            </div>
+
+            <nav class="space-y-1">
+                <a href="portal.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Dashboard
+                </a>
+                <a href="evolution.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Evolution
+                </a>
+      
+                <a href="program-view.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600">
+                    My Programs
+                </a>
+                <a href="history.html" class="flex items-center px-4 py-3 text-xs font-mono uppercase tracking-widest transition-all text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900">
+                    Program History
+                </a>
+            </nav>
+        </div>
+
+        <!-- Pupil Indicator -->
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 ag-border border-x-0 border-b-0">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white ag-border border-zinc-200 flex items-center justify-center text-cyan-700 font-mono text-xs font-bold">M</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase">Mehdi B</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase">Active Pupil</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
+                <i data-lucide="log-out" class="size-3"></i>
+                Terminate Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Backdrop (Sidebar) -->
+    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
+
+    <main class="lg:ml-64 min-h-screen p-6 pb-24 max-w-md mx-auto">
+        <header class="mb-10 lg:pt-6 pt-20">
+            <h1 class="text-2xl font-mono font-bold tracking-tight uppercase text-zinc-900">Active Protocol</h1>
+            <p class="text-[10px] font-mono text-zinc-400 mt-1 uppercase tracking-widest">Master Plan: Shred X Lite (Standard V3)</p>
+        </header>
+
+        <!-- Global Protocol Dashboard -->
+        <div class="ag-card p-6 bg-white mb-8 border-l-4 border-l-zinc-900 rounded-xl">
+            <div class="flex justify-between items-center mb-6">
+                <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Daily Pulse Recap</p>
+                <span class="text-xs font-mono font-bold text-cyan-700" x-text="dailyMacros.kcal + ' KCAL'"></span>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
+                        <span>Protein</span>
+                        <span x-text="dailyMacros.p + 'G'"></span>
+                    </div>
+                    <div class="h-1 bg-zinc-100 overflow-hidden">
+                        <div class="bg-cyan-600 h-full" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
+                        <span>Carbs</span>
+                        <span x-text="dailyMacros.c + 'G'"></span>
+                    </div>
+                    <div class="h-1 bg-zinc-100 overflow-hidden">
+                        <div class="bg-zinc-900 h-full" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
+                        <span>Fats</span>
+                        <span x-text="dailyMacros.f + 'G'"></span>
+                    </div>
+                    <div class="h-1 bg-zinc-100 overflow-hidden">
+                        <div class="bg-zinc-400 h-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-8">
+            <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 border-b border-zinc-100 pb-2">Daily Sequence</h4>
+            
+            <!-- Meal Protocol List -->
+            <div class="space-y-4 relative">
+                <!-- Vertical Line Connector -->
+                <div class="absolute left-[23px] top-6 bottom-6 w-[1px] bg-zinc-100 z-0"></div>
+
+                <template x-for="meal in [
+                    { cat: 'Breakfast', time: '08:00', menu: 'Oatmeal_Power_V3', kcal: 450, p: 35, c: 50, f: 12, details: '<ul class=\'space-y-2\'><li>- Mix <span class=\'text-cyan-700 font-bold\'>50g Oats</span> with 200ml Almond Milk.</li><li>- Microwave for 2 mins.</li><li>- Top with <span class=\'text-cyan-700 font-bold\'>Blueberries</span> and Honey.</li></ul>' },
+                    { cat: 'Lunch', time: '13:00', menu: 'Salmon_Bowl_V2', kcal: 650, p: 45, c: 55, f: 18, details: '<p class=\'leading-relaxed\'>Prepare <span class=\'text-cyan-700 font-bold\'>150g Grilled Salmon</span> seasoned with lemon and dill. Serve over a bed of <span class=\'text-cyan-700 font-bold\'>Quinoa (100g)</span> and steamed broccoli. Add a drizzle of olive oil for healthy fats.</p>' },
+                    { cat: 'Dinner', time: '20:00', menu: 'Chicken_Salad_V1', kcal: 400, p: 55, c: 10, f: 15, details: '<p class=\'leading-relaxed\'>Focus on <span class=\'text-cyan-700 font-bold\'>High Protein</span>. Shred 150g Chicken Breast. Mix with plenty of green leaves, cucumbers, and a light vinegar dressing.</p>' }
+                ]">
+                    <div @click="selectedMeal = meal; detailModalOpen = true" 
+                         class="group relative z-10 flex items-start space-x-6 cursor-pointer">
+                        <!-- Node -->
+                        <div class="h-12 w-12 bg-white ag-border flex-shrink-0 flex items-center justify-center transition-all group-hover:border-cyan-600 group-hover:scale-110 rounded-xl">
+                            <span class="text-[8px] font-mono font-bold text-zinc-400 group-hover:text-cyan-600" x-text="meal.cat"></span>
+                        </div>
+                        
+                        <!-- Card -->
+                        <div class="flex-1 ag-card p-5 bg-white group-hover:border-cyan-100 transition-all rounded-xl">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest" x-text="meal.time"></span>
+                                <span class="text-[10px] font-mono font-bold text-cyan-700" x-text="meal.kcal + ' KCAL'"></span>
+                            </div>
+                            <h4 class="text-xs font-mono font-bold text-zinc-900 uppercase" x-text="meal.menu"></h4>
+                            <p class="text-[8px] font-mono text-zinc-400 uppercase mt-4 flex items-center">
+                                View Detailed Macros
+                                <i data-lucide="chevron-right" class="h-2 w-2 ml-1"></i>
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </main>
+
+    <!-- Detail Modal Popup -->
+    <div x-show="detailModalOpen" 
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        
+        <!-- Backdrop -->
+        <div @click="detailModalOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-md"></div>
+
+        <!-- Modal Surface -->
+        <div class="ag-card bg-white w-full max-w-sm relative z-10 overflow-hidden rounded-2xl">
+            <!-- Header -->
+            <div class="p-6 border-b border-zinc-50 bg-zinc-50/50">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-[10px] font-mono font-bold text-cyan-600 bg-cyan-50 px-2 py-1 uppercase" x-text="selectedMeal?.cat"></span>
+                    <button @click="detailModalOpen = false" class="text-zinc-400 hover:text-zinc-900 transition-colors bg-zinc-100 p-1 rounded-lg">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+                <h4 class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-1" x-text="'Sync Time: ' + selectedMeal?.time"></h4>
+                <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase leading-tight" x-text="selectedMeal?.menu"></h2>
+            </div>
+
+            <!-- Content: Macros & Instructions -->
+            <div class="p-8 space-y-8">
+                <div class="flex justify-between items-end border-b border-zinc-50 pb-6">
+                    <div>
+                        <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Energy Yield</p>
+                        <p class="text-3xl font-mono font-bold text-cyan-700" x-text="selectedMeal?.kcal + ' KCAL'"></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6 font-mono">
+                    <div class="flex flex-col space-y-2">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase">Protein</span>
+                        <div class="h-1 bg-zinc-100 overflow-hidden">
+                            <div class="bg-cyan-600 h-full" style="width: 85%"></div>
+                        </div>
+                        <span class="text-lg font-bold text-zinc-900" x-text="selectedMeal?.p + 'G'"></span>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase">Carbs</span>
+                        <div class="h-1 bg-zinc-100 overflow-hidden">
+                            <div class="bg-zinc-900 h-full" style="width: 45%"></div>
+                        </div>
+                        <span class="text-lg font-bold text-zinc-900" x-text="selectedMeal?.c + 'G'"></span>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase">Fats</span>
+                        <div class="h-1 bg-zinc-100 overflow-hidden">
+                            <div class="bg-zinc-400 h-full" style="width: 25%"></div>
+                        </div>
+                        <span class="text-lg font-bold text-zinc-900" x-text="selectedMeal?.f + 'G'"></span>
+                    </div>
+                </div>
+
+                <!-- Coach Instructions -->
+                <div class="space-y-4 pt-8 border-t border-zinc-50">
+                    <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em]">Coach Directives V3.0</h5>
+                    <div class="ag-card p-5 bg-zinc-50 border border-zinc-100 text-[10px] text-zinc-600 font-sans leading-relaxed rounded-xl" 
+                         x-html="selectedMeal?.details">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 bg-zinc-50 border-t border-zinc-100">
+                <button @click="detailModalOpen = false" 
+                        class="w-full py-4 bg-zinc-900 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-black rounded-xl transition-all">
+                    Return to Protocol
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

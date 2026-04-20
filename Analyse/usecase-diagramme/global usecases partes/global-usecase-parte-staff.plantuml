@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+skinparam shadowing false
+
+actor "Co-coach (Staff)" as Staff
+
+rectangle "Gestion Opérationnelle" {
+    usecase "S'authentifier" as Login
+    usecase "Gérer les dossiers Clients" as ManageClients
+    usecase "Concevoir des Programmes" as DesignProgs
+    usecase "Gérer les Catégories de Repas" as ManageCats
+    usecase "Calculer les Macros" as CalcMacros
+    
+    ManageClients ..> Login : <<include>>
+    DesignProgs ..> Login : <<include>>
+    ManageCats ..> Login : <<include>>
+    DesignProgs ..> CalcMacros : <<include>>
+}
+
+Staff -- ManageClients
+Staff -- DesignProgs
+Staff -- ManageCats
+@enduml

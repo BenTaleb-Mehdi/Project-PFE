@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach | Categories</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Preline UI -->
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-zinc-50 antialiased font-sans" 
+      x-data="{ 
+        activePage: 'categories',
+        isSidebarOpen: false, 
+        isLargeScreen: window.innerWidth >= 1024,
+        categories: ['Breakfast', 'Lunch', 'Snack', 'Dinner'],
+        isModalOpen: false,
+        editingIndex: null,
+        tempName: '',
+        searchCategory: '',
+        
+        openModal(index = null) {
+            this.editingIndex = index;
+            this.tempName = index !== null ? this.categories[index] : '';
+            this.isModalOpen = true;
+        },
+        
+        saveCategory() {
+            if (this.tempName.trim() === '') return;
+            if (this.editingIndex !== null) {
+                this.categories[this.editingIndex] = this.tempName;
+            } else {
+                this.categories.push(this.tempName);
+            }
+            this.isModalOpen = false;
+        },
+        
+        // Delete Confirmation
+        isDeleteModalOpen: false,
+        categoryToDelete: null,
+        deleteIndex: null,
+        confirmDelete(cat, index) {
+            this.categoryToDelete = cat;
+            this.deleteIndex = index;
+            this.isDeleteModalOpen = true;
+        },
+        executeDelete() {
+            this.categories.splice(this.deleteIndex, 1);
+            this.isDeleteModalOpen = false;
+            this.categoryToDelete = null;
+            this.deleteIndex = null;
+        }
+      }"
+      x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
+
+    <!-- Header (Mobile) -->
+    <!-- Molecule: components/header.html -->
+    <header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-sans">
+        <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
+            <div class="flex items-center space-x-2">
+                <div class="h-5 w-5 bg-cyan-600"></div>
+                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">Coach</span>
+            </div>
+            
+            <button type="button" 
+                    @click.stop="isSidebarOpen = true"
+                    class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
+                <span class="sr-only">Toggle Navigation</span>
+                <i data-lucide="menu" class="size-4"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Backdrop -->
+    <div x-show="isSidebarOpen" 
+         x-transition.opacity
+         @click="isSidebarOpen = false"
+         class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-50 lg:hidden"
+         style="display: none;"></div>
+
+    <!-- Sidebar -->
+    <!-- Molecule: components/sidebar.html -->
+    <aside id="application-sidebar" 
+           :class="isSidebarOpen || isLargeScreen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-zinc-200 transition-all duration-300 transform lg:translate-x-0 font-sans"
+           @click.away="isSidebarOpen = false">
+        
+        <!-- Mobile Close Trigger -->
+        <div class="lg:hidden absolute top-4 right-4 z-50">
+            <button type="button" 
+                    @click.stop="isSidebarOpen = false"
+                    class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all font-mono">
+                <span class="sr-only">Close Sidebar</span>
+                <i data-lucide="x" class="size-4"></i>
+            </button>
+        </div>
+
+        <div class="p-6">
+            <div class="flex items-center mb-12">
+                <img src="../images/logo.png" alt="Coach Logo" class="h-14 w-auto object-contain">
+            </div>
+
+            <nav class="p-0 w-full flex flex-col flex-wrap">
+                <ul class="space-y-1">
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 focus:outline-none transition-all" href="dashboard.html">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li x-data="{ open: true }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-cyan-700 uppercase tracking-widest border-l-2 border-cyan-600 bg-cyan-50 transition-all">
+                            Nutrition_Engine
+                            <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-cyan-700 uppercase tracking-widest border-l-2 border-cyan-600 bg-cyan-50" href="categories.html">
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="nutrition.html">
+                                        Nutrition
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="clients.html">
+                            Clients
+                        </a>
+                    </li>
+
+                    <li x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                            Strategic_Control
+                            <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="team.html">
+                                        Team
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="finance.html">
+                                        Finance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-xs font-mono">A</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase font-sans">Coach_Admin</p>
+                        <p class="text-[8px] text-cyan-700 uppercase font-mono">Master_System</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors font-sans">
+                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                Logout_Session
+            </a>
+        </div>
+    </aside>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-12">
+        <header class="mb-10 font-sans">
+            <h1 class="text-3xl font-bold tracking-tight uppercase text-zinc-900">Category_Management</h1>
+            <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-widest font-mono">Step_01: Define Meal Sequences</p>
+        </header>
+
+        <!-- Discovery Bar -->
+        <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center max-w-4xl">
+            <!-- Search Input -->
+            <div class="relative flex-1 w-full">
+                <input type="text" 
+                       x-model="searchCategory"
+                       placeholder="Search_Categories..." 
+                       class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                <div class="absolute left-3.5 top-3 text-zinc-400">
+                    <i data-lucide="search" class="size-3.5"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl space-y-4 font-mono" x-init="$nextTick(() => lucide.createIcons())">
+            <template x-for="(cat, index) in categories" :key="index">
+                <div class="ag-card p-6 bg-white flex justify-between items-center group hover:border-cyan-600 transition-all font-mono"
+                     x-show="searchCategory === '' || cat.toLowerCase().includes(searchCategory.toLowerCase())">
+                    <div class="flex items-center space-x-6">
+                        <span class="text-[10px] text-zinc-300" x-text="'0' + (index + 1)"></span>
+                        <h3 class="font-bold text-sm uppercase tracking-widest text-zinc-950" x-text="cat"></h3>
+                    </div>
+                    <div class="flex items-center space-x-4 transition-opacity">
+                        <button @click="openModal(index)" class="p-2 text-zinc-400 hover:text-cyan-600 transition-colors">
+                            <i data-lucide="edit-3" class="size-4 text-black-600"></i>
+                        </button>
+                        <button @click="confirmDelete(cat, index)" class="p-2 text-zinc-400 hover:text-red-500 transition-colors">
+                            <i data-lucide="trash-2" class="size-4 text-black-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <button @click="openModal()" 
+                    class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all">
+                + Add_New_Sequence_Slot
+            </button>
+        </div>
+    </main>
+
+    <!-- Preline Modal can be integrated here, but for now we keep Alpine logic with Preline structure -->
+    <div x-show="isModalOpen" 
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/20 backdrop-blur-sm"
+         x-transition:enter="transition ease-out duration-100"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         style="display: none;">
+        <div @click.outside="isModalOpen = false" 
+             class="bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] overflow-hidden font-mono">
+            <div class="px-8 py-6 border-b border-zinc-100 flex justify-between items-center">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950" x-text="editingIndex !== null ? 'Rename_Category' : 'New_Sequence_Slot'"></h3>
+                <button @click="isModalOpen = false" class="text-zinc-400 hover:text-zinc-950 transition-colors">
+                    <i data-lucide="x" class="size-4"></i>
+                </button>
+            </div>
+            <div class="p-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category_Name</label>
+                        <input type="text" 
+                               x-model="tempName" 
+                               @keydown.enter="saveCategory()"
+                               placeholder="e.g. BREAKFAST_ENGINE" 
+                               class="w-full bg-zinc-50 px-4 py-3 text-xs uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors">
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button @click="saveCategory()" 
+                                class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99]">
+                            Finalize_Configuration
+                        </button>
+                        <button @click="isModalOpen = false" 
+                                class="w-full py-4 text-[10px] uppercase text-zinc-400 hover:text-zinc-950 transition-colors">
+                            Abandon_Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal: Delete Confirmation -->
+    <template x-teleport="body">
+        <div x-show="isDeleteModalOpen" 
+             class="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <!-- Backdrop -->
+            <div x-show="isDeleteModalOpen" 
+                 x-transition.opacity
+                 @click="isDeleteModalOpen = false"
+                 class="absolute inset-0 bg-zinc-950/20 backdrop-blur-sm"></div>
+            
+            <!-- Modal Content -->
+            <div x-show="isDeleteModalOpen" 
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="scale-95 opacity-0"
+                 x-transition:enter-end="scale-100 opacity-100"
+                 class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-8 font-mono">
+                
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="h-10 w-10 bg-red-50 flex items-center justify-center text-red-600 border border-red-100">
+                        <i data-lucide="trash-2" class="size-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-950">Confirm Deletion</h3>
+                        <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">IRREVERSIBLE_ACTION // DATA_PURGE_WARNING</p>
+                    </div>
+                </div>
+
+                <p class="text-[10px] text-zinc-500 leading-relaxed mb-8 uppercase tracking-wider">
+                   You are about to permanently remove sequence <span class="text-zinc-900 font-bold" x-text="categoryToDelete"></span> from the engine. All associated meal mappings for this slot will be lost. Do you wish to proceed?
+                </p>
+
+                <div class="flex space-x-4">
+                    <button @click="executeDelete()" 
+                            class="flex-1 h-11 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 transition-all border border-red-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
+                        Confirmer
+                    </button>
+                    <button @click="isDeleteModalOpen = false" 
+                            class="px-6 h-11 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all border border-zinc-200">
+                        Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!-- Component: HeaderMobile -->
+<!-- Dependencies: BrandLogo, NavToggle -->
+<!-- Documentation: https://preline.co/docs/navbar.html -->
+<header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-mono">
+    <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
+        <!-- Atom: BrandLogo -->
+        <div class="flex items-center space-x-2">
+            <div class="h-5 w-5 bg-cyan-600"></div>
+            <span class="font-bold text-sm tracking-tighter uppercase text-zinc-950">Coach</span>
+        </div>
+        
+        <!-- Atom: NavToggle -->
+        <button type="button" 
+                @click.stop="isSidebarOpen = true"
+                class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
+            <span class="sr-only">Toggle Navigation</span>
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+        </button>
+    </nav>
+</header>

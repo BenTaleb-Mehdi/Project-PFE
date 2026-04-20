@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach | Admin Engine V3.0</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Preline UI -->
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-50 antialiased" 
+      x-data="{ 
+        activePage: 'dashboard', 
+        isSidebarOpen: false, 
+        isLargeScreen: window.innerWidth >= 1024 
+      }"
+      x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
+
+    <!-- Header (Mobile) -->
+    <!-- Molecule: components/header.html -->
+    <header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-sans">
+        <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
+            <div class="flex items-center space-x-2">
+                <div class="h-5 w-5 bg-cyan-600"></div>
+                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">Coach</span>
+            </div>
+            
+            <button type="button" 
+                    @click.stop="isSidebarOpen = true"
+                    class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
+                <span class="sr-only">Toggle Navigation</span>
+                <i data-lucide="menu" class="size-4"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Backdrop -->
+    <div x-show="isSidebarOpen" 
+         x-transition.opacity
+         @click="isSidebarOpen = false"
+         class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-50 lg:hidden"
+         style="display: none;"></div>
+
+    <!-- Sidebar -->
+    <!-- Molecule: components/sidebar.html -->
+    <aside id="application-sidebar" 
+           :class="isSidebarOpen || isLargeScreen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-zinc-200 transition-all duration-300 transform lg:translate-x-0 font-sans"
+           @click.away="isSidebarOpen = false">
+        
+        <!-- Mobile Close Trigger -->
+        <div class="lg:hidden absolute top-4 right-4 z-50">
+            <button type="button" 
+                    @click.stop="isSidebarOpen = false"
+                    class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all font-mono">
+                <span class="sr-only">Close Sidebar</span>
+                <i data-lucide="x" class="size-4"></i>
+            </button>
+        </div>
+
+        <div class="p-6">
+                <div class="flex items-center mb-12">
+                    <img src="../images/logo.png" alt="Achraf Logo" class="h-14 w-auto object-contain">
+                </div>
+
+            <nav class="p-0 w-full flex flex-col flex-wrap">
+                <ul class="space-y-1">
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-cyan-50 text-[10px] font-bold text-cyan-700 uppercase tracking-widest border-l-2 border-cyan-600 focus:outline-none transition-all" href="dashboard.html">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li x-data="{ open: true }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                            Nutrition_Engine
+                            <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="categories.html">
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="nutrition.html">
+                                        Nutrition
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="clients.html">
+                            Clients
+                        </a>
+                    </li>
+
+                    <li x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                            Strategic_Control
+                            <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="team.html">
+                                        Team
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="finance.html">
+                                        Finance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-xs font-mono">A</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-900 uppercase font-sans">Achraf_Perf</p>
+                        <p class="text-[8px] text-cyan-700 uppercase font-mono">Master_Admin</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-[10px] font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors font-sans">
+                <i data-lucide="log-out" class="size-3"></i>
+                Logout_Session
+            </a>
+        </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-12">
+        
+        <!-- Dashboard Header -->
+        <header class="mb-8 font-sans">
+            <h1 class="text-3xl font-bold tracking-tight uppercase text-zinc-900">Dashboard</h1>
+            <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-[0.2em] font-mono">Operational_Intel // System_Sync_Active</p>
+        </header>
+
+        <!-- Navbar Molecule Preview -->
+        <div class="mb-12">
+            <nav class="bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full overflow-x-auto">
+                <div class="flex items-center px-6">
+                    <div class="flex space-x-8 h-12">
+                        <a href="#" class="flex items-center h-full text-[10px] font-bold uppercase tracking-widest text-cyan-600 border-b-2 border-cyan-600 transition-all font-sans">
+                            Overview
+                            <span class="ml-2 px-1.5 py-0.5 bg-cyan-50 text-cyan-700 font-mono text-[9px] border border-cyan-100">MTD</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 font-sans">
+            <!-- Molecule: KPI Card (Revenue) -->
+            <div class="ag-card p-8 group transition-all duration-300">
+                <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Total_Revenue_MTD</p>
+                <div class="flex items-baseline space-x-2 font-mono">
+                    <span class="text-3xl font-bold text-cyan-700">42,500</span>
+                    <span class="text-xs text-zinc-400 uppercase">MAD</span>
+                </div>
+                <div class="mt-4 flex items-center text-[9px] text-emerald-600 uppercase font-mono">
+                    <i data-lucide="trending-up" class="h-3 w-3 mr-1"></i>
+                    +12.4% vs prev_month
+                </div>
+            </div>
+            
+            <!-- Molecule: KPI Card (Pupils) -->
+            <div class="ag-card p-8 group transition-all duration-300">
+                <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Pupils_Performance_Cap</p>
+                <div class="flex items-baseline space-x-2 font-mono">
+                    <span class="text-3xl font-bold text-cyan-700">128</span>
+                    <span class="text-xs text-zinc-400 uppercase">Active</span>
+                </div>
+                <div class="w-full bg-zinc-100 h-1 mt-6">
+                    <div class="bg-cyan-600 h-1" style="width: 85%"></div>
+                </div>
+            </div>
+ 
+            <!-- Molecule: KPI Card (Compliance) -->
+            <div class="ag-card p-8 group transition-all duration-300">
+                <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Compliance_Index</p>
+                <div class="flex items-baseline space-x-2 font-mono">
+                    <span class="text-3xl font-bold text-emerald-600">94.2%</span>
+                </div>
+                <p class="text-[8px] text-zinc-400 mt-4 uppercase font-mono">Calculated_Log_Sync</p>
+            </div>
+        </div>
+
+        <!-- Bottom Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 font-mono">
+            <div class="ag-card p-8">
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4 flex justify-between">
+                    <span>System_Stream</span>
+                    <span class="text-[8px] animate-pulse text-cyan-600">Live</span>
+                </h3>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-2 h-2 bg-cyan-600 mt-1"></div>
+                        <div>
+                            <p class="text-xs uppercase font-bold">New_Registration</p>
+                            <p class="text-[10px] text-zinc-500 mt-1">Client #142 (Mehdi B.) joined Performance Engine.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ag-card p-8 flex flex-col justify-center items-center text-center">
+                <div class="h-16 w-16 border border-zinc-100 flex items-center justify-center mb-6">
+                    <i data-lucide="shield-check" class="h-8 w-8 text-cyan-600"></i>
+                </div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-950">Coach_Safe_Core</h4>
+                <p class="text-[10px] text-zinc-400 mt-2 uppercase">Integrity check: 100% // No conflicts found</p>
+            </div>
+        </div>
+
+    </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+```

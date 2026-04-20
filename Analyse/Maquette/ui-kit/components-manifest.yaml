@@ -1,0 +1,68 @@
+items:
+  - name: "HeaderMobile"
+    category: "Layout"
+    path: "./components/header-mobile.html"
+    status: "validated"
+    description: "Sticky top bar for mobile devices."
+    documentation: "https://preline.co/docs/navbar.html"
+    dependencies:
+      - "BrandLogo"
+      - "NavToggle"
+
+  - name: "Sidebar"
+    category: "Layout"
+    path: "./components/sidebar.html"
+    status: "validated"
+    description: "Full vertical navigation sidebar."
+    documentation: "https://preline.co/docs/sidebar.html"
+    dependencies:
+      - "BrandLogo"
+      - "NavItem"
+
+  - name: "CategoryList"
+    category: "Features"
+    path: "./components/category-list.html"
+    status: "validated"
+    description: "Full management interface for meal categories."
+    documentation: "Custom"
+    dependencies:
+      - "CategoryItem"
+      - "SequenceSlotButton"
+
+  - name: "MealIdentityForm"
+    category: "Features"
+    path: "./components/meal-identity-form.html"
+    status: "validated"
+    description: "Input group for meal name and category."
+    documentation: "Custom"
+    dependencies:
+      - "InputMono"
+
+  - name: "ProtocolTimelineBuilder"
+    category: "Features"
+    path: "./components/protocol-timeline-builder.html"
+    status: "validated"
+    description: "Interface for constructing dietary sequences."
+    documentation: "Custom"
+    dependencies:
+      - "ProtocolTimelineItem"
+      - "StatusLabel"
+
+  - name: "ProtocolTable"
+    category: "Tables"
+    path: "./components/protocol-table.html"
+    status: "validated"
+    description: "Overview grid for tracking nutrition protocols."
+    documentation: "Custom"
+    dependencies:
+      - "ActionButton"
+
+  - name: "BottomNavMobile"
+    category: "Layout"
+    path: "./components/bottom-nav-mobile.html"
+    status: "validated"
+    description: "Sticky bottom navigation for mobile clients."
+    documentation: "Custom"
+    dependencies: []
+
+

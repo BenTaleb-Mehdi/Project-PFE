@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach | Client Management</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Preline UI -->
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-zinc-50 antialiased font-sans" 
+      x-data="{ 
+        activePage: 'clients',
+        isSidebarOpen: false, 
+        isLargeScreen: window.innerWidth >= 1024,
+        showAssignModal: false,
+        selectedClient: null,
+        clients: [
+            { id: '142', name: 'Mehdi Ben Taleb', goal: 'Shred_X', status: 'Active' },
+            { id: '143', name: 'Sarah O.', goal: 'Bulk_Plus', status: 'Pending' }
+        ],
+        // Client Modal State (Add/Edit)
+        showClientModal: false,
+        isEditing: false,
+        editingClientId: null,
+        addClientGoalOpen: false,
+        addClientStatusOpen: false,
+        newClient: { name: '', email: '', phone: '', goal: 'Shred_X', status: 'Active', weight: '', height: '' },
+        goalOptions: ['Shred_X', 'Bulk_Plus', 'Maintenance'],
+        statusOptions: ['Active', 'Pending', 'Inactive'],
+        
+        openModal(client = null) {
+            if (client) {
+                this.isEditing = true;
+                this.editingClientId = client.id;
+                // Clone client data (in a real app, you'd fetch full details by ID)
+                this.newClient = { 
+                    name: client.name, 
+                    email: client.email || '', 
+                    phone: client.phone || '', 
+                    goal: client.goal, 
+                    status: client.status, 
+                    weight: client.weight || '', 
+                    height: client.height || '' 
+                };
+            } else {
+                this.isEditing = false;
+                this.editingClientId = null;
+                this.newClient = { name: '', email: '', phone: '', goal: 'Shred_X', status: 'Active', weight: '', height: '' };
+            }
+            this.showClientModal = true;
+        },
+
+        submitClient() {
+            if (!this.newClient.name.trim()) return;
+            
+            if (this.isEditing) {
+                // Update existing
+                const index = this.clients.findIndex(c => c.id === this.editingClientId);
+                if (index !== -1) {
+                    this.clients[index] = {
+                        ...this.clients[index],
+                        ...this.newClient,
+                        name: this.newClient.name.trim()
+                    };
+                }
+            } else {
+                // Add new
+                this.clients.push({
+                    id: String(Date.now()).slice(-4),
+                    ...this.newClient,
+                    name: this.newClient.name.trim()
+                });
+            }
+            
+            this.showClientModal = false;
+        },
+        // Modal Dropdown State
+        protocolOpen: false,
+        selectedProtocol: 'Select_Nutrition_Protocol',
+        protocols: ['SHRED_X_V2 (Achraf_Perf)', 'BULK_POWER_HYBRID', 'OATMEAL_SYSTEM_LITE'],
+        searchQuery: '',
+        filterStatus: 'ALL_STATUSES',
+        expandedClientIds: [],
+        
+        // Delete Logic
+        isDeleteModalOpen: false,
+        clientToDelete: null,
+        confirmDelete(client) {
+            this.clientToDelete = client;
+            this.isDeleteModalOpen = true;
+        },
+        executeDelete() {
+            this.clients = this.clients.filter(c => c.id !== this.clientToDelete.id);
+            this.isDeleteModalOpen = false;
+        }
+      }"
+      x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
+
+    <!-- Header (Mobile) -->
+    <!-- Molecule: components/header.html -->
+    <header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-mono">
+        <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
+            <div class="flex items-center space-x-2">
+                <div class="h-5 w-5 bg-cyan-600"></div>
+                <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">Coach</span>
+            </div>
+            
+            <button type="button" 
+                    @click.stop="isSidebarOpen = true"
+                    class="h-11 w-11 inline-flex justify-center items-center gap-x-2 text-start bg-white border border-zinc-200 text-zinc-800 shadow-sm align-middle hover:bg-zinc-50 focus:outline-none focus:bg-zinc-50 transition-all font-mono uppercase">
+                <span class="sr-only">Toggle Navigation</span>
+                <i data-lucide="menu" class="size-4"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Backdrop -->
+    <div x-show="isSidebarOpen" 
+         x-transition.opacity
+         @click="isSidebarOpen = false"
+         class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-50 lg:hidden"
+         style="display: none;"></div>
+
+    <!-- Sidebar -->
+    <!-- Molecule: components/sidebar.html -->
+    <aside id="application-sidebar" 
+           :class="isSidebarOpen || isLargeScreen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-zinc-200 transition-all duration-300 transform lg:translate-x-0 font-mono"
+           @click.away="isSidebarOpen = false">
+        
+        <!-- Mobile Close Trigger -->
+        <div class="lg:hidden absolute top-4 right-4 z-50">
+            <button type="button" 
+                    @click.stop="isSidebarOpen = false"
+                    class="h-10 w-10 flex items-center justify-center bg-white border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition-all">
+                <span class="sr-only">Close Sidebar</span>
+                <i data-lucide="x" class="size-4"></i>
+            </button>
+        </div>
+
+        <div class="p-6">
+                <div class="flex items-center mb-12">
+                    <img src="../images/logo.png" alt="Coach Logo" class="h-14 w-auto object-contain">
+                </div>
+
+            <nav class="hs-accordion-group p-0 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+                <ul class="space-y-1.5">
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="dashboard.html">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="hs-accordion" id="nutrition-accordion">
+                        <button type="button" class="hs-accordion-toggle hs-accordion-active:text-cyan-600 w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" aria-expanded="true">
+                            Nutrition_Engine
+                            <i data-lucide="chevron-up" class="hs-accordion-active:block ms-auto hidden size-4"></i>
+                            <i data-lucide="chevron-down" class="hs-accordion-active:hidden ms-auto block size-4"></i>
+                        </button>
+
+                        <div id="nutrition-accordion-content" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden" role="region" aria-labelledby="nutrition-accordion">
+                            <ul class="pt-2 ps-2">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="categories.html">
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none" href="nutrition.html">
+                                        Nutrition
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="clients.html">
+                            Clients
+                        </a>
+                    </li>
+
+                    <li x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                            Strategic_Control
+                            <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak class="w-full overflow-hidden">
+                            <ul class="pt-1 ps-4 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="team.html">
+                                        Team
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans" href="finance.html">
+                                        Finance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="absolute bottom-0 w-full p-6 bg-zinc-50/50 border-t border-zinc-200 font-sans">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center text-cyan-700 font-bold text-xs">C</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-zinc-950 uppercase">Coach_Admin</p>
+                        <p class="text-[8px] text-cyan-700 uppercase">Master_System</p>
+                    </div>
+                </div>
+            </div>
+            <a href="../auth/login.html" class="flex items-center gap-x-2 py-2 text-xs font-bold text-red-600 uppercase tracking-widest hover:text-red-700 transition-colors">
+                <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                Logout_Session
+            </a>
+        </div>
+    </aside>
+
+    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-12">
+        <header class="mb-10 lg:flex lg:justify-between lg:items-end font-mono">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight uppercase text-zinc-950">Client_Registry</h1>
+                <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-widest">Pupil_Database // Assignment_Protocol</p>
+            </div>
+            <button @click="openModal()"
+                    class="mt-4 lg:mt-0 px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
+                <i data-lucide="plus" class="size-3"></i>
+                Onboard_New_Pupil
+            </button>
+        </header>
+
+        <!-- Discovery Bar -->
+        <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center">
+            <!-- Search Input -->
+            <div class="relative flex-1 w-full">
+                <input type="text" 
+                       x-model="searchQuery"
+                       placeholder="Search_Pupils (Name, ID)..." 
+                       class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
+                <div class="absolute left-3.5 top-3 text-zinc-400">
+                    <i data-lucide="search" class="size-3.5"></i>
+                </div>
+            </div>
+
+            <!-- Filter Dropdown: Status -->
+            <div class="relative w-full md:w-64" x-data="{ open: false }">
+                <button @click="open = !open" 
+                        @click.away="open = false"
+                        x-ref="filterBtn"
+                        class="w-full flex justify-between items-center bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors">
+                    <span x-text="filterStatus.replace('_', ' ')"></span>
+                    <svg class="size-3 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+
+                <template x-teleport="body">
+                    <div x-show="open" 
+                         x-cloak
+                         x-anchor.bottom-start.offset.1="$refs.filterBtn"
+                         class="z-[100] bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-[256px]">
+                        <div class="py-1">
+                            <template x-for="opt in ['ALL_STATUSES', 'Active', 'Pending']">
+                                <button @click="filterStatus = opt; open = false" 
+                                        class="w-full text-left px-4 py-2 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all"
+                                        :class="filterStatus === opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                    <span x-text="opt.replace('_', ' ')"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Client List -->
+        <div class="grid grid-cols-1 gap-4 font-sans">
+            <template x-for="client in clients" :key="client.id">
+                <div class="ag-card bg-white overflow-hidden group transition-all"
+                     :class="expandedClientIds.includes(client.id) ? 'border-cyan-600 ring-1 ring-cyan-600/10' : 'border-zinc-200'"
+                     x-show="(searchQuery === '' || client.name.toLowerCase().includes(searchQuery.toLowerCase()) || client.id.toLowerCase().includes(searchQuery.toLowerCase())) && (filterStatus === 'ALL_STATUSES' || client.status === filterStatus)">
+                    
+                    <!-- Main Row -->
+                    <div @click="expandedClientIds.includes(client.id) ? expandedClientIds = expandedClientIds.filter(id => id !== client.id) : expandedClientIds.push(client.id)"
+                         class="p-6 flex flex-col md:flex-row md:items-center justify-between cursor-pointer hover:bg-zinc-50/50 transition-colors">
+                        <div class="flex items-center space-x-6">
+                            <div class="h-10 w-10 border border-zinc-200 flex items-center justify-center font-bold text-cyan-600 bg-cyan-50 font-mono" x-text="client.name[0]"></div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase text-zinc-900" x-text="client.name"></h4>
+                                <p class="text-[10px] text-zinc-400 uppercase mt-1">
+                                    <span class="font-mono text-cyan-700" x-text="'ID: #' + client.id"></span>
+                                    <span class="mx-2 opacity-50">//</span>
+                                    <span x-text="'Goal: ' + client.goal"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 md:mt-0 flex items-center space-x-6">
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[8px] font-bold uppercase tracking-widest border border-emerald-100 font-mono" x-text="client.status"></span>
+                            <button @click.stop="selectedClient = client; showAssignModal = true" 
+                                    class="flex items-center gap-x-1.5 px-4 py-2 text-[10px] uppercase text-cyan-600 font-bold hover:underline font-mono">
+                                <i data-lucide="clipboard-list" class="size-3 text-cyan-600"></i>
+                                Assign_Program
+                            </button>
+                            <div class="text-zinc-300 transition-all duration-200 transform"
+                                 :class="expandedClientIds.includes(client.id) ? 'rotate-180 text-cyan-600' : 'group-hover:text-zinc-950'">
+                                <i data-lucide="chevron-down" class="h-4 w-4"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details Pane -->
+                    <div x-show="expandedClientIds.includes(client.id)" 
+                         x-collapse
+                         x-cloak
+                         class="border-t border-dashed border-zinc-100 bg-zinc-50/50">
+                        <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- Bio_Metrics -->
+                            <div class="space-y-4">
+                                <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Bio_Metrics_Core</h5>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">Weight</p>
+                                        <p class="text-xs font-mono font-bold text-zinc-900">78.4 KG</p>
+                                    </div>
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">Bodyfat</p>
+                                        <p class="text-xs font-mono font-bold text-cyan-600">14.2%</p>
+                                    </div>
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">BMI</p>
+                                        <p class="text-xs font-mono font-bold text-zinc-900">24.1</p>
+                                    </div>
+                                    <div class="bg-white p-3 border border-zinc-100">
+                                        <p class="text-[8px] text-zinc-400 uppercase">Trend</p>
+                                        <p class="text-xs font-mono font-bold text-emerald-600">-0.8 KG</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Program_Status -->
+                            <div class="space-y-4">
+                                <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Current_Assignment</h5>
+                                <div class="bg-white p-4 border border-zinc-200">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-[10px] font-bold text-zinc-900 uppercase">Shred_X_V2</span>
+                                        <span class="text-[8px] font-mono text-cyan-700">Day_12/30</span>
+                                    </div>
+                                    <div class="w-full h-1 bg-zinc-100 overflow-hidden">
+                                        <div class="h-full bg-cyan-600 w-[40%] text-white"></div>
+                                    </div>
+                                    <p class="text-[8px] text-zinc-400 mt-3 uppercase tracking-widest">Consistency: <span class="text-zinc-900 font-bold">94%</span></p>
+                                </div>
+                            </div>
+
+                            <!-- Quick_Logs -->
+                            <div class="space-y-4">
+                                <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Intelligence_Feed</h5>
+                                <div class="space-y-2">
+                                    <div class="flex items-center space-x-3 text-[9px] uppercase">
+                                        <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                                        <span class="text-zinc-400 font-mono">2026-03-03 //</span>
+                                        <span class="text-zinc-900 font-bold">Weight_Check_In_Logged</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3 text-[9px] uppercase">
+                                        <div class="h-1.5 w-1.5 rounded-full bg-cyan-500"></div>
+                                        <span class="text-zinc-400 font-mono">2026-03-02 //</span>
+                                        <span class="text-zinc-900 font-bold">Protocol_X_Adherence_100%</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
+                                    <button class="w-full py-2 bg-zinc-900 text-white text-[8px] uppercase font-bold tracking-widest hover:bg-black transition-all border border-zinc-900 flex items-center justify-center gap-x-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
+                                        <i data-lucide="bar-chart-3" class="size-3"></i>
+                                        Data_Matrix
+                                    </button>
+                                    <button @click="openModal(client)" class="w-full py-2 bg-white text-zinc-900 text-[8px] uppercase font-bold tracking-widest hover:bg-zinc-50 transition-all border border-zinc-200 hover:border-cyan-600 hover:text-cyan-600 flex items-center justify-center gap-x-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
+                                        <i data-lucide="edit-3" class="size-3"></i>
+                                        Edit_Profile
+                                    </button>
+                                    <button @click="confirmDelete(client)" class="w-full py-2 bg-red-50 text-red-600 text-[8px] uppercase font-bold tracking-widest hover:bg-red-100 transition-all border border-red-100 flex items-center justify-center gap-x-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)] col-span-2 lg:col-span-1">
+                                        <i data-lucide="trash-2" class="size-3"></i>
+                                        Terminate_Pupil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Assignment Modal -->
+        <div x-show="showAssignModal" 
+             x-cloak
+             class="fixed inset-0 z-[100] flex items-center justify-center p-4 px-6 md:px-0"
+             style="display: none;">
+            
+            <!-- Backdrop -->
+            <div x-show="showAssignModal" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="showAssignModal = false"
+                 class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-[90]"></div>
+
+            <!-- Modal Content -->
+            <div x-show="showAssignModal"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="relative bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-lg z-[100] font-sans">
+                
+                <div class="flex justify-between items-center py-6 px-8 border-b border-zinc-100">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900">Program_Assignment_Wizard</h3>
+                        <p class="text-[10px] text-zinc-400 mt-1 uppercase font-mono text-cyan-700" x-text="'Target: ' + (selectedClient ? selectedClient.name : 'PENDING_SELECTION')"></p>
+                    </div>
+                    <button type="button" 
+                            @click="showAssignModal = false"
+                            class="inline-flex justify-center items-center size-8 text-sm font-semibold border border-transparent text-zinc-400 hover:text-zinc-900 focus:outline-none">
+                        <span class="sr-only">Close</span>
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+
+                <div class="p-8 space-y-6">
+                    <div>
+                        <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">Select_Nutrition_Protocol</label>
+                        <div class="relative">
+                            <!-- Advanced Dropdown (The Portal Spec) -->
+                            <button @click="protocolOpen = !protocolOpen" 
+                                    class="w-full bg-zinc-50 px-4 py-3 text-[10px] items-center justify-between flex border border-zinc-200 outline-none focus:border-cyan-600 transition-colors uppercase font-mono text-cyan-700">
+                                <span x-text="selectedProtocol"></span>
+                                <svg class="h-4 w-4 text-zinc-400 transition-transform" :class="protocolOpen ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            
+                            <div x-show="protocolOpen" 
+                                 @click.outside="protocolOpen = false"
+                                 x-transition:enter="transition ease-out duration-100"
+                                 x-transition:enter-start="opacity-0"
+                                 x-transition:enter-end="opacity-100"
+                                 class="ag-dropdown-surface absolute left-0 mt-1 w-full bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] z-[110]">
+                                <template x-for="p in protocols" :key="p">
+                                    <div @click="selectedProtocol = p; protocolOpen = false" 
+                                         class="ag-dropdown-item px-4 py-3 text-[10px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer border-l-2 border-transparent hover:border-cyan-600 flex items-center justify-between"
+                                         :class="selectedProtocol === p ? 'border-l-cyan-600 bg-zinc-50 text-cyan-600' : ''">
+                                        <span x-text="p"></span>
+                                        <span x-show="selectedProtocol === p" class="text-cyan-600">
+                                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+                                        </span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">Duration_Protocol (Weeks)</label>
+                        <input type="number" value="12" class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700">
+                    </div>
+                    
+                    <button type="button" 
+                            @click="showAssignModal = false"
+                            class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99]">
+                        Link_Protocol_to_Client
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====================================================== -->
+        <!-- Add / Edit Client Modal                                 -->
+        <!-- ====================================================== -->
+        <div x-show="showClientModal"
+             x-cloak
+             class="fixed inset-0 z-[100] flex items-center justify-center p-4 px-6 md:px-0"
+             style="display: none;">
+
+            <!-- Backdrop -->
+            <div x-show="showClientModal"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="showClientModal = false"
+                 class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-[90]"></div>
+
+            <!-- Modal Panel -->
+            <div x-show="showClientModal"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="relative bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-lg z-[100] font-sans">
+
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center py-6 px-8 border-b border-zinc-100">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900" 
+                            x-text="isEditing ? 'Edit_Pupil_Profile' : 'Onboard_New_Pupil'"></h3>
+                        <p class="text-[10px] text-zinc-400 mt-1 uppercase font-mono tracking-widest"
+                           x-text="isEditing ? 'Client_Registry // Modify_Entry' : 'Client_Registry // New_Entry'"></p>
+                    </div>
+                    <button type="button"
+                            @click="showClientModal = false"
+                            class="inline-flex justify-center items-center size-8 text-zinc-400 hover:text-zinc-900 border border-transparent hover:border-zinc-200 transition-all focus:outline-none">
+                        <span class="sr-only">Close</span>
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-8 space-y-5">
+
+                    <!-- Full Name -->
+                    <div>
+                        <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">
+                            Full_Name <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text"
+                               x-model="newClient.name"
+                               placeholder="e.g. Ali Rami"
+                               @keydown.enter="submitClient()"
+                               class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-zinc-900 uppercase placeholder:normal-case placeholder:text-zinc-400">
+                        <p x-show="showClientModal && newClient.name.trim() === ''"
+                           x-cloak
+                           class="mt-1 text-[9px] text-red-500 uppercase font-mono tracking-widest">Name_Required</p>
+                    </div>
+
+                    <!-- Contact Info Row -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">
+                                Email_Address
+                            </label>
+                            <input type="email"
+                                   x-model="newClient.email"
+                                   placeholder="ali@example.com"
+                                   class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-zinc-900 placeholder:text-zinc-400">
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">
+                                Phone_Number
+                            </label>
+                            <input type="tel"
+                                   x-model="newClient.phone"
+                                   placeholder="+212 600-000000"
+                                   class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-zinc-900 placeholder:text-zinc-400">
+                        </div>
+                    </div>
+
+                    <!-- Goal + Status Row -->
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <!-- Goal Dropdown -->
+                        <div>
+                            <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">Goal</label>
+                            <div class="relative" x-data="{ open: false }">
+                                <button @click="open = !open"
+                                        type="button"
+                                        class="w-full bg-zinc-50 px-4 py-3 text-[10px] flex items-center justify-between border border-zinc-200 outline-none focus:border-cyan-600 transition-colors uppercase font-mono text-cyan-700">
+                                    <span x-text="newClient.goal"></span>
+                                    <svg class="size-3 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </button>
+                                <div x-show="open"
+                                     @click.outside="open = false"
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="opacity-0"
+                                     x-transition:enter-end="opacity-100"
+                                     class="absolute left-0 mt-1 w-full bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] z-[110]">
+                                    <template x-for="opt in goalOptions" :key="opt">
+                                        <button @click="newClient.goal = opt; open = false"
+                                                type="button"
+                                                class="w-full text-left px-4 py-2.5 text-[10px] uppercase font-mono tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 hover:text-cyan-600 transition-all"
+                                                :class="newClient.goal === opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                            <span x-text="opt"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Dropdown -->
+                        <div>
+                            <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2">Status</label>
+                            <div class="relative" x-data="{ open: false }">
+                                <button @click="open = !open"
+                                        type="button"
+                                        class="w-full bg-zinc-50 px-4 py-3 text-[10px] flex items-center justify-between border border-zinc-200 outline-none focus:border-cyan-600 transition-colors uppercase font-mono text-cyan-700">
+                                    <span x-text="newClient.status"></span>
+                                    <svg class="size-3 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </button>
+                                <div x-show="open"
+                                     @click.outside="open = false"
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="opacity-0"
+                                     x-transition:enter-end="opacity-100"
+                                     class="absolute left-0 mt-1 w-full bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] z-[110]">
+                                    <template x-for="opt in statusOptions" :key="opt">
+                                        <button @click="newClient.status = opt; open = false"
+                                                type="button"
+                                                class="w-full text-left px-4 py-2.5 text-[10px] uppercase font-mono tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 hover:text-cyan-600 transition-all"
+                                                :class="newClient.status === opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                            <span x-text="opt"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biometrics (Optional) -->
+                    <div class="border-t border-dashed border-zinc-100 pt-5">
+                        <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-3">Bio_Metrics_Core // Optional</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[9px] text-zinc-500 uppercase font-bold tracking-widest mb-1.5">Weight (KG)</label>
+                                <input type="number"
+                                       x-model="newClient.weight"
+                                       placeholder="78.0"
+                                       class="w-full bg-zinc-50 px-3 py-2.5 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] text-zinc-500 uppercase font-bold tracking-widest mb-1.5">Height (CM)</label>
+                                <input type="number"
+                                       x-model="newClient.height"
+                                       placeholder="180"
+                                       class="w-full bg-zinc-50 px-3 py-2.5 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="button"
+                            @click="submitClient()"
+                            class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
+                        <i x-show="!isEditing" data-lucide="plus" class="size-3"></i>
+                        <i x-show="isEditing" data-lucide="check" class="size-3"></i>
+                        <span x-text="isEditing ? 'Save_Profile_Modifications' : 'Onboard_Pupil'"></span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
