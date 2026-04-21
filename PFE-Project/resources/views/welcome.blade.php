@@ -170,6 +170,42 @@
             </main>
         </div>
 
+        {{-- FAB Flower / Speed Dial --}}
+        <div x-data="{ isOpen: false }" class="fixed bottom-8 right-8 z-50 fab-container" :class="{ 'is-open': isOpen }">
+            <!-- Flower Buttons -->
+            <div class="absolute bottom-0 right-0">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/212600000000" target="_blank" 
+                   class="fab-item absolute bottom-4 right-0 bg-emerald-500 text-white p-4 rounded-full shadow-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-110 flex items-center justify-center"
+                   :style="isOpen ? 'transform: translate(-110px, -20px)' : ''"
+                   title="WhatsApp">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                </a>
+                
+                <!-- Instagram -->
+                <a href="https://instagram.com/yourprofile" target="_blank"
+                   class="fab-item absolute bottom-4 right-0 bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 text-white p-4 rounded-full shadow-lg hover:opacity-90 transition-all duration-300 hover:scale-110 flex items-center justify-center"
+                   :style="isOpen ? 'transform: translate(-80px, -80px)' : ''"
+                   title="Instagram">
+                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                </a>
+                
+                <!-- Contact Form -->
+                <a href="#contact" 
+                   class="fab-item absolute bottom-4 right-0 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 hover:scale-110 flex items-center justify-center"
+                   :style="isOpen ? 'transform: translate(-20px, -110px)' : ''"
+                   title="Contact Us">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                </a>
+            </div>
+
+            <!-- Main Toggle Button -->
+            <button @click="isOpen = !isOpen" 
+                    class="relative bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 p-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all z-10 flex items-center justify-center group">
+                <i data-lucide="plus" class="w-8 h-8 transition-transform duration-500 group-hover:rotate-90" :class="{ 'rotate-45 group-hover:rotate-[135deg]': isOpen }"></i>
+            </button>
+        </div>
+
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
