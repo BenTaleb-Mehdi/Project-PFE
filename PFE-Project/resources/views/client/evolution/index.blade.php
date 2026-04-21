@@ -67,12 +67,12 @@
     <header class="mb-12">
         <div class="flex items-center space-x-3 mb-4">
             <span class="h-[1px] w-12 bg-cyan-700"></span>
-            <span class="text-[10px] font-mono font-bold text-cyan-700 uppercase tracking-[0.4em]">Current_Status: Biometric_Active</span>
+            <span class="text-[10px] font-mono font-bold text-cyan-700 uppercase tracking-[0.4em]">Current Status: Biometric Active</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Evolution_Sync</h1>
+        <h1 class="text-5xl md:text-6xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Evolution Sync</h1>
         <p class="text-[11px] font-mono text-zinc-400 mt-5 uppercase tracking-[0.2em] flex items-center">
             <i data-lucide="zap" class="size-4 mr-3 text-cyan-600"></i>
-            Module: Physical_Trace_Capture // V3.0_PRO_SYNC
+            Module: Physical Trace Capture // V3.0 PRO SYNC
         </p>
     </header>
 
@@ -94,8 +94,8 @@
                     <div class="h-20 w-20 bg-zinc-50 flex items-center justify-center mb-8 group-hover:bg-cyan-50 transition-colors">
                         <i data-lucide="layers" class="h-10 w-10 text-zinc-200 group-hover:text-cyan-600 transition-colors"></i>
                     </div>
-                    <h3 class="text-sm font-mono font-bold uppercase tracking-widest text-zinc-900 mb-3">Deploy_Sync_Payload</h3>
-                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-[0.2em] leading-relaxed">Multi-Angle Biometric Snapshots<br/>Required_Format: PNG / JPG</p>
+                    <h3 class="text-sm font-mono font-bold uppercase tracking-widest text-zinc-900 mb-3">Deploy Sync Payload</h3>
+                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-[0.2em] leading-relaxed">Multi-Angle Biometric Snapshots<br/>Required Format: PNG / JPG</p>
                 </div>
                 
                 <!-- Live Previews Overlay -->
@@ -116,11 +116,11 @@
                     <i data-lucide="activity" class="size-48 stroke-[0.5]"></i>
                 </div>
                 <div class="relative z-10">
-                    <label class="block text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mb-8">System_Mass_Input (KG)</label>
+                    <label class="block text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mb-8">System Mass Input (KG)</label>
                     <div class="flex items-baseline space-x-6">
                         <input type="number" step="0.1" name="weight" placeholder="00.0" required
                                class="text-7xl font-mono font-bold w-full bg-transparent outline-none text-cyan-500 border-none p-0 focus:ring-0 tracking-tighter placeholder-zinc-800">
-                        <span class="text-xs font-mono text-zinc-600 font-bold uppercase">Metric_Units</span>
+                        <span class="text-xs font-mono text-zinc-600 font-bold uppercase">Metric Units</span>
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
             <input type="hidden" name="recorded_at" value="{{ date('Y-m-d') }}">
 
             <button type="submit" class="w-full py-6 bg-zinc-900 text-white text-[11px] font-mono font-bold uppercase tracking-[0.4em] hover:bg-black transition-all shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)] active:scale-[0.98] group hover:tracking-[0.6em] duration-500">
-                Finalize_Snapshot_Sync
+                Finalize Snapshot Sync
                 <i data-lucide="arrow-right" class="size-4 ml-4 inline-block transition-transform group-hover:translate-x-2"></i>
             </button>
         </div>
@@ -138,23 +138,23 @@
     <div class="pt-16 border-t border-zinc-100">
         <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12">
             <div>
-                <h4 class="text-[12px] font-mono font-bold uppercase tracking-[0.4em] text-zinc-900 underline decoration-cyan-100 underline-offset-8">Archive_Trace</h4>
-                <p class="text-[9px] font-mono text-zinc-400 uppercase mt-2">Chronological_Biometric_Ledger</p>
+                <h4 class="text-[12px] font-mono font-bold uppercase tracking-[0.4em] text-zinc-900 underline decoration-cyan-100 underline-offset-8">Archive Trace</h4>
+                <p class="text-[9px] font-mono text-zinc-400 uppercase mt-2">Chronological Biometric Ledger</p>
             </div>
             
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 flex-1 max-w-2xl justify-end">
                 <div class="relative flex-1">
                     <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-300"></i>
-                    <input type="text" x-model="searchQuery" placeholder="Search_By_Weight_Or_Date..." 
+                    <input type="text" x-model="searchQuery" placeholder="Search By Weight Or Date..." 
                            class="w-full pl-12 pr-6 py-4 bg-white ag-border text-[10px] font-mono uppercase tracking-widest placeholder:text-zinc-200 focus:ring-1 focus:ring-cyan-600 outline-none shadow-sm transition-all focus:shadow-lg">
                 </div>
                 
                 <select x-model="filterOption" class="bg-white ag-border px-6 py-4 text-[10px] font-mono uppercase tracking-widest outline-none focus:ring-1 focus:ring-cyan-600 shadow-sm cursor-pointer hover:bg-zinc-50 transition-all">
-                    <option value="latest">Sort: Latest_Entry</option>
-                    <option value="oldest">Sort: Oldest_Entry</option>
-                    <option value="heaviest">Sort: Max_Mass</option>
-                    <option value="lightest">Sort: Min_Mass</option>
-                    <option value="photos">Filter: Visual_Only</option>
+                    <option value="latest">Sort: Latest Entry</option>
+                    <option value="oldest">Sort: Oldest Entry</option>
+                    <option value="heaviest">Sort: Max Mass</option>
+                    <option value="lightest">Sort: Min Mass</option>
+                    <option value="photos">Filter: Visual Only</option>
                 </select>
                 
                 <div class="h-12 w-12 bg-zinc-900 text-white hidden sm:flex items-center justify-center shadow-md">
@@ -190,7 +190,7 @@
                             <span class="h-[1px] w-4 bg-zinc-200"></span>
                             <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest">LOG_ENTRY</span>
                         </div>
-                        <p class="text-[13px] font-mono font-bold text-cyan-700 uppercase tracking-tight"><span x-text="entry.weight"></span> KG // METRIC_MASS</p>
+                        <p class="text-[13px] font-mono font-bold text-cyan-700 uppercase tracking-tight"><span x-text="entry.weight"></span> KG // METRIC MASS</p>
                     </div>
 
                     <div class="h-12 w-12 flex items-center justify-center text-zinc-100 group-hover:text-cyan-700 transition-all group-hover:bg-cyan-50 group-hover:border-cyan-200 ag-border rotate-0 group-hover:rotate-45 duration-500">
@@ -206,8 +206,8 @@
                 <div class="h-24 w-24 bg-zinc-50 ag-border mx-auto mb-10 flex items-center justify-center text-zinc-100 shadow-inner">
                     <i data-lucide="database-zap" class="size-12"></i>
                 </div>
-                <p class="text-[11px] text-zinc-400 uppercase font-mono tracking-[0.5em] mb-4">No_Sync_Records_Detected</p>
-                <p class="text-[9px] text-zinc-300 uppercase font-mono mt-3 italic underline decoration-zinc-50 underline-offset-8">Awaiting_Initial_System_Deployment</p>
+                <p class="text-[11px] text-zinc-400 uppercase font-mono tracking-[0.5em] mb-4">No Sync Records Detected</p>
+                <p class="text-[9px] text-zinc-300 uppercase font-mono mt-3 italic underline decoration-zinc-50 underline-offset-8">Awaiting Initial System Deployment</p>
             </div>
         </template>
     </div>
@@ -230,11 +230,11 @@
                     <div>
                         <div class="flex items-center space-x-3 mb-2">
                             <span class="h-2 w-2 bg-cyan-600 animate-pulse"></span>
-                            <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tighter">Sync_Node_Analysis_V3</h2>
+                            <h2 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tighter">Sync Node Analysis V3</h2>
                         </div>
                         <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.4em] flex items-center">
                             <i data-lucide="fingerprint" class="size-3 mr-2 text-cyan-600"></i>
-                            Archive_Hash_ID: #000<span x-text="selectedSync?.id || '00'"></span> // SECURE_LOG_TRACE
+                            Archive Hash ID: #000<span x-text="selectedSync?.id || '00'"></span> // SECURE LOG TRACE
                         </p>
                     </div>
                     <button @click="syncModalOpen = false" class="h-12 w-12 ag-border flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:rotate-90 duration-500 shadow-sm bg-white">
@@ -259,7 +259,7 @@
                             <template x-if="!selectedSync?.images || selectedSync.images.length === 0">
                                 <div class="flex flex-col items-center justify-center text-zinc-100">
                                     <i data-lucide="image-off" class="size-24 mb-6 stroke-[0.5]"></i>
-                                    <span class="text-[10px] font-mono text-zinc-300 uppercase tracking-[0.4em]">No_Photo_Captured</span>
+                                    <span class="text-[10px] font-mono text-zinc-300 uppercase tracking-[0.4em]">No Photo Captured</span>
                                 </div>
                             </template>
                             
@@ -290,7 +290,7 @@
                         <div class="bg-zinc-50/50 p-6 ag-border border-dashed">
                             <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest mb-3 flex items-center">
                                 <i data-lucide="clock" class="size-3 mr-2"></i>
-                                Timestamp_Metric
+                                Timestamp Metric
                             </p>
                             <p class="text-xl font-mono font-bold text-zinc-900 tracking-tighter underline decoration-cyan-100 underline-offset-8" x-text="formatDate(selectedSync?.recorded_at)"></p>
                         </div>
@@ -301,7 +301,7 @@
                                     <i data-lucide="activity" class="size-32 stroke-[0.3]"></i>
                                 </div>
                                 <div class="relative z-10">
-                                    <p class="text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mb-4">Sync_Recorded_Mass</p>
+                                    <p class="text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mb-4">Sync Recorded Mass</p>
                                     <div class="flex items-baseline space-x-4">
                                         <span class="text-6xl font-mono font-bold tracking-tighter text-cyan-500" x-text="selectedSync?.weight"></span>
                                         <span class="text-xs font-mono text-zinc-500 font-bold uppercase tracking-widest">KILOGRAMS</span>
@@ -311,38 +311,38 @@
 
                             <div class="grid grid-cols-1 gap-3">
                                 <div class="p-5 ag-border flex justify-between items-center bg-zinc-50/30 hover:bg-zinc-50 transition-colors">
-                                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">BM_Sync_Status</p>
+                                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">BM Sync Status</p>
                                     <div class="flex items-center space-x-3">
                                         <span class="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                                        <span class="text-[11px] font-mono font-bold text-emerald-600 uppercase tracking-widest">STABLE_V3.0</span>
+                                        <span class="text-[11px] font-mono font-bold text-emerald-600 uppercase tracking-widest">STABLE V3.0</span>
                                     </div>
                                 </div>
                                 <div class="p-5 ag-border flex justify-between items-center bg-zinc-50/30 hover:bg-zinc-50 transition-colors">
-                                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">Trend_Analysis</p>
-                                    <span class="text-[11px] font-mono font-bold text-cyan-600 uppercase tracking-widest">Bio_Sync_Elite</span>
+                                    <p class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">Trend Analysis</p>
+                                    <span class="text-[11px] font-mono font-bold text-cyan-600 uppercase tracking-widest">Bio Sync Elite</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="pt-8 border-t border-zinc-100">
                             <h5 class="text-[10px] font-mono font-bold text-zinc-900 uppercase tracking-widest mb-6 border-b border-zinc-50 pb-2 flex items-center justify-between">
-                                <span>Detailed_Log_Trace</span>
+                                <span>Detailed Log Trace</span>
                                 <i data-lucide="scroll-text" class="size-4 text-zinc-200"></i>
                             </h5>
                             <div class="space-y-4">
                                 <div class="flex justify-between text-[10px] font-mono uppercase items-center">
-                                    <span class="text-zinc-400 tracking-widest">Node_Architecture</span>
-                                    <span class="text-zinc-900 font-bold bg-zinc-50 px-2 py-0.5 ag-border">SECURE_ALPHA</span>
+                                    <span class="text-zinc-400 tracking-widest">Node Architecture</span>
+                                    <span class="text-zinc-900 font-bold bg-zinc-50 px-2 py-0.5 ag-border">SECURE ALPHA</span>
                                 </div>
                                 <div class="flex justify-between text-[10px] font-mono uppercase items-center text-zinc-400">
-                                    <span>Sync_Protocol</span>
-                                    <span class="text-zinc-900 font-bold">MULTI_SURFACE_V3</span>
+                                    <span>Sync Protocol</span>
+                                    <span class="text-zinc-900 font-bold">MULTI SURFACE V3</span>
                                 </div>
                                 <div class="flex justify-between text-[10px] font-mono uppercase items-center">
-                                    <span class="text-zinc-400">Integrity_Check</span>
+                                    <span class="text-zinc-400">Integrity Check</span>
                                     <div class="flex items-center space-x-2">
                                         <i data-lucide="check-circle-2" class="size-3 text-emerald-600"></i>
-                                        <span class="text-emerald-600 font-bold">100%_PASS</span>
+                                        <span class="text-emerald-600 font-bold">100% PASS</span>
                                     </div>
                                 </div>
                             </div>
@@ -354,7 +354,7 @@
                 <div class="p-10 bg-zinc-50 border-t border-zinc-100">
                     <button @click="syncModalOpen = false" 
                             class="w-full py-6 bg-zinc-950 text-white text-[12px] font-mono font-bold uppercase tracking-[0.4em] hover:bg-black transition-all hover:tracking-[0.6em] duration-700 shadow-[16px_16px_0px_0px_rgba(0,0,0,0.05)] active:scale-[0.98]">
-                        Terminate_Visual_Log_Node
+                        Terminate Visual Log Node
                     </button>
                 </div>
             </div>

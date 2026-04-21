@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard Overview')
 @section('header_title', 'Dashboard')
-@section('header_subtitle', 'Operational_Intel // System_Sync_Active')
+@section('header_subtitle', 'Operational Intel // System Sync Active')
 
 @section('content')
     <!-- Navbar Molecule -->
@@ -23,7 +23,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 font-sans">
         <!-- KPI Card (Revenue) -->
         <div class="ag-card p-8 group transition-all duration-300">
-            <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Total_Revenue_MTD</p>
+            <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Total Revenue MTD</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-3xl font-bold text-cyan-700">{{ $financeMetrics['total_revenue_mtd'] }}</span>
                 <span class="text-xs text-zinc-400 uppercase">MAD</span>
@@ -32,12 +32,12 @@
                 @if(str_contains($financeMetrics['growth_mtd'], '+'))
                     <span class="text-emerald-600 flex items-center">
                         <i data-lucide="trending-up" class="h-3 w-3 mr-1"></i>
-                        {{ $financeMetrics['growth_mtd'] }} vs prev_month
+                        {{ $financeMetrics['growth_mtd'] }} vs prev month
                     </span>
                 @else
                     <span class="text-red-500 flex items-center">
                         <i data-lucide="trending-down" class="h-3 w-3 mr-1"></i>
-                        {{ $financeMetrics['growth_mtd'] }} vs prev_month
+                        {{ $financeMetrics['growth_mtd'] }} vs prev month
                     </span>
                 @endif
             </div>
@@ -45,7 +45,7 @@
         
         <!-- KPI Card (Pupils) -->
         <div class="ag-card p-8 group transition-all duration-300">
-            <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Pupils_Performance_Cap</p>
+            <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Pupils Performance Cap</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-3xl font-bold text-cyan-700">{{ $activePupils }}</span>
                 <span class="text-xs text-zinc-400 uppercase">Active / {{ $totalPupils }}</span>
@@ -57,11 +57,11 @@
 
         <!-- KPI Card (Compliance) -->
         <div class="ag-card p-8 group transition-all duration-300">
-            <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Compliance_Index</p>
+            <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Compliance Index</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-3xl font-bold text-emerald-600">{{ $complianceIndex }}%</span>
             </div>
-            <p class="text-[8px] text-zinc-400 mt-4 uppercase font-mono">Calculated_Log_Sync (7D)</p>
+            <p class="text-[8px] text-zinc-400 mt-4 uppercase font-mono">Calculated Log Sync (7D)</p>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 font-mono">
         <div class="ag-card p-8">
             <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4 flex justify-between">
-                <span>System_Stream</span>
+                <span>System Stream</span>
                 <span class="text-[8px] animate-pulse text-cyan-600">Live</span>
             </h3>
             <div class="space-y-6">
@@ -85,7 +85,7 @@
                 @empty
                     <div class="flex flex-col items-center py-8 text-zinc-300">
                         <i data-lucide="radio" class="size-6 mb-2 opacity-20"></i>
-                        <p class="text-[10px] uppercase font-mono">No_Recent_Traffic</p>
+                        <p class="text-[10px] uppercase font-mono">No Recent Traffic</p>
                     </div>
                 @endforelse
             </div>
@@ -95,7 +95,7 @@
             <div class="h-16 w-16 border border-zinc-100 flex items-center justify-center mb-6">
                 <i data-lucide="shield-check" class="h-8 w-8 text-cyan-600"></i>
             </div>
-            <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-950">Coach_Safe_Core</h4>
+            <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-950">Coach Safe Core</h4>
             <p class="text-[10px] text-zinc-400 mt-2 uppercase">Integrity check: 100% // No conflicts found</p>
         </div>
     </div>

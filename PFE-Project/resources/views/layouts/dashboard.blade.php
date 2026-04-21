@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Coach') }} | @yield('title', 'Admin Engine V3.0')</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    
     <!-- Fonts & Tokens -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
     <style>
         :root {
             --font-mono: 'JetBrains Mono', monospace;
         }
+        /* Global Rounding */
         * {
-            border-radius: 0 !important;
+            border-radius: var(--radius-sm);
         }
         [x-cloak] { display: none !important; }
         .ag-card {
             background-color: #FFFFFF;
             border: 1px solid #E4E4E7;
+            border-radius: var(--radius-xl);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .ag-card:hover {
@@ -27,6 +32,22 @@
             box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.05);
         }
         .font-mono { font-family: var(--font-mono) !important; }
+
+        /* Custom Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4f4f5; /* zinc-100 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0891B2; /* chartgraphique blue */
+            border-radius: 0px !important;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0E7490;
+        }
     </style>
 
     <!-- Vite Assets -->
@@ -56,7 +77,7 @@
         <!-- Dashboard Header Context -->
         <header class="mb-8 font-sans">
             <h1 class="text-3xl font-bold tracking-tight uppercase text-zinc-900">@yield('header_title', 'Dashboard')</h1>
-            <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-[0.2em] font-mono">@yield('header_subtitle', 'Operational_Intel // System_Sync_Active')</p>
+            <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-[0.2em] font-mono">@yield('header_subtitle', 'Operational Intel // System Sync Active')</p>
         </header>
         
         <!-- Global Alerts Hub -->
@@ -75,7 +96,7 @@
                 <div class="flex items-start gap-x-4">
                     <div class="h-10 w-1 bg-cyan-600 flex-shrink-0"></div>
                     <div class="flex-1">
-                        <p class="text-[8px] font-mono text-cyan-600 uppercase tracking-widest mb-1">Status: Success_Sync</p>
+                        <p class="text-[8px] font-mono text-cyan-600 uppercase tracking-widest mb-1">Status: Success Sync</p>
                         <p class="text-[10px] font-bold text-zinc-900 uppercase tracking-wider">{{ session('success') }}</p>
                     </div>
                     <button @click="show = false" class="text-zinc-400 hover:text-zinc-900 transition-colors">
@@ -96,7 +117,7 @@
                 <div class="flex items-start gap-x-4">
                     <div class="h-10 w-1 bg-red-600 flex-shrink-0"></div>
                     <div class="flex-1">
-                        <p class="text-[8px] font-mono text-red-600 uppercase tracking-widest mb-1">Status: Error_Conflict</p>
+                        <p class="text-[8px] font-mono text-red-600 uppercase tracking-widest mb-1">Status: Error Conflict</p>
                         <ul class="text-[10px] font-bold text-zinc-900 uppercase tracking-wider space-y-1">
                             @if(session('error'))
                                 <li>{{ session('error') }}</li>

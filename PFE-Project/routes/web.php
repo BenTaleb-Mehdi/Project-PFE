@@ -61,3 +61,9 @@ Route::prefix('coach')->name('coach.')->group(function () {
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', function() {
+    return redirect()->route('coach.dashboard');
+})->name('home');

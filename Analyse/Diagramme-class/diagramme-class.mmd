@@ -1,94 +1,82 @@
 classDiagram
     direction LR
 
-    %% --- Authorization (Spatie RBAC) ---
-    class Role {
-        -int id
-        -String name
-    }
-
-    class Permission {
-        -int id
-        -String name
-    }
-
     %% --- Actors ---
     class User {
-        <<abstract>>
-        #int id
-        #String name
-        #String email
-        #String password
+        +int id
+        +String name
+        +String email
+        +String password
     }
 
     class Client {
-        -String phone_number
-        -String status
-        -float target_goal
-        -float current_weight
-        -float height
-        -int? program_id
-        -DateTime program_started_at
-        -int duration_weeks
+        +String phone_number
+        +String status
+        +float target_goal
+        +float current_weight
+        +float height
+        +DateTime? program_started_at
+        +int duration_weeks
     }
 
     class Staff {
-        -String specialty
-        -String bio
+        +String specialty
+        +String bio
     }
 
-    User <|-- Client
-    User <|-- Staff
-
-    %% --- Nutrition Logic ---
+    %% --- Nutrition Engine ---
     class Meal {
-        -int id
-        -String name
-        -String details
-        -float protein 
-        -float carbs
-        -float fats 
-        -int calories
-        -int category_id
+        +int id
+        +String name
+        +String details
+        +float protein 
+        +float carbs
+        +float fats 
+        +int calories
+    }
+
+    class MealCategory {
+        +int id
+        +String name
     }
 
     class Program {
-        -int id
-        -int created_by_staff_id
-        -String title
-        -DateTime created_at
+        +int id
+        +String title
     }
 
     class ProgramItem {
-        -int id
-        -int program_id
-        -int meal_id
-        -int day_of_week
-        -Time time_slot
+        +int id
+        +int day_of_week
+        +String time_slot
     }
 
-    %% --- Records ---
+    %% --- Monitoring & Reporting ---
     class Evolution {
-        -int id
-        -int client_id
-        -float weight
-        -JSON images
-        -DateTime recorded_at
+        +int id
+        +float weight
+        +JSON images
+        +DateTime recorded_at
     }
 
+    class Payment {
+        +int id
+        +float amount
+        +DateTime date
+        +String status
+    }
 
-    %% --- Relations ---
-    User "*" -- "*" Role
-    Role "*" -- "*" Permission
+    %% --- Logical Associations ---
+    User "1" -- "0..1" Client : extended_by
+    User "1" -- "0..1" Staff : extended_by
 
-    %% Nutrition Structure
-    Meal "*" -- "1" MealCategory : belongs_to
-    Program "1" *-- "*" ProgramItem : composed_of
-    Meal "1" -- "*" ProgramItem : used_in
-    
-    %% Staff Actions
-    Staff "1" --> "*" Program : designs
+    Meal "*" -- "1" MealCategory : categorized_by
+    Program "1" *-- "*" ProgramItem : contains
+    Meal "1" -- "*" ProgramItem : defined_in
 
-    %% Client Tracking
-    Client "1" -- "0..1" Program : follows
+    Staff "1" -- "*" Program : designs
+    Client "*" -- "1" Program : follows
+
     Client "1" *-- "*" Evolution : logs
+    Client "1" *-- "*" Payment : pays
+

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Coach') }} | @yield('title', 'Pupil Portal')</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -17,7 +20,7 @@
     <style>
         /* ─── RESET ─── */
         .v3-client, .v3-client * {
-            border-radius: 0 !important;
+            border-radius: var(--radius-sm);
             box-sizing: border-box;
         }
 
@@ -38,6 +41,7 @@
         .v3-client .ag-card {
             background-color: #FFFFFF;
             border: 1px solid #E4E4E7;
+            border-radius: var(--radius-xl);
             transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
         .v3-client .ag-card:hover {
@@ -62,10 +66,13 @@
         }
 
         /* ─── SCROLLBAR ─── */
-        .v3-client ::-webkit-scrollbar { width: 5px; }
-        .v3-client ::-webkit-scrollbar-track { background: #FAFAFA; }
-        .v3-client ::-webkit-scrollbar-thumb { background: #E4E4E7; }
-        .v3-client ::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
+        .v3-client ::-webkit-scrollbar { width: 7px; height: 7px; }
+        .v3-client ::-webkit-scrollbar-track { background: #FFFFFF; }
+        .v3-client ::-webkit-scrollbar-thumb { 
+            background: #0891b2; 
+            border: 2px solid #FFFFFF;
+        }
+        .v3-client ::-webkit-scrollbar-thumb:hover { background: #0e7490; }
 
         /* ─── FORM INPUTS ─── */
         .v3-client input[type="text"],
@@ -123,7 +130,7 @@
     <div class="mobile-header lg:hidden">
         <div class="flex items-center gap-x-2">
             <div class="h-4 w-4 bg-cyan-600"></div>
-            <span style="font-family:'JetBrains Mono',monospace" class="text-xs font-bold tracking-widest uppercase text-zinc-900">Coach_Portal</span>
+            <span style="font-family:'JetBrains Mono',monospace" class="text-xs font-bold tracking-widest uppercase text-zinc-900">Coach Portal</span>
         </div>
         <button @click="sidebarOpen = !sidebarOpen" 
                 class="h-9 w-9 flex items-center justify-center ag-border text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 transition-colors">
