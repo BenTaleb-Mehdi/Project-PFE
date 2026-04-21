@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Categories')
-@section('header_title', 'Category_Management')
-@section('header_subtitle', 'Step_01: Define Meal Sequences')
+@section('header_title', 'Category Management')
+@section('header_subtitle', 'Step 01: Define Meal Sequences')
 
 @section('content')
 <div x-data='{ 
@@ -58,10 +58,14 @@
     <!-- Discovery Bar -->
     <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center max-w-4xl font-mono text-zinc-900">
         <div class="relative flex-1 w-full">
-            <input type="text" x-model="searchCategory" @input="currentPage = 1" placeholder="Search_Categories..." 
+            <input type="text" x-model="searchCategory" @input="currentPage = 1" placeholder="Search Categories..." 
                    class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
             <i data-lucide="search" class="absolute left-3.5 top-3 size-3.5 text-zinc-400"></i>
         </div>
+        <button @click="openModal()" 
+                class="h-full px-6 py-2.5 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] whitespace-nowrap">
+            + Create Sequence
+        </button>
     </div>
 
     <!-- Category List -->
@@ -90,7 +94,7 @@
                     class="px-6 py-2 bg-white border border-zinc-200 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
                 PREV
             </button>
-            <span class="text-[10px] font-bold text-zinc-400" x-text="'SEQUENCE_PHASE ' + currentPage + ' / ' + totalPages"></span>
+            <span class="text-[10px] font-bold text-zinc-400" x-text="'SEQUENCE PHASE ' + currentPage + ' / ' + totalPages"></span>
             <button @click="currentPage = Math.min(totalPages, currentPage + 1)"
                     :disabled="currentPage === totalPages"
                     class="px-6 py-2 bg-white border border-zinc-200 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
@@ -100,7 +104,7 @@
 
         <button @click="openModal()" 
                 class="w-full py-4 border-2 border-dashed border-zinc-200 text-zinc-400 text-[10px] uppercase tracking-widest hover:border-cyan-600 hover:text-cyan-600 transition-all font-mono">
-            + Add_New_Sequence_Slot
+            + Add New Sequence Slot
         </button>
     </div>
 
@@ -117,20 +121,20 @@
             </template>
 
             <div class="px-8 py-6 border-b border-zinc-100 flex justify-between items-center">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950" x-text="editingCategoryId ? 'Rename_Category' : 'New_Sequence_Slot'"></h3>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950" x-text="editingCategoryId ? 'Rename Category' : 'New Sequence Slot'"></h3>
                 <button type="button" @click="isModalOpen = false" class="text-zinc-400 hover:text-zinc-950 transition-colors"><i data-lucide="x" class="size-4"></i></button>
             </div>
             <div class="p-8 space-y-6">
                 <div>
-                    <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2 font-mono">Category_Name</label>
-                    <input type="text" name="name" x-model="tempName" placeholder="e.g. BREAKFAST_ENGINE" required
+                    <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2 font-mono">Category Name</label>
+                    <input type="text" name="name" x-model="tempName" placeholder="e.g. BREAKFAST ENGINE" required
                            class="w-full bg-zinc-50 px-4 py-3 text-xs uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors">
                 </div>
                 <div class="flex flex-col space-y-3">
                     <button type="submit" class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99]">
-                        Finalize_Configuration
+                        Finalize Configuration
                     </button>
-                    <button type="button" @click="isModalOpen = false" class="w-full py-4 text-[10px] uppercase text-zinc-400 hover:text-zinc-950 transition-colors">Abandon_Changes</button>
+                    <button type="button" @click="isModalOpen = false" class="w-full py-4 text-[10px] uppercase text-zinc-400 hover:text-zinc-950 transition-colors">Abandon Changes</button>
                 </div>
             </div>
         </form>
@@ -148,7 +152,7 @@
                 <div class="h-10 w-10 bg-red-50 flex items-center justify-center text-red-600 border border-red-100"><i data-lucide="trash-2" class="size-5"></i></div>
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-widest">Confirm Deletion</h3>
-                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">IRREVERSIBLE_ACTION // DATA_PURGE_WARNING</p>
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">IRREVERSIBLE ACTION // DATA PURGE WARNING</p>
                 </div>
             </div>
             <p class="text-[10px] text-zinc-500 leading-relaxed mb-8 uppercase tracking-wider">

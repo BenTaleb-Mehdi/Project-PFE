@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Client Registry')
-@section('header_title', 'Client_Registry')
-@section('header_subtitle', 'Pupil_Database // Assignment_Protocol')
+@section('header_title', 'Client Registry')
+@section('header_subtitle', 'Pupil Database // Assignment Protocol')
 
 @section('content')
 <div x-data="{ 
@@ -17,7 +17,7 @@
     protocolOpen: false,
     protocolSearch: '',
     protocols: {{ $protocols->map(fn($p) => ['id' => $p->id, 'title' => $p->title])->toJson() }},
-    selectedProtocol: { id: null, title: 'Select_Nutrition_Protocol' },
+    selectedProtocol: { id: null, title: 'Select Nutrition Protocol' },
     
     get filteredProtocols() {
         if (this.protocolSearch === '') return this.protocols;
@@ -63,7 +63,7 @@
         <button @click="openModal()"
                 class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
             <i data-lucide="plus" class="size-3"></i>
-            Onboard_New_Pupil
+            Onboard New Pupil
         </button>
     </div>
 
@@ -74,7 +74,7 @@
             <input type="text" name="search" 
                    x-model="searchQuery"
                    x-on:input.debounce.500ms="$refs.searchForm.submit()"
-                   placeholder="Search_Pupils (Name, ID)..." 
+                   placeholder="Search Pupils (Name, ID)..." 
                    class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 rounded-none transition-colors">
             <div class="absolute left-3.5 top-3 text-zinc-400">
                 <i data-lucide="search" class="size-3.5"></i>
@@ -96,10 +96,10 @@
             <div x-show="open" x-cloak
                  class="absolute right-0 mt-1 z-[100] bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-[256px]">
                 <div class="py-1">
-                    @foreach(['ALL_STATUSES', 'active', 'pending', 'inactive'] as $opt)
+                    @foreach(['ALL STATUSES', 'active', 'pending', 'inactive'] as $opt)
                         <a href="{{ route('coach.clients.index', ['status' => $opt, 'search' => request('search')]) }}"
-                           class="w-full text-left flex items-center px-4 py-2 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all font-sans {{ request('status', 'ALL_STATUSES') === $opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500' }}">
-                            {{ str_replace('_', ' ', $opt) }}
+                           class="w-full text-left flex items-center px-4 py-2 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all font-sans {{ request('status', 'ALL STATUSES') === $opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500' }}">
+                            {{ strtoupper($opt) }}
                         </a>
                     @endforeach
                 </div>
@@ -123,17 +123,17 @@
                             <p class="text-[10px] text-zinc-400 uppercase mt-1">
                                 <span class="font-mono text-cyan-700">ID: #{{ $client->id }}</span>
                                 <span class="mx-2 opacity-50">//</span>
-                                <span>Goal: {{ $client->target_goal ?? 'NOT_SET' }}</span>
+                                <span>Goal: {{ $client->target_goal ?? 'NOT SET' }}</span>
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 md:mt-0 flex items-center space-x-6">
-                        <span class="px-3 py-1 {{ $client->status === 'active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-zinc-50 text-zinc-400 border-zinc-100' }} text-[8px] font-bold uppercase tracking-widest border border-dashed font-mono">_{{ strtoupper($client->status) }}</span>
+                        <span class="px-3 py-1 {{ $client->status === 'active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-zinc-50 text-zinc-400 border-zinc-100' }} text-[8px] font-bold uppercase tracking-widest border border-dashed font-mono">{{ strtoupper($client->status) }}</span>
                         
                         <button @click.stop="selectedClient = {{ json_encode($client) }}; showAssignModal = true" 
                                 class="flex items-center gap-x-1.5 px-4 py-2 text-[10px] uppercase text-cyan-600 font-bold hover:underline font-mono">
                             <i data-lucide="clipboard-list" class="size-3 text-cyan-600"></i>
-                            Assign_Program
+                            Assign Program
                         </button>
 
                         <div class="text-zinc-300 transition-all duration-200 transform"
@@ -149,9 +149,9 @@
                      x-cloak
                      class="border-t border-dashed border-zinc-100 bg-zinc-50/50">
                     <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <!-- Bio_Metrics -->
+                        <!-- Bio Metrics -->
                         <div class="space-y-4">
-                            <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Bio_Metrics_Core</h5>
+                            <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Bio Metrics Core</h5>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-white p-3 border border-zinc-100">
                                     <p class="text-[8px] text-zinc-400 uppercase">Weight</p>
@@ -178,9 +178,9 @@
                             </div>
                         </div>
 
-                        <!-- Program_Status -->
+                        <!-- Program Status -->
                         <div class="space-y-4">
-                            <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Current_Assignment</h5>
+                            <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Current Assignment</h5>
                             @if($client->program)
                                 <div class="bg-white p-4 border border-zinc-200">
                                     <div class="flex justify-between items-center mb-3">
@@ -197,33 +197,33 @@
                                         @endphp
                                         <div class="h-full bg-cyan-600 transition-all duration-500" style="width: {{ min(100, $progress) }}%"></div>
                                     </div>
-                                    <p class="text-[8px] text-zinc-400 mt-3 uppercase tracking-widest">Adherence_Tracking: <span class="text-zinc-900 font-bold">ACTIVE</span></p>
+                                    <p class="text-[8px] text-zinc-400 mt-3 uppercase tracking-widest">Adherence Tracking: <span class="text-zinc-900 font-bold">ACTIVE</span></p>
                                 </div>
                             @else
                                 <div class="bg-white p-4 border border-zinc-200 border-dashed border-2 flex flex-center">
-                                    <p class="text-[9px] text-zinc-400 uppercase py-4">No_Active_Protocol_Assigned</p>
+                                    <p class="text-[9px] text-zinc-400 uppercase py-4">No Active Protocol Assigned</p>
                                 </div>
                             @endif
                         </div>
 
-                        <!-- Quick_Logs -->
+                        <!-- Quick Logs -->
                         <div class="space-y-4">
-                            <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Intelligence_Feed</h5>
+                            <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Intelligence Feed</h5>
                             <div class="space-y-2">
                                 @forelse($client->evolutions->take(2) as $evolution)
                                     <div class="flex items-center space-x-3 text-[9px] uppercase">
                                         <div class="h-1.5 w-1.5 rounded-full {{ $loop->first ? 'bg-emerald-500' : 'bg-cyan-500' }}"></div>
                                         <span class="text-zinc-400 font-mono">{{ $evolution->recorded_at }} //</span>
-                                        <span class="text-zinc-900 font-bold">Weight_Logged: {{ $evolution->weight }}kg</span>
+                                        <span class="text-zinc-900 font-bold">Weight Logged: {{ $evolution->weight }}kg</span>
                                     </div>
                                 @empty
-                                    <p class="text-[9px] text-zinc-300 italic uppercase">No_Recent_Traffic</p>
+                                    <p class="text-[9px] text-zinc-300 italic uppercase">No Recent Traffic</p>
                                 @endforelse
                             </div>
                             <div class="grid grid-cols-2 gap-3 mt-4">
                                 <button @click.stop="openModal({{ json_encode($client->load('user')) }})" class="w-full py-2 bg-white text-zinc-900 text-[8px] uppercase font-bold tracking-widest hover:bg-zinc-50 transition-all border border-zinc-200 hover:border-cyan-600 hover:text-cyan-600 flex items-center justify-center gap-x-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
                                     <i data-lucide="edit-3" class="size-3"></i>
-                                    Edit_Profile
+                                    Edit Profile
                                 </button>
                                 <button @click.stop="confirmDelete({{ json_encode(['id' => $client->id, 'name' => $client->user->name]) }})" class="w-full py-2 bg-red-50 text-red-600 text-[8px] uppercase font-bold tracking-widest hover:bg-red-100 transition-all border border-red-100 flex items-center justify-center gap-x-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
                                     <i data-lucide="trash-2" class="size-3"></i>
@@ -236,7 +236,7 @@
             </div>
         @empty
             <div class="p-12 bg-white border border-dashed border-zinc-200 text-center uppercase font-mono text-[10px] text-zinc-400">
-                No_Pupils_Found_In_Registry
+                No Pupils Found In Registry
             </div>
         @endforelse
     </div>
@@ -258,19 +258,19 @@
                 @method('PUT')
             </template>
 
-            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900 mb-6" x-text="isEditing ? 'Edit_Pupil_Profile' : 'Onboard_New_Pupil'"></h3>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900 mb-6" x-text="isEditing ? 'Edit Pupil Profile' : 'Onboard New Pupil'"></h3>
             <div class="space-y-4 font-mono">
                 <div class="space-y-1">
-                    <label class="text-[8px] uppercase text-zinc-400">Identity_Name</label>
+                    <label class="text-[8px] uppercase text-zinc-400">Identity Name</label>
                     <input type="text" name="name" x-model="newClient.name" class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 uppercase" required>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
-                        <label class="text-[8px] uppercase text-zinc-400">Email_Access</label>
+                        <label class="text-[8px] uppercase text-zinc-400">Email Access</label>
                         <input type="email" name="email" x-model="newClient.email" class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600" required>
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[8px] uppercase text-zinc-400">Phone_Node</label>
+                        <label class="text-[8px] uppercase text-zinc-400">Phone Node</label>
                         <input type="tel" name="phone_number" x-model="newClient.phone_number" class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600">
                     </div>
                 </div>
@@ -290,18 +290,18 @@
                         <input type="number" name="height" x-model="newClient.height" class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 text-cyan-700">
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[8px] uppercase text-zinc-400">Status_Node</label>
+                        <label class="text-[8px] uppercase text-zinc-400">Status Node</label>
                         <select name="status" x-model="newClient.status" class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 uppercase">
-                            <option value="active">_ACTIVE</option>
-                            <option value="pending">_PENDING</option>
-                            <option value="inactive">_INACTIVE</option>
+                            <option value="active">ACTIVE</option>
+                            <option value="pending">PENDING</option>
+                            <option value="inactive">INACTIVE</option>
                         </select>
                     </div>
                 </div>
                 <button type="submit" class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
                     <i data-lucide="check" class="size-3" x-show="isEditing"></i>
                     <i data-lucide="plus" class="size-3" x-show="!isEditing"></i>
-                    <span x-text="isEditing ? 'Save_Profile_Modifications' : 'Onboard_Pupil'"></span>
+                    <span x-text="isEditing ? 'Save Profile Modifications' : 'Onboard Pupil'"></span>
                 </button>
             </div>
         </form>
@@ -315,13 +315,13 @@
               class="relative bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full max-w-md p-8">
             @csrf
             
-            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900 mb-2">Program_Assignment_Wizard</h3>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900 mb-2">Program Assignment Wizard</h3>
             <p class="text-[10px] text-cyan-600 uppercase font-mono mb-6" x-text="'Target: ' + (selectedClient ? selectedClient.user.name : '')"></p>
             
             <div class="space-y-6">
                 <!-- Protocol Selection Dropdown -->
                 <div>
-                    <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2 font-mono">Select_Nutrition_Protocol</label>
+                    <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2 font-mono">Select Nutrition Protocol</label>
                     <div class="relative">
                         <button type="button" @click="protocolOpen = !protocolOpen" 
                                 class="w-full bg-zinc-50 px-4 py-3 text-[10px] flex items-center justify-between border border-zinc-200 outline-none focus:border-cyan-600 transition-colors uppercase font-mono text-cyan-700 rounded-none">
@@ -335,7 +335,7 @@
                             <!-- Search Box -->
                             <div class="p-3 bg-white border-b border-zinc-200 flex items-center gap-x-2 focus-within:bg-zinc-50/50 transition-all">
                                 <i data-lucide="search" class="size-3 text-zinc-400"></i>
-                                <input type="text" x-model="protocolSearch" placeholder="Type_to_filter..." 
+                                <input type="text" x-model="protocolSearch" placeholder="Type to filter..." 
                                        class="w-full bg-transparent border-none focus:ring-0 text-[10px] uppercase font-mono placeholder:text-zinc-300 p-0">
                             </div>
 
@@ -351,7 +351,7 @@
                                     </div>
                                 </template>
                                 <div x-show="filteredProtocols.length === 0" class="p-8 text-center text-[8px] text-zinc-400 italic font-mono uppercase">
-                                    Search_Mismatch // No_Protocol_Found
+                                    Search Mismatch // No Protocol Found
                                 </div>
                             </div>
                         </div>
@@ -360,7 +360,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2 font-mono">Duration_Protocol (Weeks)</label>
+                    <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2 font-mono">Duration Protocol (Weeks)</label>
                     <input type="number" name="duration_weeks" x-model="durationWeeks" min="1" max="52"
                            class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700">
                 </div>
@@ -368,7 +368,7 @@
                 <button type="submit" 
                         class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
                     <i data-lucide="link" class="size-3"></i>
-                    Link_Protocol_to_Client
+                    Link Protocol to Client
                 </button>
             </div>
         </form>
@@ -385,11 +385,11 @@
             <div class="size-12 bg-red-50 text-red-600 border border-red-100 flex items-center justify-center mx-auto mb-4">
                 <i data-lucide="alert-octagon" class="size-6"></i>
             </div>
-            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 mb-2">Confirm_Deactivation</h3>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-950 mb-2">Confirm Deactivation</h3>
             <p class="text-[10px] text-zinc-400 uppercase font-mono mb-8">Revoking access for <span class="text-zinc-950 font-bold" x-text="clientToDelete ? clientToDelete.name : ''"></span>. Irreversible action.</p>
             <div class="flex gap-4 font-sans">
                 <button type="button" @click="isDeleteModalOpen = false" class="flex-1 py-3 border border-zinc-200 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-50 transition-all">Cancel</button>
-                <button type="submit" class="flex-1 py-3 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">Execute_Purge</button>
+                <button type="submit" class="flex-1 py-3 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">Execute Purge</button>
             </div>
         </form>
     </div>

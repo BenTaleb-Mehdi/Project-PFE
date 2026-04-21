@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Team Management')
-@section('header_title', 'Team_Registry')
-@section('header_subtitle', 'Hierarchy_Control // Staff_Manifest_V3.0')
+@section('header_title', 'Team Registry')
+@section('header_subtitle', 'Hierarchy Control // Staff Manifest V3.0')
 
 @section('content')
 <div x-data="{ 
@@ -42,27 +42,27 @@
         <button @click="isAddMemberModalOpen = true"
                 class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
             <i data-lucide="user-plus" class="size-3"></i>
-            Add_Member
+            Add Member
         </button>
     </div>
 
     <!-- KPI Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 font-sans">
         <div class="ag-card p-6 border border-zinc-200">
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Total_Staff</p>
+            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Total Staff</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-2xl font-bold text-cyan-700">{{ $team->total() }}</span>
-                <span class="text-[10px] text-zinc-400 uppercase tracking-widest">Active_Nodes</span>
+                <span class="text-[10px] text-zinc-400 uppercase tracking-widest">Active Nodes</span>
             </div>
         </div>
         <div class="ag-card p-6 border border-zinc-200">
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Registry_Efficiency</p>
+            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Registry Efficiency</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-2xl font-bold text-emerald-600">98.2%</span>
             </div>
         </div>
         <div class="ag-card p-6 border border-zinc-200">
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">System_Status</p>
+            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">System Status</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-2xl font-bold text-zinc-900 uppercase">ONLINE</span>
             </div>
@@ -72,7 +72,7 @@
     <!-- Discovery Bar -->
     <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center">
         <form action="{{ route('coach.team') }}" method="GET" class="relative flex-1 w-full text-zinc-900">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search_Members (Name, Email, ID)..." 
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search Members (Name, Email, ID)..." 
                    class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
             <i data-lucide="search" class="absolute left-3.5 top-3 size-3.5 text-zinc-400"></i>
         </form>
@@ -104,7 +104,7 @@
             <table class="w-full text-left border-collapse font-sans font-medium">
                 <thead class="bg-zinc-50 border-b border-zinc-200 uppercase font-mono tracking-widest">
                     <tr>
-                        <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Member_ID</th>
+                        <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Member ID</th>
                         <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Identity</th>
                         <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Specialization</th>
                         <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Status</th>
@@ -123,7 +123,7 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-x-2 px-2 py-1 text-[8px] font-bold border bg-emerald-50 text-emerald-600 border-emerald-100 font-mono">
                                     <div class="size-1.5 rounded-full bg-emerald-500"></div>
-                                    _ACTIVE
+                                    ACTIVE
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right">
@@ -148,17 +148,17 @@
         <form action="{{ route('coach.team.store') }}" method="POST" class="bg-white w-full max-w-lg border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-8 font-mono">
             @csrf
             <header class="mb-8 font-sans">
-                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Add_New_Member</h2>
-                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Staff_Deployment_Interface // V3.0</p>
+                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Add New Member</h2>
+                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Staff Deployment Interface // V3.0</p>
             </header>
             <div class="space-y-6">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1.5">
-                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Full_Name</label>
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Full Name</label>
                         <input type="text" name="name" required class="w-full text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600 font-sans uppercase">
                     </div>
                     <div class="space-y-1.5">
-                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Email_Access</label>
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Email Access</label>
                         <input type="email" name="email" required class="w-full text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600 font-mono">
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                 </div>
 
                 <div class="flex space-x-4 pt-4 font-sans">
-                    <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">Initialize_Deployment</button>
+                    <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">Initialize Deployment</button>
                     <button type="button" @click="isAddMemberModalOpen = false" class="h-11 px-6 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest border border-zinc-200">Cancel</button>
                 </div>
             </div>
@@ -196,17 +196,17 @@
             @csrf
             @method('PUT')
             <header class="mb-8 font-sans">
-                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Edit_Staff_Member</h2>
-                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Personnel_Modification_Interface // V3.0</p>
+                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Edit Staff Member</h2>
+                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Personnel Modification Interface // V3.0</p>
             </header>
             <div class="space-y-6">
                 <div class="grid grid-cols-2 gap-4 uppercase">
                     <div class="space-y-1.5">
-                        <label class="text-[10px] text-zinc-400 tracking-widest">Full_Name</label>
+                        <label class="text-[10px] text-zinc-400 tracking-widest">Full Name</label>
                         <input type="text" name="name" x-model="editingMember.name" class="w-full text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600 font-sans">
                     </div>
                     <div class="space-y-1.5 uppercase">
-                        <label class="text-[10px] text-zinc-400 tracking-widest">Email_Access</label>
+                        <label class="text-[10px] text-zinc-400 tracking-widest">Email Access</label>
                         <input type="email" name="email" x-model="editingMember.email" class="w-full text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600 font-mono">
                     </div>
                 </div>
@@ -232,18 +232,18 @@
                     </div>
                     
                     <div class="space-y-1.5">
-                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Status_Node</label>
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Status Node</label>
                         <div class="flex space-x-2">
                             <label class="flex items-center cursor-pointer">
                                 <input type="radio" value="Active" x-model="editingMember.status" class="hidden peer">
-                                <span class="px-3 py-2 bg-zinc-50 border border-zinc-200 text-[8px] font-bold uppercase tracking-widest peer-checked:bg-emerald-50 peer-checked:text-emerald-600 peer-checked:border-emerald-100 font-mono transition-all">_ACTIVE_SYSTEM</span>
+                                <span class="px-3 py-2 bg-zinc-50 border border-zinc-200 text-[8px] font-bold uppercase tracking-widest peer-checked:bg-emerald-50 peer-checked:text-emerald-600 peer-checked:border-emerald-100 font-mono transition-all">ACTIVE SYSTEM</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex space-x-4 pt-4 font-sans">
-                    <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">Save_Modifications</button>
+                    <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">Save Modifications</button>
                     <button type="button" @click="isEditModalOpen = false" class="h-11 px-6 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest border border-zinc-200">Cancel</button>
                 </div>
             </div>
@@ -259,12 +259,12 @@
                 <div class="h-10 w-10 bg-red-50 flex items-center justify-center text-red-600 border border-red-100"><i data-lucide="trash-2" class="size-5"></i></div>
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-widest">Confirm Termination</h3>
-                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">STAFF_RESCISSION // ACCESS_REVOCATION</p>
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">STAFF RESCISSION // ACCESS REVOCATION</p>
                 </div>
             </div>
             <p class="text-[10px] text-zinc-500 uppercase mb-8">Revoking credentials for <span class="font-bold text-zinc-950" x-text="memberToDelete ? memberToDelete.name : ''"></span>. Proceed?</p>
             <div class="flex gap-4 font-sans">
-                <button type="submit" class="flex-1 h-11 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">Confirm_Purge</button>
+                <button type="submit" class="flex-1 h-11 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">Confirm Purge</button>
                 <button type="button" @click="isDeleteModalOpen = false" class="px-6 h-11 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest border border-zinc-200">Cancel</button>
             </div>
         </form>

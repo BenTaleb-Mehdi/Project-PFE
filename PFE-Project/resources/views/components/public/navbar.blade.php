@@ -24,11 +24,17 @@
       <button @click="toggleTheme()" class="theme-toggle" title="Toggle light/dark mode"></button>
 
       <!-- CTA (hidden when menu open) -->
-      <a href="#contact"
+      <a href="{{ route('register') }}"
          x-show="!menuOpen"
          class="atom-btn atom-btn-premium hidden md:inline-flex">
+        Sign Up
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </a>
+
+      <a href="#contact"
+         x-show="!menuOpen"
+         class="hidden md:inline-flex text-xs font-cond tracking-widest uppercase hover:text-acid transition-colors">
         Start Now
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
 
       <!-- Hamburger -->

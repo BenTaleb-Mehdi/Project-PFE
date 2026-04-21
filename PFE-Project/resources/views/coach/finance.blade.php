@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Finance Control')
-@section('header_title', 'Financial_Flows')
-@section('header_subtitle', 'Revenue_Control // Transaction_Log_V3.0')
+@section('header_title', 'Financial Flows')
+@section('header_subtitle', 'Revenue Control // Transaction Log V3.0')
 
 @section('content')
 <div x-data="{ 
@@ -43,27 +43,27 @@
         <button @click="isAddPaymentModalOpen = true"
                 class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
             <i data-lucide="plus" class="size-3"></i>
-            Add_Payment
+            Add Payment
         </button>
     </div>
 
     <!-- KPI Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 font-sans">
         <div class="ag-card p-6 border border-zinc-200 bg-white">
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Total_Revenue_MTD</p>
+            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Total Revenue MTD</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-2xl font-bold text-cyan-700">{{ $metrics['total_revenue_mtd'] }}</span>
                 <span class="text-[10px] text-zinc-400 uppercase tracking-widest">MAD</span>
             </div>
         </div>
         <div class="ag-card p-6 border border-zinc-200 bg-white">
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Pending_Syncs</p>
+            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Pending Syncs</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-2xl font-bold text-amber-600">{{ $metrics['pending_syncs'] }}</span>
             </div>
         </div>
         <div class="ag-card p-6 border border-zinc-200 bg-white">
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Growth_MTD</p>
+            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Growth MTD</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-2xl font-bold text-emerald-600">{{ $metrics['growth_mtd'] }}</span>
             </div>
@@ -73,7 +73,7 @@
     <!-- Discovery Bar -->
     <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center">
         <form action="{{ route('coach.finance') }}" method="GET" class="relative flex-1 w-full text-zinc-900 font-mono">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search_Transactions (Pupil, ID)..." 
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search Transactions (Pupil, ID)..." 
                    class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] uppercase tracking-widest focus:outline-none focus:border-cyan-600 rounded-none transition-colors">
             <i data-lucide="search" class="absolute left-3.5 top-3 size-3.5 text-zinc-400"></i>
         </form>
@@ -105,7 +105,7 @@
             <table class="w-full text-left border-collapse font-sans font-medium">
                 <thead class="bg-zinc-50 border-b border-zinc-200 uppercase font-mono tracking-widest">
                     <tr>
-                        <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">TXN_ID</th>
+                        <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">TXN ID</th>
                         <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Date</th>
                         <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Pupil</th>
                         <th class="px-6 py-4 text-[10px] font-bold text-zinc-400">Amount</th>
@@ -122,7 +122,7 @@
                             <td class="px-6 py-4 text-[10px] font-mono text-zinc-900 font-bold">{{ number_format($txn->amount, 0) }} MAD</td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 text-[8px] font-bold border font-mono {{ $txn->status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100' }}">
-                                    _{{ strtoupper($txn->status) }}
+                                    {{ strtoupper($txn->status) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
@@ -148,8 +148,8 @@
         <form action="{{ route('coach.finance.store') }}" method="POST" class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] p-8 font-mono">
             @csrf
             <header class="mb-8 font-sans">
-                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Add_New_Transaction</h2>
-                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Pupil_Payment_Sync_V3.0</p>
+                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Add New Transaction</h2>
+                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Pupil Payment Sync V3.0</p>
             </header>
             <div class="space-y-6">
                 <!-- Pupil Selection -->
@@ -164,7 +164,7 @@
                         return this.clients.filter(c => c.name.toLowerCase().includes(this.search.toLowerCase()));
                     }
                 }">
-                    <label class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Select_Pupil</label>
+                    <label class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Select Pupil</label>
                     <input type="hidden" name="client_id" :value="selectedId">
                     <button type="button" @click="open = !open" 
                             class="w-full flex justify-between items-center text-[10px] p-3 bg-zinc-50 border border-zinc-200 uppercase font-sans text-cyan-700">
@@ -177,7 +177,7 @@
                         <!-- Search Box -->
                         <div class="p-3 bg-white border-b border-zinc-200 flex items-center gap-x-2 focus-within:bg-zinc-50/50 transition-all">
                             <i data-lucide="search" class="size-3 text-zinc-400"></i>
-                            <input type="text" x-model="search" placeholder="Type_to_filter..." 
+                            <input type="text" x-model="search" placeholder="Type to filter..." 
                                    class="w-full bg-transparent border-none focus:ring-0 text-[10px] uppercase font-mono placeholder:text-zinc-300 p-0">
                         </div>
                         
@@ -191,7 +191,7 @@
                                 </div>
                             </template>
                             <div x-show="filteredClients.length === 0" class="p-8 text-center text-[8px] text-zinc-400 italic">
-                                Search_Mismatch // No_Pupil_Found
+                                Search Mismatch // No Pupil Found
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                         <input type="number" name="amount" required class="w-full text-sm p-3 bg-zinc-50 border border-zinc-200 focus:border-cyan-600 outline-none text-cyan-700 font-bold">
                     </div>
                     <div class="space-y-1.5 font-mono">
-                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Transaction_Date</label>
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Transaction Date</label>
                         <input type="date" name="date" value="{{ date('Y-m-d') }}" required class="w-full text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600">
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                 <div class="flex space-x-4 pt-4 font-sans">
                     <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
                         <i data-lucide="check" class="size-3"></i>
-                        Initialize_Payment
+                        Initialize Payment
                     </button>
                     <button type="button" @click="isAddPaymentModalOpen = false" class="h-11 px-6 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest border border-zinc-200">Cancel</button>
                 </div>
@@ -240,12 +240,12 @@
             @csrf
             @method('PUT')
             <header class="mb-8 font-sans">
-                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Edit_Transaction</h2>
-                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Update_Fiscal_Record // V3.0</p>
+                <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Edit Transaction</h2>
+                <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Update Fiscal Record // V3.0</p>
             </header>
             <div class="space-y-6">
                 <div class="space-y-1.5 uppercase opacity-50">
-                    <label class="text-[10px] text-zinc-400 tracking-widest">Pupil_Name (Read Only)</label>
+                    <label class="text-[10px] text-zinc-400 tracking-widest">Pupil Name (Read Only)</label>
                     <input type="text" x-model="editingTxn.pupil" disabled class="w-full text-sm p-3 bg-zinc-100 border border-zinc-200 cursor-not-allowed">
                 </div>
 
@@ -261,21 +261,21 @@
                 </div>
 
                 <div class="space-y-1.5 font-sans">
-                    <label class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Current_Status</label>
+                    <label class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Current Status</label>
                     <div class="flex space-x-3">
                         <label class="flex items-center cursor-pointer">
                             <input type="radio" name="status" value="paid" x-model="editingTxn.status" class="hidden peer">
-                            <span class="px-4 py-2 bg-zinc-50 border border-zinc-200 text-[10px] font-bold peer-checked:bg-emerald-50 peer-checked:text-emerald-600 peer-checked:border-emerald-100 transition-all font-mono uppercase">_PAID</span>
+                            <span class="px-4 py-2 bg-zinc-50 border border-zinc-200 text-[10px] font-bold peer-checked:bg-emerald-50 peer-checked:text-emerald-600 peer-checked:border-emerald-100 transition-all font-mono uppercase">PAID</span>
                         </label>
                         <label class="flex items-center cursor-pointer">
                             <input type="radio" name="status" value="pending" x-model="editingTxn.status" class="hidden peer">
-                            <span class="px-4 py-2 bg-zinc-50 border border-zinc-200 text-[10px] font-bold peer-checked:bg-amber-50 peer-checked:text-amber-600 peer-checked:border-amber-100 transition-all font-mono uppercase">_PENDING</span>
+                            <span class="px-4 py-2 bg-zinc-50 border border-zinc-200 text-[10px] font-bold peer-checked:bg-amber-50 peer-checked:text-amber-600 peer-checked:border-amber-100 transition-all font-mono uppercase">PENDING</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="flex space-x-4 pt-4 font-sans">
-                    <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">Save_Modifications</button>
+                    <button type="submit" class="flex-1 h-11 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">Save Modifications</button>
                     <button type="button" @click="isEditModalOpen = false" class="h-11 px-6 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest border border-zinc-200">Cancel</button>
                 </div>
             </div>
@@ -292,14 +292,14 @@
                 <div class="h-10 w-10 bg-red-50 flex items-center justify-center text-red-600 border border-red-100"><i data-lucide="trash-2" class="size-5"></i></div>
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-widest">Confirm Deletion</h3>
-                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">FISCAL_PURGE // RECORD_REMOVAL</p>
+                    <p class="text-[8px] text-zinc-400 uppercase tracking-widest mt-0.5">FISCAL PURGE // RECORD REMOVAL</p>
                 </div>
             </div>
             <p class="text-[10px] text-zinc-500 uppercase mb-8 leading-relaxed">
                Purging transaction <span class="font-bold text-zinc-950" x-text="txnToDelete ? '#' + txnToDelete.id : ''"></span> for <span class="font-bold text-zinc-950" x-text="txnToDelete ? txnToDelete.name : ''"></span>. Irreversible.
             </p>
             <div class="flex gap-4 font-sans">
-                <button type="submit" class="flex-1 h-11 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">Execute_Purge</button>
+                <button type="submit" class="flex-1 h-11 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">Execute Purge</button>
                 <button type="button" @click="isDeleteModalOpen = false" class="px-6 h-11 bg-zinc-100 text-zinc-500 text-[10px] font-bold uppercase tracking-widest border border-zinc-200">Cancel</button>
             </div>
         </form>

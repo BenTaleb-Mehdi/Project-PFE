@@ -25,19 +25,19 @@
             <div class="flex-1">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="h-[1px] w-12 bg-cyan-700"></span>
-                    <span class="text-[10px] font-mono font-bold text-cyan-700 uppercase tracking-[0.4em]">Current_Status: Deployment_Level_03</span>
+                    <span class="text-[10px] font-mono font-bold text-cyan-700 uppercase tracking-[0.4em]">Current Status: Deployment Level 03</span>
                 </div>
-                <h1 class="text-5xl md:text-6xl font-mono font-bold tracking-tighter uppercase text-zinc-900 leading-none">Active_Protocol</h1>
+                <h1 class="text-5xl md:text-6xl font-mono font-bold tracking-tighter uppercase text-zinc-900 leading-none">Active Protocol</h1>
                 <p class="text-[11px] font-mono text-zinc-400 mt-5 uppercase tracking-[0.2em] flex items-center">
                     <i data-lucide="zap" class="size-4 mr-3 text-cyan-600"></i>
-                    Neural_MasterPlan: {{ $programData['program_title'] }} // V3.0_PRO_SYNC
+                    Neural MasterPlan: {{ $programData['program_title'] }} // V3.0 PRO SYNC
                 </p>
             </div>
             
             <div class="mt-8 lg:mt-0 flex space-x-4">
                 <div class="ag-card px-8 py-5 bg-white flex flex-col items-center justify-center border border-zinc-100 shadow-sm">
                     <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Phase</span>
-                    <span class="text-sm font-mono font-bold text-zinc-900 uppercase">Load_Hypertrophy</span>
+                    <span class="text-sm font-mono font-bold text-zinc-900 uppercase">Load Hypertrophy</span>
                 </div>
                 <div class="ag-card px-8 py-5 bg-white flex flex-col items-center justify-center border border-zinc-100 shadow-sm">
                     <span class="text-[8px] font-mono text-zinc-400 uppercase tracking-widest mb-1">Intensity</span>
@@ -58,22 +58,22 @@
                 <div class="relative z-10">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-20">
                         <div>
-                            <p class="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.4em] mb-4">Internal_Metric_Overview</p>
-                            <h3 class="text-2xl font-mono font-bold text-zinc-100 uppercase tracking-tight">System_Nutrient_Partitioning</h3>
+                            <p class="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.4em] mb-4">Internal Metric Overview</p>
+                            <h3 class="text-2xl font-mono font-bold text-zinc-100 uppercase tracking-tight">System Nutrient Partitioning</h3>
                         </div>
                         <div class="mt-8 md:mt-0 flex items-center bg-zinc-900/40 p-1 border-l border-zinc-800">
                             <div class="flex items-baseline px-6">
                                 <span class="text-7xl font-mono font-bold text-cyan-500 tracking-tighter leading-none" x-text="dailyMacros.kcal"></span>
-                                <span class="text-[10px] font-mono text-zinc-500 font-bold ml-3 uppercase tracking-widest">Kcal_Target</span>
+                                <span class="text-[10px] font-mono text-zinc-500 font-bold ml-3 uppercase tracking-widest">Kcal Target</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
                         <template x-for="item in [
-                            { label: 'Protein_Synthetics', val: dailyMacros.p, color: 'bg-cyan-600' },
-                            { label: 'Glycogen_Reserve', val: dailyMacros.c, color: 'bg-white' },
-                            { label: 'Lipid_Optimization', val: dailyMacros.f, color: 'bg-zinc-600' }
+                            { label: 'Protein Synthetics', val: dailyMacros.p, color: 'bg-cyan-600' },
+                            { label: 'Glycogen Reserve', val: dailyMacros.c, color: 'bg-white' },
+                            { label: 'Lipid Optimization', val: dailyMacros.f, color: 'bg-zinc-600' }
                         ]">
                             <div class="space-y-4">
                                 <div class="flex justify-between items-end border-b border-zinc-800/50 pb-2">
@@ -94,14 +94,14 @@
                     <div class="h-10 w-10 ag-border flex items-center justify-center text-cyan-600 mb-8">
                         <i data-lucide="info" class="size-5"></i>
                     </div>
-                    <h5 class="text-[10px] font-mono font-bold text-zinc-900 uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Core_Directive</h5>
+                    <h5 class="text-[10px] font-mono font-bold text-zinc-900 uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Core Directive</h5>
                     <p class="text-[11px] font-mono text-zinc-400 leading-relaxed uppercase tracking-tight">Maintain strict adherence to meal timing for maximum metabolic overclocking.</p>
                 </div>
                 <div class="pt-8 mt-12 border-t border-zinc-100">
-                    <span class="text-[8px] font-mono text-zinc-300 uppercase block mb-1 tracking-widest">Status_Check</span>
+                    <span class="text-[8px] font-mono text-zinc-300 uppercase block mb-1 tracking-widest">Status Check</span>
                     <div class="flex items-center space-x-2">
                         <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                        <span class="text-[10px] font-mono font-bold text-emerald-600 uppercase tracking-widest">100%_Sync_Ready</span>
+                        <span class="text-[10px] font-mono font-bold text-emerald-600 uppercase tracking-widest">100% Sync Ready</span>
                     </div>
                 </div>
             </div>
@@ -109,9 +109,9 @@
 
         <div class="space-y-10">
             <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
-                <h4 class="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-zinc-400">Daily_Sequence</h4>
+                <h4 class="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-zinc-400">Daily Sequence</h4>
                 <div class="flex items-center space-x-2 text-zinc-200">
-                    <span class="text-[8px] font-mono uppercase font-bold tracking-widest">Mark_V3.0</span>
+                    <span class="text-[8px] font-mono uppercase font-bold tracking-widest">Mark V3.0</span>
                     <i data-lucide="list-ordered" class="size-4"></i>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                             <div class="mt-auto pt-8 border-t border-zinc-50 flex justify-between items-end opacity-40 group-hover:opacity-100 transition-opacity">
                                 <div class="flex flex-col">
                                     <span class="text-2xl font-mono font-bold text-zinc-900 tracking-tighter">{{ $meal['kcal'] }}</span>
-                                    <span class="text-[7px] font-mono text-zinc-400 font-bold uppercase tracking-widest">Kcal_Yield</span>
+                                    <span class="text-[7px] font-mono text-zinc-400 font-bold uppercase tracking-widest">Kcal Yield</span>
                                 </div>
                                 <div class="h-10 w-10 ag-border flex items-center justify-center text-zinc-200 group-hover:text-cyan-600 group-hover:bg-cyan-50 transition-all">
                                     <i data-lucide="plus" class="size-5"></i>
@@ -154,8 +154,8 @@
             <div class="h-24 w-24 bg-zinc-50 ag-border mx-auto mb-10 flex items-center justify-center text-zinc-200 shadow-inner">
                 <i data-lucide="box-select" class="size-12"></i>
             </div>
-            <h3 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-widest mb-4">No_Active_Protocol_Detected</h3>
-            <p class="text-[10px] text-zinc-400 uppercase font-mono italic decoration-zinc-100 underline underline-offset-8 tracking-widest">Awaiting_Neural_Deployment_from_Coach</p>
+            <h3 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-widest mb-4">No Active Protocol Detected</h3>
+            <p class="text-[10px] text-zinc-400 uppercase font-mono italic decoration-zinc-100 underline underline-offset-8 tracking-widest">Awaiting Neural Deployment from Coach</p>
         </div>
     @endif
 
@@ -174,7 +174,7 @@
             
             <div class="p-10 border-b border-zinc-100 bg-zinc-50/30 flex justify-between items-start">
                 <div>
-                    <span class="text-[9px] font-mono text-cyan-700 font-bold uppercase tracking-[0.4em] block mb-3 px-3 py-1 bg-cyan-50 ag-border inline-block" x-text="selectedMeal?.cat + '_PROTOCOL_NODE'"></span>
+                    <span class="text-[9px] font-mono text-cyan-700 font-bold uppercase tracking-[0.4em] block mb-3 px-3 py-1 bg-cyan-50 ag-border inline-block" x-text="selectedMeal?.cat + ' PROTOCOL NODE'"></span>
                     <h2 class="text-3xl font-mono font-bold text-zinc-900 uppercase tracking-tighter" x-text="selectedMeal?.menu"></h2>
                 </div>
                 <button @click="detailModalOpen = false" class="h-12 w-12 ag-border flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-all hover:rotate-90 duration-300">
@@ -205,7 +205,7 @@
                 <div class="bg-zinc-50/50 p-8 ag-border border-dashed">
                     <h4 class="text-[10px] font-mono font-bold text-zinc-900 uppercase tracking-[0.4em] mb-4 flex items-center">
                         <i data-lucide="scroll-text" class="size-4 mr-3 text-cyan-600"></i>
-                        Execution_Schema
+                        Execution Schema
                     </h4>
                     <p class="text-sm font-mono text-zinc-500 leading-relaxed font-sans" x-text="selectedMeal?.desc"></p>
                 </div>
@@ -214,7 +214,7 @@
             <div class="p-10 bg-zinc-50 border-t border-zinc-100 flex justify-end">
                 <button @click="detailModalOpen = false" 
                         class="px-12 py-5 bg-zinc-950 text-white text-[11px] font-mono font-bold uppercase tracking-[0.3em] hover:bg-black transition-all shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)]">
-                    Return_to_Nexus
+                    Return to Nexus
                 </button>
             </div>
         </div>

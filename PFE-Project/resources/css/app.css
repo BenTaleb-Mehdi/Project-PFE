@@ -24,6 +24,8 @@
   --color-darkgray: #111111;
   --color-mid:      #1A1A1A;
   --color-border:   #2A2A2A;
+
+ 
 }
 
 /* ── Source scanning for Tailwind class detection ── */
@@ -31,3 +33,25 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
+/* ── Lenis Smooth Scroll Setup ── */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}

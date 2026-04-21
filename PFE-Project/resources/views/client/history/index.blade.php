@@ -18,8 +18,8 @@
 
     <header class="mb-10 lg:flex lg:justify-between lg:items-end">
         <div>
-            <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Program_History</h1>
-            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Historical_Intelligence // Protocol_Archive</p>
+            <h1 class="text-3xl font-mono font-bold tracking-tight uppercase text-zinc-900">Program History</h1>
+            <p class="text-[10px] font-mono text-zinc-400 mt-2 uppercase tracking-[0.2em]">Historical Intelligence // Protocol Archive</p>
         </div>
     </header>
 
@@ -29,7 +29,7 @@
         <div class="relative flex-1 w-full">
             <input type="text" 
                    x-model="searchQuery"
-                   placeholder="Search_Protocols (Name)..." 
+                   placeholder="Search Protocols (Name)..." 
                    class="w-full bg-zinc-50 border border-zinc-200 px-10 py-2.5 text-[10px] font-mono uppercase tracking-widest focus:outline-none focus:border-cyan-600 transition-colors">
             <div class="absolute left-3.5 top-3 text-zinc-400">
                 <i data-lucide="search" class="size-3.5"></i>
@@ -64,9 +64,9 @@
             <table class="w-full text-left border-collapse font-mono">
                 <thead class="bg-zinc-50 border-b border-zinc-200 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                     <tr>
-                        <th class="px-6 py-4">Protocol_ID</th>
+                        <th class="px-6 py-4">Protocol ID</th>
                         <th class="px-6 py-4">Name</th>
-                        <th class="px-6 py-4">Meal_Nodes</th>
+                        <th class="px-6 py-4">Meal Nodes</th>
                         <th class="px-6 py-4">Status</th>
                         <th class="px-6 py-4 text-right">Actions</th>
                     </tr>
@@ -112,8 +112,8 @@
                                         <!-- Meal Matrix -->
                                         <div>
                                             <div class="flex justify-between items-center mb-4">
-                                                <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em]">Meal_Matrix_Sequence</h5>
-                                                <span class="text-[8px] font-mono text-cyan-600 uppercase">{{ $program->items_count }} Sequences_Logged</span>
+                                                <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em]">Meal Matrix Sequence</h5>
+                                                <span class="text-[8px] font-mono text-cyan-600 uppercase">{{ $program->items_count }} Sequences Logged</span>
                                             </div>
                                             <div class="ag-card bg-white border border-zinc-200 overflow-hidden shadow-sm">
                                                 @if($program->items_count > 0)
@@ -121,7 +121,7 @@
                                                         <thead class="bg-zinc-50 border-b border-zinc-200 text-zinc-400 uppercase font-bold">
                                                             <tr>
                                                                 <th class="px-4 py-3 font-mono">Seq</th>
-                                                                <th class="px-4 py-3">Item_Label</th>
+                                                                <th class="px-4 py-3">Item Label</th>
                                                                 <th class="px-4 py-3 text-right">Kcal</th>
                                                             </tr>
                                                         </thead>
@@ -137,7 +137,7 @@
                                                     </table>
                                                 @else
                                                     <div class="p-8 text-center bg-zinc-50/50">
-                                                        <p class="text-[10px] font-mono text-zinc-400 uppercase italic">No_Meal_Data_Sequenced</p>
+                                                        <p class="text-[10px] font-mono text-zinc-400 uppercase italic">No Meal Data Sequenced</p>
                                                     </div>
                                                 @endif
                                             </div>
@@ -145,7 +145,7 @@
 
                                         <!-- Macro Distribution -->
                                         <div>
-                                            <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Macro_Distribution_Archive</h5>
+                                            <h5 class="text-[8px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Macro Distribution Archive</h5>
                                             @php
                                                 $totalP = $program->items->sum(fn($i) => $i->meal->protein ?? 0);
                                                 $totalC = $program->items->sum(fn($i) => $i->meal->carbs ?? 0);
@@ -170,14 +170,14 @@
                                                 <div class="flex justify-between items-center mb-3">
                                                     <div class="flex items-center gap-2">
                                                         <div class="h-1.5 w-1.5 bg-emerald-500"></div>
-                                                        <span class="text-[9px] font-bold text-zinc-900 uppercase tracking-widest">Protocol_Efficiency</span>
+                                                        <span class="text-[9px] font-bold text-zinc-900 uppercase tracking-widest">Protocol Efficiency</span>
                                                     </div>
                                                     <span class="text-[10px] font-mono font-bold text-emerald-600">92%</span>
                                                 </div>
                                                 <div class="w-full h-1.5 bg-zinc-100 overflow-hidden">
                                                     <div class="h-full bg-emerald-500" style="width: 92%"></div>
                                                 </div>
-                                                <p class="text-[7px] text-zinc-400 uppercase mt-3 font-mono">Archive_Ref: AG-HIS-{{ $program->id }}-B</p>
+                                                <p class="text-[7px] text-zinc-400 uppercase mt-3 font-mono">Archive Ref: AG-HIS-{{ $program->id }}-B</p>
                                             </div>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-8 py-20 text-center text-zinc-300 uppercase tracking-[0.3em] text-[8px] font-mono">
-                                NODES_NULL // NO_HISTORY_DETECTED
+                                NODES NULL // NO HISTORY DETECTED
                             </td>
                         </tr>
                     @endforelse

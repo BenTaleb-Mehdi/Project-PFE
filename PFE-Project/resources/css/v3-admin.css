@@ -17,8 +17,9 @@
     color: var(--text-primary);
 }
 
-.v3-admin * {
-    border-radius: 0 !important;
+/* Global Rounding Override */
+.v3-admin *:not(.ag-no-round) {
+    border-radius: var(--radius-sm);
 }
 
 .ag-border {
@@ -28,6 +29,7 @@
 .ag-card {
     background-color: var(--bg-main);
     border: 1px solid var(--border-zinc);
+    border-radius: var(--radius-xl);
     transition: all 0.3s ease;
 }
 
@@ -54,7 +56,7 @@
     background: var(--bg-offset);
 }
 .v3-admin ::-webkit-scrollbar-thumb {
-    background: var(--border-zinc);
+    background: #0891B2;
 }
 .v3-admin ::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
@@ -64,7 +66,7 @@
 .ag-dropdown-surface {
     background-color: var(--bg-main);
     border: 1px solid var(--border-zinc);
-    border-radius: 0px; 
+    border-radius: var(--radius-lg); 
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.05); 
     overflow: hidden;
     z-index: 100;
