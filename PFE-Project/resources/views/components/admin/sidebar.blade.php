@@ -60,6 +60,7 @@
                     </a>
                 </li>
 
+                @role('admin')
                 <li x-data="{ open: {{ request()->is('coach/team*') || request()->is('coach/finance*') ? 'true' : 'false' }} }">
                     <button @click="open = !open" 
                             class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
@@ -84,6 +85,7 @@
                         </ul>
                     </div>
                 </li>
+                @endrole
             </ul>
         </nav>
     </div>

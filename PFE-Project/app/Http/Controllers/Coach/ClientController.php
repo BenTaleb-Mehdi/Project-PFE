@@ -15,7 +15,7 @@ class ClientController extends Controller
     protected $nutritionService;
 
     public function __construct(
-        ClientRegistryService $clientService, 
+        ClientRegistryService $clientService,
         \App\Services\AssignmentService $assignmentService,
         \App\Services\NutritionService $nutritionService
     ) {
@@ -47,7 +47,7 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request)
     {
         $this->clientService->addClient($request->validated());
-        return redirect()->back()->with('success', 'CLIENT_ONBOARDED // Session_Secure');
+        return redirect()->back()->with('success', 'CLIENT_ONBOARDED // Credentials_Sent');
     }
 
     public function update(UpdateClientRequest $request, $id)
