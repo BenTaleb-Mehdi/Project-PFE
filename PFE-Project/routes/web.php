@@ -64,7 +64,7 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
 
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', function() {
     return redirect()->route('coach.dashboard');
