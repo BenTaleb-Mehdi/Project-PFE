@@ -31,9 +31,9 @@
       </p>
 
       <div class="flex flex-wrap gap-4 items-center">
-        <a href="{{ route('register') }}" class="atom-btn atom-btn-premium text-sm px-7 py-4">
-          Sign Up Now
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        <a href="#contact" class="atom-btn atom-btn-premium text-sm px-7 py-4">
+          Start Your Journey
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="#contact" class="inline-flex items-center gap-3 text-sm font-cond font-semibold tracking-widest uppercase group hover:text-acid transition-colors">
           Get Started Free

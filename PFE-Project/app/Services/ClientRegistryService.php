@@ -5,6 +5,9 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Notifications\SendClientCredentials;
+use Illuminate\Support\Facades\Log;
 
 class ClientRegistryService {
     public function getDetailedRegistry($search = null, $status = 'ALL_STATUSES') {
@@ -23,23 +26,40 @@ class ClientRegistryService {
 
         return $query->latest()->paginate(15);
     }
-
     public function addClient(array $data) {
-        return DB::transaction(function () use ($data) {
+        $password = Str::random(12);
+
+        // 1. Create User and Client in transaction — ensure data integrity
+        $user = DB::transaction(function () use ($data, $password) {
             $user = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password'] ?? 'password123'),
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => Hash::make($password),
             ]);
 
-            return $user->client()->create([
-                'phone_number' => $data['phone_number'] ?? null,
-                'status' => $data['status'] ?? 'active',
-                'target_goal' => $data['target_goal'] ?? null,
+            // Assign Spatie Role
+            $user->assignRole('client');
+
+            $user->client()->create([
+                'phone_number'   => $data['phone_number'] ?? null,
+                'status'         => $data['status'] ?? 'active',
+                'target_goal'    => $data['target_goal'] ?? null,
                 'current_weight' => $data['current_weight'] ?? null,
-                'height' => $data['height'] ?? null,
+                'height'         => $data['height'] ?? null,
             ]);
+
+            return $user;
         });
+
+        // 2. Send credentials via Laravel Notification with error handling
+        try {
+            $user->notify(new SendClientCredentials($password));
+            Log::info("CREDENTIALS_SENT // Registry_Success // User: " . $user->email);
+        } catch (\Exception $e) {
+            Log::error("EMAIL_FAILURE // Registry_Warning // User: " . $user->email . " // Error: " . $e->getMessage());
+        }
+
+        return $user->client;
     }
 
     public function updateClient(int $id, array $data) {

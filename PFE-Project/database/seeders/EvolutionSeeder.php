@@ -27,8 +27,17 @@ class EvolutionSeeder extends Seeder
             if (empty(trim($row))) continue;
             $values = str_getcsv($row, ",");
             
-            $uniqueKey = [$header[0] => $values[0]];
             $record = array_combine($header, $values);
+            
+            // Handle transition from body_img_url to images
+            if (isset($record['body_img_url'])) {
+                $record['images'] = json_encode([$record['body_img_url']]);
+                unset($record['body_img_url']);
+            } elseif (isset($record['images']) && !is_string($record['images'])) {
+                $record['images'] = json_encode($record['images']);
+            }
+
+            $uniqueKey = ['id' => $record['id']];
             
             DB::table('evolutions')->updateOrInsert($uniqueKey, $record);
         }
