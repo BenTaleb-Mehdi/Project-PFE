@@ -23,9 +23,16 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/coach/dashboard';
+    public function redirectTo()
+    {
+        if (auth()->user()->hasRole('client')) {
+            return '/client/dashboard';
+        }
+        
+        return '/coach/dashboard';
+    }
 
     /**
      * Show the unified auth portal in login mode.
