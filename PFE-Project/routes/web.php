@@ -54,6 +54,11 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
         Route::put('/team/{team}', [StaffController::class, 'update'])->name('team.update');
         Route::delete('/team/{team}', [StaffController::class, 'destroy'])->name('team.destroy');
 
+        // Specialty Management
+        Route::post('/team/specialties', [StaffController::class, 'storeSpecialty'])->name('team.specialties.store');
+        Route::put('/team/specialties/{specialty}', [StaffController::class, 'updateSpecialty'])->name('team.specialties.update');
+        Route::delete('/team/specialties/{specialty}', [StaffController::class, 'destroySpecialty'])->name('team.specialties.destroy');
+
         // Finance Flow
         Route::get('/finance', [PaymentController::class, 'index'])->name('finance');
         Route::post('/finance', [PaymentController::class, 'store'])->name('finance.store');

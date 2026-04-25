@@ -49,12 +49,6 @@
     },
 }'>
 
-    @if(session('success'))
-        <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-mono uppercase tracking-[0.2em] shadow-[4px_4px_0px_0px_rgba(16,185,129,0.1)]">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- Discovery Bar -->
     <div class="ag-card p-4 bg-white mb-6 border border-zinc-200 flex flex-col md:flex-row gap-4 items-center max-w-4xl font-mono text-zinc-900">
         <div class="relative flex-1 w-full">

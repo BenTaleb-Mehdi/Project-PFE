@@ -21,10 +21,13 @@ class UpdateStaffRequest extends FormRequest
         $userId = $staff ? $staff->user_id : null;
 
         return [
-            'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $userId],
-            'specialty' => ['required', 'string', 'max:255'],
-            'bio'       => ['nullable', 'string', 'max:1000'],
+            'name'          => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $userId],
+            'specialties'   => ['required', 'array'],
+            'specialties.*' => ['exists:specialties,id'],
+            'phone_number'  => ['nullable', 'string', 'max:20'],
+            'status'        => ['required', 'string', 'in:active,inactive'],
+            'bio'           => ['nullable', 'string', 'max:1000'],
         ];
     }
 }

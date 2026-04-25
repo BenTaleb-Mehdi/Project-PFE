@@ -6,47 +6,72 @@ use App\Models\User;
 use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Notifications\SendStaffCredentials;
+use Illuminate\Support\Facades\Log;
 
 class StaffRegistryService
 {
     /**
      * Create a new Staff member with an associated User account.
-     *
-     * @param array $data
-     * @return Staff
      */
     public function addStaff(array $data): Staff
     {
-        return DB::transaction(function () use ($data) {
+        $password = Str::random(12);
+
+        $staff = DB::transaction(function () use ($data, $password) {
             $user = User::create([
                 'name'     => $data['name'],
                 'email'    => $data['email'],
-                'password' => Hash::make($data['password'] ?? 'staff123'),
+                'password' => Hash::make($password),
             ]);
 
-            return Staff::create([
-                'user_id'   => $user->id,
-                'specialty' => $data['specialty'] ?? 'Coach',
-                'bio'       => $data['bio'] ?? '',
+            $user->assignRole('co-coach');
+
+            $staff = Staff::create([
+                'user_id'      => $user->id,
+                'specialty'    => $data['legacy_specialty'] ?? 'Coach', // Keeping for backward compatibility if needed
+                'bio'          => $data['bio'] ?? '',
+                'phone_number' => $data['phone_number'] ?? null,
+                'status'       => 'active',
             ]);
+
+            if (isset($data['specialties'])) {
+                $staff->specialties()->sync($data['specialties']);
+            }
+
+            return $staff;
         });
+
+        // Send credentials
+        try {
+            $staff->user->notify(new SendStaffCredentials($password));
+            Log::info("STAFF_CREDENTIALS_SENT // User: " . $staff->user->email);
+        } catch (\Exception $e) {
+            Log::error("STAFF_EMAIL_FAILURE // User: " . $staff->user->email . " // Error: " . $e->getMessage());
+        }
+
+        return $staff;
     }
 
     /**
      * Get all staff members with optional search and specialty filters.
      */
-    public function getTeam(?string $search = null, ?string $specialty = null)
+    public function getTeam(?string $search = null, ?string $specialtyId = null)
     {
-        $query = Staff::with('user');
+        $query = Staff::with(['user', 'specialties']);
 
         if ($search) {
             $query->whereHas('user', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
-        if ($specialty && $specialty !== 'ALL_SPECIALIZATIONS') {
-            $query->where('specialty', 'like', "%{$specialty}%");
+        if ($specialtyId && $specialtyId !== 'ALL_SPECIALIZATIONS') {
+            $query->whereHas('specialties', function ($q) use ($specialtyId) {
+                $q->where('specialties.id', $specialtyId);
+            });
         }
 
         return $query->latest()->paginate(10);
@@ -64,9 +89,14 @@ class StaffRegistryService
                 'email' => $data['email'],
             ]);
 
+            if (isset($data['specialties'])) {
+                $staff->specialties()->sync($data['specialties']);
+            }
+
             return $staff->update([
-                'specialty' => $data['specialty'],
-                'bio'       => $data['bio'] ?? $staff->bio,
+                'bio'          => $data['bio'] ?? $staff->bio,
+                'phone_number' => $data['phone_number'] ?? $staff->phone_number,
+                'status'       => $data['status'] ?? $staff->status,
             ]);
         });
     }

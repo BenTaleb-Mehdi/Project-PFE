@@ -17,10 +17,13 @@ class StoreStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'specialty' => ['required', 'string', 'max:255'],
-            'bio'       => ['nullable', 'string', 'max:1000'],
+            'name'             => ['required', 'string', 'max:255'],
+            'email'            => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'legacy_specialty' => ['nullable', 'string', 'max:255'],
+            'specialties'      => ['required', 'array'],
+            'specialties.*'    => ['exists:specialties,id'],
+            'phone_number'     => ['nullable', 'string', 'max:20'],
+            'bio'              => ['nullable', 'string', 'max:1000'],
         ];
     }
 

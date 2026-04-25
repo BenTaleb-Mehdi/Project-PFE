@@ -55,10 +55,21 @@
 </head>
 <body class="bg-zinc-50 antialiased v3-admin" 
       x-data="{ 
+        loading: false,
         isSidebarOpen: false, 
         isLargeScreen: window.innerWidth >= 1024 
       }"
+      @submit.window="loading = true"
       x-init="window.addEventListener('resize', () => isLargeScreen = window.innerWidth >= 1024)">
+
+    <!-- Global Loading Overlay -->
+    <div x-show="loading" x-transition.opacity x-cloak 
+         class="fixed inset-0 z-[1000] bg-zinc-950/40 backdrop-blur-md flex items-center justify-center">
+        <div class="flex flex-col items-center">
+            <div class="size-12 border-2 border-zinc-800 border-t-cyan-600 rounded-full animate-spin mb-4"></div>
+            <p class="text-[10px] font-mono text-white uppercase tracking-[0.3em] animate-pulse">Synchronizing Data...</p>
+        </div>
+    </div>
 
     <!-- Mobile Backdrop -->
     <div x-show="isSidebarOpen" 
@@ -91,15 +102,15 @@
                  x-transition:leave="transition ease-in duration-200 transform"
                  x-transition:leave-start="translate-x-0 opacity-100"
                  x-transition:leave-end="translate-x-full opacity-0"
-                 class="fixed top-8 right-8 z-[200] bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] p-6 min-w-[320px] pointer-events-auto"
+                 class="fixed top-8 right-8 z-[200] bg-zinc-900 border border-zinc-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] p-6 min-w-[320px] pointer-events-auto"
                  x-cloak>
                 <div class="flex items-start gap-x-4">
-                    <div class="h-10 w-1 bg-cyan-600 flex-shrink-0"></div>
+                    <div class="h-10 w-1 bg-cyan-600 flex-shrink-0 animate-pulse"></div>
                     <div class="flex-1">
                         <p class="text-[8px] font-mono text-cyan-600 uppercase tracking-widest mb-1">Status: Success Sync</p>
-                        <p class="text-[10px] font-bold text-zinc-900 uppercase tracking-wider">{{ session('success') }}</p>
+                        <p class="text-[10px] font-bold text-zinc-100 uppercase tracking-wider">{{ session('success') }}</p>
                     </div>
-                    <button @click="show = false" class="text-zinc-400 hover:text-zinc-900 transition-colors">
+                    <button @click="show = false" class="text-zinc-500 hover:text-white transition-colors">
                         <i data-lucide="x" class="size-4"></i>
                     </button>
                 </div>
