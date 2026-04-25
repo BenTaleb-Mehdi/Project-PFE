@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 class StaffController extends Controller
 {
     protected $staffService;
+    protected $specialtyService;
 
-    public function __construct(StaffRegistryService $staffService)
+    public function __construct(StaffRegistryService $staffService, \App\Services\SpecialtyService $specialtyService)
     {
         $this->staffService = $staffService;
+        $this->specialtyService = $specialtyService;
     }
 
     /**
@@ -26,7 +28,9 @@ class StaffController extends Controller
             $request->search,
             $request->specialty
         );
-        return view('coach.team', compact('team'));
+        $specialties = $this->specialtyService->getAllSpecialties();
+        
+        return view('coach.team', compact('team', 'specialties'));
     }
 
     /**
@@ -35,7 +39,7 @@ class StaffController extends Controller
     public function store(StoreStaffRequest $request)
     {
         $this->staffService->addStaff($request->validated());
-        return redirect()->route('coach.team')->with('success', 'STAFF_ONBOARDED // ID_Sync_Complete');
+        return redirect()->route('coach.team')->with('success', 'STAFF_ONBOARDED // ID_Sync_Complete // Credentials_Dispatched');
     }
 
     /**
@@ -54,5 +58,34 @@ class StaffController extends Controller
     {
         $this->staffService->removeStaff($id);
         return redirect()->route('coach.team')->with('success', 'STAFF_WIPED // Access_Revoked');
+    }
+
+    /**
+     * Specialty Management: Add
+     */
+    public function storeSpecialty(Request $request)
+    {
+        $request->validate(['name' => 'required|string|unique:specialties,name']);
+        $this->specialtyService->addSpecialty($request->name);
+        return redirect()->route('coach.team')->with('success', 'SPECIALTY_REGISTERED // Matrix_Updated');
+    }
+
+    /**
+     * Specialty Management: Update
+     */
+    public function updateSpecialty(Request $request, $id)
+    {
+        $request->validate(['name' => 'required|string|unique:specialties,name,' . $id]);
+        $this->specialtyService->updateSpecialty($id, $request->name);
+        return redirect()->route('coach.team')->with('success', 'SPECIALTY_MODIFIED // Matrix_Calibrated');
+    }
+
+    /**
+     * Specialty Management: Remove
+     */
+    public function destroySpecialty($id)
+    {
+        $this->specialtyService->deleteSpecialty($id);
+        return redirect()->route('coach.team')->with('success', 'SPECIALTY_DELETED // Matrix_Updated');
     }
 }

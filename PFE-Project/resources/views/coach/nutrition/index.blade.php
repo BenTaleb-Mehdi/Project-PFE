@@ -168,13 +168,6 @@
         return html;
     }
 }'>
-    <!-- Alerts / Notifications -->
-    @if(session('success'))
-        <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-mono uppercase tracking-[0.2em] shadow-[4px_4px_0px_0px_rgba(16,185,129,0.1)]">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- Tabs Header (Maquette Spec) -->
     <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6 font-sans border-b border-zinc-100 pb-4">
         <div class="flex space-x-8">

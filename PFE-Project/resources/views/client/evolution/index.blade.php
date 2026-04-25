@@ -76,13 +76,6 @@
         </p>
     </header>
 
-    @if(session('success'))
-        <div class="mb-10 p-5 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-mono uppercase tracking-[0.2em] shadow-[8px_8px_0px_0px_rgba(16,185,129,0.05)] flex items-center">
-            <i data-lucide="shield-check" class="size-5 mr-3"></i>
-            {{ session('success') }}
-        </div>
-    @endif
-
     <form action="{{ route('client.evolution.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
         @csrf
         

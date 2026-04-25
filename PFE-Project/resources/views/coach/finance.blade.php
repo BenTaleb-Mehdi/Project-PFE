@@ -32,12 +32,6 @@
     }
 }">
 
-    @if(session('success'))
-        <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-mono uppercase tracking-[0.2em] shadow-[4px_4px_0px_0px_rgba(16,185,129,0.1)]">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- Action Header -->
     <div class="mb-8 lg:flex lg:justify-end font-mono">
         <button @click="isAddPaymentModalOpen = true"
