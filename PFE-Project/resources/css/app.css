@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import 'tailwindcss';
+@import './style.css';
+@import './v3-admin.css';
+
 /*
   FIX: Import order matters in Tailwind v4.
   1. tailwindcss first (generates utilities)
   2. custom theme overrides via @theme
   3. your own CSS last (can use Tailwind utilities inside)
+  Note: PostCSS requires ALL @imports to be at the top.
 */
-
-@import 'tailwindcss';
 
 /* ── Tailwind theme extension (replaces inline tailwind.config in <script>) ── */
 @theme {
@@ -20,6 +24,8 @@
   --color-darkgray: #111111;
   --color-mid:      #1A1A1A;
   --color-border:   #2A2A2A;
+
+ 
 }
 
 /* ── Source scanning for Tailwind class detection ── */
@@ -28,6 +34,24 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-/* ── Your custom UI kit ── */
-@import './style.css';
-@import './v3-admin.css';
+/* ── Lenis Smooth Scroll Setup ── */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}

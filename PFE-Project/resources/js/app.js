@@ -12,6 +12,7 @@ import Alpine from 'alpinejs'
 import { appData } from './landingpage.js'
 import 'preline'
 import { createIcons, icons } from 'lucide'
+import Lenis from 'lenis'
 
 // Initialize Lucide Icons
 window.addEventListener('DOMContentLoaded', () => {
@@ -26,3 +27,10 @@ Alpine.effect(() => {
 
 window.Alpine = Alpine
 Alpine.start()
+
+// Initialize Lenis Smooth Scroll
+const lenis = new Lenis({
+    autoRaf: true,
+    smoothWheel: true,
+    duration: 1.2,
+});

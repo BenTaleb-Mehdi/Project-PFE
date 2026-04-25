@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
     --bg-main: #FFFFFF;
@@ -18,8 +17,9 @@
     color: var(--text-primary);
 }
 
-.v3-admin * {
-    border-radius: 0 !important;
+/* Global Rounding Override */
+.v3-admin *:not(.ag-no-round) {
+    border-radius: var(--radius-sm);
 }
 
 .ag-border {
@@ -29,6 +29,7 @@
 .ag-card {
     background-color: var(--bg-main);
     border: 1px solid var(--border-zinc);
+    border-radius: var(--radius-xl);
     transition: all 0.3s ease;
 }
 
@@ -55,7 +56,7 @@
     background: var(--bg-offset);
 }
 .v3-admin ::-webkit-scrollbar-thumb {
-    background: var(--border-zinc);
+    background: #0891B2;
 }
 .v3-admin ::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
@@ -65,7 +66,7 @@
 .ag-dropdown-surface {
     background-color: var(--bg-main);
     border: 1px solid var(--border-zinc);
-    border-radius: 0px; 
+    border-radius: var(--radius-lg); 
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.05); 
     overflow: hidden;
     z-index: 100;
@@ -145,4 +146,77 @@
 
 .ag-editor-content:focus {
     outline: none;
+}
+
+/* =========================================
+   PDF EXPORT ENGINE (PRINT PROJECTION)
+   ========================================= */
+@media print {
+    /* Total Isolation Logic */
+    body, main { 
+        background: white !important; 
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Hide Layout Elements from dashboard.blade.php */
+    header.lg\:hidden, nav, #application-sidebar, main > header, .no-print { display: none !important; }
+    
+    /* Force Modal Parents to be visible & Remove Centering Constraints */
+    .print-modal-projection { 
+        visibility: visible !important; 
+        display: block !important; 
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: white !important;
+    }
+    .print-modal-projection * {
+        visibility: visible !important;
+    }
+    
+    /* The printable node selector */
+    .print-intelligence-node, #print-intelligence-node { 
+        display: block !important; 
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .print-intelligence-node, #print-intelligence-node, 
+    .print-intelligence-node *, #print-intelligence-node * { 
+        overflow: visible !important;
+        max-height: none !important;
+    }
+    
+    .print-intelligence-node, #print-intelligence-node {
+        position: relative !important; 
+        left: 0 !important; 
+        top: 0 !important; 
+        width: 100% !important; 
+        height: auto !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .no-print, header .modal-close, footer.bg-zinc-50, .print-intelligence-node header.bg-zinc-950 { display: none !important; }
+    
+    /* Reveal dense matrices ONLY during document extraction */
+    .print-matrix-expand, .print-matrix-expand * { display: block !important; }
+    
+    /* Branded Elements */
+    .print-only-branding { display: flex !important; }
+    
+    /* Layout Tuning */
+    .v3-editor-matrix { padding: 0 !important; border: none !important; background: transparent !important; }
+    .divide-y > div { page-break-inside: avoid !important; }
+    
+    @page { size: A4; margin: 1cm; }
 }
