@@ -32,8 +32,11 @@
 
       <div class="flex flex-wrap gap-4 items-center">
         <a href="#contact" class="atom-btn atom-btn-premium text-sm px-7 py-4">
-          Get Started Free
+          Start Your Journey
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-3 text-sm font-cond font-semibold tracking-widest uppercase group hover:text-acid transition-colors">
+          Get Started Free
         </a>
         <a href="#video" class="inline-flex items-center gap-3 text-sm font-cond font-semibold tracking-widest uppercase group">
           <span class="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:border-acid group-hover:text-acid transition-colors">

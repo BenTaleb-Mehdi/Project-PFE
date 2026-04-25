@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model
 {
     protected $table = 'staffs';
-    protected $fillable = ['user_id', 'specialty', 'bio'];
+    protected $fillable = ['user_id', 'specialty', 'bio', 'phone_number', 'status'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function specialties()
+    {
+        return $this->belongsToMany(Specialty::class, 'staff_specialty');
     }
 
     public function clients()
