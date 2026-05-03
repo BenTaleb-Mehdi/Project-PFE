@@ -116,37 +116,63 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                @foreach($programData['meals'] as $meal)
-                    <div @click="selectedMeal = {{ json_encode($meal) }}; detailModalOpen = true" 
-                         class="group ag-card p-0 bg-white hover:border-cyan-600 transition-all cursor-pointer relative overflow-hidden flex flex-col shadow-sm hover:shadow-2xl hover:-translate-y-2 duration-300">
-                        
-                        <div class="h-1 bg-zinc-50 group-hover:bg-cyan-600 transition-colors"></div>
-                        
-                        <div class="p-10 flex-1 flex flex-col">
-                            <div class="flex justify-between items-start mb-12">
-                                <div class="px-3 py-1 bg-zinc-50 ag-border text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest group-hover:bg-cyan-50 group-hover:text-cyan-700 transition-colors">
-                                    {{ $meal['cat'] }}
-                                </div>
-                                <span class="text-[9px] font-mono text-zinc-300 font-bold uppercase tracking-widest">{{ $meal['time'] }} HRS</span>
+            <div class="relative">
+                <!-- Timeline Connecting Line -->
+                <div class="absolute left-[20px] top-4 bottom-4 w-px bg-zinc-200 hidden md:block"></div>
+
+                <div class="space-y-8">
+                    @foreach($programData['meals'] as $meal)
+                        <div @click="selectedMeal = {{ json_encode($meal) }}; detailModalOpen = true" 
+                             class="group relative flex flex-col md:flex-row md:items-center gap-8 cursor-pointer">
+                            
+                            <!-- Timeline Dot -->
+                            <div class="hidden md:flex absolute left-0 w-10 h-10 items-center justify-center bg-white z-10">
+                                <div class="h-3 w-3 bg-zinc-200 group-hover:bg-cyan-600 group-hover:scale-125 transition-all duration-300"></div>
                             </div>
 
-                            <h4 class="text-xl font-mono font-bold text-zinc-900 uppercase tracking-tighter group-hover:text-cyan-700 transition-colors mb-4 leading-tight min-h-[4rem]">
-                                {{ str_replace('_', ' ', $meal['menu']) }}
-                            </h4>
+                            <!-- Time Indicator -->
+                            <div class="md:ml-16 min-w-[100px]">
+                                <span class="text-[10px] font-mono font-bold text-zinc-400 group-hover:text-cyan-700 transition-colors uppercase tracking-widest">{{ $meal['time'] }} HRS</span>
+                            </div>
 
-                            <div class="mt-auto pt-8 border-t border-zinc-50 flex justify-between items-end opacity-40 group-hover:opacity-100 transition-opacity">
-                                <div class="flex flex-col">
-                                    <span class="text-2xl font-mono font-bold text-zinc-900 tracking-tighter">{{ $meal['kcal'] }}</span>
-                                    <span class="text-[7px] font-mono text-zinc-400 font-bold uppercase tracking-widest">Kcal Yield</span>
+                            <!-- Meal Card (Timeline Content) -->
+                            <div class="flex-1 ag-card p-6 md:p-8 bg-white hover:border-cyan-600 transition-all flex flex-col md:flex-row md:items-center justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 duration-300">
+                                <div class="flex items-center gap-6">
+                                    <div class="h-12 w-12 bg-zinc-50 ag-border flex items-center justify-center text-zinc-300 group-hover:bg-cyan-50 group-hover:text-cyan-700 transition-colors">
+                                        <i data-lucide="utensils" class="size-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-3 mb-1">
+                                            <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">{{ $meal['cat'] }}</span>
+                                            <span class="h-px w-3 bg-zinc-200"></span>
+                                            @if($meal['is_validated'])
+                                                <span class="text-[8px] font-mono font-bold text-emerald-600 uppercase tracking-widest flex items-center gap-1">
+                                                    <i data-lucide="check-circle" class="size-2.5"></i>
+                                                    Synchronized
+                                                </span>
+                                            @else
+                                                <span class="text-[8px] font-mono font-bold text-cyan-600 uppercase tracking-widest">Pending Sync</span>
+                                            @endif
+                                        </div>
+                                        <h4 class="text-lg font-mono font-bold text-zinc-900 uppercase tracking-tighter group-hover:text-cyan-700 transition-colors">
+                                            {{ str_replace('_', ' ', $meal['menu']) }}
+                                        </h4>
+                                    </div>
                                 </div>
-                                <div class="h-10 w-10 ag-border flex items-center justify-center text-zinc-200 group-hover:text-cyan-600 group-hover:bg-cyan-50 transition-all">
-                                    <i data-lucide="plus" class="size-5"></i>
+
+                                <div class="mt-4 md:mt-0 flex items-center gap-8">
+                                    <div class="text-right">
+                                        <p class="text-xl font-mono font-bold text-zinc-900 tracking-tighter">{{ $meal['kcal'] }}</p>
+                                        <p class="text-[7px] font-mono text-zinc-400 font-bold uppercase tracking-widest">Kcal Output</p>
+                                    </div>
+                                    <div class="h-10 w-10 ag-border flex items-center justify-center text-zinc-200 group-hover:text-cyan-600 group-hover:bg-cyan-50 transition-all">
+                                        <i data-lucide="chevron-right" class="size-5"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     @else
@@ -184,21 +210,21 @@
 
             <div class="p-10">
                 <div class="grid grid-cols-4 gap-6 mb-12">
-                    <div class="p-6 bg-zinc-50 ag-border text-center">
+                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-cyan-700">
                         <p class="text-[8px] font-mono text-zinc-400 uppercase mb-2">Energy</p>
-                        <p class="text-xl font-mono font-bold text-zinc-900" x-text="selectedMeal?.kcal + 'kc'"></p>
+                        <p class="text-xl font-mono font-bold text-cyan-700" x-text="selectedMeal?.kcal + 'kc'"></p>
                     </div>
-                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-cyan-600">
+                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-cyan-700">
                         <p class="text-[8px] font-mono text-zinc-400 uppercase mb-2">Protein</p>
-                        <p class="text-xl font-mono font-bold text-zinc-900" x-text="selectedMeal?.p + 'g'"></p>
+                        <p class="text-xl font-mono font-bold text-cyan-700" x-text="selectedMeal?.p + 'g'"></p>
                     </div>
-                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-zinc-900">
+                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-cyan-700">
                         <p class="text-[8px] font-mono text-zinc-400 uppercase mb-2">Carbs</p>
-                        <p class="text-xl font-mono font-bold text-zinc-900" x-text="selectedMeal?.c + 'g'"></p>
+                        <p class="text-xl font-mono font-bold text-cyan-700" x-text="selectedMeal?.c + 'g'"></p>
                     </div>
-                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-zinc-400">
+                    <div class="p-6 bg-zinc-50 ag-border text-center border-b-4 border-b-cyan-700">
                         <p class="text-[8px] font-mono text-zinc-400 uppercase mb-2">Fats</p>
-                        <p class="text-xl font-mono font-bold text-zinc-900" x-text="selectedMeal?.f + 'g'"></p>
+                        <p class="text-xl font-mono font-bold text-cyan-700" x-text="selectedMeal?.f + 'g'"></p>
                     </div>
                 </div>
 
@@ -207,13 +233,33 @@
                         <i data-lucide="scroll-text" class="size-4 mr-3 text-cyan-600"></i>
                         Execution Schema
                     </h4>
-                    <p class="text-sm font-mono text-zinc-500 leading-relaxed font-sans" x-text="selectedMeal?.desc"></p>
+                    <p class="text-sm font-mono text-zinc-500 leading-relaxed font-sans" x-text="selectedMeal?.details"></p>
                 </div>
             </div>
 
-            <div class="p-10 bg-zinc-50 border-t border-zinc-100 flex justify-end">
+            <div class="p-10 bg-zinc-50 border-t border-zinc-100 flex justify-between items-center">
+                <template x-if="!selectedMeal?.is_validated">
+                    <form action="{{ route('client.meals.validate') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="program_item_id" :value="selectedMeal?.id">
+                        <button type="submit" 
+                                class="px-8 py-4 bg-cyan-600 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-[8px_8px_0px_0px_rgba(8,145,178,0.1)] active:scale-95 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="size-4"></i>
+                            Validate Node
+                        </button>
+                    </form>
+                </template>
+                <template x-if="selectedMeal?.is_validated">
+                    <div class="flex items-center gap-3 text-emerald-600 font-mono text-[10px] font-bold uppercase tracking-[0.2em]">
+                        <div class="h-10 w-10 bg-emerald-50 rounded-full flex items-center justify-center">
+                            <i data-lucide="check" class="size-5"></i>
+                        </div>
+                        Synchronized to Core
+                    </div>
+                </template>
+
                 <button @click="detailModalOpen = false" 
-                        class="px-12 py-5 bg-zinc-950 text-white text-[11px] font-mono font-bold uppercase tracking-[0.3em] hover:bg-black transition-all shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)]">
+                        class="px-10 py-5 bg-zinc-950 text-white text-[11px] font-mono font-bold uppercase tracking-[0.3em] hover:bg-black transition-all shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)]">
                     Return to Nexus
                 </button>
             </div>

@@ -9,18 +9,29 @@ use App\Http\Controllers\Coach\PaymentController;
 use App\Http\Controllers\Coach\StaffController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use App\Http\Controllers\Client\EvolutionController;
+use App\Http\Controllers\Client\MealValidationController;
+use App\Http\Controllers\ProfileSettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", [landingPage::class,"index"])->name("landingpage");
+
+// Profile Settings (Shared)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/settings', [ProfileSettingsController::class, 'index'])->name('profile.settings');
+    Route::put('/settings', [ProfileSettingsController::class, 'update'])->name('profile.settings.update');
+    Route::put('/settings/password', [ProfileSettingsController::class, 'updatePassword'])->name('profile.settings.password');
+});
 
 // Client Portal (Responsive Web Exp)
 Route::prefix('client')->name('client.')->middleware(['auth', 'role:client'])->group(function () {
     Route::get('/dashboard', [ClientDashboardController::class, 'index'])->name('dashboard');
     Route::get('/evolution', [EvolutionController::class, 'index'])->name('evolution.index');
     Route::post('/evolution', [EvolutionController::class, 'store'])->name('evolution.store');
+    Route::delete('/evolution/{id}', [EvolutionController::class, 'destroy'])->name('evolution.destroy');
     
     Route::get('/programs', [ClientDashboardController::class, 'programs'])->name('programs.index');
     Route::get('/history', [ClientDashboardController::class, 'history'])->name('history.index');
+    Route::post('/meals/validate', [MealValidationController::class, 'store'])->name('meals.validate');
 });
 
 Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach'])->group(function () {
@@ -64,6 +75,9 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
         Route::post('/finance', [PaymentController::class, 'store'])->name('finance.store');
         Route::put('/finance/{finance}', [PaymentController::class, 'update'])->name('finance.update');
         Route::delete('/finance/{finance}', [PaymentController::class, 'destroy'])->name('finance.destroy');
+
+        // System Settings
+        Route::post('/settings/update', [DashboardController::class, 'updateSettings'])->name('settings.update');
     });
 });
 

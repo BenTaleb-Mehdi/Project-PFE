@@ -7,6 +7,12 @@ use App\Models\Payment;
 
 class DashboardService {
 
+    protected $evolutionService;
+    
+    public function __construct() {
+        $this->evolutionService = new EvolutionService();
+    }
+
     public function getClientMetrics(int $clientId)
     {
         $client = Client::with('user')->findOrFail($clientId);
@@ -33,6 +39,8 @@ class DashboardService {
             'current_weight' => $latestEvolution?->weight ?? $client->current_weight,
             'weight_change'  => $weightChange,
             'height'         => $client->height,
+            'streak'         => $this->evolutionService->calculateStreak($clientId),
+            'compliance'     => $this->evolutionService->calculateCompliance($clientId),
         ];
     }
 

@@ -5,35 +5,10 @@
 @section('header_subtitle', 'Hierarchy Control // Staff Manifest V3.0')
 
 @section('content')
-<div x-data="{ 
-    isAddMemberModalOpen: false,
-    searchQuery: '',
-    filterSpec: '{{ request('specialty', 'ALL_SPECIALIZATIONS') }}',
-    
-    isEditModalOpen: false,
-    editingMember: { id: '', name: '', email: '', specialties: [], status: 'active', phone_number: '' },
-    isDeleteModalOpen: false,
-    memberToDelete: null,
-    
-    isSpecialtyModalOpen: false,
-    editingSpecialty: { id: null, name: '' },
-    
-    openEditModal(staff) {
-        this.editingMember = {
-            id: staff.id,
-            name: staff.user.name,
-            email: staff.user.email,
-            specialties: staff.specialties.map(s => s.id),
-            status: staff.status || 'active',
-            phone_number: staff.phone_number || ''
-        };
-        this.isEditModalOpen = true;
-    },
-    confirmDelete(staff) {
-        this.memberToDelete = staff;
-        this.isDeleteModalOpen = true;
-    }
-}">
+<div x-data='teamManagement({ 
+    searchQuery: "{{ request("search") }}",
+    filterSpec: "{{ request("specialty", "ALL_SPECIALIZATIONS") }}"
+})'>
 
     <!-- Action Header -->
     <div class="mb-8 lg:flex lg:justify-end gap-4 font-mono">

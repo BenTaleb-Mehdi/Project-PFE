@@ -3,59 +3,9 @@
 @section('title', 'Biometric Sync')
 
 @section('content')
-<div x-data="evolutionSync" class="max-w-4xl mx-auto relative">
-    
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('evolutionSync', () => ({
-                syncModalOpen: false, 
-                selectedSync: null,
-                previewPhotos: [],
-                searchQuery: '',
-                filterOption: 'latest',
-                history: @json($history),
-                
-                get filteredHistory() {
-                    let filtered = [...this.history];
-                    
-                    // Search Filter
-                    if(this.searchQuery) {
-                        const query = this.searchQuery.toLowerCase();
-                        filtered = filtered.filter(item => 
-                            item.weight.toString().includes(query) || 
-                            this.formatDate(item.recorded_at).toLowerCase().includes(query)
-                        );
-                    }
-                    
-                    // Sort Filter
-                    if(this.filterOption === 'latest') filtered.sort((a,b) => new Date(b.recorded_at) - new Date(a.recorded_at));
-                    if(this.filterOption === 'oldest') filtered.sort((a,b) => new Date(a.recorded_at) - new Date(b.recorded_at));
-                    if(this.filterOption === 'heaviest') filtered.sort((a,b) => b.weight - a.weight);
-                    if(this.filterOption === 'lightest') filtered.sort((a,b) => a.weight - b.weight);
-                    if(this.filterOption === 'photos') filtered = filtered.filter(item => item.images && item.images.length > 0);
-                    
-                    return filtered;
-                },
-                
-                formatDate(dateStr) {
-                    if(!dateStr) return '';
-                    const date = new Date(dateStr);
-                    return date.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
-                },
-                handleFileChange(e) {
-                    this.previewPhotos = [];
-                    const files = e.target.files;
-                    for (let i = 0; i < files.length; i++) {
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            this.previewPhotos.push(event.target.result);
-                        };
-                        reader.readAsDataURL(files[i]);
-                    }
-                }
-            }));
-        });
-    </script>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div x-data='evolutionSync({ history: @json($history) })' class="max-w-4xl mx-auto relative">
     
     <!-- Background Accents -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
@@ -75,6 +25,23 @@
             Module: Physical Trace Capture // V3.0 PRO SYNC
         </p>
     </header>
+    
+    <!-- Progression Analytics -->
+    <div class="mb-12 ag-card p-10 bg-white relative overflow-hidden group shadow-sm">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h4 class="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-zinc-900">Bio-Metric Analytics</h4>
+                <p class="text-[8px] font-mono text-zinc-400 uppercase mt-1">Real-time Mass Trajectory</p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="h-2 w-2 rounded-full bg-cyan-600 animate-pulse"></span>
+                <span class="text-[8px] font-mono font-bold text-zinc-900 uppercase tracking-widest">Live Sync</span>
+            </div>
+        </div>
+        <div class="h-[250px] w-full">
+            <canvas id="weightChart"></canvas>
+        </div>
+    </div>
 
     <form action="{{ route('client.evolution.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
         @csrf
@@ -94,8 +61,8 @@
                 <!-- Live Previews Overlay -->
                 <div x-show="previewPhotos.length > 0" class="absolute bottom-6 left-6 right-6 grid grid-cols-5 gap-2 pointer-events-none">
                     <template x-for="photo in previewPhotos">
-                        <div class="aspect-square ag-border overflow-hidden bg-white shadow-md">
-                            <img :src="photo" class="w-full h-full object-cover opacity-80">
+                        <div class="aspect-square ag-border overflow-hidden bg-white shadow-md grayscale hover:grayscale-0 transition-all duration-500">
+                            <img :src="photo" class="w-full h-full object-cover">
                         </div>
                     </template>
                 </div>
@@ -142,16 +109,35 @@
                            class="w-full pl-12 pr-6 py-4 bg-white ag-border text-[10px] font-mono uppercase tracking-widest placeholder:text-zinc-200 focus:ring-1 focus:ring-cyan-600 outline-none shadow-sm transition-all focus:shadow-lg">
                 </div>
                 
-                <select x-model="filterOption" class="bg-white ag-border px-6 py-4 text-[10px] font-mono uppercase tracking-widest outline-none focus:ring-1 focus:ring-cyan-600 shadow-sm cursor-pointer hover:bg-zinc-50 transition-all">
-                    <option value="latest">Sort: Latest Entry</option>
-                    <option value="oldest">Sort: Oldest Entry</option>
-                    <option value="heaviest">Sort: Max Mass</option>
-                    <option value="lightest">Sort: Min Mass</option>
-                    <option value="photos">Filter: Visual Only</option>
-                </select>
+                <!-- Sort / Filter -->
+                <div class="relative w-full md:w-64" x-data="{ filterOpen: false }">
+                    <button @click="filterOpen = !filterOpen" @click.away="filterOpen = false"
+                            class="w-full flex justify-between items-center bg-white border border-zinc-200 px-6 py-4 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors shadow-sm">
+                        <span x-text="'SORT: ' + filterOption.replace('_', ' ')"></span>
+                        <i data-lucide="chevron-down" class="size-3 transition-transform" :class="filterOpen ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="filterOpen" x-cloak
+                         class="absolute top-full left-0 right-0 z-[100] bg-white border border-zinc-200 shadow-[16px_16px_0px_0px_rgba(0,0,0,0.05)] mt-0.5">
+                        <div class="py-1">
+                            <template x-for="opt in [
+                                {v: 'latest', l: 'LATEST ENTRY'},
+                                {v: 'oldest', l: 'OLDEST ENTRY'},
+                                {v: 'heaviest', l: 'MAX MASS'},
+                                {v: 'lightest', l: 'MIN MASS'},
+                                {v: 'photos', l: 'SNAPSHOTS ONLY'}
+                            ]">
+                                <button @click="filterOption = opt.v; filterOpen = false" 
+                                        class="w-full text-left px-6 py-3 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all"
+                                        :class="filterOption === opt.v ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                    <span x-text="opt.l"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="h-12 w-12 bg-zinc-900 text-white hidden sm:flex items-center justify-center shadow-md">
-                    <span class="text-[10px] font-mono font-bold" x-text="filteredHistory.length"></span>
+                <div class="h-[60px] w-[60px] bg-zinc-950 flex items-center justify-center text-white text-sm font-mono font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)]">
+                    <span x-text="filteredHistory.length"></span>
                 </div>
             </div>
         </div>
@@ -344,10 +330,18 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="p-10 bg-zinc-50 border-t border-zinc-100">
+                <div class="p-10 bg-zinc-50 border-t border-zinc-100 flex gap-4">
+                    <form :action="'{{ route('client.evolution.destroy', ['id' => 'REPLACE_ID']) }}'.replace('REPLACE_ID', selectedSync?.id)" method="POST" class="flex-1" onsubmit="return confirm('CRITICAL_WARNING: This action will purge the biometric log. Proceed?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" 
+                                class="w-full py-6 bg-white border border-red-100 text-red-600 text-[11px] font-mono font-bold uppercase tracking-[0.3em] hover:bg-red-50 transition-all duration-300 shadow-sm active:scale-[0.98]">
+                            Purge Log Node
+                        </button>
+                    </form>
                     <button @click="syncModalOpen = false" 
-                            class="w-full py-6 bg-zinc-950 text-white text-[12px] font-mono font-bold uppercase tracking-[0.4em] hover:bg-black transition-all hover:tracking-[0.6em] duration-700 shadow-[16px_16px_0px_0px_rgba(0,0,0,0.05)] active:scale-[0.98]">
-                        Terminate Visual Log Node
+                            class="flex-[2] py-6 bg-zinc-950 text-white text-[12px] font-mono font-bold uppercase tracking-[0.4em] hover:bg-black transition-all hover:tracking-[0.6em] duration-700 shadow-[16px_16px_0px_0px_rgba(0,0,0,0.05)] active:scale-[0.98]">
+                        Close Analysis
                     </button>
                 </div>
             </div>
