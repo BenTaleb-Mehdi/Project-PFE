@@ -602,6 +602,12 @@
          class="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm"
          x-cloak>
         <div @click.outside="showDeleteModal = false" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-2"
              class="bg-white w-full max-w-md shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] border border-zinc-200 relative overflow-hidden">
             
             <!-- Warning Header -->
@@ -648,9 +654,4 @@
     </form>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-    });
-</script>
 @endsection
