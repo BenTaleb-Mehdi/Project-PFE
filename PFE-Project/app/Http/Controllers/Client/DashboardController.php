@@ -55,10 +55,12 @@ class DashboardController extends Controller
      */
     public function history()
     {
-        $allPrograms = $this->programService->getAllPrograms();
+        $client = $this->getClient();
+        $clientId = $client->id;
+        $history = $this->programService->getClientPrograms($clientId);
 
         return view('client.history.index', [
-            'programData' => ['all_programs' => $allPrograms],
+            'programData' => ['all_programs' => $history],
         ]);
     }
 

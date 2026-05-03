@@ -5,59 +5,11 @@
 @section('header_subtitle', 'Pupil Database // Assignment Protocol')
 
 @section('content')
-<div x-data="{ 
-    showAssignModal: false,
-    selectedClient: null,
-    showClientModal: false,
-    isEditing: false,
-    editingClientId: null,
-    newClient: { name: '', email: '', phone_number: '', target_goal: '', current_weight: '', height: '', status: 'active' },
-    
-    // Assignment State
-    protocolOpen: false,
-    protocolSearch: '',
-    protocols: {{ $protocols->map(fn($p) => ['id' => $p->id, 'title' => $p->title])->toJson() }},
-    selectedProtocol: { id: null, title: 'Select Nutrition Protocol' },
-    
-    get filteredProtocols() {
-        if (this.protocolSearch === '') return this.protocols;
-        return this.protocols.filter(p => p.title.toLowerCase().includes(this.protocolSearch.toLowerCase()));
-    },
-    durationWeeks: 12,
-
-    openModal(client = null) {
-        if (client) {
-            this.isEditing = true;
-            this.editingClientId = client.id;
-            this.newClient = { 
-                id: client.id,
-                name: client.user.name, 
-                email: client.user.email, 
-                phone_number: client.phone_number, 
-                target_goal: client.target_goal, 
-                current_weight: client.current_weight, 
-                height: client.height, 
-                status: client.status 
-            };
-        } else {
-            this.isEditing = false;
-            this.editingClientId = null;
-            this.newClient = { name: '', email: '', phone_number: '', target_goal: '', current_weight: '', height: '', status: 'active' };
-        }
-        this.showClientModal = true;
-    },
-
-    isDeleteModalOpen: false,
-    clientToDelete: null,
-    confirmDelete(client) {
-        this.clientToDelete = client;
-        this.isDeleteModalOpen = true;
-    },
-
-    searchQuery: '{{ request('search') }}',
-    filterStatus: '{{ request('status', 'ALL_STATUSES') }}',
-    expandedClientIds: [],
-}">
+<div x-data='clientRegistry({ 
+    protocols: {{ $protocols->map(fn($p) => ["id" => $p->id, "title" => $p->title])->toJson() }},
+    searchQuery: "{{ request("search") }}",
+    filterStatus: "{{ request("status", "ALL_STATUSES") }}"
+})'>
     <!-- Action Bar -->
     <div class="mb-10 lg:flex lg:justify-end font-mono">
         <button @click="openModal()"
@@ -291,11 +243,43 @@
                     </div>
                     <div class="space-y-1">
                         <label class="text-[8px] uppercase text-zinc-400">Status Node</label>
-                        <select name="status" x-model="newClient.status" class="w-full bg-zinc-50 px-4 py-3 text-[10px] border border-zinc-200 outline-none focus:border-cyan-600 uppercase">
-                            <option value="active">ACTIVE</option>
-                            <option value="pending">PENDING</option>
-                            <option value="inactive">INACTIVE</option>
-                        </select>
+                        <div class="relative" x-data="{ open: false }">
+                            <button type="button" @click="open = !open" @click.away="open = false"
+                                    class="w-full flex justify-between items-center bg-zinc-50 border border-zinc-200 px-4 py-3 text-[10px] font-mono uppercase tracking-widest text-zinc-900 focus:border-cyan-600 transition-colors">
+                                <div class="flex items-center gap-2">
+                                    <div class="h-1.5 w-1.5 rounded-full" 
+                                         :class="{
+                                            'bg-emerald-500': newClient.status === 'active',
+                                            'bg-amber-500': newClient.status === 'pending',
+                                            'bg-zinc-400': newClient.status === 'inactive'
+                                         }"></div>
+                                    <span x-text="newClient.status"></span>
+                                </div>
+                                <i data-lucide="chevron-down" class="size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="open" x-cloak
+                                 class="absolute top-full left-0 right-0 z-[110] bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] mt-1">
+                                <div class="py-1">
+                                    <template x-for="opt in ['active', 'pending', 'inactive']">
+                                        <button type="button" @click="newClient.status = opt; open = false" 
+                                                class="w-full text-left px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-l-cyan-600 hover:text-cyan-600 transition-all flex items-center justify-between"
+                                                :class="newClient.status === opt ? 'bg-zinc-50 text-cyan-600 border-l-cyan-600' : 'text-zinc-500'">
+                                            <div class="flex items-center gap-2">
+                                                <div class="h-1 w-1 rounded-full" 
+                                                     :class="{
+                                                        'bg-emerald-500': opt === 'active',
+                                                        'bg-amber-500': opt === 'pending',
+                                                        'bg-zinc-400': opt === 'inactive'
+                                                     }"></div>
+                                                <span x-text="opt"></span>
+                                            </div>
+                                            <i data-lucide="check" class="size-2.5" x-show="newClient.status === opt"></i>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                            <input type="hidden" name="status" :value="newClient.status">
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="w-full py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">

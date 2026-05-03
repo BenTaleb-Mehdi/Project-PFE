@@ -37,4 +37,23 @@ class Client extends Model
     {
         return $this->belongsTo(Program::class);
     }
+
+    /**
+     * Get the program deadline date.
+     */
+    public function getDeadlineAttribute()
+    {
+        if (!$this->program_started_at) return null;
+        return \Carbon\Carbon::parse($this->program_started_at)->addWeeks($this->duration_weeks ?? 12);
+    }
+
+    /**
+     * Get days remaining until program deadline.
+     */
+    public function getDaysLeftAttribute()
+    {
+        $deadline = $this->deadline;
+        if (!$deadline) return null;
+        return (int) now()->diffInDays($deadline, false);
+    }
 }

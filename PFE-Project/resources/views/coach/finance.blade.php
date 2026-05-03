@@ -5,32 +5,11 @@
 @section('header_subtitle', 'Revenue Control // Transaction Log V3.0')
 
 @section('content')
-<div x-data="{ 
-    isAddPaymentModalOpen: false,
-    searchQuery: '{{ request('search') }}',
-    filterStatus: '{{ request('status', 'ALL_TRANSACTIONS') }}',
-    
-    isEditModalOpen: false,
-    editingTxn: { id: '', date: '', pupil: '', amount: 0, status: 'paid' },
-    isDeleteModalOpen: false,
-    txnToDelete: null,
-
-    openEditModal(txn) {
-        this.editingTxn = {
-            id: txn.id,
-            date: txn.date,
-            client_id: txn.client_id,
-            pupil: txn.client.user.name,
-            amount: txn.amount,
-            status: txn.status
-        };
-        this.isEditModalOpen = true;
-    },
-    confirmDelete(txn) {
-        this.txnToDelete = txn;
-        this.isDeleteModalOpen = true;
-    }
-}">
+<div x-data='financeTracker({ 
+    searchQuery: "{{ request("search") }}",
+    filterStatus: "{{ request("status", "ALL_TRANSACTIONS") }}",
+    pupils: {{ $clients->map(fn($c) => ["id" => $c->id, "name" => $c->user->name])->toJson() }}
+})'>
 
     <!-- Action Header -->
     <div class="mb-8 lg:flex lg:justify-end font-mono">
@@ -147,44 +126,34 @@
             </header>
             <div class="space-y-6">
                 <!-- Pupil Selection -->
-                <div class="space-y-1.5 font-sans relative" x-data="{ 
-                    open: false, 
-                    search: '', 
-                    selected: 'Select_Pupil', 
-                    selectedId: '',
-                    clients: {{ $clients->map(fn($c) => ['id' => $c->id, 'name' => $c->user->name])->toJson() }},
-                    get filteredClients() {
-                        if (this.search === '') return this.clients;
-                        return this.clients.filter(c => c.name.toLowerCase().includes(this.search.toLowerCase()));
-                    }
-                }">
+                <div class="space-y-1.5 font-sans relative">
                     <label class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Select Pupil</label>
-                    <input type="hidden" name="client_id" :value="selectedId">
-                    <button type="button" @click="open = !open" 
+                    <input type="hidden" name="client_id" :value="selectedPupil.id">
+                    <button type="button" @click="pupilOpen = !pupilOpen" 
                             class="w-full flex justify-between items-center text-[10px] p-3 bg-zinc-50 border border-zinc-200 uppercase font-sans text-cyan-700">
-                        <span x-text="selected"></span>
-                        <i data-lucide="chevron-down" class="size-4" :class="open ? 'rotate-180' : ''"></i>
+                        <span x-text="selectedPupil.name"></span>
+                        <i data-lucide="chevron-down" class="size-4" :class="pupilOpen ? 'rotate-180' : ''"></i>
                     </button>
                     
-                    <div x-show="open" @click.away="open = false" x-cloak
+                    <div x-show="pupilOpen" @click.away="pupilOpen = false" x-cloak
                          class="absolute z-[120] left-0 right-0 mt-1 bg-white border border-zinc-200 shadow-xl max-h-64 overflow-hidden flex flex-col uppercase font-mono">
                         <!-- Search Box -->
                         <div class="p-3 bg-white border-b border-zinc-200 flex items-center gap-x-2 focus-within:bg-zinc-50/50 transition-all">
                             <i data-lucide="search" class="size-3 text-zinc-400"></i>
-                            <input type="text" x-model="search" placeholder="Type to filter..." 
+                            <input type="text" x-model="pupilSearch" placeholder="Type to filter..." 
                                    class="w-full bg-transparent border-none focus:ring-0 text-[10px] uppercase font-mono placeholder:text-zinc-300 p-0">
                         </div>
                         
                         <!-- List -->
                         <div class="overflow-y-auto max-h-48 divide-y divide-zinc-50">
-                            <template x-for="client in filteredClients" :key="client.id">
-                                <div @click="selected = client.name; selectedId = client.id; open = false; search = ''" 
+                            <template x-for="client in filteredPupils" :key="client.id">
+                                <div @click="selectedPupil = { id: client.id, name: client.name }; pupilOpen = false; pupilSearch = ''" 
                                      class="px-4 py-3 text-[10px] hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer border-l-2 border-transparent hover:border-cyan-600 transition-all text-zinc-500 font-bold flex justify-between items-center">
                                     <span x-text="client.name"></span>
                                     <span class="text-[8px] opacity-30" x-text="'#' + client.id"></span>
                                 </div>
                             </template>
-                            <div x-show="filteredClients.length === 0" class="p-8 text-center text-[8px] text-zinc-400 italic">
+                            <div x-show="filteredPupils.length === 0" class="p-8 text-center text-[8px] text-zinc-400 italic">
                                 Search Mismatch // No Pupil Found
                             </div>
                         </div>

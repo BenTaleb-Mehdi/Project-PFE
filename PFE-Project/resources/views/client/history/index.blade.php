@@ -154,15 +154,15 @@
                                             <div class="grid grid-cols-3 gap-4">
                                                 <div class="ag-card bg-white p-4 border border-zinc-200 text-center hover:border-emerald-200 transition-colors">
                                                     <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-1">Protein</p>
-                                                    <p class="text-xl font-mono font-bold text-emerald-600">{{ $totalP }}<span class="text-[8px] ml-0.5">G</span></p>
+                                                    <p class="text-xl font-mono font-bold text-cyan-700">{{ $totalP }}<span class="text-[8px] ml-0.5">G</span></p>
                                                 </div>
                                                 <div class="ag-card bg-white p-4 border border-zinc-200 text-center hover:border-cyan-200 transition-colors">
                                                     <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-1">Carbs</p>
-                                                    <p class="text-xl font-mono font-bold text-cyan-600">{{ $totalC }}<span class="text-[8px] ml-0.5">G</span></p>
+                                                    <p class="text-xl font-mono font-bold text-cyan-700">{{ $totalC }}<span class="text-[8px] ml-0.5">G</span></p>
                                                 </div>
                                                 <div class="ag-card bg-white p-4 border border-zinc-200 text-center hover:border-orange-200 transition-colors">
                                                     <p class="text-[8px] text-zinc-400 uppercase tracking-widest mb-1">Fats</p>
-                                                    <p class="text-xl font-mono font-bold text-orange-500">{{ $totalF }}<span class="text-[8px] ml-0.5">G</span></p>
+                                                    <p class="text-xl font-mono font-bold text-cyan-700">{{ $totalF }}<span class="text-[8px] ml-0.5">G</span></p>
                                                 </div>
                                             </div>
 
@@ -172,10 +172,10 @@
                                                         <div class="h-1.5 w-1.5 bg-emerald-500"></div>
                                                         <span class="text-[9px] font-bold text-zinc-900 uppercase tracking-widest">Protocol Efficiency</span>
                                                     </div>
-                                                    <span class="text-[10px] font-mono font-bold text-emerald-600">92%</span>
+                                                    <span class="text-[10px] font-mono font-bold text-cyan-700">92%</span>
                                                 </div>
                                                 <div class="w-full h-1.5 bg-zinc-100 overflow-hidden">
-                                                    <div class="h-full bg-emerald-500" style="width: 92%"></div>
+                                                    <div class="h-full bg-cyan-700" style="width: 92%"></div>
                                                 </div>
                                                 <p class="text-[7px] text-zinc-400 uppercase mt-3 font-mono">Archive Ref: AG-HIS-{{ $program->id }}-B</p>
                                             </div>

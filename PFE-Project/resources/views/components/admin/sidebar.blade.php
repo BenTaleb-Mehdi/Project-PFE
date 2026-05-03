@@ -15,8 +15,8 @@
     </div>
 
     <div class="p-6">
-        <div class="flex items-center mb-12">
-            <img src="{{ asset('images/logo.png') }}" alt="Coach Logo" class="h-14 w-auto object-contain">
+        <div class="flex items-center mb-10">
+            <x-logo />
         </div>
 
         <nav class="hs-accordion-group p-0 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
@@ -86,6 +86,14 @@
                     </div>
                 </li>
                 @endrole
+
+                <li class="pt-4 border-t border-zinc-100 mt-4">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold {{ request()->routeIs('profile.settings') ? 'text-cyan-700 border-l-2 border-cyan-600 bg-cyan-50' : 'text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans' }}" 
+                       href="{{ route('profile.settings') }}">
+                        <i data-lucide="settings" class="size-3.5"></i>
+                        Settings
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

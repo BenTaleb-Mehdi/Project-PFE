@@ -5,169 +5,12 @@
 @section('header_subtitle', 'Protocol Sync // Biomass Analysis')
 
 @section('content')
-<div x-data='{ 
-    activeTab: "meals",
+<div x-data='coachHub({ 
     meals: @json($meals),
-    // Meal Creator Matrix
-    p: 30, c: 20, f: 10,
-    get kcal() { return (this.p * 4) + (this.c * 4) + (this.f * 9) },
-    get totalMacros() { return this.p + this.c + this.f || 1 },
-    get pPct() { return (this.p / this.totalMacros) * 100 },
-    get cPct() { return (this.c / this.totalMacros) * 100 },
-    get fPct() { return (this.f / this.totalMacros) * 100 },
-    
-    // UI State
-    programView: "list",
-    mealSearch: "{{ request("meal_search") }}",
-    mealCategory: "ALL_CATEGORIES",
-    programSearch: "{{ request("program_search") }}",
-    
-    // Pagination
-    mealPage: 1,
-    mealsPerPage: 5,
-    
-    get filteredMeals() {
-        return this.meals.filter(m => {
-            const matchesSearch = !this.mealSearch || m.name.toLowerCase().includes(this.mealSearch.toLowerCase());
-            const matchesCategory = this.mealCategory === "ALL_CATEGORIES" || (m.category && m.category.name === this.mealCategory);
-            return matchesSearch && matchesCategory;
-        });
-    },
-    
-    get paginatedMeals() {
-        let start = (this.mealPage - 1) * this.mealsPerPage;
-        return this.filteredMeals.slice(start, start + this.mealsPerPage);
-    },
-    
-    get mealTotalPages() {
-        return Math.ceil(this.filteredMeals.length / this.mealsPerPage) || 1;
-    },
-    
-    // Program Builder State
-    isEditing: false,
-    editingProgramId: null,
-    currentProtocolTitle: "",
-    protocolItems: [], // { slot_id, meal_id }
-    
-    resetProtocol() {
-        this.currentProtocolTitle = "";
-        this.protocolItems = [];
-        this.isEditing = false;
-        this.programView = "create";
-    },
-
-    editProgram(p) {
-        this.editingProgramId = p.id;
-        this.currentProtocolTitle = p.title;
-        // Map existing items
-        this.protocolItems = (p.items || []).map(i => ({
-            slot: i.time_slot,
-            meal_id: i.meal_id
-        }));
-        this.isEditing = true;
-        this.programView = "create";
-    },
-
-    setMeal(slot, mealId) {
-        let index = this.protocolItems.findIndex(i => i.slot === slot);
-        if (index !== -1) {
-            this.protocolItems[index].meal_id = mealId;
-        } else {
-            this.protocolItems.push({ slot: slot, meal_id: mealId });
-        }
-    },
-
-    getMealName(slot) {
-        let item = this.protocolItems.find(i => i.slot === slot);
-        if (!item) return "Select Meal";
-        let m = this.meals.find(m => m.id == item.meal_id);
-        return m ? m.name : "Unknown Meal";
-    },
-
-    // Detailed View State
-    showDetailsModal: false,
-    detailedProtocol: null,
-    openDetails(p) {
-        this.detailedProtocol = p;
-        this.showDetailsModal = true;
-    },
-    
-    // Meal Intelligence State
-    showMealModal: false,
-    detailedMeal: null,
-    openMealDetails(m) {
-        this.detailedMeal = m;
-        this.showMealModal = true;
-    },
-    getDetailedStats() {
-        if (!this.detailedProtocol) return { p: 0, c: 0, f: 0, k: 0 };
-        return this.detailedProtocol.items.reduce((acc, item) => {
-            if (item.meal) {
-                acc.p += parseFloat(item.meal.protein);
-                acc.c += parseFloat(item.meal.carbs);
-                acc.f += parseFloat(item.meal.fats);
-                acc.k += parseFloat(item.meal.calories);
-            }
-            return acc;
-        }, { p: 0, c: 0, f: 0, k: 0 });
-    },
-
-    // Rich Text State
-    detailsHTML: "",
-    showLinkModal: false,
-    showImageModal: false,
-    savedRange: null,
-    linkUrl: "",
-    imageUrl: "",
-
-    saveSelection() {
-        const sel = window.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            this.savedRange = sel.getRangeAt(0);
-        }
-    },
-
-    restoreSelection() {
-        if (this.savedRange) {
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(this.savedRange);
-        }
-    },
-
-    insertLink() {
-        this.restoreSelection();
-        if (this.linkUrl) {
-            document.execCommand("createLink", false, this.linkUrl);
-        }
-        this.showLinkModal = false;
-        this.linkUrl = "";
-    },
-
-    insertImage(url) {
-        this.restoreSelection();
-        if (url) {
-            document.execCommand("insertImage", false, url);
-        }
-        this.showImageModal = false;
-        this.imageUrl = "";
-    },
-
-    handleImageUpload(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            this.insertImage(event.target.result);
-        };
-        reader.readAsDataURL(file);
-    },
-    
-    renderInstructions(html) {
-        if (!html) return "";
-        return html;
-    }
-}'>
+    programs: @json($programs),
+    mealSearch: "{{ request("meal_search") }}", 
+    programSearch: "{{ request("program_search") }}" 
+})'>
     <!-- Tabs Header (Maquette Spec) -->
     <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6 font-sans border-b border-zinc-100 pb-4">
         <div class="flex space-x-8">
@@ -576,11 +419,45 @@
         <!-- List View -->
         <div x-show="programView === 'list'" class="ag-card bg-white overflow-hidden shadow-sm">
             <div class="px-6 py-4 border-b border-zinc-100 bg-zinc-50 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-                <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Protocol Registry Control</h3>
-                <div class="relative w-full md:w-80">
-                    <input type="text" x-model="programSearch" placeholder="Filter Protocols..." 
-                           class="w-full bg-white border border-zinc-200 px-10 py-2.5 text-[10px] uppercase font-mono tracking-widest focus:outline-none focus:border-cyan-600 rounded-none">
-                    <i data-lucide="search" class="absolute left-3.5 top-3 size-3.5 text-zinc-400"></i>
+                <div class="flex items-center gap-x-3">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Protocol Registry Control</h3>
+                    <span class="text-[8px] bg-cyan-100 text-cyan-700 font-mono px-2 py-0.5" x-text="'COUNT: ' + filteredPrograms.length"></span>
+                </div>
+                <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+                    <!-- Live Search -->
+                    <div class="relative w-full md:w-80">
+                        <input type="text" x-model="programSearch" placeholder="Filter Protocols..." 
+                               class="w-full bg-white border border-zinc-200 px-10 py-2.5 text-[10px] uppercase font-mono tracking-widest focus:outline-none focus:border-cyan-600 rounded-none">
+                        <i data-lucide="search" class="absolute left-3.5 top-3 size-3.5 text-zinc-400"></i>
+                    </div>
+                    
+                    <!-- Status Filter -->
+                    <div class="relative w-full md:w-48" x-data="{ open: false }">
+                        <button @click="open = !open" 
+                                class="w-full bg-white border border-zinc-200 px-4 py-2.5 text-[10px] uppercase font-mono tracking-widest flex items-center justify-between focus:outline-none focus:border-cyan-600 rounded-none transition-all">
+                            <span x-text="programFilter === 'ALL_PROTOCOLS' ? 'ALL_STATUSES' : programFilter"></span>
+                            <i data-lucide="filter" class="size-3 text-zinc-400"></i>
+                        </button>
+                        <div x-show="open" @click.outside="open = false" 
+                             class="absolute left-0 mt-1 w-full bg-white border border-zinc-200 z-[110] shadow-xl">
+                            <div @click="programFilter = 'ALL_PROTOCOLS'; open = false" 
+                                 class="px-4 py-2.5 text-[8px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer transition-all border-l-2 border-transparent hover:border-cyan-600">
+                                ALL STATUSES
+                            </div>
+                            <div @click="programFilter = 'ACTIVE'; open = false" 
+                                 class="px-4 py-2.5 text-[8px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer transition-all border-l-2 border-transparent hover:border-cyan-600">
+                                ACTIVE (LINKED)
+                            </div>
+                            <div @click="programFilter = 'UNUSED'; open = false" 
+                                 class="px-4 py-2.5 text-[8px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer transition-all border-l-2 border-transparent hover:border-cyan-600">
+                                UNUSED (DORMANT)
+                            </div>
+                            <div @click="programFilter = 'HIGH_DENSITY'; open = false" 
+                                 class="px-4 py-2.5 text-[8px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer transition-all border-l-2 border-transparent hover:border-cyan-600">
+                                HIGH DENSITY (5+ MEALS)
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -590,40 +467,49 @@
                         <tr>
                             <th class="px-8 py-5">Protocol Matrix Identity</th>
                             <th class="px-8 py-5">Meal Slots</th>
+                            <th class="px-8 py-5 text-center">Associated Clients</th>
                             <th class="px-8 py-5">Date Modified</th>
                             <th class="px-8 py-5 text-right">Action Nodes</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-zinc-50 uppercase">
-                        @forelse($programs as $program)
+                        <template x-for="program in filteredPrograms" :key="program.id">
                             <tr class="hover:bg-cyan-50/20 transition-colors group">
                                 <td class="px-8 py-5">
                                     <div class="flex items-center gap-x-3">
                                         <div class="h-1.5 w-1.5 bg-cyan-600"></div>
-                                        <span class="font-bold text-zinc-950 group-hover:text-cyan-700 transition-colors">{{ $program->title }}</span>
+                                        <span class="font-bold text-zinc-950 group-hover:text-cyan-700 transition-colors" x-text="program.title"></span>
                                     </div>
                                 </td>
-                                <td class="px-8 py-5 text-zinc-500 font-mono">{{ $program->items_count }} Units</td>
-                                <td class="px-8 py-5 text-zinc-400 font-mono">{{ $program->updated_at?->format('Y-m-d') ?? 'N/A' }}</td>
+                                <td class="px-8 py-5 text-zinc-500 font-mono" x-text="program.items_count + ' Units'"></td>
+                                <td class="px-8 py-5 text-center">
+                                    <span class="text-[10px] bg-zinc-100 text-zinc-950 font-mono px-3 py-1 rounded-sm font-bold border border-zinc-200" x-text="program.clients_count + ' ACTIVE'"></span>
+                                </td>
+                                <td class="px-8 py-5 text-zinc-400 font-mono" x-text="program.updated_at ? program.updated_at.split('T')[0] : 'N/A'"></td>
                                  <td class="px-8 py-5 text-right">
                                     <div class="flex justify-end gap-x-6">
-                                        <button @click="openDetails({{ json_encode($program) }})" class="text-zinc-400 hover:text-cyan-600 transition-all" title="View Intelligence Report"><i data-lucide="layout-list" class="size-3.5"></i></button>
-                                        <button @click="editProgram({{ json_encode($program->load('items')) }})" class="text-zinc-400 hover:text-cyan-600 transition-all"><i data-lucide="terminal" class="size-3.5"></i></button>
-                                        <form action="{{ route('coach.nutrition.programs.destroy', $program->id) }}" method="POST" onsubmit="return confirm('Nodes Purge Confirm?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-zinc-300 hover:text-red-500 transition-all"><i data-lucide="zap-off" class="size-3.5"></i></button>
-                                        </form>
+                                        <button @click="openDetails(program)" class="text-zinc-400 hover:text-cyan-600 transition-all" title="View Intelligence Report"><i data-lucide="layout-list" class="size-3.5"></i></button>
+                                        <button @click="editProgram(program)" class="text-zinc-400 hover:text-cyan-600 transition-all"><i data-lucide="terminal" class="size-3.5"></i></button>
+                                        <button @click="openDeleteModal(program)" class="text-zinc-300 hover:text-red-500 transition-all">
+                                             <i data-lucide="zap-off" class="size-3.5"></i>
+                                         </button>
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="px-8 py-20 text-center text-zinc-300 uppercase tracking-[0.3em] text-[8px]">
-                                    NODES_NULL // NO_DATA_DETECTED
-                                </td>
-                            </tr>
-                        @endforelse
+                        </template>
+
+                        <tr x-show="filteredPrograms.length === 0">
+                            <td colspan="5" class="px-8 py-20 text-center">
+                                <div class="flex flex-col items-center gap-3">
+                                    <i data-lucide="search-x" class="size-8 text-zinc-200"></i>
+                                    <p class="text-[8px] text-zinc-300 uppercase tracking-[0.4em] font-mono">NODES_NULL // NO_MATCH_DETECTED</p>
+                                    <button @click="programSearch = ''; programFilter = 'ALL_PROTOCOLS'" 
+                                            class="text-[8px] text-cyan-600 uppercase font-mono tracking-widest hover:text-cyan-800 transition-colors">
+                                        Reset Filters
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -638,6 +524,8 @@
                 <div class="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                     <i data-lucide="cpu" class="size-32"></i>
                 </div>
+
+                <input type="hidden" name="id" :value="editingProgramId">
 
                 <div class="flex items-center justify-between mb-12 border-b border-zinc-100 pb-6">
                     <div>
@@ -702,6 +590,62 @@
 
     <!-- Externalized Print Modals -->
     @include('coach.nutrition.partials.pdf_styles')
+
+    <!-- Delete Confirmation Modal -->
+    <div x-show="showDeleteModal" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm"
+         x-cloak>
+        <div @click.outside="showDeleteModal = false" 
+             class="bg-white w-full max-w-md shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] border border-zinc-200 relative overflow-hidden">
+            
+            <!-- Warning Header -->
+            <div class="h-1 bg-red-500 w-full"></div>
+            
+            <div class="p-8">
+                <div class="flex items-center gap-x-4 mb-6">
+                    <div class="size-12 bg-red-50 flex items-center justify-center rounded-none border border-red-100">
+                        <i data-lucide="alert-triangle" class="size-6 text-red-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-950">Confirm Node Purge</h4>
+                        <p class="text-[8px] text-red-600 font-mono uppercase tracking-widest mt-1">Destructive Action // Irreversible</p>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-50 border border-zinc-100 p-6 mb-8">
+                    <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-2 font-mono">Target Protocol Identity:</p>
+                    <p class="text-xs font-bold text-zinc-950 uppercase tracking-widest font-mono" x-text="programToDelete?.title || 'Unknown Protocol'"></p>
+                </div>
+
+                <p class="text-[10px] text-zinc-500 leading-relaxed mb-8 font-sans">
+                    Warning: You are about to purge this protocol from the master registry. This action will remove all associated matrix data. Confirm system override?
+                </p>
+
+                <div class="flex gap-x-4">
+                    <button @click="showDeleteModal = false" 
+                            class="flex-1 px-6 py-4 border border-zinc-200 text-zinc-400 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-50 transition-all">
+                        Abort Purge
+                    </button>
+                    <button @click="executeDelete()" 
+                            class="flex-1 px-6 py-4 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[4px_4px_0px_0px_rgba(220,38,38,0.2)]">
+                        Confirm Purge
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Delete Form -->
+    <form x-ref="deleteForm" method="POST" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form>
 </div>
 
 <script>
