@@ -116,9 +116,23 @@
 
     <!-- Modals -->
     <!-- Add Payment Modal -->
-    <div x-show="isAddPaymentModalOpen" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div @click="isAddPaymentModalOpen = false" class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm"></div>
-        <form action="{{ route('coach.finance.store') }}" method="POST" class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] p-8 font-mono">
+    <div x-show="isAddPaymentModalOpen" x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/30 backdrop-blur-sm">
+        <form action="{{ route('coach.finance.store') }}" method="POST"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+              x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+              x-transition:leave-end="opacity-0 translate-y-2"
+              @click.outside="isAddPaymentModalOpen = false"
+              class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono">
             @csrf
             <header class="mb-8 font-sans">
                 <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Add New Transaction</h2>
@@ -197,9 +211,23 @@
     </div>
 
     <!-- Edit Transaction Modal -->
-    <div x-show="isEditModalOpen" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div @click="isEditModalOpen = false" class="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm"></div>
-        <form :action="'{{ route('coach.finance') }}/' + editingTxn.id" method="POST" class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] p-8 font-mono">
+    <div x-show="isEditModalOpen" x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/30 backdrop-blur-sm">
+        <form :action="'{{ route('coach.finance') }}/' + editingTxn.id" method="POST"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+              x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+              x-transition:leave-end="opacity-0 translate-y-2"
+              @click.outside="isEditModalOpen = false"
+              class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono">
             @csrf
             @method('PUT')
             <header class="mb-8 font-sans">
@@ -246,9 +274,23 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div x-show="isDeleteModalOpen" x-cloak class="fixed inset-0 z-[110] flex items-center justify-center p-4">
-        <div @click="isDeleteModalOpen = false" class="absolute inset-0 bg-zinc-950/20 backdrop-blur-sm"></div>
-        <form :action="'{{ route('coach.finance') }}/' + (txnToDelete ? txnToDelete.id : '')" method="POST" class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-8 font-mono text-zinc-900">
+    <div x-show="isDeleteModalOpen" x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-zinc-950/30 backdrop-blur-sm">
+        <form :action="'{{ route('coach.finance') }}/' + (txnToDelete ? txnToDelete.id : '')" method="POST"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+              x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+              x-transition:leave-end="opacity-0 translate-y-2"
+              @click.outside="isDeleteModalOpen = false"
+              class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono text-zinc-900">
             @csrf
             @method('DELETE')
             <div class="flex items-center space-x-4 mb-6">

@@ -24,6 +24,7 @@
                 <li>
                     <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-xs font-bold {{ request()->routeIs('coach.dashboard') ? 'text-cyan-700 uppercase tracking-widest' : 'text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 focus:outline-none' }}" 
                        href="{{ route('coach.dashboard') }}">
+                        <i data-lucide="layout-dashboard" class="size-4"></i>
                         Dashboard
                     </a>
                 </li>
@@ -31,6 +32,7 @@
                 <li x-data="{ open: {{ request()->is('coach/nutrition*') ? 'true' : 'false' }} }">
                     <button @click="open = !open" 
                             class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold uppercase tracking-widest transition-all focus:outline-none {{ request()->is('coach/nutrition*') ? 'bg-cyan-50 text-cyan-700 border-l-2 border-cyan-600' : 'text-zinc-500 hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600' }}">
+                        <i data-lucide="utensils" class="size-3.5"></i>
                         Nutrition Engine
                         <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                     </button>
@@ -40,12 +42,14 @@
                             <li>
                                 <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold {{ request()->routeIs('coach.nutrition.categories') ? 'text-cyan-600 border-l-2 border-cyan-600' : 'text-zinc-500 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600' }} uppercase tracking-widest transition-all font-sans" 
                                    href="{{ route('coach.nutrition.categories') }}">
+                                    <i data-lucide="layers" class="size-3.5"></i>
                                     Categories
                                 </a>
                             </li>
                             <li>
                                 <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold {{ request()->routeIs('coach.nutrition.index') ? 'text-cyan-600 border-l-2 border-cyan-600' : 'text-zinc-500 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600' }} uppercase tracking-widest transition-all font-sans" 
                                    href="{{ route('coach.nutrition.index') }}">
+                                    <i data-lucide="apple" class="size-3.5"></i>
                                     Nutrition
                                 </a>
                             </li>
@@ -56,6 +60,7 @@
                 <li>
                     <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold {{ request()->routeIs('coach.clients.*') ? 'text-cyan-700 border-l-2 border-cyan-600 bg-cyan-50' : 'text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all font-sans' }}" 
                        href="{{ route('coach.clients.index') }}">
+                        <i data-lucide="users" class="size-3.5"></i>
                         Clients
                     </a>
                 </li>
@@ -64,6 +69,7 @@
                 <li x-data="{ open: {{ request()->is('coach/team*') || request()->is('coach/finance*') ? 'true' : 'false' }} }">
                     <button @click="open = !open" 
                             class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:bg-zinc-50 border-l-2 border-transparent hover:border-cyan-600 transition-all focus:outline-none">
+                        <i data-lucide="shield" class="size-3.5"></i>
                         Strategic Control
                         <i data-lucide="chevron-down" class="ms-auto size-3 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                     </button>
@@ -73,12 +79,14 @@
                             <li>
                                 <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold {{ request()->routeIs('coach.team') ? 'text-cyan-600 border-l-2 border-cyan-600' : 'text-zinc-500 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600' }} uppercase tracking-widest transition-all font-sans" 
                                    href="{{ route('coach.team') }}">
+                                    <i data-lucide="user-cog" class="size-3.5"></i>
                                     Team
                                 </a>
                             </li>
                             <li>
                                 <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-[10px] font-bold {{ request()->routeIs('coach.finance') ? 'text-cyan-600 border-l-2 border-cyan-600' : 'text-zinc-500 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-600' }} uppercase tracking-widest transition-all font-sans" 
                                    href="{{ route('coach.finance') }}">
+                                    <i data-lucide="circle-dollar-sign" class="size-3.5"></i>
                                     Finance
                                 </a>
                             </li>
