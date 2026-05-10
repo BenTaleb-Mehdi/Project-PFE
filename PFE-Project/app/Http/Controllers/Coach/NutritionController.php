@@ -79,10 +79,11 @@ class NutritionController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'items' => 'required|array'
+            'items' => 'required|array',
+            'id' => 'nullable|integer|exists:programs,id'
         ]);
 
-        $this->nutritionService->finalizeProtocol($request->title, $request->items);
+        $this->nutritionService->finalizeProtocol($request->title, $request->items, $request->id);
         return redirect()->back()->with('success', 'PROTOCOL_FINALIZED // Grid_Sync_Complete');
     }
 

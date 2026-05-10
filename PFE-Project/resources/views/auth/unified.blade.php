@@ -9,10 +9,9 @@
 </style>
 
 <div class="min-h-screen flex flex-col md:flex-row"
-     x-data="{
-         loading: false,
-         remember: {{ old('remember') ? 'true' : 'false' }}
-     }">
+     x-data='authController({ 
+         remember: {{ old("remember") ? "true" : "false" }} 
+     })'>
 
     {{-- ================================================================
          LEFT PANEL — Dark Brand Panel
@@ -90,7 +89,7 @@
                 </div>
             @endif
 
-            <form class="space-y-5" method="POST" action="{{ route('login') }}" @submit="loading = true">
+            <form class="space-y-5" method="POST" action="{{ route('login') }}" @submit="submitForm">
                 @csrf
                 <div class="space-y-1.5">
                     <label class="block text-xs font-semibold text-zinc-500 uppercase tracking-widest">Email Address</label>

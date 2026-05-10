@@ -51,6 +51,15 @@ class EvolutionController extends Controller
     }
 
     /**
+     * Remove a specific log entry.
+     */
+    public function destroy(int $id)
+    {
+        $this->evolutionService->deleteEvolution($id);
+        return redirect()->back()->with('success', 'RECORD_PURGED // Sync_Integrity_Maintained');
+    }
+
+    /**
      * Internal helper to get client context.
      */
     private function getClient()
