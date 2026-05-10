@@ -15,12 +15,19 @@ class NutritionService {
         return Meal::create($data);
     }
 
-    public function finalizeProtocol(string $name, array $items) {
-        return DB::transaction(function () use ($name, $items) {
+    public function finalizeProtocol(string $name, array $items, $id = null) {
+        return DB::transaction(function () use ($name, $items, $id) {
             $user = auth()->user();
             $staffId = $user->staff->id ?? 1; // Dev_Mode_Fallback // Use Staff_1
 
-            $program = Program::create(['title' => $name, 'created_by_staff_id' => $staffId]);
+            if ($id) {
+                $program = Program::findOrFail($id);
+                $program->update(['title' => $name]);
+                // Clear existing items for re-sync
+                $program->items()->delete();
+            } else {
+                $program = Program::create(['title' => $name, 'created_by_staff_id' => $staffId]);
+            }
             
             foreach ($items as $item) {
                 // V3_Integrity_Node // Skip empty slots to prevent data-sync failures
@@ -60,7 +67,7 @@ class NutritionService {
      */
     public function getPrograms($search = null)
     {
-        $query = Program::with(['items.meal.category'])->withCount('items');
+        $query = Program::with(['items.meal.category'])->withCount(['items', 'clients']);
 
         if ($search) {
             $query->where('title', 'like', "%$search%");

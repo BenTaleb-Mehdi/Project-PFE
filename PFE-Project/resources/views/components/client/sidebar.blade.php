@@ -7,11 +7,7 @@
 
     <!-- Logo Block -->
     <div class="p-6 border-b border-zinc-100">
-        <div class="flex items-center gap-x-2">
-            <div class="h-5 w-5 bg-zinc-950"></div>
-            <span class="font-mono text-xs font-bold tracking-widest uppercase text-zinc-900">Coach Portal</span>
-        </div>
-        <p class="font-mono text-[8px] text-cyan-600 uppercase tracking-[0.3em] mt-1">Pupil Access V3.0</p>
+        <x-logo />
     </div>
 
     <!-- Navigation -->
@@ -48,6 +44,17 @@
             <i data-lucide="archive" class="size-3.5 flex-shrink-0"></i>
             Program History
         </a>
+
+        <div class="pt-4 mt-4 border-t border-zinc-100">
+            <a href="{{ route('profile.settings') }}"
+               class="flex items-center gap-x-3 px-3 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-all
+                      {{ request()->routeIs('profile.settings')
+                         ? 'bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600'
+                         : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 border-r-2 border-transparent hover:border-cyan-600' }}">
+                <i data-lucide="settings" class="size-3.5 flex-shrink-0"></i>
+                Settings
+            </a>
+        </div>
     </nav>
 
     <!-- Pupil Identity Footer -->
