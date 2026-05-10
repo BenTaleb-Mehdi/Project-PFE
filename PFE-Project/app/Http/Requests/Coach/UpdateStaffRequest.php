@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Requests\Coach;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateStaffRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        $staffId = $this->route('team'); // Assuming the route parameter is 'team'
+        $staff = \App\Models\Staff::find($staffId);
+        $userId = $staff ? $staff->user_id : null;
+
+        return [
+            'name'          => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $userId],
+            'specialties'   => ['required', 'array'],
+            'specialties.*' => ['exists:specialties,id'],
+            'phone_number'  => ['nullable', 'string', 'max:20'],
+            'status'        => ['required', 'string', 'in:active,inactive'],
+            'bio'           => ['nullable', 'string', 'max:1000'],
+        ];
+    }
+}

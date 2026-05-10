@@ -20,11 +20,21 @@ class NutritionController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        ini_set('memory_limit', '512M'); // V3_Safety_Node // Support High-Capacity Protocols
         $categories = $this->categoryService->getSequenceSlots();
-        // Assuming we'll need programs later, but for now just categories for the meal creator
-        return view('coach.nutrition.index', compact('categories'));
+        
+        $meals = $this->nutritionService->getMeals(
+            $request->meal_search, 
+            $request->meal_category ?? 'ALL_CATEGORIES'
+        );
+        
+        $programs = $this->nutritionService->getPrograms(
+            $request->program_search
+        );
+        
+        return view('coach.nutrition.index', compact('categories', 'meals', 'programs'));
     }
 
     public function categories()
@@ -62,5 +72,24 @@ class NutritionController extends Controller
     {
         $this->nutritionService->registerMeal($request->validated());
         return redirect()->back()->with('success', 'MEAL_CATALOGUED // Bio_Data_Active');
+    }
+
+    /* Program Actions */
+    public function storeProgram(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'items' => 'required|array',
+            'id' => 'nullable|integer|exists:programs,id'
+        ]);
+
+        $this->nutritionService->finalizeProtocol($request->title, $request->items, $request->id);
+        return redirect()->back()->with('success', 'PROTOCOL_FINALIZED // Grid_Sync_Complete');
+    }
+
+    public function destroyProgram($id)
+    {
+        \App\Models\Program::destroy($id);
+        return redirect()->back()->with('success', 'PROTOCOL_PURGED // Node_Removed');
     }
 }

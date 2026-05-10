@@ -51,9 +51,8 @@
                 </div>
             </section>
 
-            {{-- Stats Grid --}}
+            {{-- Stats Grid 1 --}}
             <section class="grid grid-cols-2 gap-4">
-
                 {{-- Weight --}}
                 <div class="bg-white border border-zinc-100 p-5 shadow-sm rounded-xl">
                     <div class="flex justify-between items-start mb-4">
@@ -70,6 +69,35 @@
                     </p>
                 </div>
 
+                {{-- Streak --}}
+                <div class="bg-white border border-zinc-100 p-5 shadow-sm rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-[8px] text-zinc-400 font-bold uppercase tracking-widest">Master Streak</span>
+                        <x-lucide-flame class="h-3 w-3 text-orange-500" />
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-2xl font-bold text-zinc-900 tracking-tight" x-text="metrics.streak"></span>
+                        <span class="text-[9px] font-bold text-ag-cyan tracking-widest">DAYS</span>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-bold mt-2 uppercase tracking-widest">Continuous Sync</p>
+                </div>
+            </section>
+
+            {{-- Stats Grid 2 --}}
+            <section class="grid grid-cols-2 gap-4">
+                {{-- Adherence --}}
+                <div class="bg-white border border-zinc-100 p-5 shadow-sm rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-[8px] text-zinc-400 font-bold uppercase tracking-widest">Adherence</span>
+                        <x-lucide-check-circle class="h-3 w-3 text-emerald-500" />
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-2xl font-bold text-zinc-900 tracking-tight" x-text="metrics.compliance"></span>
+                        <span class="text-[9px] font-bold text-ag-cyan tracking-widest">%</span>
+                    </div>
+                    <p class="text-[8px] text-zinc-400 font-bold mt-2 uppercase tracking-widest">7_Day_Window</p>
+                </div>
+
                 {{-- Height --}}
                 <div class="bg-white border border-zinc-100 p-5 shadow-sm rounded-xl">
                     <div class="flex justify-between items-start mb-4">
@@ -82,7 +110,6 @@
                     </div>
                     <p class="text-[8px] text-zinc-400 font-bold mt-2 uppercase tracking-widest" x-text="metrics.client_name"></p>
                 </div>
-
             </section>
             
             {{-- Weight Update Pulse --}}

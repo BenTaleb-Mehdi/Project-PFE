@@ -17,4 +17,9 @@ class Program extends Model
     {
         return $this->hasMany(ProgramItem::class);
     }
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
 }

@@ -4,6 +4,7 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 actor "Coach (Achraf)" as Coach
+actor "Application Mobile" as MobileApp
 
 rectangle "Sprint 1: Gestion des Ressources" {
   
@@ -23,11 +24,17 @@ rectangle "Sprint 1: Gestion des Ressources" {
     (AddM) ..> (Cat) : <<include>>
   }
 
+  package "API Rest (Mobile)" {
+    (Consommer les Ressources) as (ConsumeAPI)
+  }
+
   Coach -- (AddC)
   Coach -- (EditC)
   Coach -- (DelC)
   Coach -- (ListC)
   Coach -- (Cat)
   Coach -- (AddM)
+  
+  MobileApp -- (ConsumeAPI)
 }
 @enduml
