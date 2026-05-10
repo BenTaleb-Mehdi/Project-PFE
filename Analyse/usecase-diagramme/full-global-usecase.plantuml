@@ -27,6 +27,10 @@ rectangle "Coach Management System (API)" {
     ViewProg ..> Login : <<include>>
   }
 
+  package "Synchronisation Mobile" {
+    usecase "Synchroniser données biométriques" as SyncBio
+  }
+
   package "Espace Client (Web/Desktop)" {
     usecase "Mettre à jour poids & photos" as UpdateStats
     usecase "Visualiser sa progression détaillée" as ViewProgress
@@ -45,6 +49,10 @@ rectangle "Coach Management System (API)" {
     DesignProgs ..> Login : <<include>>
     ManageCats ..> Login : <<include>>
     DesignProgs ..> CalcMacros : <<include>>
+  }
+
+  package "Neural_Link (AI Automation)" {
+    usecase "Générer du contenu via IA (Chatbot)" as AIContent
   }
 
   package "Administration & Stratégie" {

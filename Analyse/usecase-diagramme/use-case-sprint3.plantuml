@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+' Actors
+actor "Client" as Client
+actor "Co-coach (Staff)" as Staff
+actor "Coach (Admin)" as Admin
+actor "Mobile Application" as MobileApp <<System>>
+
+' Hierarchy
+Staff <|-- Admin
+
+rectangle "Sprint 3 - Intelligence Artificielle & Intégration Mobile" {
+
+  package "Neural_Link (IA Automation)" {
+    usecase "Générer des catégories de repas via IA" as AICat
+    usecase "Automatiser la création de programmes" as AIProg
+  }
+
+  package "Synchronisation Mobile (API)" {
+    usecase "Synchroniser les données biométriques" as SyncBio
+    usecase "Consulter son protocole en temps réel" as ViewProto
+  }
+
+  package "Gestion de Protocoles (Staff/Admin)" {
+    usecase "Assigner un programme à un Client" as AssignProg
+    usecase "Suivre l'évolution du protocole" as TrackProto
+  }
+}
+
+' Relations
+Client -- ViewProto : "(Via App Mobile)"
+Client -- SyncBio : "(Via App Mobile)"
+
+Staff -- AICat
+Staff -- AssignProg
+Staff -- TrackProto
+
+Admin -- AIProg
+
+' Mobile App System
+MobileApp -- ViewProto
+MobileApp -- SyncBio
+
+@enduml
