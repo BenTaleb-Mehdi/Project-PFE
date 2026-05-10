@@ -4,44 +4,40 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 ' Actors
+actor "Visiteur" as Visitor
 actor "Client" as Client
 actor "Co-coach (Staff)" as Staff
 actor "Coach (Admin)" as Admin
-actor "Mobile Application" as MobileApp <<System>>
 
 ' Hierarchy
 Staff <|-- Admin
 
-rectangle "Sprint 3 - Intelligence Artificielle & Intégration Mobile" {
+rectangle "Sprint 3 - IA Automation, Messagerie & Notifications" {
 
-  package "Neural_Link (IA Automation)" {
-    usecase "Générer des catégories de repas via IA" as AICat
-    usecase "Automatiser la création de programmes" as AIProg
+  package "Neural_Link (IA & Chatbot)" {
+    usecase "Créer une catégorie via Chatbot AI" as AICat
+    usecase "Interagir avec le Chatbot d'assistance (Landing Page)" as LPBot
   }
 
-  package "Synchronisation Mobile (API)" {
-    usecase "Synchroniser les données biométriques" as SyncBio
-    usecase "Consulter son protocole en temps réel" as ViewProto
-  }
-
-  package "Gestion de Protocoles (Staff/Admin)" {
-    usecase "Assigner un programme à un Client" as AssignProg
-    usecase "Suivre l'évolution du protocole" as TrackProto
+  package "Communication & Engagement" {
+    usecase "Accéder à l'espace de messagerie (Space Messages)" as MsgSpace
+    usecase "Recevoir des notifications (Messages/Actions)" as Notif
+    usecase "Alerte expiration deadline (Recréer repas)" as DeadlineAlert
   }
 }
 
 ' Relations
-Client -- ViewProto : "(Via App Mobile)"
-Client -- SyncBio : "(Via App Mobile)"
+Visitor -- LPBot
+
+Client -- LPBot
+Client -- MsgSpace
+Client -- Notif
 
 Staff -- AICat
-Staff -- AssignProg
-Staff -- TrackProto
+Staff -- MsgSpace
+Staff -- Notif
+Staff -- DeadlineAlert
 
-Admin -- AIProg
-
-' Mobile App System
-MobileApp -- ViewProto
-MobileApp -- SyncBio
+Admin -- AICat
 
 @enduml
