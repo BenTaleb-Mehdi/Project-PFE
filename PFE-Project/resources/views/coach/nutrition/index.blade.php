@@ -27,7 +27,12 @@
                 Program Manager
             </button>
         </div>
-        <div x-show="activeTab === 'programs'">
+        <div x-show="activeTab === 'programs'" class="flex gap-4">
+            <a href="{{ route('coach.nutrition.programs.export') }}" 
+               class="px-6 py-3 border border-zinc-200 text-zinc-600 text-[10px] uppercase font-bold tracking-widest hover:bg-zinc-50 transition-all font-mono flex items-center gap-x-2">
+                <i data-lucide="download" class="size-3"></i>
+                <span>Export Registry</span>
+            </a>
             <button @click="programView === 'list' ? resetProtocol() : programView = 'list'" 
                     class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] font-mono flex items-center gap-x-2">
                 <i :data-lucide="programView === 'list' ? 'plus' : 'list-ordered'" class="size-3"></i>

@@ -100,6 +100,7 @@
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end space-x-3">
+                                    <a href="{{ route('coach.finance.receipt.download', $txn->id) }}" class="p-2 text-zinc-400 hover:text-cyan-600 transition-colors" title="Download Receipt PDF"><i data-lucide="file-text" class="size-3.5"></i></a>
                                     <button @click="openEditModal({{ json_encode($txn->load('client.user')) }})" class="p-2 text-zinc-400 hover:text-cyan-600 transition-colors"><i data-lucide="edit-3" class="size-3.5"></i></button>
                                     <button @click="confirmDelete({{ json_encode(['id' => $txn->id, 'name' => $txn->client->user->name]) }})" class="p-2 text-zinc-400 hover:text-red-600 transition-colors"><i data-lucide="trash-2" class="size-3.5"></i></button>
                                 </div>

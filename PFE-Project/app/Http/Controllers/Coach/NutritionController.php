@@ -8,6 +8,8 @@ use App\Http\Requests\Coach\StoreCategoryRequest;
 use App\Services\NutritionService;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProgramsExport;
 
 class NutritionController extends Controller
 {
@@ -103,5 +105,10 @@ class NutritionController extends Controller
     {
         \App\Models\Program::destroy($id);
         return redirect()->back()->with('success', 'PROTOCOL_PURGED // Node_Removed');
+    }
+
+    public function exportPrograms()
+    {
+        return Excel::download(new ProgramsExport, 'nutrition_programs_' . date('Y-m-d') . '.xlsx');
     }
 }
