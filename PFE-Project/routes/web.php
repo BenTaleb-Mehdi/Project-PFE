@@ -47,6 +47,8 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
     // Nutrition Hub
     Route::get('/nutrition', [NutritionController::class, 'index'])->name('nutrition.index');
     Route::post('/nutrition/meals', [NutritionController::class, 'storeMeal'])->name('nutrition.meals.store');
+    Route::put('/nutrition/meals/{meal}', [NutritionController::class, 'updateMeal'])->name('nutrition.meals.update');
+    Route::delete('/nutrition/meals/{meal}', [NutritionController::class, 'destroyMeal'])->name('nutrition.meals.destroy');
     
     Route::get('/nutrition/programs', function() { return redirect()->route('coach.nutrition.index'); });
     Route::post('/nutrition/programs', [NutritionController::class, 'storeProgram'])->name('nutrition.programs.store');

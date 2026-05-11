@@ -74,6 +74,18 @@ class NutritionController extends Controller
         return redirect()->back()->with('success', 'MEAL_CATALOGUED // Bio_Data_Active');
     }
 
+    public function updateMeal(StoreMealRequest $request, $id)
+    {
+        $this->nutritionService->updateMeal($id, $request->validated());
+        return redirect()->back()->with('success', 'MEAL_MODIFIED // Update_Live');
+    }
+
+    public function destroyMeal($id)
+    {
+        $this->nutritionService->deleteMeal($id);
+        return redirect()->back()->with('success', 'MEAL_WIPED // Node_Removed');
+    }
+
     /* Program Actions */
     public function storeProgram(Request $request)
     {
