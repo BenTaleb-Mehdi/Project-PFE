@@ -7,6 +7,9 @@ use App\Http\Requests\Coach\StorePaymentRequest;
 use App\Services\FinanceService;
 use App\Services\ClientRegistryService;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentReceiptMail;
 
 class PaymentController extends Controller
 {
@@ -39,8 +42,37 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request)
     {
-        $this->financeService->logPayment($request->validated());
-        return redirect()->route('coach.finance')->with('success', 'PAYMENT_CATALOGUED // Node_Active');
+        $payment = $this->financeService->logPayment($request->validated());
+        
+        // Load relationships for the PDF and Email
+        $payment->load('client.user');
+        
+        // Send Receipt via Email
+        try {
+            Mail::to($payment->client->user->email)->send(new PaymentReceiptMail($payment));
+        } catch (\Exception $e) {
+            // Log error but don't block the UI
+            \Illuminate\Support\Facades\Log::error("RECEIPT_EMAIL_FAILURE // TXN: " . $payment->id . " // Error: " . $e->getMessage());
+        }
+
+        return redirect()->route('coach.finance')->with('success', 'PAYMENT_CATALOGUED // Receipt_Sent');
+    }
+
+    public function downloadReceipt($id)
+    {
+        $payment = \App\Models\Payment::with('client.user')->findOrFail($id);
+        $pdf = Pdf::loadView('pdfs.receipt', compact('payment'));
+        
+        return $pdf->download('receipt_' . $payment->id . '.pdf');
+    }
+
+    public function downloadReceiptSigned($id)
+    {
+        // This route is protected by 'signed' middleware in routes/web.php
+        $payment = \App\Models\Payment::with('client.user')->findOrFail($id);
+        $pdf = Pdf::loadView('pdfs.receipt', compact('payment'));
+        
+        return $pdf->download('receipt_' . $payment->id . '.pdf');
     }
 
     /**

@@ -8,6 +8,8 @@ use App\Http\Requests\Coach\StoreCategoryRequest;
 use App\Services\NutritionService;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProgramsExport;
 
 class NutritionController extends Controller
 {
@@ -74,6 +76,18 @@ class NutritionController extends Controller
         return redirect()->back()->with('success', 'MEAL_CATALOGUED // Bio_Data_Active');
     }
 
+    public function updateMeal(StoreMealRequest $request, $id)
+    {
+        $this->nutritionService->updateMeal($id, $request->validated());
+        return redirect()->back()->with('success', 'MEAL_MODIFIED // Update_Live');
+    }
+
+    public function destroyMeal($id)
+    {
+        $this->nutritionService->deleteMeal($id);
+        return redirect()->back()->with('success', 'MEAL_WIPED // Node_Removed');
+    }
+
     /* Program Actions */
     public function storeProgram(Request $request)
     {
@@ -91,5 +105,10 @@ class NutritionController extends Controller
     {
         \App\Models\Program::destroy($id);
         return redirect()->back()->with('success', 'PROTOCOL_PURGED // Node_Removed');
+    }
+
+    public function exportPrograms()
+    {
+        return Excel::download(new ProgramsExport, 'nutrition_programs_' . date('Y-m-d') . '.xlsx');
     }
 }

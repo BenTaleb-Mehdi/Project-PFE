@@ -77,6 +77,13 @@ export const coachHub = (config) => ({
     editingProgramId: null,
     currentProtocolTitle: "",
     protocolItems: [], // { slot_id, meal_id }
+
+    // Meal Editor State
+    isEditingMeal: false,
+    editingMealId: null,
+    mealName: "",
+    mealCategorySelected: config.firstCategoryName || "Select Category",
+    mealCategorySelectedId: config.firstCategoryId || "",
     
     resetProtocol() {
         this.currentProtocolTitle = "";
@@ -111,6 +118,39 @@ export const coachHub = (config) => ({
         if (!item) return "Select Meal";
         let m = this.meals.find(m => m.id == item.meal_id);
         return m ? m.name : "Unknown Meal";
+    },
+
+    editMeal(m) {
+        this.isEditingMeal = true;
+        this.editingMealId = m.id;
+        this.mealName = m.name;
+        this.mealCategorySelected = m.category ? m.category.name : "Select Category";
+        this.mealCategorySelectedId = m.category_id;
+        this.p = parseFloat(m.protein);
+        this.c = parseFloat(m.carbs);
+        this.f = parseFloat(m.fats);
+        this.detailsHTML = m.details || "";
+        
+        // Ensure editor is updated after state change
+        this.$nextTick(() => {
+            if (this.$refs.editor) {
+                this.$refs.editor.innerHTML = this.detailsHTML;
+            }
+        });
+        
+        // Scroll to form
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    resetMeal() {
+        this.isEditingMeal = false;
+        this.editingMealId = null;
+        this.mealName = "";
+        this.mealCategorySelected = config.firstCategoryName || "Select Category";
+        this.mealCategorySelectedId = config.firstCategoryId || "";
+        this.p = 30; this.c = 20; this.f = 10;
+        this.detailsHTML = "";
+        this.$refs.editor.innerHTML = "";
     },
 
     // Detailed View State
@@ -207,6 +247,20 @@ export const coachHub = (config) => ({
     executeDelete() {
         if (this.programToDelete) {
             this.$refs.deleteForm.action = `/coach/nutrition/programs/${this.programToDelete.id}`;
+            this.$refs.deleteForm.submit();
+        }
+    },
+
+    // Meal Delete State
+    showDeleteMealModal: false,
+    mealToDelete: null,
+    openDeleteMealModal(m) {
+        this.mealToDelete = m;
+        this.showDeleteMealModal = true;
+    },
+    executeDeleteMeal() {
+        if (this.mealToDelete) {
+            this.$refs.deleteForm.action = `/coach/nutrition/meals/${this.mealToDelete.id}`;
             this.$refs.deleteForm.submit();
         }
     }
