@@ -233,7 +233,7 @@
                         <i data-lucide="scroll-text" class="size-4 mr-3 text-cyan-600"></i>
                         Execution Schema
                     </h4>
-                    <p class="text-sm font-mono text-zinc-500 leading-relaxed font-sans" x-text="selectedMeal?.details"></p>
+                    <div class="text-sm font-mono text-zinc-500 leading-relaxed font-sans prose prose-zinc max-w-none" x-html="selectedMeal?.details"></div>
                 </div>
             </div>
 

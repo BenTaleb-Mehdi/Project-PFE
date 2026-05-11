@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", [landingPage::class,"index"])->name("landingpage");
 
+// Public Signed Downloads
+Route::get('/receipts/{id}/download/signed', [App\Http\Controllers\Coach\PaymentController::class, 'downloadReceiptSigned'])
+    ->name('receipts.download.signed')
+    ->middleware('signed');
+
 // Profile Settings (Shared)
 Route::middleware(['auth'])->group(function () {
     Route::get('/settings', [ProfileSettingsController::class, 'index'])->name('profile.settings');
@@ -50,6 +55,8 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
     Route::put('/nutrition/meals/{meal}', [NutritionController::class, 'updateMeal'])->name('nutrition.meals.update');
     Route::delete('/nutrition/meals/{meal}', [NutritionController::class, 'destroyMeal'])->name('nutrition.meals.destroy');
     
+    Route::get('/nutrition/programs/export', [NutritionController::class, 'exportPrograms'])->name('nutrition.programs.export');
+    
     Route::get('/nutrition/programs', function() { return redirect()->route('coach.nutrition.index'); });
     Route::post('/nutrition/programs', [NutritionController::class, 'storeProgram'])->name('nutrition.programs.store');
     Route::delete('/nutrition/programs/{program}', [NutritionController::class, 'destroyProgram'])->name('nutrition.programs.destroy');
@@ -75,6 +82,7 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
         // Finance Flow
         Route::get('/finance', [PaymentController::class, 'index'])->name('finance');
         Route::post('/finance', [PaymentController::class, 'store'])->name('finance.store');
+        Route::get('/finance/{id}/receipt', [PaymentController::class, 'downloadReceipt'])->name('finance.receipt.download');
         Route::put('/finance/{finance}', [PaymentController::class, 'update'])->name('finance.update');
         Route::delete('/finance/{finance}', [PaymentController::class, 'destroy'])->name('finance.destroy');
 
