@@ -9,7 +9,9 @@
     meals: @json($meals),
     programs: @json($programs),
     mealSearch: "{{ request("meal_search") }}", 
-    programSearch: "{{ request("program_search") }}" 
+    programSearch: "{{ request("program_search") }}",
+    firstCategoryName: "{{ $categories->first()->name ?? "" }}",
+    firstCategoryId: "{{ $categories->first()->id ?? "" }}"
 })'>
     <!-- Tabs Header (Maquette Spec) -->
     <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6 font-sans border-b border-zinc-100 pb-4">
@@ -38,35 +40,42 @@
     <div x-show="activeTab === 'meals'" x-transition class="grid grid-cols-1 lg:grid-cols-3 gap-8 font-mono">
         <!-- Configuration Column -->
         <div class="lg:col-span-2 space-y-6">
-            <form action="{{ route('coach.nutrition.meals.store') }}" method="POST" class="ag-card p-8 bg-white relative">
+            <form :action="isEditingMeal ? `/coach/nutrition/meals/${editingMealId}` : '{{ route('coach.nutrition.meals.store') }}'" 
+                  method="POST" class="ag-card p-8 bg-white relative">
                 @csrf
-                <h3 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-zinc-100 pb-2">Meal Configuration</h3>
+                <template x-if="isEditingMeal">
+                    <input type="hidden" name="_method" value="PUT">
+                </template>
+                <div class="flex items-center justify-between mb-6 border-b border-zinc-100 pb-2">
+                    <h3 class="text-xs font-bold uppercase tracking-widest" x-text="isEditingMeal ? 'Meal Modification' : 'Meal Configuration'"></h3>
+                    <button type="button" x-show="isEditingMeal" @click="resetMeal()" class="text-[8px] text-red-500 uppercase font-bold tracking-widest hover:underline">Cancel Edit</button>
+                </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <!-- Category Dropdown -->
-                    <div class="relative" x-data='{ open: false, selected: "{{ $categories->first()->name ?? "Select Category" }}", selectedId: "{{ $categories->first()->id ?? "" }}" }'>
+                    <div class="relative" x-data='{ open: false }'>
                         <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category Node</label>
-                        <input type="hidden" name="category_id" :value="selectedId">
+                        <input type="hidden" name="category_id" :value="mealCategorySelectedId">
                         <button type="button" @click="open = !open" 
                                 class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 flex items-center justify-between outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700 rounded-none">
-                            <span x-text="selected"></span>
+                            <span x-text="mealCategorySelected || 'Select Category'"></span>
                             <i data-lucide="chevron-down" class="size-4" :class="open ? 'rotate-180' : ''"></i>
                         </button>
                         <div x-show="open" @click.outside="open = false" 
                              class="absolute left-0 mt-1 w-full bg-white border border-zinc-200 z-[110] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]">
                             @foreach($categories as $cat)
-                                <div @click="selected = '{{ $cat->name }}'; selectedId = '{{ $cat->id }}'; open = false" 
+                                <div @click="mealCategorySelected = '{{ $cat->name }}'; mealCategorySelectedId = '{{ $cat->id }}'; open = false" 
                                      class="px-4 py-3 text-[10px] uppercase font-bold tracking-widest text-zinc-500 hover:bg-zinc-50 hover:text-cyan-600 cursor-pointer transition-all border-l-2 border-transparent hover:border-cyan-600 flex items-center justify-between">
                                     <span>{{ $cat->name }}</span>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-
+-
                     <!-- Meal Name -->
                     <div>
                         <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Identity Label</label>
-                        <input type="text" name="name" placeholder="E.G. SHRED OATS V4" required
+                        <input type="text" name="name" x-model="mealName" placeholder="E.G. SHRED OATS V4" required
                                class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 outline-none focus:border-cyan-600 transition-colors font-mono text-zinc-900 placeholder:opacity-30 rounded-none">
                     </div>
                 </div>
@@ -235,7 +244,7 @@
 
                 <div class="mt-6 flex justify-end">
                     <button type="submit" class="px-8 py-4 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
-                        Register Meal to Registry
+                        <span x-text="isEditingMeal ? 'Update Meal Node' : 'Register Meal to Registry'"></span>
                     </button>
                 </div>
             </form>
@@ -290,11 +299,20 @@
                                     <span class="text-[7px] text-zinc-400 uppercase ml-0.5">kcal</span>
                                 </div>
                             </div>
+                            <div class="mt-2 mb-3">
+                                <div class="text-[9px] text-zinc-400 font-sans line-clamp-2 overflow-hidden opacity-60 normal-case" x-html="renderInstructions(meal.details)"></div>
+                            </div>
                             <div class="flex justify-between items-end mt-4 border-t border-zinc-100 pt-3">
                                 <div class="flex items-center gap-x-4">
                                     <h4 class="text-[10px] font-bold text-zinc-900 uppercase font-mono tracking-wide" x-text="meal.name"></h4>
                                     <button @click="openMealDetails(meal)" class="text-[8px] text-cyan-600 uppercase font-mono tracking-widest hover:text-cyan-800 transition-colors flex items-center gap-x-1" title="View Intelligence">
                                         <i data-lucide="scan-line" class="size-3"></i> INTELLIGENCE
+                                    </button>
+                                    <button @click="editMeal(meal)" class="text-[8px] text-zinc-400 uppercase font-mono tracking-widest hover:text-cyan-600 transition-colors flex items-center gap-x-1" title="Modify Node">
+                                        <i data-lucide="terminal" class="size-3"></i> EDIT
+                                    </button>
+                                    <button @click="openDeleteMealModal(meal)" class="text-[8px] text-zinc-300 uppercase font-mono tracking-widest hover:text-red-500 transition-colors flex items-center gap-x-1" title="Purge Node">
+                                        <i data-lucide="zap-off" class="size-3"></i> DELETE
                                     </button>
                                 </div>
                                 <div class="flex gap-x-3">
@@ -639,6 +657,61 @@
                         Abort Purge
                     </button>
                     <button @click="executeDelete()" 
+                            class="flex-1 px-6 py-4 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[4px_4px_0px_0px_rgba(220,38,38,0.2)]">
+                        Confirm Purge
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meal Delete Confirmation Modal -->
+    <div x-show="showDeleteMealModal" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm"
+         x-cloak>
+        <div @click.outside="showDeleteMealModal = false" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-2"
+             class="bg-white w-full max-w-md shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] border border-zinc-200 relative overflow-hidden">
+            
+            <div class="h-1 bg-red-500 w-full"></div>
+            
+            <div class="p-8">
+                <div class="flex items-center gap-x-4 mb-6">
+                    <div class="size-12 bg-red-50 flex items-center justify-center rounded-none border border-red-100">
+                        <i data-lucide="alert-triangle" class="size-6 text-red-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-950">Confirm Meal Purge</h4>
+                        <p class="text-[8px] text-red-600 font-mono uppercase tracking-widest mt-1">Destructive Action // Irreversible</p>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-50 border border-zinc-100 p-6 mb-8">
+                    <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-2 font-mono">Target Meal Identity:</p>
+                    <p class="text-xs font-bold text-zinc-950 uppercase tracking-widest font-mono" x-text="mealToDelete?.name || 'Unknown Meal'"></p>
+                </div>
+
+                <p class="text-[10px] text-zinc-500 leading-relaxed mb-8 font-sans">
+                    Warning: You are about to purge this meal from the master registry. This action will remove all associated matrix data. Confirm system override?
+                </p>
+
+                <div class="flex gap-x-4">
+                    <button @click="showDeleteMealModal = false" 
+                            class="flex-1 px-6 py-4 border border-zinc-200 text-zinc-400 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-50 transition-all">
+                        Abort Purge
+                    </button>
+                    <button @click="executeDeleteMeal()" 
                             class="flex-1 px-6 py-4 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[4px_4px_0px_0px_rgba(220,38,38,0.2)]">
                         Confirm Purge
                     </button>

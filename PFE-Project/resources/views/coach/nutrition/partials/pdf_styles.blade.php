@@ -162,7 +162,7 @@
                 <div class="space-y-4">
                     <h4 class="text-[8px] font-bold uppercase tracking-[0.2em] text-zinc-400">Preparation_Matrix</h4>
                     <div class="bg-zinc-50 p-6 border-l-2 border-cyan-100/50">
-                        <div class="v3-editor-matrix text-[10px] text-zinc-700 font-sans leading-relaxed whitespace-pre-line" x-html="renderInstructions(detailedMeal.details)"></div>
+                        <div class="v3-editor-matrix text-[10px] text-zinc-700 font-sans leading-relaxed" x-html="renderInstructions(detailedMeal.details)"></div>
                     </div>
                 </div>
             </template>

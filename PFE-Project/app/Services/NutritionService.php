@@ -15,6 +15,21 @@ class NutritionService {
         return Meal::create($data);
     }
 
+    public function updateMeal($id, array $data) {
+        $meal = Meal::findOrFail($id);
+        $data['protein'] = (float)($data['protein'] ?? 0);
+        $data['carbs'] = (float)($data['carbs'] ?? 0);
+        $data['fats'] = (float)($data['fats'] ?? 0);
+        
+        $data['calories'] = ($data['protein'] * 4) + ($data['carbs'] * 4) + ($data['fats'] * 9);
+        $meal->update($data);
+        return $meal;
+    }
+
+    public function deleteMeal($id) {
+        return Meal::destroy($id);
+    }
+
     public function finalizeProtocol(string $name, array $items, $id = null) {
         return DB::transaction(function () use ($name, $items, $id) {
             $user = auth()->user();
