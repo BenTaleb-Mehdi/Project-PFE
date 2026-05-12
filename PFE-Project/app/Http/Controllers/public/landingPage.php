@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class landingPage extends Controller
 {
     public function index(){
-        return view("landingpage");
+        $whatsappNumber = \App\Models\SystemSetting::getVal('whatsapp_number', '212600000000');
+        return view("landingpage", compact('whatsappNumber'));
     }
 }
