@@ -92,7 +92,7 @@
         </div>
 
         <!-- Deadline Alert Center -->
-        <div x-data="{ settingsOpen: false, threshold: {{ $threshold }} }" class="ag-card p-8 flex flex-col relative overflow-hidden group">
+        <div x-data="{ settingsOpen: false, whatsapp: '{{ $whatsappNumber }}' }" class="ag-card p-8 flex flex-col relative overflow-hidden group">
             <div class="absolute right-0 top-0 p-4">
                 <button @click="settingsOpen = true" class="h-8 w-8 bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-cyan-600 hover:border-cyan-200 transition-all">
                     <i data-lucide="settings-2" class="size-4"></i>
@@ -131,9 +131,6 @@
                         </div>
                     @endforeach
                 </div>
-                <p class="text-[8px] text-zinc-400 mt-6 uppercase font-mono tracking-widest text-center">
-                    Alert Threshold: {{ $threshold }} Days // Based on Client Start Date
-                </p>
             @endif
 
             <!-- Settings Modal -->
@@ -153,11 +150,11 @@
                      x-transition:leave-end="opacity-0 translate-y-2"
                      @click.outside="settingsOpen = false"
                      class="ag-card bg-white w-full max-w-sm relative z-10 p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)]">
-                    <h4 class="text-xs font-bold uppercase tracking-widest mb-6">Alert Configuration</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-widest mb-6">System Configuration</h4>
                     <div class="space-y-4 font-mono">
                         <div class="space-y-1.5">
-                            <label class="text-[8px] uppercase text-zinc-400 tracking-widest">Deadline Alert Threshold (Days)</label>
-                            <input type="number" x-model="threshold" class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-[10px] outline-none focus:border-cyan-600 transition-colors">
+                            <label class="text-[8px] uppercase text-zinc-400 tracking-widest">WhatsApp Number (e.g. 2126...)</label>
+                            <input type="text" x-model="whatsapp" class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-[10px] outline-none focus:border-cyan-600 transition-colors">
                         </div>
                         <button @click="
                             fetch('{{ route('coach.settings.update') }}', {
@@ -166,7 +163,9 @@
                                     'Content-Type': 'application/json',
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                                 },
-                                body: JSON.stringify({ deadline_alert_threshold: threshold })
+                                body: JSON.stringify({ 
+                                    whatsapp_number: whatsapp
+                                })
                             }).then(() => window.location.reload())
                         " class="w-full py-3 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-95">
                             Sync Engine Settings
