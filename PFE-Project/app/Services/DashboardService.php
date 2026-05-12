@@ -15,13 +15,16 @@ class DashboardService {
 
     public function getClientMetrics(int $clientId)
     {
-        $client = Client::with('user')->findOrFail($clientId);
+        $client = Client::with('user')
+            ->where('id', $clientId)
+            ->orWhere('user_id', $clientId)
+            ->firstOrFail();
 
-        $latestEvolution = Evolution::where('client_id', $clientId)
+        $latestEvolution = Evolution::where('client_id', $client->id)
                             ->latest()
                             ->first();
 
-        $previousEvolution = Evolution::where('client_id', $clientId)
+        $previousEvolution = Evolution::where('client_id', $client->id)
                             ->latest()
                             ->skip(1)
                             ->first();
@@ -39,8 +42,9 @@ class DashboardService {
             'current_weight' => $latestEvolution?->weight ?? $client->current_weight,
             'weight_change'  => $weightChange,
             'height'         => $client->height,
-            'streak'         => $this->evolutionService->calculateStreak($clientId),
-            'compliance'     => $this->evolutionService->calculateCompliance($clientId),
+            'streak'         => $this->evolutionService->calculateStreak($client->id),
+            'compliance'     => $this->evolutionService->calculateCompliance($client->id),
+            'program_id'     => $client->program_id,
         ];
     }
 
