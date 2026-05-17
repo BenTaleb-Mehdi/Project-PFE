@@ -114,7 +114,10 @@
                 <button type="submit"
                         class="w-full h-11 bg-zinc-950 text-white text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         :disabled="loading || !terms">
-                    <span x-show="!loading">Create Account</span>
+                    <div x-show="!loading" class="flex items-center gap-2">
+                        <span>Create Account</span>
+                        <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                    </div>
                     <template x-if="loading">
                         <div class="flex items-center gap-2">
                             <div class="h-4 w-4 border-2 border-white/20 border-t-white animate-spin"></div>
