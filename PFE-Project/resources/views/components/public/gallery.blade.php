@@ -1,82 +1,49 @@
-{{-- resources/views/components/public/gallery.blade.php --}}
+@props(['gallery' => []])
 
-<section id="gallery" class="atom-section t-bg">
-  <div class="atom-container">
-
-    <div class="mb-12 reveal">
-      <div class="flex items-center gap-4 mb-4">
-        <span class="atom-label">Behind The Scenes</span>
+<section id="gallery" class="py-24 lg:py-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+      <div class="space-y-4">
+        <div class="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">Gallery</div>
+        <h2 class="reveal delay-100 font-display text-5xl sm:text-6xl tracking-wider text-neutral-900 dark:text-white">CLIENT <span class="text-brand-500">RESULTS</span></h2>
       </div>
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <h2 class="atom-h-section t-text">Training <span class="atom-text-accent">Gallery</span></h2>
-        <p class="t-muted text-sm max-w-xs leading-relaxed">Real sessions, real results. A look inside the IronCoach experience.</p>
-      </div>
+      <button @click="goTo('gallery')" class="reveal self-start sm:self-auto inline-flex items-center gap-2 text-brand-500 font-medium hover:underline">
+        View Full Gallery
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </button>
     </div>
 
-    <!-- Grid -->
-    <div class="gallery-grid reveal">
-      <template x-for="(item, idx) in galleryItems" :key="idx">
-        <div class="gallery-item rounded-sm overflow-hidden"
-             x-show="galleryFilter === 'all' || item.category === galleryFilter"
-             @click="openLightbox(idx)">
-          <div class="w-full h-full flex items-center justify-center p-6 transition-transform duration-700 hover:scale-110"
-               :style="lightMode ? 'background:var(--bg)' : 'background:' + item.bg">
-            <div class="text-center">
-              <div class="font-display text-2xl md:text-3xl leading-none mb-1"
-                   :class="item.category === 'mindset' ? 'text-dark' : 'text-acid'"
-                   x-text="item.title"></div>
-              <div class="atom-label opacity-60"
-                   :class="item.category === 'mindset' ? 'text-dark/70' : 't-muted'"
-                   x-text="item.sub"></div>
-            </div>
-          </div>
-          <div class="gallery-overlay">
-            <span class="atom-label text-white/80" x-text="item.title"></span>
+    <!-- Client-side / Alpine dynamic grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6" x-show="(gallery && gallery.length > 0) || (galleryItems && galleryItems.length > 0)">
+      <template x-for="(img, i) in (galleryItems || gallery || []).slice(0, 6)" :key="i">
+        <div
+          class="reveal group relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer"
+          :class="'delay-' + (i * 100 + 100)"
+          @click="selectedGalleryItem = img"
+        >
+          <img :src="img.url" :alt="img.alt" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+            <span class="text-white font-medium text-sm tracking-wider uppercase" x-text="img.alt"></span>
+            <span class="text-brand-400 text-xs font-medium mt-1">Click to view details</span>
           </div>
         </div>
       </template>
     </div>
 
-    <!-- Filter pills -->
-    <div class="flex flex-wrap gap-3 mt-8 reveal">
-      @foreach(['all' => 'All', 'strength' => 'Strength', 'cardio' => 'Cardio', 'online' => 'Online', 'mindset' => 'Mindset'] as $key => $label)
-      <button @click="galleryFilter='{{ $key }}'"
-              :class="galleryFilter==='{{ $key }}' ? 'bg-acid text-dark' : 't-card t-border t-muted border'"
-              class="atom-label px-4 py-2 rounded-sm transition-all">
-        {{ $label }}
-      </button>
+    <!-- Server-side fallback list (displays while Javascript is loading or if it's disabled) -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6" x-show="!gallery || gallery.length === 0">
+      @foreach(array_slice($gallery, 0, 6) as $index => $item)
+        <div
+          class="reveal group relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer delay-{{ ($index * 100 + 100) }}"
+          @click="selectedGalleryItem = { url: '{{ $item['url'] }}', alt: '{{ $item['alt'] }}', duration: '{{ $item['duration'] }}', goal: '{{ $item['goal'] }}', details: '{{ addslashes($item['details']) }}' }"
+        >
+          <img src="{{ $item['url'] }}" alt="{{ $item['alt'] }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+            <span class="text-white font-medium text-sm tracking-wider uppercase">{{ $item['alt'] }}</span>
+            <span class="text-brand-400 text-xs font-medium mt-1">Click to view details</span>
+          </div>
+        </div>
       @endforeach
     </div>
-
   </div>
 </section>
-
-<!-- Lightbox -->
-<div id="lightbox" @click="closeLightbox()" @keydown.escape.window="closeLightbox()">
-  <button class="absolute top-6 right-8 text-white/60 hover:text-acid transition-colors font-display text-3xl z-10" @click.stop="closeLightbox()">✕</button>
-  <div class="relative flex items-center justify-center w-full h-full">
-    <button class="absolute left-6 w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white hover:border-acid hover:text-acid transition-colors z-10" @click.stop="lightboxPrev()">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <template x-if="galleryItems.length > 0">
-      <div class="max-w-3xl w-full mx-20 t-card t-border border rounded-sm overflow-hidden" @click.stop>
-        <div class="aspect-video flex items-center justify-center" :style="lightMode ? 'background:var(--bg-mid)' : 'background:' + galleryItems[lightboxIdx].bg">
-          <div class="text-center px-8">
-            <div class="font-display text-5xl text-acid mb-2" x-text="galleryItems[lightboxIdx].title"></div>
-            <div class="font-cond text-xs tracking-widest uppercase t-muted" x-text="galleryItems[lightboxIdx].sub"></div>
-          </div>
-        </div>
-        <div class="p-5 t-bg-mid flex items-center justify-between">
-          <div>
-            <div class="font-cond font-bold tracking-wider uppercase text-sm t-text" x-text="galleryItems[lightboxIdx].title"></div>
-            <div class="font-cond text-xs t-muted mt-1" x-text="galleryItems[lightboxIdx].sub"></div>
-          </div>
-          <div class="font-display text-acid text-lg" x-text="(lightboxIdx+1) + ' / ' + galleryItems.length"></div>
-        </div>
-      </div>
-    </template>
-    <button class="absolute right-6 w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white hover:border-acid hover:text-acid transition-colors z-10" @click.stop="lightboxNext()">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
-  </div>
-</div>

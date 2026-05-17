@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" x-data="app()" x-init="init()" :class="lightMode ? 'light' : ''" id="html-root">
+<html lang="en" x-data="app" :class="lightMode ? 'light' : 'dark'" id="html-root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Achraf Coach — Build Your Champion Body</title>
+  
+  <!-- Inline theme check to prevent Flash of Unstyled Content (FOUC) -->
+  <script>
+    if (localStorage.getItem('ironcoach-theme') === 'light') {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    }
+  </script>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
