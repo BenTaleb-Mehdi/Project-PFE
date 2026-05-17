@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+' Actors
+actor "Visiteur" as Visitor
+actor "Client" as Client
+actor "Co-coach (Staff)" as Staff
+actor "Coach (Admin)" as Admin
+
+' Hierarchy
+Staff <|-- Admin
+
+rectangle "Sprint 3 - IA Automation, Messagerie & Notifications" {
+
+  package "Neural_Link (IA & Chatbot)" {
+    usecase "Créer une catégorie via Chatbot AI" as AICat
+    usecase "Interagir avec le Chatbot d'assistance (Landing Page)" as LPBot
+  }
+
+  package "Communication & Engagement" {
+    usecase "Accéder à l'espace de messagerie (Space Messages)" as MsgSpace
+    usecase "Recevoir des notifications (Messages/Actions)" as Notif
+    usecase "Alerte expiration deadline (Recréer repas)" as DeadlineAlert
+  }
+}
+
+' Relations
+Visitor -- LPBot
+
+Client -- LPBot
+Client -- MsgSpace
+Client -- Notif
+
+Staff -- AICat
+Staff -- MsgSpace
+Staff -- Notif
+Staff -- DeadlineAlert
+
+Admin -- AICat
+
+@enduml

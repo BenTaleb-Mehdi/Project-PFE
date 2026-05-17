@@ -185,4 +185,5 @@
         </form>
     </div>
 </div>
+<x-ai-chatbot />
 @endsection
