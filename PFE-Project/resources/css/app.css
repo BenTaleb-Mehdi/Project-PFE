@@ -3,6 +3,11 @@
 @import './style.css';
 @import './v3-admin.css';
 
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
   FIX: Import order matters in Tailwind v4.
   1. tailwindcss first (generates utilities)
@@ -24,6 +29,19 @@
   --color-darkgray: #111111;
   --color-mid:      #1A1A1A;
   --color-border:   #2A2A2A;
+
+  /* Brand Electric Green (matched with acid #B5FF2D) */
+  --color-brand-50:  #f5ffe0;
+  --color-brand-100: #e6ffb3;
+  --color-brand-200: #d6ff80;
+  --color-brand-300: #c6ff4d;
+  --color-brand-400: #b9ff27;
+  --color-brand-500: #B5FF2D; /* Primary Neon Brand Color */
+  --color-brand-600: #93db1f;
+  --color-brand-700: #71b814;
+  --color-brand-800: #52940c;
+  --color-brand-900: #3b7507;
+  --color-brand-950: #1d4201;
 
  
 }

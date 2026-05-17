@@ -1,46 +1,41 @@
-{{-- resources/views/components/public/footer.blade.php --}}
+@props(['socials' => []])
 
-<footer class="py-12 max-w-7xl mx-auto px-6">
-  <div class="neon-line mb-10"></div>
-  <div class="grid md:grid-cols-4 gap-8 mb-10">
-
-    <!-- Brand -->
-    <div class="md:col-span-2">
-      <div class="font-display text-3xl tracking-wider mb-3">IRON<span class="atom-text-accent">COACH</span></div>
-      <p class="t-muted text-sm leading-relaxed max-w-xs">
-        Empowering individuals to achieve peak physical performance through science-backed coaching and relentless dedication.
-      </p>
-      <div class="flex gap-3 mt-5">
-        <template x-for="social in socials" :key="social.name">
-          <a :href="social.url" class="w-9 h-9 border t-border rounded-sm flex items-center justify-center t-muted hover:border-acid hover:text-acid transition-colors" x-html="social.icon"></a>
-        </template>
+<footer class="bg-neutral-950 text-neutral-400 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div class="space-y-4 lg:col-span-2">
+        <a href="#" @click="goTo('home')" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29l-1.43-1.43z"/></svg>
+          </span>
+          <span class="font-display text-xl tracking-widest text-white">COACH<span class="text-brand-500">PRO</span></span>
+        </a>
+        <p class="text-sm leading-relaxed max-w-xs">Science-backed coaching for those serious about transforming their body and mind. No gimmicks — just results.</p>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-widest text-neutral-500 mb-4">Navigate</div>
+        <ul class="space-y-2 text-sm">
+          <template x-for="item in navItems" :key="item.id">
+            <li><a href="#" @click.prevent="goTo(item.id)" class="hover:text-white hover:text-brand-400 transition-colors" x-text="item.label"></a></li>
+          </template>
+        </ul>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-widest text-neutral-500 mb-4">Legal</div>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
+        </ul>
       </div>
     </div>
-
-    <!-- Quick Links -->
-    <div>
-      <div class="atom-label opacity-60 mb-4">Quick Links</div>
-      <ul class="space-y-2">
-        @foreach(['Services', 'About', 'Gallery', 'Contact'] as $link)
-        <li><a href="#{{ strtolower($link) }}" class="text-sm t-sub hover:text-acid transition-colors">{{ $link }}</a></li>
+    <div class="pt-8 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <span>&copy; 2025 CoachPro. All rights reserved.</span>
+      <div class="flex gap-4">
+        @foreach($socials as $s)
+          <a href="{{ $s['url'] ?? '#' }}" target="_blank" class="hover:text-white transition-colors">{!! $s['icon'] !!}</a>
         @endforeach
-      </ul>
-    </div>
-
-    <!-- Contact info -->
-    <div>
-      <div class="atom-label opacity-60 mb-4">Contact</div>
-      <div class="space-y-2 text-sm t-sub">
-        <div>coach@ironcoach.com</div>
-        <div>+1 (555) 000-0000</div>
-        <div>Los Angeles, California</div>
       </div>
     </div>
-
-  </div>
-
-  <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs t-muted atom-label pt-6 border-t t-border">
-    <span>© 2025 IronCoach. All Rights Reserved.</span>
-    <span>Built With Precision. Crafted For Champions.</span>
   </div>
 </footer>
