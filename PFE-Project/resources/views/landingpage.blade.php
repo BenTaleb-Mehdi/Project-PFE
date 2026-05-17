@@ -37,7 +37,7 @@
         </div>
         <div class="relative font-light">
           <div class="aspect-[3/4] rounded-3xl bg-gradient-to-br from-brand-500/20 to-brand-700/20 border border-brand-500/20 flex items-end justify-center overflow-hidden">
-            <svg viewBox="0 0 300 420" class="w-full h-full" fill="none"><circle cx="150" cy="90" r="52" fill="#10b981" opacity=".8"/><rect x="90" y="152" width="120" height="160" rx="24" fill="#10b981" opacity=".6"/><rect x="42" y="168" width="44" height="120" rx="18" fill="#10b981" opacity=".4"/><rect x="214" y="168" width="44" height="120" rx="18" fill="#10b981" opacity=".4"/><rect x="96" y="318" width="46" height="100" rx="18" fill="#10b981" opacity=".5"/><rect x="158" y="318" width="46" height="100" rx="18" fill="#10b981" opacity=".5"/></svg>
+            <img src="{{ asset('images/achraf-about.png') }}" alt="Professional Fitness Coach" class="w-full h-full object-cover object-top" />
           </div>
           <div class="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl p-5 space-y-1">
             <div class="font-display text-3xl text-brand-500">500+</div>

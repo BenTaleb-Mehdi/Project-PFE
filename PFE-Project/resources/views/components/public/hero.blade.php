@@ -59,7 +59,7 @@
         
         <!-- Image Container -->
         <div class="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80" alt="Professional Fitness Coach" class="w-full h-full object-cover object-top" />
+          <img src="{{ asset('images/achraf.png') }}" alt="Professional Fitness Coach" class="w-full h-full object-cover object-top" />
           <!-- Luxury gradient overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent"></div>
         </div>
