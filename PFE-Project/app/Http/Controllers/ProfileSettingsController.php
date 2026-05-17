@@ -14,9 +14,16 @@ class ProfileSettingsController extends Controller
      */
     public function index()
     {
-        return view('profile.settings', [
+        $data = [
             'user' => Auth::user()
-        ]);
+        ];
+
+        if (Auth::user()->hasRole('admin')) {
+            $data['whatsappNumber'] = \App\Models\SystemSetting::getVal('whatsapp_number', '212600000000');
+            $data['threshold'] = \App\Models\SystemSetting::getVal('deadline_alert_threshold', 2);
+        }
+
+        return view('profile.settings', $data);
     }
 
     /**
@@ -26,12 +33,31 @@ class ProfileSettingsController extends Controller
     {
         $user = Auth::user();
 
-        $validated = $request->validate([
+        $rules = [
             'name'  => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+        ];
+
+        if ($user->hasRole('admin')) {
+            $rules['whatsapp_number'] = ['nullable', 'string', 'max:20'];
+            $rules['deadline_alert_threshold'] = ['nullable', 'integer', 'min:0', 'max:30'];
+        }
+
+        $validated = $request->validate($rules);
+
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
         ]);
 
-        $user->update($validated);
+        if ($user->hasRole('admin')) {
+            if (isset($validated['whatsapp_number'])) {
+                \App\Models\SystemSetting::setVal('whatsapp_number', $validated['whatsapp_number']);
+            }
+            if (isset($validated['deadline_alert_threshold'])) {
+                \App\Models\SystemSetting::setVal('deadline_alert_threshold', $validated['deadline_alert_threshold']);
+            }
+        }
 
         return back()->with('success', 'Profile information synchronized successfully.');
     }

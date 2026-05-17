@@ -28,7 +28,25 @@ class DashboardController extends Controller
             ], $response->status());
         }
 
-        return response()->json($response->json());
+        $data = $response->json();
+        
+        // Notification Logic: Check for new program assignments
+        if (isset($data['data']['program_id'])) {
+            $currentProgramId = $data['data']['program_id'];
+            $lastSeenProgramId = session('last_seen_program_id');
+
+            // If we have a last seen ID and it differs from current, mark as new
+            if ($lastSeenProgramId && $currentProgramId != $lastSeenProgramId) {
+                session(['has_new_program' => true]);
+            }
+            
+            // If first time seeing a program, store it
+            if (!$lastSeenProgramId && $currentProgramId) {
+                session(['last_seen_program_id' => $currentProgramId]);
+            }
+        }
+
+        return response()->json($data);
     }
 
     public function updateMetrics(\Illuminate\Http\Request $request, $id)
@@ -46,7 +64,6 @@ class DashboardController extends Controller
             $json = $response->json();
             $message = $json['message'] ?? 'Backend validation error';
             
-            // If there are detailed validation errors, pick the first one
             if (isset($json['errors']) && is_array($json['errors'])) {
                 $firstError = collect($json['errors'])->flatten()->first();
                 if ($firstError) {

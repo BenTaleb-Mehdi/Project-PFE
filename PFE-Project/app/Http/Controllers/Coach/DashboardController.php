@@ -61,6 +61,8 @@ class DashboardController extends Controller
 
         $systemStream = $recentClients->concat($recentLogs)->sortByDesc('time')->take(5);
 
+        $whatsappNumber = SystemSetting::getVal('whatsapp_number', '212600000000');
+        
         return view('coach.dashboard', compact(
             'financeMetrics', 
             'activePupils', 
@@ -69,7 +71,8 @@ class DashboardController extends Controller
             'complianceIndex', 
             'systemStream',
             'deadlineAlerts',
-            'threshold'
+            'threshold',
+            'whatsappNumber'
         ));
     }
 
@@ -79,10 +82,17 @@ class DashboardController extends Controller
     public function updateSettings(Request $request)
     {
         $validated = $request->validate([
-            'deadline_alert_threshold' => 'required|integer|min:0|max:30'
+            'deadline_alert_threshold' => 'nullable|integer|min:0|max:30',
+            'whatsapp_number' => 'nullable|string|max:20'
         ]);
 
-        SystemSetting::setVal('deadline_alert_threshold', $validated['deadline_alert_threshold']);
+        if (isset($validated['deadline_alert_threshold'])) {
+            SystemSetting::setVal('deadline_alert_threshold', $validated['deadline_alert_threshold']);
+        }
+        
+        if (isset($validated['whatsapp_number'])) {
+            SystemSetting::setVal('whatsapp_number', $validated['whatsapp_number']);
+        }
 
         return response()->json(['success' => true]);
     }

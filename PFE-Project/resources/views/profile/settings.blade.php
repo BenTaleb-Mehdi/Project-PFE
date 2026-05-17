@@ -45,6 +45,45 @@
         </form>
     </div>
 
+    @if(auth()->user()->hasRole('admin'))
+    <!-- System Configuration Section -->
+    <div class="ag-card bg-white border border-zinc-200 overflow-hidden">
+        <div class="p-6 border-b border-zinc-100 flex justify-between items-center">
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900">System Engine</h3>
+                <p class="text-[9px] font-mono text-zinc-400 uppercase mt-1">Global performance configuration</p>
+            </div>
+            <div class="h-8 w-8 bg-zinc-50 border border-zinc-200 flex items-center justify-center">
+                <i data-lucide="cog" class="size-4 text-zinc-400"></i>
+            </div>
+        </div>
+        
+        <form action="{{ route('profile.settings.update') }}" method="POST" class="p-8 space-y-6">
+            @csrf
+            @method('PUT')
+            
+            {{-- Hidden fields to preserve name/email --}}
+            <input type="hidden" name="name" value="{{ $user->name }}">
+            <input type="hidden" name="email" value="{{ $user->email }}">
+
+            <div class="grid grid-cols-1 font-mono">
+                <div class="space-y-1.5">
+                    <label class="text-[8px] uppercase text-zinc-400 tracking-widest">WhatsApp Contact Number</label>
+                    <input type="text" name="whatsapp_number" value="{{ old('whatsapp_number', $whatsappNumber) }}" 
+                           class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-[10px] outline-none focus:border-cyan-600 transition-colors">
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-4">
+                <button type="submit" class="px-8 py-3 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
+                    <i data-lucide="save" class="size-3.5"></i>
+                    Sync System Engine
+                </button>
+            </div>
+        </form>
+    </div>
+    @endif
+
     <!-- Security Section -->
     <div class="ag-card bg-white border border-zinc-200 overflow-hidden">
         <div class="p-6 border-b border-zinc-100 flex justify-between items-center">

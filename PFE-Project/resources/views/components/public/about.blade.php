@@ -1,46 +1,40 @@
-{{-- resources/views/components/public/about.blade.php --}}
+@props(['features' => [], 'stats' => [], 'certs' => [], 'timeline' => []])
 
-<section id="about" class="atom-section bg-mid border-y border-border overflow-hidden">
-  <div class="atom-container grid lg:grid-cols-2 gap-16 items-center">
-
-    <!-- Visual side -->
-    <div class="reveal-left relative">
-      <div class="bg-dark border border-border rounded-sm p-8 aspect-square relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid opacity-20"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-border rounded-full"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-acid/20 rounded-full animate-spin" style="animation-duration:20s"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-acid/10 rounded-full blur-xl"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <img src="{{ asset('images/achraf-about.png') }}" alt="" class="w-full h-full object-cover">
+<section id="about-section" class="py-24 bg-neutral-50 dark:bg-neutral-900/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal-left space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">About Me</div>
+      <h2 class="font-display text-5xl sm:text-6xl tracking-wider text-neutral-900 dark:text-white">YOUR COACH,<br/><span class="text-brand-500">YOUR ALLY</span></h2>
+      <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">With over 8 years coaching athletes and everyday people, I blend evidence-based exercise science with real-world psychology. I've helped 500+ clients lose fat, build muscle, and — most importantly — build lasting habits.</p>
+      
+      <!-- Features list -->
+      <ul class="space-y-3">
+        @foreach($features as $f)
+          <li class="flex items-center gap-3 text-sm font-medium">
+            <span class="w-5 h-5 rounded-full bg-brand-500 flex items-center justify-center shrink-0">
+              <svg class="w-3 h-3 text-neutral-950" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span>{{ $f }}</span>
+          </li>
+        @endforeach
+      </ul>
+      
+      <button @click="goTo('about')" class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-brand-500 hover:bg-brand-600 text-neutral-950 font-medium text-sm transition-colors">
+        Full Story
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </button>
+    </div>
+    
+    <div class="reveal-right grid grid-cols-2 gap-4">
+      @foreach($stats as $index => $stat)
+        <div
+          class="rounded-2xl p-6 flex flex-col gap-2"
+          :class="currentPage === 'home' && {{ $index }} === 0 ? 'bg-brand-500 text-neutral-950' : 'bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800'"
+        >
+          <div class="stat-number text-4xl" :class="currentPage === 'home' && {{ $index }} === 0 ? 'text-neutral-950' : 'text-brand-500'">{{ $stat['value'] }}</div>
+          <div class="text-xs uppercase tracking-widest opacity-80">{{ $stat['label'] }}</div>
         </div>
-        <div class="absolute top-4 right-4 bg-acid text-dark font-display text-sm px-3 py-1 rounded-sm">ELITE</div>
-        <div class="absolute bottom-4 left-4 font-cond text-xs tracking-widest uppercase text-gray-600">Est. 2018</div>
-      </div>
+      @endforeach
     </div>
-
-    <!-- Text side -->
-    <div class="reveal-right">
-      <div class="flex items-center gap-4 mb-4">
-        <span class="atom-label">Why Choose Us</span>
-      </div>
-      <h2 class="atom-h-section mb-8">
-        What Makes You <span class="atom-text-accent">Sure</span><br>To Choose Us?
-      </h2>
-
-      <div class="space-y-5">
-        <template x-for="(reason, idx) in reasons" :key="reason.title">
-          <div class="flex gap-5 group cursor-default p-4 rounded-sm border border-transparent hover:border-border hover:bg-dark transition-colors">
-            <div class="flex-shrink-0 w-10 h-10 rounded-sm border border-border flex items-center justify-center text-acid font-display text-lg group-hover:bg-acid group-hover:text-dark transition-colors">
-              <span x-text="(idx+1).toString().padStart(2,'0')"></span>
-            </div>
-            <div>
-              <h4 class="font-cond font-bold tracking-wider uppercase text-sm mb-1 group-hover:text-acid transition-colors" x-text="reason.title"></h4>
-              <p class="t-muted text-sm leading-relaxed" x-text="reason.desc"></p>
-            </div>
-          </div>
-        </template>
-      </div>
-    </div>
-
   </div>
 </section>
