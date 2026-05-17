@@ -13,7 +13,11 @@ Staff <|-- Admin
 
 rectangle "Sprint 2 - Automation & Expérience Mobile" {
 
-
+  package "Synchronisation Mobile (NativePHP)" {
+    usecase "S'authentifier (Email/Password)" as MobileLogin
+    usecase "Consulter son Dashboard Sync" as MobileDashboard
+    usecase "Recevoir notifications de mise à jour" as MobileNotify
+  }
 
   package "Suivi & Performance (Web)" {
     usecase "Mettre à jour poids & photos" as UpdateStats
@@ -28,6 +32,10 @@ rectangle "Sprint 2 - Automation & Expérience Mobile" {
 }
 
 ' Relations
+Client -- MobileLogin : "(Via App)"
+Client -- MobileDashboard : "(Via App)"
+Client -- MobileNotify : "(Via App)"
+
 Client -- UpdateStats : "(Via Web)"
 Client -- ViewProgress : "(Via Web)"
 

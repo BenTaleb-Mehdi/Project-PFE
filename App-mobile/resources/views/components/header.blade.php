@@ -8,7 +8,9 @@
         <div class="flex items-center space-x-2">
             @if(request()->is('client/*/dashboard'))
                 <button class="h-8 w-8 flex items-center justify-center text-zinc-400 relative hover:text-zinc-600 transition-colors">
-                    <div class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white z-10"></div>
+                    @if(session('has_new_program'))
+                        <div class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white z-10 animate-pulse"></div>
+                    @endif
                     <x-lucide-bell class="h-5 w-5" />
                 </button>
             @else
@@ -61,7 +63,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <a href="/" 
+                    <a href="{{ route('logout') }}" 
                        class="w-full h-14 bg-red-500 text-white font-bold rounded-xl flex items-center justify-center uppercase tracking-widest text-xs hover:bg-red-600 transition-all active:scale-[0.98]">
                         Confirm & Logout
                     </a>

@@ -9,7 +9,8 @@
 */
 
 import Alpine from 'alpinejs'
-import { appData } from './landingpage.js'
+import { appData, contactForm } from './landingpage.js'
+window.contactForm = contactForm
 import { coachHub } from './components/nutrition/coach-hub.js'
 import { clientDashboard } from './components/nutrition/client-dashboard.js'
 import { clientRegistry } from './components/admin/client-registry.js'

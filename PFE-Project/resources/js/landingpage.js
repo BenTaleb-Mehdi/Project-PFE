@@ -9,12 +9,24 @@ export function appData() {
   return {
 
     /* ── Core State ── */
+    currentPage:        'home',
     scrolled:           false,
     menuOpen:           false,
     activePreview:      -1,   // FIX: declared ONCE (was duplicated — 2nd declaration wiped 1st)
     countersStarted:    false,
     activeTestimonial:  0,
-    lightMode:          false,
+    lightMode:          (typeof localStorage !== 'undefined') ? localStorage.getItem('ironcoach-theme') === 'light' : false,
+    selectedPost:       null,
+    selectedGalleryItem: null,
+    activeCategory:     'All',
+
+    navItems: [
+      { id: 'home',     label: 'Home' },
+      { id: 'about',    label: 'About' },
+      { id: 'gallery',  label: 'Gallery' },
+      { id: 'blog',     label: 'Blog' },
+      { id: 'contact',  label: 'Contact' },
+    ],
 
     /* ── Data (loaded from /data.json via fetch) ── */
     heroStats:    { clients: 0, years: 0, rate: 0 },
@@ -49,9 +61,9 @@ export function appData() {
         Object.assign(this, this._fallback())
       }
 
-      /* Theme */
-      const saved = localStorage.getItem('ironcoach-theme')
-      if (saved === 'light') this.lightMode = true
+      /* Theme (initialized reactive state directly on load, synchronized to HTML) */
+      document.documentElement.classList.toggle('light', this.lightMode)
+      document.documentElement.classList.toggle('dark', !this.lightMode)
 
       /* Global key events */
       document.addEventListener('keydown', (e) => {
@@ -72,8 +84,16 @@ export function appData() {
           }
         })
       }, { threshold: 0.12 })
+      
+      // Observe static elements currently in the DOM
       document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
         .forEach(el => revealObs.observe(el))
+
+      // Wait for Alpine to render dynamic elements from data.json, then observe them!
+      this.$nextTick(() => {
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+          .forEach(el => revealObs.observe(el))
+      })
 
       /* Skill bars */
       const skillObs = new IntersectionObserver((entries) => {
@@ -170,6 +190,8 @@ export function appData() {
     toggleTheme() {
       this.lightMode = !this.lightMode
       localStorage.setItem('ironcoach-theme', this.lightMode ? 'light' : 'dark')
+      document.documentElement.classList.toggle('light', this.lightMode)
+      document.documentElement.classList.toggle('dark', !this.lightMode)
     },
 
     /* ── Menu ── */
@@ -192,6 +214,35 @@ export function appData() {
     },
     lightboxNext() { this.lightboxIdx = (this.lightboxIdx + 1) % this.galleryItems.length },
     lightboxPrev() { this.lightboxIdx = (this.lightboxIdx - 1 + this.galleryItems.length) % this.galleryItems.length },
+
+    /* ── Blog Getters & Actions ── */
+    get filteredPosts() {
+      if (this.activeCategory === 'All') return this.posts || []
+      return (this.posts || []).filter(p => p.category === this.activeCategory)
+    },
+    goTo(page) {
+      this.currentPage = page
+      this.selectedPost = null
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      setTimeout(() => {
+        // Observer for reveal trigger
+        const revealObs = new IntersectionObserver((entries) => {
+          entries.forEach(el => {
+            if (el.isIntersecting) {
+              el.target.classList.add('in')
+              revealObs.unobserve(el.target)
+            }
+          })
+        }, { threshold: 0.12 })
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+          .forEach(el => revealObs.observe(el))
+      }, 200)
+    },
+    openPost(post) {
+      if (!post) return
+      this.selectedPost = post
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
 
     /* ════════════════════════════════════
        FALLBACK DATA (if /data.json fails)
@@ -245,3 +296,18 @@ export function appData() {
 
   } /* end return */
 } /* end appData */
+
+export function contactForm() {
+  return {
+    form: { firstName: '', lastName: '', email: '', goal: '', message: '' },
+    loading: false,
+    submitted: false,
+    submit() {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.submitted = true;
+      }, 1500);
+    }
+  }
+}

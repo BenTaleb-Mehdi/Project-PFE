@@ -14,13 +14,17 @@ class ProgramController extends Controller
     {
         $response = ApiHelper::fetchFromApi("/client/{$id}/program");
 
-        if (!$response) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Cannot connect to backend API'
-            ], 500);
+        $data = $response->json();
+        
+        if (isset($data['data']['program_title'])) {
+            // Since we don't have a direct program_id in this specific response yet, 
+            // but we are viewing the program page, we can clear the notification flag.
+            session()->forget('has_new_program');
+            
+            // We'll update the last_seen_program_id next time metrics are fetched 
+            // or we could try to get it here if the API provided it.
         }
 
-        return response()->json($response->json());
+        return response()->json($data);
     }
 }
