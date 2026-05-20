@@ -121,4 +121,16 @@ class ClientProgramService
             'meals' => [],
         ];
     }
+
+    /**
+     * Mark a specific meal as validated for the current day.
+     */
+    public function validateMeal(int $clientId, int $programItemId): void
+    {
+        \App\Models\MealValidation::updateOrCreate([
+            'client_id'       => $clientId,
+            'program_item_id' => $programItemId,
+            'validated_for'   => now()->toDateString(),
+        ]);
+    }
 }

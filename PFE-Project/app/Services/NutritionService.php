@@ -90,4 +90,12 @@ class NutritionService {
 
         return $query->get();
     }
+
+    /**
+     * Remove a nutritional program from the system.
+     */
+    public function deleteProgram(int $id): void
+    {
+        Program::destroy($id);
+    }
 }

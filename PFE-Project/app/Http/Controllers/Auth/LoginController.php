@@ -3,35 +3,29 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Services\AuthService;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
+    /**
+     * The authentication service instance.
+     *
+     * @var AuthService
+     */
+    protected $authService;
 
     /**
-     * Where to redirect users after login.
+     * Create a new controller instance.
      *
-     * @return string
+     * @param AuthService $authService
      */
-    public function redirectTo()
+    public function __construct(AuthService $authService)
     {
-        if (auth()->user()->hasRole('client')) {
-            return '/client/dashboard';
-        }
-        
-        return '/coach/dashboard';
+        $this->authService = $authService;
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
     }
 
     /**
@@ -43,13 +37,32 @@ class LoginController extends Controller
     }
 
     /**
-     * Create a new controller instance.
+     * Handle a login request to the application.
      *
-     * @return void
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws ValidationException
      */
-    public function __construct()
+    public function login(Request $request)
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $credentials = $request->only('email', 'password');
+        $remember = $request->filled('remember');
+
+        $redirectUrl = $this->authService->login($credentials, $remember);
+
+        return redirect()->intended($redirectUrl);
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        $this->authService->logout();
+
+        return redirect('/');
     }
 }

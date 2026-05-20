@@ -6,6 +6,10 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentReceiptMail;
+use Illuminate\Support\Facades\Log;
+
 class FinanceService
 {
     /**
@@ -13,12 +17,35 @@ class FinanceService
      */
     public function logPayment(array $data): Payment
     {
-        return Payment::create([
+        $payment = Payment::create([
             'client_id' => $data['client_id'],
             'amount'    => $data['amount'],
             'date'      => $data['date'] ?? now()->toDateString(),
             'status'    => $data['status'] ?? 'pending',
         ]);
+
+        // Load relationships for the PDF and Email
+        $payment->load('client.user');
+
+        // Send Receipt via Email
+        try {
+            if ($payment->client && $payment->client->user && $payment->client->user->email) {
+                Mail::to($payment->client->user->email)->send(new PaymentReceiptMail($payment));
+            }
+        } catch (\Exception $e) {
+            // Log error but don't block the UI
+            Log::error("RECEIPT_EMAIL_FAILURE // TXN: " . $payment->id . " // Error: " . $e->getMessage());
+        }
+
+        return $payment;
+    }
+
+    /**
+     * Get a specific payment record with client and user details.
+     */
+    public function getPaymentWithClient(int $id): Payment
+    {
+        return Payment::with('client.user')->findOrFail($id);
     }
 
     /**

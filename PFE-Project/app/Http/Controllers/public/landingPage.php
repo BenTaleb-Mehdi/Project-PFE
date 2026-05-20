@@ -1,22 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\public;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Services\LandingPageService;
 
 class landingPage extends Controller
 {
-    public function index(){
-        $whatsappNumber = \App\Models\SystemSetting::getVal('whatsapp_number', '212600000000');
-        
-        $jsonPath = public_path('data.json');
-        $landingpageData = [];
-        if (file_exists($jsonPath)) {
-            $landingpageData = json_decode(file_get_contents($jsonPath), true) ?? [];
-        }
+    protected $landingPageService;
 
-        return view("landingpage", array_merge([
-            'whatsappNumber' => $whatsappNumber,
-        ], $landingpageData));
+    public function __construct(LandingPageService $landingPageService)
+    {
+        $this->landingPageService = $landingPageService;
+    }
+
+    public function index()
+    {
+        $data = $this->landingPageService->getLandingPageData();
+
+        return view("landingpage", $data);
     }
 }

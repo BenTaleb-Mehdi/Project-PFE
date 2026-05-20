@@ -2,26 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProfileSettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class ProfileSettingsController extends Controller
 {
     /**
+     * The profile settings service instance.
+     *
+     * @var ProfileSettingsService
+     */
+    protected $profileSettingsService;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param ProfileSettingsService $profileSettingsService
+     */
+    public function __construct(ProfileSettingsService $profileSettingsService)
+    {
+        $this->profileSettingsService = $profileSettingsService;
+    }
+
+    /**
      * Display the settings page.
      */
     public function index()
     {
-        $data = [
-            'user' => Auth::user()
-        ];
-
-        if (Auth::user()->hasRole('admin')) {
-            $data['whatsappNumber'] = \App\Models\SystemSetting::getVal('whatsapp_number', '212600000000');
-            $data['threshold'] = \App\Models\SystemSetting::getVal('deadline_alert_threshold', 2);
-        }
+        $data = $this->profileSettingsService->getSettingsData();
 
         return view('profile.settings', $data);
     }
@@ -32,6 +42,9 @@ class ProfileSettingsController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
+        if (!$user) {
+            return back()->with('error', 'User context not found.');
+        }
 
         $rules = [
             'name'  => ['required', 'string', 'max:255'],
@@ -45,19 +58,7 @@ class ProfileSettingsController extends Controller
 
         $validated = $request->validate($rules);
 
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-        ]);
-
-        if ($user->hasRole('admin')) {
-            if (isset($validated['whatsapp_number'])) {
-                \App\Models\SystemSetting::setVal('whatsapp_number', $validated['whatsapp_number']);
-            }
-            if (isset($validated['deadline_alert_threshold'])) {
-                \App\Models\SystemSetting::setVal('deadline_alert_threshold', $validated['deadline_alert_threshold']);
-            }
-        }
+        $this->profileSettingsService->updateProfile($validated);
 
         return back()->with('success', 'Profile information synchronized successfully.');
     }
@@ -72,9 +73,7 @@ class ProfileSettingsController extends Controller
             'password'         => ['required', Password::defaults(), 'confirmed'],
         ]);
 
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
+        $this->profileSettingsService->updatePassword($validated['password']);
 
         return back()->with('success', 'Password updated successfully. Security protocols updated.');
     }

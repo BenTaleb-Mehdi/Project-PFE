@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Services\ClientProgramService;
 use Illuminate\Http\Request;
-
-use App\Models\MealValidation;
 use Illuminate\Support\Facades\Auth;
 
 class MealValidationController extends Controller
 {
+    protected $clientProgramService;
+
+    public function __construct(ClientProgramService $clientProgramService)
+    {
+        $this->clientProgramService = $clientProgramService;
+    }
+
     /**
      * Validate a meal for today.
      */
@@ -20,16 +26,12 @@ class MealValidationController extends Controller
         ]);
 
         $client = Auth::user()->client;
-        
+
         if (!$client) {
             return back()->with('error', 'Client context not found.');
         }
 
-        MealValidation::updateOrCreate([
-            'client_id'       => $client->id,
-            'program_item_id' => $request->program_item_id,
-            'validated_for'   => now()->toDateString(),
-        ]);
+        $this->clientProgramService->validateMeal($client->id, $request->program_item_id);
 
         return back()->with('success', 'Meal validated! Sequence progress updated.');
     }

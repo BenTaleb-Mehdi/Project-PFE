@@ -26,9 +26,6 @@
 
   <!-- Vite: compiles Tailwind + style.css + Alpine + app.js -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-  <!-- Lenis smooth scroll (CDN only — no npm package needed) -->
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 </head>
 
 <body class="antialiased">

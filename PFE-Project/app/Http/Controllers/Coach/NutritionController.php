@@ -103,7 +103,7 @@ class NutritionController extends Controller
 
     public function destroyProgram($id)
     {
-        \App\Models\Program::destroy($id);
+        $this->nutritionService->deleteProgram($id);
         return redirect()->back()->with('success', 'PROTOCOL_PURGED // Node_Removed');
     }
 
