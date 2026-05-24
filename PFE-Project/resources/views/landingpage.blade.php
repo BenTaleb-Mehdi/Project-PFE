@@ -11,6 +11,7 @@
   <!-- ▌▌▌ HOME PAGE ▌▌▌ -->
   <div x-show="currentPage === 'home'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
     <x-public.hero />
+
     <x-public.gallery :gallery="$gallery" />
     <x-public.about :features="$features" :stats="$stats" :certs="$certs" :timeline="$timeline" />
     <x-public.digital-app :whatsappNumber="$whatsappNumber" />
@@ -37,7 +38,7 @@
         </div>
         <div class="relative font-light">
           <div class="aspect-[3/4] rounded-3xl bg-gradient-to-br from-brand-500/20 to-brand-700/20 border border-brand-500/20 flex items-end justify-center overflow-hidden">
-            <img src="{{ asset('images/achraf-about.png') }}" alt="Professional Fitness Coach" class="w-full h-full object-cover object-top" />
+            <img src="{{ asset('images/images-coach/coach-03.jpg') }}" alt="Professional Fitness Coach" class="w-full h-full object-cover object-top" />
           </div>
           <div class="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl p-5 space-y-1">
             <div class="font-display text-3xl text-brand-500">500+</div>
@@ -79,48 +80,132 @@
     </section>
   </div>
 
-  <!-- ▌▌▌ GALLERY PAGE ▌▌▌ -->
-  <div x-show="currentPage === 'gallery'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display: none;">
-    <section class="pt-36 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16 space-y-4">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">Gallery</div>
-        <h1 class="font-display text-6xl sm:text-7xl tracking-wider text-neutral-900 dark:text-white">CLIENT<br/><span class="text-brand-500">RESULTS</span></h1>
-        <p class="text-neutral-500 dark:text-neutral-400 max-w-md mx-auto font-light">Real transformations from individuals who committed to the process.</p>
-      </div>
+<!-- ▌▌▌ GALLERY PAGE ▌▌▌ -->
+<section
+    class="pt-36 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+    x-show="currentPage === 'gallery' && gallery && gallery.length > 0"
+    x-transition:enter="transition ease-out duration-400"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+>
+    <!-- heading -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase mb-4">Transformations</div>
+        <h1 class="font-display text-5xl sm:text-6xl tracking-wider text-neutral-900 dark:text-white">OUR <span class="text-brand-500">GALLERY</span></h1>
+        <p class="text-neutral-500 dark:text-neutral-400 font-light text-lg">Here are some examples of transformations our clients have achieved with our program.</p>
+    </div>
 
-      <!-- Full Gallery Grid (Alpine with Blade fallback) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20" x-show="gallery && gallery.length > 0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <template x-for="(img, i) in (galleryItems || gallery || [])" :key="i">
-          <div class="reveal group relative aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer" :class="'delay-' + (i * 100 + 100)" @click="selectedGalleryItem = img">
-            <img :src="img.url" :alt="img.alt" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-              <span class="text-white font-display text-2xl tracking-wider" x-text="img.alt"></span>
-              <span class="text-brand-400 text-sm font-medium mt-1">Click to view details</span>
+            <div
+                class="reveal overflow-hidden rounded-[2rem] border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-xl transition-all duration-300 hover:shadow-2xl"
+                :class="'delay-' + (i * 100 + 100)"
+            >
+                <!-- BEFORE / AFTER -->
+                <div
+                    class="relative h-[500px]"
+                    x-data="{ position: 50 }"
+                >
+                    <!-- BEFORE IMAGE -->
+                    <img
+                        :src="img.before"
+                        :alt="img.alt"
+                        class="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                    >
+
+                    <!-- AFTER IMAGE -->
+                    <div
+                        class="absolute inset-0 overflow-hidden"
+                        :style="`clip-path: inset(0 0 0 ${position}%)`"
+                    >
+                        <img
+                            :src="img.after"
+                            :alt="img.alt"
+                            class="absolute inset-0 w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <!-- CENTER LINE -->
+                    <div
+                        class="absolute top-0 bottom-0 z-30"
+                        :style="`left:${position}%`"
+                    >
+                        <!-- LINE -->
+                        <div class="absolute top-0 bottom-0 w-[2px] bg-white"></div>
+
+                        <!-- SLIDER BUTTON -->
+                        <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2">
+                            <div class="w-14 h-14 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-brand-500">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5 text-black"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    stroke-width="2.5"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M8 9l-4 3m0 0l4 3m-4-3h16m-4-3l4 3m0 0l-4 3"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RANGE -->
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        x-model="position"
+                        class="absolute inset-0 z-40 opacity-0 cursor-ew-resize w-full h-full"
+                    >
+
+                    <!-- LABELS -->
+                    <div class="absolute top-5 left-5 z-40">
+                        <div class="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-white text-[10px] uppercase tracking-[0.25em]">
+                            Before
+                        </div>
+                    </div>
+
+                    <div class="absolute top-5 right-5 z-40">
+                        <div class="px-4 py-2 rounded-full bg-brand-500 text-white text-[10px] uppercase tracking-[0.25em] shadow-lg">
+                            After
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3
+                            class="font-display text-2xl tracking-wider text-neutral-900 dark:text-white"
+                            x-text="img.alt"
+                        ></h3>
+                        <span
+                            class="text-brand-500 text-sm font-medium"
+                            x-text="img.duration"
+                        ></span>
+                    </div>
+
+                    <p
+                        class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-5"
+                        x-text="img.details"
+                    ></p>
+
+                    <span
+                        class="inline-flex px-4 py-2 rounded-full bg-brand-500/10 text-brand-500 text-xs uppercase tracking-widest font-semibold"
+                        x-text="img.goal"
+                    ></span>
+                </div>
             </div>
-          </div>
         </template>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20" x-show="!gallery || gallery.length === 0">
-        @foreach($gallery as $index => $item)
-          <div class="reveal group relative aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer delay-{{ ($index * 100 + 100) }}" @click="selectedGalleryItem = { url: '{{ $item['url'] }}', alt: '{{ $item['alt'] }}', duration: '{{ $item['duration'] }}', goal: '{{ $item['goal'] }}', details: '{{ addslashes($item['details']) }}' }">
-            <img src="{{ $item['url'] }}" alt="{{ $item['alt'] }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-              <span class="text-white font-display text-2xl tracking-wider">{{ $item['alt'] }}</span>
-              <span class="text-brand-400 text-sm font-medium mt-1">Click to view details</span>
-            </div>
-          </div>
-        @endforeach
-      </div>
-
-      <!-- CTA -->
-      <div class="max-w-2xl mx-auto text-center p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-        <h2 class="font-display text-4xl tracking-wider mb-4 text-neutral-900 dark:text-white">READY FOR YOUR OWN <span class="text-brand-500">BEFORE & AFTER</span>?</h2>
-        <p class="text-neutral-500 dark:text-neutral-400 mb-8 font-light">Stop waiting for the perfect time. The perfect time is right now.</p>
-        <button @click="goTo('contact')" class="px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-medium transition-colors inline-block">Start Your Journey</button>
-      </div>
-    </section>
-  </div>
+    </div>
+</section>
 
   <!-- ▌▌▌ BLOG PAGES & DETAIL ▌▌▌ -->
   <x-public.blog :posts="$posts" />

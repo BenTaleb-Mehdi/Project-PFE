@@ -1,49 +1,107 @@
-@props(['gallery' => []])
-
-<section id="gallery" class="py-24 lg:py-32">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-      <div class="space-y-4">
-        <div class="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">Gallery</div>
-        <h2 class="reveal delay-100 font-display text-5xl sm:text-6xl tracking-wider text-neutral-900 dark:text-white">CLIENT <span class="text-brand-500">RESULTS</span></h2>
-      </div>
-      <button @click="goTo('gallery')" class="reveal self-start sm:self-auto inline-flex items-center gap-2 text-brand-500 font-medium hover:underline">
-        View Full Gallery
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-      </button>
-    </div>
-
-    <!-- Client-side / Alpine dynamic grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6" x-show="(gallery && gallery.length > 0) || (galleryItems && galleryItems.length > 0)">
-      <template x-for="(img, i) in (galleryItems || gallery || []).slice(0, 6)" :key="i">
-        <div
-          class="reveal group relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer"
-          :class="'delay-' + (i * 100 + 100)"
-          @click="selectedGalleryItem = img"
-        >
-          <img :src="img.url" :alt="img.alt" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-            <span class="text-white font-medium text-sm tracking-wider uppercase" x-text="img.alt"></span>
-            <span class="text-brand-400 text-xs font-medium mt-1">Click to view details</span>
-          </div>
+<section class="py-24 bg-neutral-100 dark:bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase mb-4">Gallery</div>
+            <h2 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wider leading-none text-neutral-900 dark:text-white mb-4">Client Transformations</h2>
+            <p class="text-neutral-500 dark:text-neutral-400 font-light text-lg">Check out some of our amazing client transformations</p>
         </div>
-      </template>
-    </div>
 
-    <!-- Server-side fallback list (displays while Javascript is loading or if it's disabled) -->
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6" x-show="!gallery || gallery.length === 0">
-      @foreach(array_slice($gallery, 0, 6) as $index => $item)
-        <div
-          class="reveal group relative aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer delay-{{ ($index * 100 + 100) }}"
-          @click="selectedGalleryItem = { url: '{{ $item['url'] }}', alt: '{{ $item['alt'] }}', duration: '{{ $item['duration'] }}', goal: '{{ $item['goal'] }}', details: '{{ addslashes($item['details']) }}' }"
-        >
-          <img src="{{ $item['url'] }}" alt="{{ $item['alt'] }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-            <span class="text-white font-medium text-sm tracking-wider uppercase">{{ $item['alt'] }}</span>
-            <span class="text-brand-400 text-xs font-medium mt-1">Click to view details</span>
-          </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach($gallery as $index => $item)
+                <div class="rounded-[2rem] overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-xl transition-all duration-300 hover:shadow-2xl">
+                    <div
+                        class="relative h-[500px]"
+                        x-data="{ position: 50 }"
+                    >
+                        <!-- BEFORE -->
+                        <img
+                            src="{{ $item['before'] }}"
+                            alt="{{ $item['alt'] }}"
+                            class="absolute inset-0 w-full h-full object-cover"
+                        >
+
+                        <!-- AFTER -->
+                        <div
+                            class="absolute inset-0 overflow-hidden"
+                            :style="`clip-path: inset(0 0 0 ${position}%)`"
+                        >
+                            <img
+                                src="{{ $item['after'] }}"
+                                alt="{{ $item['alt'] }}"
+                                class="absolute inset-0 w-full h-full object-cover"
+                            >
+                        </div>
+
+                        <!-- LINE -->
+                        <div
+                            class="absolute top-0 bottom-0 z-30"
+                            :style="`left:${position}%`"
+                        >
+                            <div class="absolute top-0 bottom-0 w-[2px] bg-white"></div>
+                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2">
+                                <div class="w-14 h-14 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-brand-500">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-5 h-5 text-black"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2.5"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M8 9l-4 3m0 0l4 3m-4-3h16m-4-3l4 3m0 0l-4 3"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RANGE -->
+                        <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            x-model="position"
+                            class="absolute inset-0 opacity-0 cursor-ew-resize z-40 w-full h-full"
+                        >
+
+                        <!-- LABELS -->
+                        <div class="absolute top-5 left-5 z-40">
+                            <div class="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-white text-[10px] uppercase tracking-[0.25em]">
+                                Before
+                            </div>
+                        </div>
+
+                        <div class="absolute top-5 right-5 z-40">
+                            <div class="px-4 py-2 rounded-full bg-brand-500 text-white text-[10px] uppercase tracking-[0.25em] shadow-lg">
+                                After
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENT -->
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-display text-2xl tracking-wider text-neutral-900 dark:text-white">
+                                {{ $item['alt'] }}
+                            </h3>
+                            <span class="text-brand-500 text-sm font-medium">
+                                {{ $item['duration'] }}
+                            </span>
+                        </div>
+
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-5">
+                            {{ $item['details'] }}
+                        </p>
+
+                        <span class="inline-flex px-4 py-2 rounded-full bg-brand-500/10 text-brand-500 text-xs uppercase tracking-widest font-semibold">
+                            {{ $item['goal'] }}
+                        </span>
+                    </div>
+                </div>
+            @endforeach
         </div>
-      @endforeach
     </div>
-  </div>
 </section>

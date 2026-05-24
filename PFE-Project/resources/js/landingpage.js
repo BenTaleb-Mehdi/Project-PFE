@@ -240,6 +240,7 @@ export function appData() {
     },
     openPost(post) {
       if (!post) return
+      this.currentPage = 'blog'
       this.selectedPost = post
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },

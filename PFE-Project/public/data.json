@@ -146,27 +146,59 @@
       "body": "<h2 style=\"font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.05em;margin-bottom:1rem\">The Concept</h2><p>Calorie cycling means eating at or above maintenance on training days (fueling performance and recovery) and eating in a moderate deficit on rest days (encouraging fat oxidation).</p><h2 style=\"font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.05em;margin:1.5rem 0 1rem\">A Simple Formula</h2><p>If your maintenance is <strong>2400 kcal</strong>:</p><ul style=\"list-style:disc;padding-left:1.5rem\"><li><strong>Training days:</strong> 2600 kcal (+200)</li><li><strong>Rest days:</strong> 2000 kcal (–400)</li></ul><p style=\"margin-top:1rem\">Over a week with 4 training days and 3 rest days: <em>4×2600 + 3×2000 = 16,400 kcal</em> vs maintenance of <em>7×2400 = 16,800</em>. A 400 kcal weekly deficit — sustainable and muscle-preserving.</p>"
     }
   ],
+  
   "gallery": [
-    { "url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80", "alt": "Client training session", "duration": "16 Weeks", "goal": "Muscle Gain", "details": "By focusing on progressive overload and tracking every session in the app, we added 10lbs of lean mass while dropping body fat." },
-    { "url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80", "alt": "Personal coaching", "duration": "12 Weeks", "goal": "Fat Loss", "details": "A structured recomp phase utilizing daily macro tracking directly in the companion app, leading to a complete visual transformation." },
-    { "url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&q=80", "alt": "Gym environment", "duration": "8 Weeks", "goal": "Strength Phase", "details": "Focused strictly on maximal strength. The client broke plateau limits by using our app's rest timers and video feedback loops." },
-    { "url": "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&q=80", "alt": "Weightlifting progress", "duration": "24 Weeks", "goal": "Athletic Prep", "details": "Long term athletic development. The client tracked every metric visually, allowing us to pivot nutrition weeks before competition." },
-    { "url": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80", "alt": "Fitness results", "duration": "16 Weeks", "goal": "Body Recomp", "details": "Using the before/after slider feature in the app helped the client stay incredibly motivated when the scale wasn't moving." },
-    { "url": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80", "alt": "Coach in action", "duration": "12 Weeks", "goal": "Mobility & Core", "details": "Rebuilt movement patterns from the ground up. In-app video tutorials were crucial for perfecting form without in-person sessions." },
-    { "url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80", "alt": "Strength building", "duration": "20 Weeks", "goal": "Hypertrophy", "details": "A high-volume protocol managed effortlessly through the app, ensuring optimal recovery and avoiding information chaos." },
-    { "url": "https://images.unsplash.com/photo-1550259979-ed79b48d2a30?w=800&q=80", "alt": "Transformation", "duration": "12 Weeks", "goal": "Fat Loss", "details": "A textbook cut. Dropped 15lbs of fat while maintaining strength through meticulous online monitoring and daily check-ins." },
-    { "url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&q=80", "alt": "Elite conditioning", "duration": "10 Weeks", "goal": "Conditioning", "details": "Short, brutal conditioning phase. Having the program readily available on the phone without scrolling through WhatsApp was a game changer." }
+    {
+      "before": "/images/clients/client-01/before.jpg",
+      "after": "/images/clients/client-01/after.jpg",
+      "alt": "Client Transformation",
+      "duration": "12 Weeks",
+      "goal": "Fat Loss",
+      "details": "Lost 14kg with personalized nutrition and strength coaching."
+    },
+    {
+      "before": "/images/clients/client-02/before.jpg",
+      "after": "/images/clients/client-02/after.jpg",
+      "alt": "Body Recomposition",
+      "duration": "16 Weeks",
+      "goal": "Muscle Gain",
+      "details": "Built lean muscle mass while reducing body fat percentage."
+    },
+    {
+      "before": "/images/clients/client-03/before.jpg",
+      "after": "/images/clients/client-03/after.jpg",
+      "alt": "Strength Transformation",
+      "duration": "10 Weeks",
+      "goal": "Strength",
+      "details": "Improved overall strength and athletic performance."
+    }
   ],
+
   "galleryItems": [
-    { "url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80", "alt": "Client training session", "duration": "16 Weeks", "goal": "Muscle Gain", "details": "By focusing on progressive overload and tracking every session in the app, we added 10lbs of lean mass while dropping body fat." },
-    { "url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80", "alt": "Personal coaching", "duration": "12 Weeks", "goal": "Fat Loss", "details": "A structured recomp phase utilizing daily macro tracking directly in the companion app, leading to a complete visual transformation." },
-    { "url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&q=80", "alt": "Gym environment", "duration": "8 Weeks", "goal": "Strength Phase", "details": "Focused strictly on maximal strength. The client broke plateau limits by using our app's rest timers and video feedback loops." },
-    { "url": "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&q=80", "alt": "Weightlifting progress", "duration": "24 Weeks", "goal": "Athletic Prep", "details": "Long term athletic development. The client tracked every metric visually, allowing us to pivot nutrition weeks before competition." },
-    { "url": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80", "alt": "Fitness results", "duration": "16 Weeks", "goal": "Body Recomp", "details": "Using the before/after slider feature in the app helped the client stay incredibly motivated when the scale wasn't moving." },
-    { "url": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80", "alt": "Coach in action", "duration": "12 Weeks", "goal": "Mobility & Core", "details": "Rebuilt movement patterns from the ground up. In-app video tutorials were crucial for perfecting form without in-person sessions." },
-    { "url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80", "alt": "Strength building", "duration": "20 Weeks", "goal": "Hypertrophy", "details": "A high-volume protocol managed effortlessly through the app, ensuring optimal recovery and avoiding information chaos." },
-    { "url": "https://images.unsplash.com/photo-1550259979-ed79b48d2a30?w=800&q=80", "alt": "Transformation", "duration": "12 Weeks", "goal": "Fat Loss", "details": "A textbook cut. Dropped 15lbs of fat while maintaining strength through meticulous online monitoring and daily check-ins." },
-    { "url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&q=80", "alt": "Elite conditioning", "duration": "10 Weeks", "goal": "Conditioning", "details": "Short, brutal conditioning phase. Having the program readily available on the phone without scrolling through WhatsApp was a game changer." }
+    {
+      "before": "/images/clients/client-01/before.jpg",
+      "after": "/images/clients/client-01/after.jpg",
+      "alt": "Client Transformation",
+      "duration": "12 Weeks",
+      "goal": "Fat Loss",
+      "details": "Lost 14kg with personalized nutrition and strength coaching."
+    },
+    {
+      "before": "/images/clients/client-02/before.jpg",
+      "after": "/images/clients/client-02/after.jpg",
+      "alt": "Body Recomposition",
+      "duration": "16 Weeks",
+      "goal": "Muscle Gain",
+      "details": "Built lean muscle mass while reducing body fat percentage."
+    },
+    {
+      "before": "/images/clients/client-03/before.jpg",
+      "after": "/images/clients/client-03/after.jpg",
+      "alt": "Strength Transformation",
+      "duration": "10 Weeks",
+      "goal": "Strength",
+      "details": "Improved overall strength and athletic performance."
+    }
   ],
   "socials": [
     { "name": "Instagram", "url": "#", "icon": "<svg class=\"w-4 h-4\" fill=\"currentColor\" viewBox=\"0 0 24 24\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z\"/></svg>" },

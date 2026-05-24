@@ -254,7 +254,7 @@
           <h3 class="font-display text-2xl tracking-wider mb-6 text-neutral-900 dark:text-white">MORE <span class="text-brand-500">ARTICLES</span></h3>
           <div class="grid sm:grid-cols-2 gap-4">
             <template x-for="post in posts.filter(p => p.id !== selectedPost?.id).slice(0, 2)" :key="post.id">
-              <div class="cursor-pointer rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden group card-hover" @click="selectedPost = post; window.scrollTo(0, 0)">
+              <div class="cursor-pointer rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden group card-hover" @click="openPost(post)">
                 <div class="h-28" :style="'background: ' + post.color + '; display:flex; align-items:center; justify-content:center'">
                   <span class="font-display text-4xl text-white/30" x-text="post.emoji"></span>
                 </div>
