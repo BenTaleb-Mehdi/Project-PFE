@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Http;
 
 class ChatbotController extends Controller
 {
+    /**
+     * Landing page chatbot — powered by Gemini 2.5 Flash.
+     * Accepts { message, history[] } and returns { output: string }.
+     */
+ 
+
     public function sendToN8n(Request $request)
     {
         set_time_limit(150); // Prevent PHP 30s execution timeout

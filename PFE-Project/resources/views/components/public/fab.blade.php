@@ -58,7 +58,7 @@
     <button 
       @click="fabOpen = !fabOpen"
       @click.outside="fabOpen = false"
-      class="w-14 h-14 rounded-full bg-brand-500 text-white flex items-center justify-center shadow-xl hover:bg-brand-600 transition-colors z-10 relative"
+      class="w-14 h-14 rounded-full bg-brand-700 text-white flex items-center justify-center shadow-xl hover:bg-brand-600 transition-colors z-10 relative"
     >
       <svg class="w-6 h-6 transition-transform duration-300" :class="fabOpen ? 'rotate-45' : ''" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     </button>

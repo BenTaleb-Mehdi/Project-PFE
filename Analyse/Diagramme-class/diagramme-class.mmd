@@ -1,82 +1,130 @@
 classDiagram
     direction LR
 
-    %% --- Actors ---
+    %% ── Core Auth & Users ──
     class User {
         +int id
-        +String name
-        +String email
-        +String password
+        +string name
+        +string email
+        +string password
+        +datetime email_verified_at
+        +string remember_token
+        +verifyEmail() bool
     }
 
     class Client {
-        +String phone_number
-        +String status
+        +int id
+        +string phone_number
+        +string status
         +float target_goal
         +float current_weight
         +float height
-        +DateTime? program_started_at
+        +date program_started_at
         +int duration_weeks
+        +date deadline /
+        +int days_left /
+        +calculateBMI() float
+        +hasActiveProgram() bool
     }
 
     class Staff {
-        +String specialty
-        +String bio
-    }
-
-    %% --- Nutrition Engine ---
-    class Meal {
         +int id
-        +String name
-        +String details
-        +float protein 
-        +float carbs
-        +float fats 
-        +int calories
+        +string bio
+        +string phone_number
+        +string status
+        +assignProgram(client_id) bool
     }
 
+    class Specialty {
+        +int id
+        +string name
+    }
+
+    %% ── Nutrition & Programs ──
     class MealCategory {
         +int id
-        +String name
+        +string name
+    }
+
+    class Meal {
+        +int id
+        +string name
+        +string details
+        +float protein
+        +float carbs
+        +float fats
+        +int calories
+        +getMacros() string
     }
 
     class Program {
         +int id
-        +String title
+        +string title
+        +cloneProgram() Program
     }
 
     class ProgramItem {
         +int id
         +int day_of_week
-        +String time_slot
+        +string time_slot
     }
 
-    %% --- Monitoring & Reporting ---
+    class MealValidation {
+        +int id
+        +string validated_for
+        +toggleValidation() bool
+    }
+
+    %% ── Monitoring & Finance ──
     class Evolution {
         +int id
         +float weight
-        +JSON images
-        +DateTime recorded_at
+        +array images
+        +date recorded_at
     }
 
     class Payment {
         +int id
         +float amount
-        +DateTime date
-        +String status
+        +date date
+        +string status
+        +processPayment() bool
+        +refund() bool
     }
 
-    %% --- Logical Associations ---
-    User "1" -- "0..1" Client : extended_by
-    User "1" -- "0..1" Staff : extended_by
+    %% ── System ──
+    class SystemNotification {
+        +int id
+        +string title
+        +string body
+        +string type
+        +bool is_read
+        +string link
+        +markAsRead() void
+    }
 
-    Meal "*" -- "1" MealCategory : categorized_by
+    class SystemSetting {
+        +string key
+        +string value
+        +get(key) string
+    }
+
+    %% ── Structural Associations ──
+    User "1" -- "0..1" Client : acts_as
+    User "1" -- "0..1" Staff : acts_as
+    User "1" --> "0..*" SystemNotification : receives
+
+    Staff "*" -- "*" Specialty : specialized_in
+    Staff "1" -- "0..*" Program : designs
+
+    Client "0..*" --> "0..1" Program : follows
+
     Program "1" *-- "*" ProgramItem : contains
-    Meal "1" -- "*" ProgramItem : defined_in
+    ProgramItem "*" --> "1" Meal : schedules
+    Meal "*" --> "1" MealCategory : categorized_by
 
-    Staff "1" -- "*" Program : designs
-    Client "*" -- "1" Program : follows
+    MealValidation "*" --> "1" Client : logs_for
+    MealValidation "*" --> "1" ProgramItem : tracks
 
-    Client "1" *-- "*" Evolution : logs
-    Client "1" *-- "*" Payment : pays
-
+    Client "1" *-- "0..*" Evolution : monitors
+    Client "1" *-- "0..*" Payment : bills

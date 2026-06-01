@@ -91,7 +91,7 @@
                         <tr class="hover:bg-zinc-50/50 transition-colors">
                             <td class="px-6 py-4 text-[10px] font-mono text-cyan-700 font-bold">#{{ $txn->id }}</td>
                             <td class="px-6 py-4 text-[10px] text-zinc-400 font-mono">{{ $txn->date }}</td>
-                            <td class="px-6 py-4 text-[10px] text-zinc-900 font-bold tracking-tight">{{ $txn->client->user->name }}</td>
+                            <td class="px-6 py-4 text-[10px] text-zinc-900 font-bold tracking-tight">{{ optional($txn->client)->user->name ?? 'N/A' }}</td>
                             <td class="px-6 py-4 text-[10px] font-mono text-zinc-900 font-bold">{{ number_format($txn->amount, 0) }} MAD</td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 text-[8px] font-bold border font-mono {{ $txn->status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100' }}">
@@ -102,7 +102,7 @@
                                 <div class="flex justify-end space-x-3">
                                     <a href="{{ route('coach.finance.receipt.download', $txn->id) }}" class="p-2 text-zinc-400 hover:text-cyan-600 transition-colors" title="Download Receipt PDF"><i data-lucide="file-text" class="size-3.5"></i></a>
                                     <button @click="openEditModal({{ json_encode($txn->load('client.user')) }})" class="p-2 text-zinc-400 hover:text-cyan-600 transition-colors"><i data-lucide="edit-3" class="size-3.5"></i></button>
-                                    <button @click="confirmDelete({{ json_encode(['id' => $txn->id, 'name' => $txn->client->user->name]) }})" class="p-2 text-zinc-400 hover:text-red-600 transition-colors"><i data-lucide="trash-2" class="size-3.5"></i></button>
+                                    <button @click="confirmDelete({{ json_encode(['id' => $txn->id, 'name' => optional($txn->client)->user->name ?? 'N/A']) }})" class="p-2 text-zinc-400 hover:text-red-600 transition-colors"><i data-lucide="trash-2" class="size-3.5"></i></button>
                                 </div>
                             </td>
                         </tr>

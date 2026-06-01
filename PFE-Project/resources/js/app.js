@@ -18,6 +18,7 @@ import { teamManagement } from './components/admin/team-management.js'
 import { financeTracker } from './components/admin/finance-tracker.js'
 import { evolutionSync } from './components/client/evolution-sync.js'
 import { authController } from './components/auth-controller.js'
+import { notificationHub } from './components/notification-hub.js'
 import 'preline'
 import { createIcons, icons } from 'lucide'
 import Lenis from 'lenis'
@@ -36,6 +37,7 @@ Alpine.data('teamManagement', teamManagement)
 Alpine.data('financeTracker', financeTracker)
 Alpine.data('evolutionSync', evolutionSync)
 Alpine.data('authController', authController)
+Alpine.data('notificationHub', notificationHub)
 
 window.Alpine = Alpine
 Alpine.start()

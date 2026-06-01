@@ -89,5 +89,122 @@
     { "title": "Online",    "sub": "E-Books + Videos",       "category": "online",   "bg": "linear-gradient(135deg,#1a0a0a,#060606)" },
     { "title": "Yoga",      "sub": "Mind & Body",            "category": "mindset",  "bg": "linear-gradient(135deg,#0d1a1a,#0a0a0a)" },
     { "title": "12+",       "sub": "Years Elite Coaching",   "category": "online",   "bg": "linear-gradient(180deg,rgba(181,255,45,.1),#0a0a0a)" }
-  ]
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "category": "Training",
+      "date": "May 8, 2025",
+      "readTime": "6 min read",
+      "emoji": "\ud83c\udfcb\ufe0f",
+      "color": "linear-gradient(135deg,#1a1a2e,#16213e)",
+      "title": "Progressive Overload: The Only Muscle-Building Principle You Need",
+      "excerpt": "If you're not getting stronger over time, you're not growing. Here's exactly how to implement progressive overload systematically.",
+      "tags": ["training", "hypertrophy", "strength"],
+      "body": "<h2>What Is Progressive Overload?</h2><p>Progressive overload is the gradual increase of stress placed upon the musculoskeletal and nervous system. In plain terms: you must challenge your muscles <em>more</em> over time for them to keep adapting (growing and strengthening).</p><h2>The 5 Ways to Overload</h2><ul><li><strong>Load</strong> \u2014 add weight to the bar</li><li><strong>Volume</strong> \u2014 more sets or reps at the same weight</li><li><strong>Density</strong> \u2014 same work in less time</li><li><strong>Range of motion</strong> \u2014 deeper, more complete movements</li><li><strong>Technique</strong> \u2014 better motor unit recruitment</li></ul><h2>A Simple Weekly Template</h2><p>Start by adding <strong>2.5 kg</strong> to compound lifts each week. Once you can no longer add weight, increase reps (8 \u2192 10 \u2192 12), then deload and start the cycle heavier.</p>"
+    },
+    {
+      "id": 2,
+      "category": "Nutrition",
+      "date": "Apr 22, 2025",
+      "readTime": "5 min read",
+      "emoji": "\ud83e\udd57",
+      "color": "linear-gradient(135deg,#0f4c35,#1a6b3a)",
+      "title": "How Much Protein Do You Actually Need? The Science Explained",
+      "excerpt": "Forget the bro-science. Here's what the research actually says about protein requirements for muscle gain and fat loss.",
+      "tags": ["nutrition", "protein", "science"],
+      "body": "<h2>The Research Consensus</h2><p>Meta-analyses consistently show that <strong>1.6\u20132.2g of protein per kg of bodyweight</strong> maximizes muscle protein synthesis for most people.</p><h2>Practical Targets</h2><ul><li><strong>Muscle gain:</strong> 1.8\u20132.2g/kg</li><li><strong>Fat loss:</strong> 2.0\u20132.4g/kg</li><li><strong>General health:</strong> 1.2\u20131.6g/kg</li></ul>"
+    },
+    {
+      "id": 3,
+      "category": "Recovery",
+      "date": "Apr 10, 2025",
+      "readTime": "4 min read",
+      "emoji": "\ud83d\ude34",
+      "color": "linear-gradient(135deg,#2d1b69,#4a2c8a)",
+      "title": "Why Sleep Is Your Most Powerful Performance Drug",
+      "excerpt": "Every supplement in your stack combined won't come close to what 8 hours of quality sleep does for body composition.",
+      "tags": ["recovery", "sleep", "performance"],
+      "body": "<h2>Sleep & Hormones</h2><p>During deep sleep stages (N3 and REM), your body releases the majority of its daily <strong>growth hormone</strong>. Cutting sleep short reduces anabolic signaling and increases cortisol.</p><h2>5 Sleep Hygiene Hacks</h2><ol><li>Set a consistent wake time \u2014 even weekends</li><li>No screens 60 minutes before bed</li><li>Keep your room at 18\u00b0C / 65\u00b0F</li><li>Limit caffeine after 2 PM</li><li>10 minutes of box breathing before sleep</li></ol>"
+    },
+    {
+      "id": 4,
+      "category": "Mindset",
+      "date": "Mar 28, 2025",
+      "readTime": "7 min read",
+      "emoji": "\ud83e\udde0",
+      "color": "linear-gradient(135deg,#7c1d1d,#b91c1c)",
+      "title": "Identity-Based Habit Change: Become the Person Who Never Misses",
+      "excerpt": "Motivation is unreliable. Identity is bulletproof. How to rewire your self-concept for permanent fitness habits.",
+      "tags": ["mindset", "habits", "psychology"],
+      "body": "<h2>Outcome vs. Identity</h2><p>Most people set <em>outcome-based goals</em>: \"I want to lose 20 pounds.\" The problem? Once achieved, the motivation disappears. <strong>Identity-based goals</strong> work differently: \"I am a person who trains 4x per week.\"</p><p style=\"margin-top:1rem\">Every time you follow through on a workout, you cast a vote for that identity.</p>"
+    },
+    {
+      "id": 5,
+      "category": "Training",
+      "date": "Mar 14, 2025",
+      "readTime": "8 min read",
+      "emoji": "\u26a1",
+      "color": "linear-gradient(135deg,#1c1c00,#4a4a00)",
+      "title": "The 4-Day Upper/Lower Split: Best Program for Natural Lifters",
+      "excerpt": "Four days per week, alternating upper and lower body. It's been around forever because it works.",
+      "tags": ["training", "program", "split"],
+      "body": "<h2>Why Upper/Lower Works</h2><p>The upper/lower split hits each muscle group <strong>twice per week</strong> \u2014 the research-optimal training frequency for natural lifters.</p><h2>Sample Week</h2><ul><li><strong>Monday \u2014 Upper (Strength):</strong> Bench Press, Row, OHP, Pull-ups</li><li><strong>Tuesday \u2014 Lower (Strength):</strong> Squat, Romanian DL, Leg Press</li><li><strong>Thursday \u2014 Upper (Hypertrophy):</strong> Incline DB, Cable Row, Lateral Raises</li><li><strong>Friday \u2014 Lower (Hypertrophy):</strong> Deadlift, Leg Curl, Calf Raises</li></ul>"
+    },
+    {
+      "id": 6,
+      "category": "Nutrition",
+      "date": "Feb 28, 2025",
+      "readTime": "5 min read",
+      "emoji": "\ud83d\udd25",
+      "color": "linear-gradient(135deg,#431407,#7c2d12)",
+      "title": "Calorie Cycling: Eat More on Training Days, Less on Rest Days",
+      "excerpt": "A simple nutrient timing strategy that supports muscle growth and fat loss simultaneously.",
+      "tags": ["nutrition", "calories", "strategy"],
+      "body": "<h2>The Concept</h2><p>Calorie cycling means eating at or above maintenance on training days and eating in a moderate deficit on rest days.</p><h2>A Simple Formula</h2><p>If your maintenance is <strong>2400 kcal</strong>:</p><ul><li><strong>Training days:</strong> 2600 kcal (+200)</li><li><strong>Rest days:</strong> 2000 kcal (\u2013400)</li></ul>"
+    }
+  ],
+  "chatbot": {
+    "fallback": "I'm Achraf, your Elite Fitness Coach at IRONCOACH! I can help with training, nutrition, recovery, and mindset. What's on your mind?",
+    "greetings": [
+      {
+        "keywords": ["hello", "hi", "hey", "good morning", "good evening", "sup", "yo"],
+        "response": "Hey there! I'm Achraf, your Elite Fitness Coach at IRONCOACH. Ready to build your champion body? Ask me anything about training, nutrition, or getting started!"
+      },
+      {
+        "keywords": ["who are you", "what is ironcoach", "tell me about yourself", "what's your name"],
+        "response": "I'm Achraf, a professional bodybuilder with 10 years of experience. At IRONCOACH, we transform physiques through personalized training, science-backed nutrition, and mindset coaching. What goal can I help you crush today?"
+      }
+    ],
+    "responses": [
+      {
+        "keywords": ["training", "workout", "exercise", "gym", "strength", "muscle", "lift", "progressive overload", "split", "program", "routine", "rep", "set"],
+        "response": "Great question! At IRONCOACH, we use progressive overload as the foundation \u2014 gradually increasing weight, volume, or density to keep your muscles adapting. A 4-day upper/lower split is my go-to for natural lifters: it hits each muscle group twice per week with full recovery. Want me to suggest a sample week?"
+      },
+      {
+        "keywords": ["nutrition", "diet", "food", "protein", "meal", "calorie", "eat", "fat loss", "carb", "macro"],
+        "response": "Nutrition is where transformations happen. I recommend 1.6\u20132.2g of protein per kg of bodyweight for muscle gain, and 2.0\u20132.4g/kg during fat loss to preserve muscle. Calorie cycling \u2014 eating more on training days and less on rest days \u2014 is a sustainable strategy that supports both performance and fat loss. Want a sample meal plan?"
+      },
+      {
+        "keywords": ["recovery", "sleep", "rest", "rest day", "hormone", "growth", "hygiene", "overtrain"],
+        "response": "Sleep is your most powerful performance drug. During deep sleep, your body releases the majority of its daily growth hormone. Aim for 7\u20139 hours, keep your room at 18\u00b0C, and avoid screens 60 minutes before bed. Never skip rest days \u2014 that's when your muscles actually grow!"
+      },
+      {
+        "keywords": ["mindset", "motivation", "habit", "goal", "identity", "psychology", "mental", "discipline"],
+        "response": "Motivation is unreliable \u2014 identity is bulletproof. Instead of 'I want to lose 20 pounds,' tell yourself 'I am a person who trains 4x per week.' Every workout casts a vote for that identity. Write down your target identity, read it daily, and act accordingly. That's how permanent change happens."
+      },
+      {
+        "keywords": ["price", "cost", "plan", "package", "session", "rate", "pricing", "how much", "fee", "subscription"],
+        "response": "We offer personalized coaching plans tailored to your goals and budget. Each plan includes a custom training program, nutrition guidance, 24/7 WhatsApp support, and weekly progress reviews. Want to book a free zero-pressure consultation to discuss what works for you?"
+      },
+      {
+        "keywords": ["contact", "call", "booking", "consultation", "whatsapp", "email", "location", "reach", "phone", "talk"],
+        "response": "You can reach me via email at alex@coachfitnesspro.com or through WhatsApp. I'm based in Los Angeles, CA, and also work with clients worldwide through our online coaching platform. Ready to start? Click 'Contact' above and let's schedule your free consultation!"
+      },
+      {
+        "keywords": ["thanks", "thank you", "appreciate", "helpful", "great"],
+        "response": "You're welcome! That's what I'm here for. If you have more questions, just ask \u2014 I'm always online to help you build your champion body!"
+      }
+    ]
+  }
 }

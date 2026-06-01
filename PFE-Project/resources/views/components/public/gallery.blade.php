@@ -1,3 +1,5 @@
+@props(['gallery' => []])
+
 <section class="py-24 bg-neutral-100 dark:bg-black">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
