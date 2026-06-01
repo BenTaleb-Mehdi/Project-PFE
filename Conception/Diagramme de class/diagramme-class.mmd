@@ -1,38 +1,30 @@
 classDiagram
     direction LR
 
-    %% ── Core Auth & Users ──
+    %% ── Core Auth & Users (Héritage) ──
     class User {
         +int id
         +string name
         +string email
         +string password
+        +string phone_number
+        +string status
         +datetime email_verified_at
         +string remember_token
-        +verifyEmail() bool
     }
 
     class Client {
-        +int id
-        +string phone_number
-        +string status
         +float target_goal
         +float current_weight
         +float height
         +date program_started_at
         +int duration_weeks
-        +date deadline /
-        +int days_left /
-        +calculateBMI() float
-        +hasActiveProgram() bool
+        +/date deadline
+        +/int days_left
     }
 
     class Staff {
-        +int id
         +string bio
-        +string phone_number
-        +string status
-        +assignProgram(client_id) bool
     }
 
     class Specialty {
@@ -54,13 +46,11 @@ classDiagram
         +float carbs
         +float fats
         +int calories
-        +getMacros() string
     }
 
     class Program {
         +int id
         +string title
-        +cloneProgram() Program
     }
 
     class ProgramItem {
@@ -71,15 +61,15 @@ classDiagram
 
     class MealValidation {
         +int id
-        +string validated_for
-        +toggleValidation() bool
+        +datetime validated_at
+        +bool is_completed
     }
 
     %% ── Monitoring & Finance ──
     class Evolution {
         +int id
         +float weight
-        +array images
+        +string[] images
         +date recorded_at
     }
 
@@ -88,8 +78,6 @@ classDiagram
         +float amount
         +date date
         +string status
-        +processPayment() bool
-        +refund() bool
     }
 
     %% ── System ──
@@ -100,7 +88,6 @@ classDiagram
         +string type
         +bool is_read
         +string link
-        +markAsRead() void
     }
 
     class SystemSetting {
@@ -110,21 +97,21 @@ classDiagram
     }
 
     %% ── Structural Associations ──
-    User "1" -- "0..1" Client : acts_as
-    User "1" -- "0..1" Staff : acts_as
-    User "1" --> "0..*" SystemNotification : receives
+    User <|-- Client : est un
+    User <|-- Staff : est un
+    User "1" --> "*" SystemNotification : reçoit
 
-    Staff "*" -- "*" Specialty : specialized_in
-    Staff "1" -- "0..*" Program : designs
+    Staff "*" -- "*" Specialty : spécialisé dans
+    Staff "1" --> "*" Program : crée
 
-    Client "0..*" --> "0..1" Program : follows
+    Client "0..*" --> "0..1" Program : suit
 
-    Program "1" *-- "*" ProgramItem : contains
-    ProgramItem "*" --> "1" Meal : schedules
-    Meal "*" --> "1" MealCategory : categorized_by
+    Program "1" *-- "*" ProgramItem : contient
+    ProgramItem "*" --> "1" Meal : planifie
+    Meal "*" --> "1" MealCategory : appartient à
 
-    MealValidation "*" --> "1" Client : logs_for
-    MealValidation "*" --> "1" ProgramItem : tracks
+    MealValidation "*" --> "1" Client : validé par
+    MealValidation "*" --> "1" ProgramItem : concerne
 
-    Client "1" *-- "0..*" Evolution : monitors
-    Client "1" *-- "0..*" Payment : bills
+    Client "1" *-- "*" Evolution : historique poids
+    Client "1" *-- "*" Payment : paye
