@@ -22,8 +22,8 @@ use App\Http\Controllers\Api\NotificationController;
 // --- Nutrition AI ---
 Route::post('/nutrition/categories/ai-create', [MealCategoryController::class, 'store']);
 
-// --- n8n Chatbot (legacy) ---
-Route::post('/chatbot/send', [ChatbotController::class, 'sendToN8n']);
+// --- Gemini AI Chatbot ---
+Route::post('/chatbot/send', [ChatbotController::class, 'send']);
 
 
 // --- System Notifications (auth required via session cookie) ---

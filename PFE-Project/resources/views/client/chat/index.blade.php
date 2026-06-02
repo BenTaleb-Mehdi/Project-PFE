@@ -337,6 +337,8 @@
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
+                        // Prevent race condition - only update if still viewing same contact
+                        if (!this.activeContact || this.activeContact.id !== contactId) return;
                         const prevCount = this.messages.length;
                         this.messages = data.messages;
                         
@@ -355,6 +357,15 @@
             handleFileChange(e) {
                 const file = e.target.files[0];
                 if (!file) return;
+                
+                // Max 5MB file size validation
+                const maxSize = 5 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    alert('File too large. Maximum size is 5MB.');
+                    this.clearFile();
+                    return;
+                }
+                
                 this.selectedFile = file;
                 this.fileName = file.name;
             },
@@ -362,10 +373,52 @@
             clearFile() {
                 this.selectedFile = null;
                 this.fileName = '';
-                this.$refs.fileInput.value = '';
+                if (this.$refs.fileInput) {
+                    this.$refs.fileInput.value = '';
+                }
             },
             
-            sendMessage() {
+            async compressImage(file) {
+                return new Promise((resolve) => {
+                    if (!file.type.startsWith('image/')) {
+                        resolve(file);
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            let { width, height } = img;
+                            const maxDim = 1920;
+                            if (width > maxDim || height > maxDim) {
+                                if (width > height) {
+                                    height = (height / width) * maxDim;
+                                    width = maxDim;
+                                } else {
+                                    width = (width / height) * maxDim;
+                                    height = maxDim;
+                                }
+                            }
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            canvas.toBlob((blob) => {
+                                const compressed = new File([blob], file.name, {
+                                    type: file.type,
+                                    lastModified: Date.now()
+                                });
+                                resolve(compressed);
+                            }, file.type, 0.8);
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            },
+            
+            async sendMessage() {
                 if (!this.activeContact) return;
                 if (!this.messageText.trim() && !this.selectedFile) return;
                 
@@ -376,7 +429,8 @@
                     formData.append('message', this.messageText);
                 }
                 if (this.selectedFile) {
-                    formData.append('file', this.selectedFile);
+                    const compressed = await this.compressImage(this.selectedFile);
+                    formData.append('file', compressed);
                 }
                 
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

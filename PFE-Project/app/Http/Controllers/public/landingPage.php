@@ -30,12 +30,14 @@ class landingPage extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
             'goal' => 'nullable|string|max:255',
             'message' => 'required|string',
         ]);
 
         $name = $request->input('name');
         $email = $request->input('email');
+        $phone = $request->input('phone');
         $goal = $request->input('goal') ?: 'General';
         $messageText = $request->input('message');
 
@@ -45,7 +47,7 @@ class landingPage extends Controller
             $user = User::create([
                 'name' => $name,
                 'email' => $email,
-                'password' => bcrypt('Client@2026') // default temporary password
+                'password' => bcrypt('Client@2026')
             ]);
             $user->assignRole('client');
         }
@@ -63,10 +65,19 @@ class landingPage extends Controller
         $admin = User::role('admin')->first() ?: User::where('email', 'admin@ironcoach.com')->first();
         
         if ($admin) {
+            $msg = "Contact Request\n";
+            $msg .= "Name: {$name}\n";
+            $msg .= "Email: {$email}\n";
+            if ($phone) {
+                $msg .= "Phone: {$phone}\n";
+            }
+            $msg .= "Goal: {$goal}\n";
+            $msg .= "Message: {$messageText}";
+
             Message::create([
                 'sender_id' => $user->id,
                 'receiver_id' => $admin->id,
-                'message' => "Contact Request - Goal: {$goal}\nMessage: {$messageText}",
+                'message' => $msg,
                 'is_read' => false,
             ]);
         }

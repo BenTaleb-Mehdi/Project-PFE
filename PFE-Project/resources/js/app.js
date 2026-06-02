@@ -24,6 +24,7 @@ import { createIcons, icons } from 'lucide'
 import Lenis from 'lenis'
 
 // Initialize Lucide Icons
+window.lucide = { createIcons, icons };
 window.addEventListener('DOMContentLoaded', () => {
     createIcons({ icons });
 });

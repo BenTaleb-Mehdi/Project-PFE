@@ -122,7 +122,7 @@
                 <span class="text-[11px] text-zinc-400">Coach Flow AI Protocol</span>
                 <div class="flex items-center gap-1">
                     <span class="text-[11px] text-zinc-400">Powered by</span>
-                    <span class="text-[11px] font-bold text-[#0891B2]">MT Engine</span>
+                    <span class="text-[11px] font-bold text-[#0891B2]">Gemini AI</span>
                 </div>
             </div>
         </div>
@@ -135,8 +135,9 @@
             isOpen: false,
             isLoading: false,
             input: '',
+            chatHistory: [],
             messages: [
-                { role: 'ai', content: 'Hello! I can help you generate nutrition categories. What would you like to create today?' }
+                { role: 'ai', content: 'Hello! I am CoachBot AI, powered by Gemini. I can help you create nutrition categories, design meal sequences, or answer fitness questions. What would you like to do?' }
             ],
             
             toggleChat() {
@@ -173,41 +174,40 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         body: JSON.stringify({ 
-                            chatInput: userText
+                            chatInput: userText,
+                            history: this.chatHistory
                         })
                     });
                     
                     const data = await response.json();
                     
                     if (response.ok) {
-                        const aiResponse = data.output || 'Success! The category has been created and synced.';
+                        const aiResponse = data.output || 'Response received.';
                         
                         this.messages.push({ 
                             role: 'ai', 
                             content: aiResponse 
                         });
                         
-                        if (aiResponse.toLowerCase().includes('success') || aiResponse.toLowerCase().includes('created')) {
-                             setTimeout(() => {
+                        this.chatHistory.push({ role: 'user', text: userText });
+                        this.chatHistory.push({ role: 'ai', text: aiResponse });
+                        
+                        // Reload if any entity was created
+                        if (data.created && data.created.length > 0) {
+                            setTimeout(() => {
                                 window.location.reload();
-                            }, 2500);
+                            }, 2000);
                         }
                     } else {
-                        let errorMsg = data.details || data.output || data.message || 'Workflow Failure.';
-                        
-                        if (errorMsg.includes('Error in workflow')) {
-                            errorMsg = "⚠️ **N8N Workflow Error detected.**\n\n**The Problem:** Your n8n workflow is likely trying to call an old ngrok link.\n\n**The Fix:**\n1. Open your n8n workflow.\n2. Find the **HTTP Request** node.\n3. Update the URL to:\n`https://dripping-hangup-detonator.ngrok-free.dev/api/nutrition/categories/ai-create`";
-                        }
-
                         this.messages.push({ 
                             role: 'ai', 
-                            content: errorMsg 
+                            content: data.output || 'Service unavailable. Please try again.' 
                         });
                     }
                 } catch (error) {
                     this.messages.push({ 
                         role: 'ai', 
-                        content: `**System Error:** Connection to n8n failed. Check your ngrok tunnel.` 
+                        content: 'Connection error. Please check your internet and try again.' 
                     });
                 } finally {
                     this.isLoading = false;

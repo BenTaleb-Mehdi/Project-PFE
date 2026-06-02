@@ -501,7 +501,7 @@ export function appData() {
 
 export function contactForm() {
   return {
-    form: { firstName: '', lastName: '', email: '', goal: '', message: '' },
+    form: { firstName: '', lastName: '', email: '', phone: '', goal: '', message: '' },
     loading: false,
     submitted: false,
     async submit() {
@@ -522,6 +522,7 @@ export function contactForm() {
           body: JSON.stringify({
             name: `${this.form.firstName} ${this.form.lastName}`.trim(),
             email: this.form.email,
+            phone: this.form.phone,
             goal: this.form.goal,
             message: this.form.message
           })
