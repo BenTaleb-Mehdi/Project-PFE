@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileSettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", [landingPage::class,"index"])->name("landingpage");
+Route::post("/contact", [landingPage::class, "submitContact"])->name("contact.submit");
 
 // Public Signed Downloads
 Route::get('/receipts/{id}/download/signed', [App\Http\Controllers\Coach\PaymentController::class, 'downloadReceiptSigned'])
@@ -37,10 +38,22 @@ Route::prefix('client')->name('client.')->middleware(['auth', 'role:client'])->g
     Route::get('/programs', [ClientDashboardController::class, 'programs'])->name('programs.index');
     Route::get('/history', [ClientDashboardController::class, 'history'])->name('history.index');
     Route::post('/meals/validate', [MealValidationController::class, 'store'])->name('meals.validate');
+
+    // Chat Messaging Space
+    Route::get('/chat', [App\Http\Controllers\ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/contacts', [App\Http\Controllers\ChatController::class, 'getContacts'])->name('chat.contacts');
+    Route::get('/chat/messages/{contactId}', [App\Http\Controllers\ChatController::class, 'getMessages'])->name('chat.messages');
+    Route::post('/chat/send/{contactId}', [App\Http\Controllers\ChatController::class, 'send'])->name('chat.send');
 });
 
 Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Chat Messaging Space
+    Route::get('/chat', [App\Http\Controllers\ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/contacts', [App\Http\Controllers\ChatController::class, 'getContacts'])->name('chat.contacts');
+    Route::get('/chat/messages/{contactId}', [App\Http\Controllers\ChatController::class, 'getMessages'])->name('chat.messages');
+    Route::post('/chat/send/{contactId}', [App\Http\Controllers\ChatController::class, 'send'])->name('chat.send');
     
     // Client Management
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');

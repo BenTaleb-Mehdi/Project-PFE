@@ -44,6 +44,14 @@
             <i data-lucide="archive" class="size-3.5 flex-shrink-0"></i>
             Program History
         </a>
+        <a href="{{ route('client.chat.index') }}"
+           class="flex items-center gap-x-3 px-3 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-all
+                  {{ request()->routeIs('client.chat.*')
+                     ? 'bg-cyan-50 text-cyan-700 border-r-2 border-cyan-600'
+                     : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 border-r-2 border-transparent hover:border-cyan-600' }}">
+            <i data-lucide="message-square" class="size-3.5 flex-shrink-0"></i>
+            Messages
+        </a>
 
         <div class="pt-4 mt-4 border-t border-zinc-100">
             <a href="{{ route('profile.settings') }}"

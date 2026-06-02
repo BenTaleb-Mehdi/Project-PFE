@@ -62,6 +62,10 @@
               <input x-model="form.email" type="email" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-white" placeholder="you@email.com"/>
             </div>
             <div>
+              <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Phone Number</label>
+              <input x-model="form.phone" type="tel" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-white" placeholder="+212 6XX XXX XXX"/>
+            </div>
+            <div>
               <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Goal</label>
               <select x-model="form.goal" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-neutral-400">
                 <option value="">Select your primary goal</option>

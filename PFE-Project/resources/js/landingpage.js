@@ -504,12 +504,40 @@ export function contactForm() {
     form: { firstName: '', lastName: '', email: '', goal: '', message: '' },
     loading: false,
     submitted: false,
-    submit() {
+    async submit() {
+      if (!this.form.firstName || !this.form.email || !this.form.message) {
+        alert('Please fill out the required fields: First Name, Email, and Message.');
+        return;
+      }
       this.loading = true;
-      setTimeout(() => {
+      try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken || '',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: `${this.form.firstName} ${this.form.lastName}`.trim(),
+            email: this.form.email,
+            goal: this.form.goal,
+            message: this.form.message
+          })
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+          this.submitted = true;
+        } else {
+          alert(data.message || 'Error sending message. Please try again.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Connection error. Please try again later.');
+      } finally {
         this.loading = false;
-        this.submitted = true;
-      }, 1500);
+      }
     }
   }
 }
