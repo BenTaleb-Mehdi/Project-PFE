@@ -421,4 +421,15 @@
         </form>
     </div>
 </div>
+@include('components.ai-chatbot')
+
+<!-- Success Toast for Laravel session -->
+<div x-data="{ show: false, message: '' }" x-show="show" x-init="@if (session('success')) 
+    message = '{{ session('success') }}'; 
+    show = true; 
+    setTimeout(() => show = false, 3000); 
+@endif" class="fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition-opacity" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    <span x-text="message"></span>
+</div>
+
 @endsection

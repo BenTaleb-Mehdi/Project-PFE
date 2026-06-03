@@ -10,6 +10,7 @@ export const clientRegistry = (config) => ({
     isEditing: false,
     editingClientId: null,
     newClient: { name: "", email: "", phone_number: "", target_goal: "", current_weight: "", height: "", status: "active" },
+    previewImage: null,
     
     // Assignment State
     protocolOpen: false,

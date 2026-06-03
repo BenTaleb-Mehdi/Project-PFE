@@ -2,6 +2,8 @@
     x-data="aiChatbot()"
     class="fixed bottom-6 right-6 z-50 font-sans"
 >
+    <div x-data="{ show: false, text: '' }" x-show="show" id="chatbot-toast" class="fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition-opacity" style="opacity: 0;" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
+
     <!-- Chat Toggle Button -->
     <button 
         @click="toggleChat()"
@@ -77,9 +79,9 @@
                     <!-- Quick Actions (Only for AI and only if relevant) -->
                     <template x-if="msg.role === 'ai' && index === messages.length - 1 && !isLoading">
                         <div class="flex flex-wrap gap-2 mt-3 ml-10">
-                            <button @click="input = 'Generate Breakfast'; sendMessage()" class="px-4 py-2 border border-[#0891B2] text-[#0891B2] rounded-full text-sm font-medium hover:bg-[#0891B2]/5 transition-colors">Breakfast</button>
-                            <button @click="input = 'Generate Lunch'; sendMessage()" class="px-4 py-2 border border-[#0891B2] text-[#0891B2] rounded-full text-sm font-medium hover:bg-[#0891B2]/5 transition-colors">Lunch</button>
-                            <button @click="input = 'Generate Snack'; sendMessage()" class="px-4 py-2 border border-[#0891B2] text-[#0891B2] rounded-full text-sm font-medium hover:bg-[#0891B2]/5 transition-colors">Snack</button>
+                            <template x-for="action in quickActions" :key="action.label">
+                                <button @click="clickQuickAction(action)" class="px-4 py-2 border border-[#0891B2] text-[#0891B2] rounded-full text-sm font-medium hover:bg-[#0891B2]/5 transition-colors" x-text="action.label"></button>
+                            </template>
                         </div>
                     </template>
                 </div>
@@ -136,9 +138,50 @@
             isLoading: false,
             input: '',
             chatHistory: [],
-            messages: [
-                { role: 'ai', content: 'Hello! I am CoachBot AI, powered by Gemini. I can help you create nutrition categories, design meal sequences, or answer fitness questions. What would you like to do?' }
-            ],
+            messages: [],
+            quickActions: [],
+            
+            init() {
+                const path = window.location.pathname;
+                if (path.includes('/coach/finance')) {
+                    this.quickActions = [
+                        { label: 'Create Payment Prompt', text: 'Create payment of 500 MAD for client [Client Name], status paid' }
+                    ];
+                    this.messages = [
+                        { role: 'ai', content: 'Hello! I am CoachBot AI. I can help you manage financial flows and log client payments. Click below to load a ready prompt to create a payment.' }
+                    ];
+                } else if (path.includes('/coach/clients')) {
+                    this.quickActions = [
+                        { label: 'Create Client Prompt', text: 'Create client named [Client Name], email: [email@example.com], phone: [Phone Number]' }
+                    ];
+                    this.messages = [
+                        { role: 'ai', content: 'Hello! I am CoachBot AI. I can help you manage your clients and onboard new pupils. Click below to load a ready prompt to onboard a client.' }
+                    ];
+                } else if (path.includes('/coach/team')) {
+                    this.quickActions = [
+                        { label: 'Create Staff Prompt', text: 'Create staff named [Staff Name], email: [email@example.com], phone: [Phone Number]' }
+                    ];
+                    this.messages = [
+                        { role: 'ai', content: 'Hello! I am CoachBot AI. I can help you manage your team registry and deploy staff. Click below to load a ready prompt to add a staff member.' }
+                    ];
+                } else {
+                    this.quickActions = [
+                        { label: 'Breakfast', text: 'Generate Breakfast' },
+                        { label: 'Lunch', text: 'Generate Lunch' },
+                        { label: 'Snack', text: 'Generate Snack' }
+                    ];
+                    this.messages = [
+                        { role: 'ai', content: 'Hello! I am CoachBot AI, powered by Gemini. I can help you create nutrition categories, design meal sequences, or answer fitness questions. What would you like to do?' }
+                    ];
+                }
+            },
+            
+            clickQuickAction(action) {
+                this.input = action.text;
+                if (!action.text.includes('[')) {
+                    this.sendMessage();
+                }
+            },
             
             toggleChat() {
                 this.isOpen = !this.isOpen;
