@@ -27,7 +27,7 @@
         <div class="space-y-6">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">About</div>
           <h1 class="font-display text-6xl sm:text-7xl tracking-wider leading-none text-neutral-900 dark:text-white">MEET YOUR<br/><span class="text-brand-500">COACH</span></h1>
-          <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed text-lg font-light">I'm Alex Rivera — a certified strength & conditioning specialist with a passion for making fitness accessible, sustainable, and actually enjoyable.</p>
+          <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed text-lg font-light">I'm Achraf kfit — a certified strength & conditioning specialist with a passion for making fitness accessible, sustainable, and actually enjoyable.</p>
           <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed font-light">After struggling with my own fitness journey for years, I found a method that truly works: combining progressive overload with habit science and mindset coaching. Today I bring that same system to every single client.</p>
           <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed font-light">I hold certifications from the NSCA (CSCS), NASM (CPT), and Precision Nutrition. My approach is rooted in research, but delivered with empathy and real-world practicality.</p>
           <div class="flex flex-wrap gap-3 pt-2">

@@ -8,6 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="description" content="Top‑rated bodybuilding and training services in Tangier. Tailored plans, expert guidance, and results‑driven coaching.">
+    <meta name="keywords" content="gym training Tangier, bodybuilding coach, custom workout plans, health and wellness">
+    <meta property="og:title" content="{{ config('app.name', 'Laravel') }}">
+    <meta property="og:description" content="Top‑rated bodybuilding and training services in Tangier. Tailored plans, expert guidance, and results‑driven coaching.">
+    <meta property="og:type" content="website">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/logo-head.png') }}">
@@ -75,8 +80,17 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 dark:from-gray-800 dark:via-gray-900 dark:to-black text-white py-20">
+  <div class="container mx-auto px-6 md:px-12 text-center">
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 animate-fade-in-up">Elevate Your Fitness Journey</h1>
+    <p class="text-xl md:text-2xl mb-8 animate-fade-in-up delay-200">Personalized coaching, cutting‑edge training plans, and results you can see.</p>
+    <a href="{{ route('register') }}" class="inline-block bg-white text-indigo-600 font-medium rounded-full px-8 py-3 shadow-lg hover:bg-gray-100 transition transform hover:-translate-y-1 animate-fade-in-up delay-400">Join Now</a>
+  </div>
+</section>
+
+<main class="py-4">
+    @yield('content')
         </main>
     </div>
 </body>

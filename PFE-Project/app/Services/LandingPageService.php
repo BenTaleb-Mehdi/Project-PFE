@@ -10,7 +10,7 @@ class LandingPageService
     {
         $whatsappNumber = SystemSetting::getVal('whatsapp_number', '212600000000');
 
-        $jsonPath = resource_path('js/data.json');
+        $jsonPath = resource_path('js/landingpageData.json');
         $raw = [];
         if (file_exists($jsonPath)) {
             $raw = json_decode(file_get_contents($jsonPath), true) ?? [];

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ChatbotController extends Controller
 {
@@ -179,30 +179,36 @@ PROMPT
             } elseif ($action === 'create_payment') {
                 try {
                     $clientName = $decoded['client_name'] ?? '';
-                    $user = \App\Models\User::where('name', 'like', "%{$clientName}%")
-                        ->whereHas('client')
-                        ->first();
-                    
-                    if (!$user) {
-                        $client = \App\Models\Client::first();
-                    } else {
-                        $client = $user->client;
+                    if (empty($clientName)) {
+                        throw new \Exception('Client name not provided.');
                     }
 
-                    if (!$client) {
-                        throw new \Exception("No clients exist in the system to assign this payment to.");
+                    $clientName = trim($clientName);
+                    $user = \App\Models\User::whereRaw('LOWER(name) = ?', [strtolower($clientName)])->first();
+                    if (!$user) {
+                        // Fallback: try to find client directly by name (if client has a name field in future)
+                        $client = \App\Models\Client::whereRaw('LOWER(name) = ?', [strtolower($clientName)])->first();
+                        if (!$client) {
+                            throw new \Exception("Client '{$clientName}' not found.");
+                        }
+                    } else {
+                        $client = $user->client;
+                        if (!$client) {
+                            throw new \Exception("User '{$clientName}' does not have an associated client.");
+                        }
                     }
 
                     $paymentData = [
                         'client_id' => $client->id,
-                        'amount' => $decoded['amount'] ?? 0,
-                        'date' => $decoded['date'] ?? now()->toDateString(),
-                        'status' => $decoded['status'] ?? 'pending',
+                        'amount'    => $decoded['amount'] ?? 0,
+                        'date'      => $decoded['date'] ?? now()->toDateString(),
+                        'status'    => $decoded['status'] ?? 'pending',
                     ];
                     $payment = $this->financeService->logPayment($paymentData);
                     $created[] = $payment;
-                    $aiText = $decoded['message'] ?? "✅ Payment of {$paymentData['amount']} MAD for Client \"{$client->user->name}\" has been catalogued successfully!";
-                    session()->flash('success', 'PAYMENT_CATALOGUED // Receipt_Sent');
+                    $aiText = $decoded['message'] ?? "✅ Payment of {$paymentData['amount']} MAD for client \"{$client->name}\" has been logged successfully!";
+                    Log::info("Payment logged: client={$client->name}, amount={$paymentData['amount']}, date={$paymentData['date']}, status={$paymentData['status']}");
+                    session()->flash('success', 'PAYMENT_LOGGED // Receipt_Sent');
                 } catch (\Exception $e) {
                     $aiText = "⚠️ Failed to log payment: " . $e->getMessage();
                 }

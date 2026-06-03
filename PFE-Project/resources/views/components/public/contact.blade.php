@@ -85,7 +85,7 @@
               :disabled="loading"
               class="w-full py-4 rounded-full bg-brand-500 hover:bg-brand-600 disabled:opacity-60 text-neutral-950 font-medium transition-all"
             >
-              <span x-show="!loading">Send Message 🚀</span>
+              <span x-show="!loading">Send Message <lucide-icon name="send"></lucide-icon></span>
               <span x-show="loading" class="flex items-center justify-center gap-2" style="display: none;">
                 <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
                 Sending…

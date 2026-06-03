@@ -5,7 +5,7 @@
     <div class="reveal-left space-y-6">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">About Me</div>
       <h2 class="font-display text-5xl sm:text-6xl tracking-wider text-neutral-900 dark:text-white">YOUR COACH,<br/><span class="text-brand-500">YOUR ALLY</span></h2>
-      <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">With over 8 years coaching athletes and everyday people, I blend evidence-based exercise science with real-world psychology. I've helped 500+ clients lose fat, build muscle, and — most importantly — build lasting habits.</p>
+      <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">With over 5 years coaching athletes and everyday people, I blend evidence-based exercise science with real-world psychology. I've helped 500+ clients lose fat, build muscle, and — most importantly — build lasting habits.</p>
       
       <!-- Features list -->
       <ul class="space-y-3">

@@ -24,7 +24,7 @@
     <!-- Flower Items (Quarter Circle) -->
     <!-- Instagram (Top) -->
     <a 
-      href="https://instagram.com"
+      href="https://www.instagram.com/achraf_knfit/"
       target="_blank"
       class="absolute w-12 h-12 rounded-full bg-[#E1306C] text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-out"
       :class="fabOpen ? '-translate-y-[80px] scale-100 opacity-100' : 'translate-y-0 scale-50 opacity-0 pointer-events-none'"
