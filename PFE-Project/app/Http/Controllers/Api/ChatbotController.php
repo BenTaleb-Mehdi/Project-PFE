@@ -38,11 +38,56 @@ class ChatbotController extends Controller
             'chatInput' => 'required|string|max:2000',
             'history'   => 'nullable|array',
         ]);
+$userMessage = trim($validated['chatInput']);
+                // Early handling: direct category creation commands (e.g., "Generate Breakfast")
+        $lowerMessage = strtolower($userMessage);
+        if (strpos($lowerMessage, 'generate') === 0) {
+            // Extract the part after the keyword
+            $parts = preg_split('/\s+/', $userMessage, 2);
+            $categoryName = $parts[1] ?? '';
+            $categoryName = trim($categoryName);
+            if ($categoryName !== '') {
+                try {
+                    $category = $this->categoryService->addSequenceSlot($categoryName);
+                    $created = [$category];
+                    $aiText = "✅ Category \"{$categoryName}\" has been created successfully!";
+                    session()->flash('success', $aiText);
+                    return response()->json([
+                        'output' => $aiText,
+                        'created' => $created,
+                    ]);
+                } catch (\Exception $e) {
+                    $aiText = "⚠️ I tried to create the category \"{$categoryName}\" but encountered an error: " . $e->getMessage();
+                    return response()->json([
+                        'output' => $aiText,
+                        'created' => [],
+                    ], 500);
+                }
+            }
+        }
+                // Early handling: if user directly requests category creation
+        if (preg_match('/^generate\s+(.+)/i', $userMessage, $matches)) {
+            $categoryName = trim($matches[1]);
+            try {
+                $category = $this->categoryService->addSequenceSlot($categoryName);
+                $created = [$category];
+                $aiText = "✅ Category \"{$categoryName}\" has been created successfully!";
+                session()->flash('success', $aiText);
+                return response()->json([
+                    'output' => $aiText,
+                    'created' => $created,
+                ]);
+            } catch (\Exception $e) {
+                $aiText = "⚠️ I tried to create the category \"{$categoryName}\" but encountered an error: " . $e->getMessage();
+                return response()->json([
+                    'output' => $aiText,
+                    'created' => [],
+                ], 500);
+            }
+        }
 
-        $userMessage = trim($validated['chatInput']);
-        $history     = $validated['history'] ?? [];
+                $history = $validated['history'] ?? [];
 
-        // ── 1. Build Gemini request ──────────────────────────────────────────
         $systemInstruction = [
             'parts' => [[
                 'text' => <<<PROMPT
@@ -90,24 +135,42 @@ PROMPT
 
         // ── 2. Call Gemini 2.0/2.5 API ────────────────────────────────────
         $apiKey = config('services.gemini.api_key', env('GEMINI_API_KEY'));
-        $url    = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
-
-        $geminiResponse = Http::withoutVerifying()->timeout(30)
-            ->withHeaders(['Content-Type' => 'application/json'])
-            ->post($url, [
-                'system_instruction' => $systemInstruction,
-                'contents'           => $contents,
-                'generationConfig'   => [
-                    'temperature'     => 0.7,
-                    'maxOutputTokens' => 512,
-                ],
-            ]);
-
-        if (!$geminiResponse->successful()) {
+        if (empty($apiKey)) {
+            Log::error('Gemini API key is not set');
             return response()->json([
-                'output'  => 'Sorry, I could not reach Gemini AI. Please try again.',
+                'output' => '⚠️ Gemini API key is missing. Please configure GEMINI_API_KEY.',
                 'created' => [],
             ], 500);
+        }
+        $url    = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
+
+        try {
+            $geminiResponse = Http::retry(3, 100)
+                ->timeout(60)
+                ->withoutVerifying()
+                ->withHeaders(['Content-Type' => 'application/json'])
+                ->post($url, [
+                    'system_instruction' => $systemInstruction,
+                    'contents' => $contents,
+                    'generationConfig' => [
+                        'temperature' => 0.7,
+                        'maxOutputTokens' => 512,
+                    ],
+                ]);
+        } catch (\Exception $e) {
+            Log::error('Gemini API request failed after retries: ' . $e->getMessage());
+            return response()->json([
+                'output' => 'Sorry, we encountered an unexpected error while contacting the AI service. Please try again later.',
+                'created' => [],
+            ], 500);
+        }
+
+        if (!$geminiResponse->successful()) {
+            Log::warning('Gemini API responded with error status.', ['status' => $geminiResponse->status()]);
+            return response()->json([
+                'output' => 'Sorry, the AI service is currently unavailable. Please try again in a few minutes.',
+                'created' => [],
+            ], 503);
         }
 
         $aiText = $geminiResponse->json(
@@ -124,7 +187,17 @@ PROMPT
         $cleanText = preg_replace('/\s*```$/', '', $cleanText);
         $cleanText = trim($cleanText);
 
-        $decoded = json_decode($cleanText, true);
+        $decodedData = json_decode($cleanText, true);
+        $decoded = $decodedData;
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            if (preg_match('/^generate\s+(\w+)/i', $cleanText, $matches)) {
+                $decoded = [
+                    'action' => 'create_category',
+                    'name' => $matches[1],
+                    'message' => "✅ Category \"{$matches[1]}\" has been created successfully!",
+                ];
+            }
+        }
 
         if (json_last_error() === JSON_ERROR_NONE && isset($decoded['action'])) {
             $action = $decoded['action'];
