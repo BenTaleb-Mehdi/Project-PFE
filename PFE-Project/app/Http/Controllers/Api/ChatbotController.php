@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class ChatbotController extends Controller
@@ -16,20 +17,10 @@ class ChatbotController extends Controller
      */
 
     protected CategoryService $categoryService;
-    protected \App\Services\FinanceService $financeService;
-    protected \App\Services\ClientRegistryService $clientService;
-    protected \App\Services\StaffRegistryService $staffService;
 
-    public function __construct(
-        CategoryService $categoryService,
-        \App\Services\FinanceService $financeService,
-        \App\Services\ClientRegistryService $clientService,
-        \App\Services\StaffRegistryService $staffService
-    ) {
+    public function __construct(CategoryService $categoryService)
+    {
         $this->categoryService = $categoryService;
-        $this->financeService = $financeService;
-        $this->clientService = $clientService;
-        $this->staffService = $staffService;
     }
 
     public function send(Request $request)
@@ -38,8 +29,9 @@ class ChatbotController extends Controller
             'chatInput' => 'required|string|max:2000',
             'history'   => 'nullable|array',
         ]);
-$userMessage = trim($validated['chatInput']);
-                // Early handling: direct category creation commands (e.g., "Generate Breakfast")
+        $userMessage = trim($validated['chatInput']);
+
+        // Early handling: direct category creation commands (e.g., "Generate Breakfast")
         $lowerMessage = strtolower($userMessage);
         if (strpos($lowerMessage, 'generate') === 0) {
             // Extract the part after the keyword
@@ -65,7 +57,8 @@ $userMessage = trim($validated['chatInput']);
                 }
             }
         }
-                // Early handling: if user directly requests category creation
+
+        // Early handling: if user directly requests category creation
         if (preg_match('/^generate\s+(.+)/i', $userMessage, $matches)) {
             $categoryName = trim($matches[1]);
             try {
@@ -86,7 +79,7 @@ $userMessage = trim($validated['chatInput']);
             }
         }
 
-                $history = $validated['history'] ?? [];
+        $history = $validated['history'] ?? [];
 
         $systemInstruction = [
             'parts' => [[
@@ -96,21 +89,9 @@ You are CoachBot AI, an expert nutrition & fitness assistant for the IronCoach p
 Your main capabilities:
 1. Answer fitness, nutrition, and health questions.
 2. Create meal/nutrition CATEGORIES when the user asks (e.g. "create a category called Breakfast", "add Snack category", "generate a Lunch category").
-3. Onboard a new client/pupil (e.g., "Create client named John Doe, email john@example.com, phone 123456").
-4. Deploy/add a new staff member (e.g., "Create staff named Jane Smith, email jane@example.com, phone 654321, specialties [1]").
-5. Catalogue/log a payment (e.g., "Create payment of 500 MAD for client John Doe, status paid, date 2026-06-03").
 
 When you detect a category creation request, you MUST respond with ONLY valid JSON in this exact format — no markdown, no extra text:
 {"action":"create_category","name":"<CategoryName>","message":"<friendly confirmation message>"}
-
-When you detect a client onboarding request, you MUST respond with ONLY valid JSON in this exact format — no markdown, no extra text:
-{"action":"create_client","name":"<ClientName>","email":"<ClientEmail>","phone_number":"<ClientPhone>","status":"active","message":"<friendly confirmation message>"}
-
-When you detect a staff deployment request, you MUST respond with ONLY valid JSON in this exact format — no markdown, no extra text:
-{"action":"create_staff","name":"<StaffName>","email":"<StaffEmail>","phone_number":"<StaffPhone>","specialties":[<SpecialtyIDs>],"bio":"","message":"<friendly confirmation message>"}
-
-When you detect a payment logging request, you MUST respond with ONLY valid JSON in this exact format — no markdown, no extra text:
-{"action":"create_payment","client_name":"<ClientName>","amount":<Amount>,"date":"<YYYY-MM-DD>","status":"<paid|pending>","message":"<friendly confirmation message>"}
 
 For all other messages, respond naturally as a helpful coach assistant.
 PROMPT
@@ -209,81 +190,6 @@ PROMPT
                     session()->flash('success', $aiText);
                 } catch (\Exception $e) {
                     $aiText = "⚠️ I tried to create the category \"{$decoded['name']}\" but encountered an error: " . $e->getMessage();
-                }
-            } elseif ($action === 'create_client') {
-                try {
-                    $clientData = [
-                        'name' => $decoded['name'] ?? '',
-                        'email' => $decoded['email'] ?? '',
-                        'phone_number' => $decoded['phone_number'] ?? null,
-                        'status' => $decoded['status'] ?? 'active',
-                    ];
-                    $client = $this->clientService->addClient($clientData);
-                    $created[] = $client;
-                    $aiText = $decoded['message'] ?? "✅ Client \"{$clientData['name']}\" has been onboarded successfully!";
-                    session()->flash('success', 'CLIENT_ONBOARDED // Credentials_Sent');
-                } catch (\Exception $e) {
-                    $aiText = "⚠️ Failed to onboard client: " . $e->getMessage();
-                }
-            } elseif ($action === 'create_staff') {
-                try {
-                    $specialties = $decoded['specialties'] ?? [];
-                    if (empty($specialties)) {
-                        $firstSpec = \DB::table('specialties')->first();
-                        if ($firstSpec) {
-                            $specialties = [$firstSpec->id];
-                        }
-                    }
-                    $staffData = [
-                        'name' => $decoded['name'] ?? '',
-                        'email' => $decoded['email'] ?? '',
-                        'phone_number' => $decoded['phone_number'] ?? null,
-                        'specialties' => $specialties,
-                        'bio' => $decoded['bio'] ?? '',
-                        'legacy_specialty' => 'Coach'
-                    ];
-                    $staff = $this->staffService->addStaff($staffData);
-                    $created[] = $staff;
-                    $aiText = $decoded['message'] ?? "✅ Staff member \"{$staffData['name']}\" has been deployed successfully!";
-                    session()->flash('success', 'STAFF_ONBOARDED // ID_Sync_Complete // Credentials_Dispatched');
-                } catch (\Exception $e) {
-                    $aiText = "⚠️ Failed to deploy staff member: " . $e->getMessage();
-                }
-            } elseif ($action === 'create_payment') {
-                try {
-                    $clientName = $decoded['client_name'] ?? '';
-                    if (empty($clientName)) {
-                        throw new \Exception('Client name not provided.');
-                    }
-
-                    $clientName = trim($clientName);
-                    $user = \App\Models\User::whereRaw('LOWER(name) = ?', [strtolower($clientName)])->first();
-                    if (!$user) {
-                        // Fallback: try to find client directly by name (if client has a name field in future)
-                        $client = \App\Models\Client::whereRaw('LOWER(name) = ?', [strtolower($clientName)])->first();
-                        if (!$client) {
-                            throw new \Exception("Client '{$clientName}' not found.");
-                        }
-                    } else {
-                        $client = $user->client;
-                        if (!$client) {
-                            throw new \Exception("User '{$clientName}' does not have an associated client.");
-                        }
-                    }
-
-                    $paymentData = [
-                        'client_id' => $client->id,
-                        'amount'    => $decoded['amount'] ?? 0,
-                        'date'      => $decoded['date'] ?? now()->toDateString(),
-                        'status'    => $decoded['status'] ?? 'pending',
-                    ];
-                    $payment = $this->financeService->logPayment($paymentData);
-                    $created[] = $payment;
-                    $aiText = $decoded['message'] ?? "✅ Payment of {$paymentData['amount']} MAD for client \"{$client->name}\" has been logged successfully!";
-                    Log::info("Payment logged: client={$client->name}, amount={$paymentData['amount']}, date={$paymentData['date']}, status={$paymentData['status']}");
-                    session()->flash('success', 'PAYMENT_LOGGED // Receipt_Sent');
-                } catch (\Exception $e) {
-                    $aiText = "⚠️ Failed to log payment: " . $e->getMessage();
                 }
             }
         }
