@@ -284,11 +284,79 @@ export function appData() {
 export function contactForm() {
   return {
     form: { firstName: '', lastName: '', email: '', phone: '', goal: '', message: '' },
+    errors: { firstName: '', lastName: '', email: '', phone: '', goal: '', message: '' },
     loading: false,
     submitted: false,
+
+    validateField(field) {
+      if (field === 'firstName') {
+        if (!this.form.firstName || !this.form.firstName.trim()) {
+          this.errors.firstName = 'First name is required.';
+        } else if (this.form.firstName.trim().length < 2) {
+          this.errors.firstName = 'Must be at least 2 characters.';
+        } else {
+          this.errors.firstName = '';
+        }
+      }
+      if (field === 'lastName') {
+        if (!this.form.lastName || !this.form.lastName.trim()) {
+          this.errors.lastName = 'Last name is required.';
+        } else if (this.form.lastName.trim().length < 2) {
+          this.errors.lastName = 'Must be at least 2 characters.';
+        } else {
+          this.errors.lastName = '';
+        }
+      }
+      if (field === 'email') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!this.form.email || !this.form.email.trim()) {
+          this.errors.email = 'Email address is required.';
+        } else if (!emailRegex.test(this.form.email.trim())) {
+          this.errors.email = 'Please enter a valid email address.';
+        } else {
+          this.errors.email = '';
+        }
+      }
+      if (field === 'phone') {
+        const phoneRegex = /^\+?[0-9\s\-]{8,15}$/;
+        if (!this.form.phone || !this.form.phone.trim()) {
+          this.errors.phone = 'Phone number is required.';
+        } else if (!phoneRegex.test(this.form.phone.trim())) {
+          this.errors.phone = 'Please enter a valid phone number (e.g. +212600000000).';
+        } else {
+          this.errors.phone = '';
+        }
+      }
+      if (field === 'goal') {
+        if (!this.form.goal) {
+          this.errors.goal = 'Please select a training goal.';
+        } else {
+          this.errors.goal = '';
+        }
+      }
+      if (field === 'message') {
+        if (!this.form.message || !this.form.message.trim()) {
+          this.errors.message = 'Message is required.';
+        } else if (this.form.message.trim().length < 10) {
+          this.errors.message = 'Must be at least 10 characters.';
+        } else {
+          this.errors.message = '';
+        }
+      }
+    },
+
+    validateAll() {
+      this.validateField('firstName');
+      this.validateField('lastName');
+      this.validateField('email');
+      this.validateField('phone');
+      this.validateField('goal');
+      this.validateField('message');
+      return !Object.values(this.errors).some(err => err !== '');
+    },
+
     async submit() {
-      if (!this.form.firstName || !this.form.email || !this.form.message) {
-        alert('Please fill out the required fields: First Name, Email, and Message.');
+      if (!this.validateAll()) {
         return;
       }
       this.loading = true;
@@ -312,6 +380,8 @@ export function contactForm() {
         const data = await response.json();
         if (response.ok && data.success) {
           this.submitted = true;
+          this.form = { firstName: '', lastName: '', email: '', phone: '', goal: '', message: '' };
+          this.errors = { firstName: '', lastName: '', email: '', phone: '', goal: '', message: '' };
         } else {
           alert(data.message || 'Error sending message. Please try again.');
         }

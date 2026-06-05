@@ -51,8 +51,8 @@
     </div>
 
     <!-- Coach Image -->
-    <div class="reveal-right hidden lg:flex justify-end relative h-[650px] w-full items-center">
-      <div class="relative w-[420px] h-[580px]">
+    <div class="reveal-right flex lg:justify-end justify-center relative lg:h-[650px] w-full items-center mt-12 lg:mt-0">
+      <div class="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] aspect-[4/5] sm:aspect-auto sm:h-[580px]">
         <!-- Background Accent -->
         <div class="absolute -top-4 -right-4 w-full h-full border-2 border-brand-500 rounded-3xl opacity-30"></div>
         <div class="absolute -bottom-4 -left-4 w-full h-full bg-brand-500/10 rounded-3xl blur-xl"></div>
@@ -65,20 +65,20 @@
         </div>
         
         <!-- Floating Badge -->
-        <div class="absolute -left-12 bottom-12 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 p-5 rounded-2xl shadow-2xl flex items-center gap-4 max-w-[220px]">
-          <div class="w-12 h-12 border border-brand-500 flex items-center justify-center shrink-0 rounded-xl bg-brand-500/10">
-            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <div class="absolute -left-4 xs:-left-8 sm:-left-12 bottom-12 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 p-4 sm:p-5 rounded-2xl shadow-2xl flex items-center gap-3 sm:gap-4 max-w-[180px] sm:max-w-[220px]">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 border border-brand-500 flex items-center justify-center shrink-0 rounded-xl bg-brand-500/10">
+            <svg class="w-5 sm:w-6 h-5 sm:h-6 text-brand-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
           <div>
-            <div class="font-display tracking-widest text-sm uppercase text-neutral-900 dark:text-white">Elite</div>
-            <div class="text-[10px] text-neutral-500 dark:text-neutral-400 tracking-wider">Certified Pro</div>
+            <div class="font-display tracking-widest text-xs sm:text-sm uppercase text-neutral-900 dark:text-white">Elite</div>
+            <div class="text-[9px] sm:text-[10px] text-neutral-500 dark:text-neutral-400 tracking-wider">Certified Pro</div>
           </div>
         </div>
 
         <!-- Secondary Badge -->
-        <div class="absolute -right-8 top-12 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 p-5 rounded-2xl shadow-xl">
-          <div class="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-1">Availability</div>
-          <div class="font-display text-2xl text-neutral-900 dark:text-white font-light">3 <span class="text-brand-500 text-sm">Spots</span></div>
+        <div class="absolute -right-4 xs:-right-6 sm:-right-8 top-12 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 p-4 sm:p-5 rounded-2xl shadow-xl">
+          <div class="text-[9px] sm:text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-1">Availability</div>
+          <div class="font-display text-xl sm:text-2xl text-neutral-900 dark:text-white font-light">3 <span class="text-brand-500 text-xs sm:text-sm">Spots</span></div>
         </div>
       </div>
     </div>

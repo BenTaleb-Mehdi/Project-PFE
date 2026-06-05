@@ -50,35 +50,58 @@
             <div class="grid sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">First Name</label>
-                <input x-model="form.firstName" type="text" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-white" placeholder="Alex"/>
+                <input x-model="form.firstName" @input="validateField('firstName')" type="text" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors text-neutral-900 dark:text-white" :class="errors.firstName ? 'border-red-500 focus:border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'" placeholder="Alex"/>
+                <p x-show="errors.firstName" x-cloak class="text-xs text-red-500 mt-1 font-mono" x-text="errors.firstName"></p>
               </div>
               <div>
                 <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Last Name</label>
-                <input x-model="form.lastName" type="text" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-white" placeholder="Rivera"/>
+                <input x-model="form.lastName" @input="validateField('lastName')" type="text" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors text-neutral-900 dark:text-white" :class="errors.lastName ? 'border-red-500 focus:border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'" placeholder="Rivera"/>
+                <p x-show="errors.lastName" x-cloak class="text-xs text-red-500 mt-1 font-mono" x-text="errors.lastName"></p>
               </div>
             </div>
             <div>
               <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Email</label>
-              <input x-model="form.email" type="email" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-white" placeholder="you@email.com"/>
+              <input x-model="form.email" @input="validateField('email')" type="email" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors text-neutral-900 dark:text-white" :class="errors.email ? 'border-red-500 focus:border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'" placeholder="you@email.com"/>
+              <p x-show="errors.email" x-cloak class="text-xs text-red-500 mt-1 font-mono" x-text="errors.email"></p>
             </div>
             <div>
               <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Phone Number</label>
-              <input x-model="form.phone" type="tel" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-white" placeholder="+212 6XX XXX XXX"/>
+              <input x-model="form.phone" @input="validateField('phone')" type="tel" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors text-neutral-900 dark:text-white" :class="errors.phone ? 'border-red-500 focus:border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'" placeholder="+212 6XX XXX XXX"/>
+              <p x-show="errors.phone" x-cloak class="text-xs text-red-500 mt-1 font-mono" x-text="errors.phone"></p>
             </div>
-            <div>
+            <div class="relative" x-data="{ open: false }">
               <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Goal</label>
-              <select x-model="form.goal" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors text-neutral-900 dark:text-neutral-400">
-                <option value="">Select your primary goal</option>
-                <option>Fat Loss</option>
-                <option>Muscle Building</option>
-                <option>Athletic Performance</option>
-                <option>General Health</option>
-                <option>Online Coaching</option>
-              </select>
+              <button type="button" @click="open = !open" 
+                      class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors text-left flex justify-between items-center text-neutral-900 dark:text-white"
+                      :class="errors.goal ? 'border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'">
+                <span x-text="form.goal || 'Select your primary goal'" :class="form.goal ? 'text-neutral-900 dark:text-white' : 'text-neutral-400 dark:text-neutral-500'"></span>
+                <svg class="w-4 h-4 text-neutral-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              
+              <!-- Dropdown Panel -->
+              <div x-show="open" @click.outside="open = false" x-cloak
+                   x-transition:enter="transition ease-out duration-150"
+                   x-transition:enter-start="opacity-0 translate-y-1"
+                   x-transition:enter-end="opacity-100 translate-y-0"
+                   x-transition:leave="transition ease-in duration-100"
+                   x-transition:leave-start="opacity-100"
+                   x-transition:leave-end="opacity-0"
+                   class="absolute left-0 right-0 mt-2 z-50 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-xl overflow-hidden divide-y divide-neutral-100 dark:divide-neutral-800">
+                <template x-for="g in ['Fat Loss', 'Muscle Building', 'Athletic Performance', 'General Health', 'Online Coaching']">
+                  <div @click="form.goal = g; open = false; validateField('goal')"
+                       class="px-4 py-3 text-sm hover:bg-brand-500/10 hover:text-brand-500 dark:hover:bg-brand-500/15 cursor-pointer transition-colors flex items-center justify-between text-neutral-800 dark:text-neutral-200"
+                       :class="form.goal === g ? 'bg-brand-500/5 text-brand-500 font-medium' : ''">
+                    <span x-text="g"></span>
+                    <svg x-show="form.goal === g" class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                </template>
+              </div>
+              <p x-show="errors.goal" x-cloak class="text-xs text-red-500 mt-1 font-mono" x-text="errors.goal"></p>
             </div>
             <div>
               <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Message</label>
-              <textarea x-model="form.message" rows="4" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 focus:outline-none focus:border-brand-500 text-sm transition-colors resize-none text-neutral-900 dark:text-white" placeholder="Tell me a bit about your situation…"></textarea>
+              <textarea x-model="form.message" @input="validateField('message')" rows="4" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors resize-none text-neutral-900 dark:text-white" :class="errors.message ? 'border-red-500 focus:border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'" placeholder="Tell me a bit about your situation…"></textarea>
+              <p x-show="errors.message" x-cloak class="text-xs text-red-500 mt-1 font-mono" x-text="errors.message"></p>
             </div>
             <button
               @click="submit()"

@@ -36,6 +36,11 @@ export function notificationHub() {
           const data = await res.json();
           this.notifications = data.notifications ?? [];
           this.unreadCount  = data.unread_count ?? 0;
+          this.$nextTick(() => {
+            if (typeof lucide !== 'undefined') {
+              lucide.createIcons();
+            }
+          });
         }
       } catch (e) {
         // Silently fail — no connection noise
