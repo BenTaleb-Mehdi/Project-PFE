@@ -18,11 +18,11 @@
             </div>
         </div>
         
-        <form action="{{ route('profile.settings.update') }}" method="POST" class="p-8 space-y-6">
+        <form action="{{ route('profile.settings.update') }}" method="POST" class="p-4 sm:p-8 space-y-6">
             @csrf
             @method('PUT')
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 font-mono">
                 <div class="space-y-1.5">
                     <label class="text-[8px] uppercase text-zinc-400 tracking-widest">Public Alias / Name</label>
                     <input type="text" name="name" value="{{ old('name', $user->name) }}" 
@@ -37,7 +37,7 @@
             </div>
 
             <div class="flex justify-end pt-4">
-                <button type="submit" class="px-8 py-3 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
+                <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
                     <i data-lucide="refresh-cw" class="size-3.5"></i>
                     Sync Identity Data
                 </button>
@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <form action="{{ route('profile.settings.password') }}" method="POST" class="p-8 space-y-6">
+        <form action="{{ route('profile.settings.password') }}" method="POST" class="p-4 sm:p-8 space-y-6">
             @csrf
             @method('PUT')
             
@@ -107,7 +107,7 @@
                            class="w-full bg-zinc-50 border border-zinc-200 px-4 py-3 text-[10px] outline-none focus:border-cyan-600 transition-colors" required>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                     <div class="space-y-1.5">
                         <label class="text-[8px] uppercase text-zinc-400 tracking-widest">New System Key</label>
                         <input type="password" name="password" 
@@ -123,7 +123,7 @@
             </div>
 
             <div class="flex justify-end pt-4">
-                <button type="submit" class="px-8 py-3 bg-cyan-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
+                <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-cyan-600 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
                     <i data-lucide="lock" class="size-3.5"></i>
                     Update Encryption
                 </button>

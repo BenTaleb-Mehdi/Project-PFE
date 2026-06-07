@@ -8,7 +8,7 @@
     {{-- ====================================================
          LEFT PANEL — Brand / Identity
     ===================================================== --}}
-    <div class="md:w-5/12 bg-zinc-950 flex flex-col justify-between p-10 md:p-14 text-white relative overflow-hidden">
+    <div class="md:w-5/12 bg-zinc-950 flex flex-col justify-between p-6 sm:p-10 md:p-14 text-white relative overflow-hidden">
 
         {{-- Decorative grid lines --}}
         <div class="absolute inset-0 opacity-[0.06] pointer-events-none">

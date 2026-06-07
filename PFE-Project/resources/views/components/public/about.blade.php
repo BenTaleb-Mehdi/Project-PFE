@@ -1,10 +1,10 @@
 @props(['features' => [], 'stats' => [], 'certs' => [], 'timeline' => []])
 
-<section id="about-section" class="py-24 bg-neutral-50 dark:bg-neutral-900/50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+<section id="about-section" class="py-16 sm:py-24 bg-neutral-50 dark:bg-neutral-900/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
     <div class="reveal-left space-y-6">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase">About Me</div>
-      <h2 class="font-display text-5xl sm:text-6xl tracking-wider text-neutral-900 dark:text-white">YOUR COACH,<br/><span class="text-brand-500">YOUR ALLY</span></h2>
+      <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl tracking-wider text-neutral-900 dark:text-white">YOUR COACH,<br/><span class="text-brand-500">YOUR ALLY</span></h2>
       <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">With over 5 years coaching athletes and everyday people, I blend evidence-based exercise science with real-world psychology. I've helped 500+ clients lose fat, build muscle, and — most importantly — build lasting habits.</p>
       
       <!-- Features list -->

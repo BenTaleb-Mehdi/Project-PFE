@@ -11,14 +11,14 @@
 })'>
 
     <!-- Action Header -->
-    <div class="mb-8 lg:flex lg:justify-end gap-4 font-mono">
+    <div class="mb-8 flex flex-col sm:flex-row sm:justify-end gap-3 sm:gap-4 font-mono">
         <button @click="isSpecialtyModalOpen = true"
-                class="px-6 py-3 bg-white text-zinc-950 border border-zinc-200 text-[10px] uppercase font-bold tracking-widest hover:bg-zinc-50 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.02)] active:scale-[0.99] flex items-center gap-x-2">
+                class="w-full sm:w-auto px-6 py-3 bg-white text-zinc-950 border border-zinc-200 text-[10px] uppercase font-bold tracking-widest hover:bg-zinc-50 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.02)] active:scale-[0.99] flex items-center justify-center gap-x-2">
             <i data-lucide="settings-2" class="size-3"></i>
             Manage Specialties
         </button>
         <button @click="isAddMemberModalOpen = true"
-                class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
+                class="w-full sm:w-auto px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
             <i data-lucide="user-plus" class="size-3"></i>
             Add Member
         </button>
@@ -80,8 +80,8 @@
         </div>
     </div>
 
-    <!-- Staff Table -->
-    <div class="ag-card overflow-hidden">
+    <!-- Staff Table (Desktop) -->
+    <div class="ag-card overflow-hidden hidden md:block">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse font-sans font-medium">
                 <thead class="bg-zinc-50 border-b border-zinc-200 uppercase font-mono tracking-widest">
@@ -136,6 +136,42 @@
             </table>
         </div>
     </div>
+
+    <!-- Staff Cards (Mobile) -->
+    <div class="md:hidden space-y-3">
+        @foreach($team as $member)
+            <div class="ag-card bg-white p-4 border border-zinc-200 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono text-cyan-700 font-bold">#STF-{{ str_pad($member->id, 3, '0', STR_PAD_LEFT) }}</span>
+                    @if($member->status === 'active')
+                        <span class="flex items-center gap-x-1 px-2 py-0.5 text-[8px] font-bold border bg-emerald-50 text-emerald-600 border-emerald-100 font-mono">
+                            <span class="size-1.5 rounded-full bg-emerald-500"></span>ACTIVE
+                        </span>
+                    @else
+                        <span class="flex items-center gap-x-1 px-2 py-0.5 text-[8px] font-bold border bg-zinc-50 text-zinc-400 border-zinc-200 font-mono">
+                            <span class="size-1.5 rounded-full bg-zinc-300"></span>INACTIVE
+                        </span>
+                    @endif
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-zinc-900">{{ $member->user->name }}</p>
+                    <p class="text-[8px] text-zinc-400 font-mono">{{ $member->user->email }}</p>
+                </div>
+                <div class="flex flex-wrap gap-1">
+                    @foreach($member->specialties as $spec)
+                        <span class="px-1.5 py-0.5 bg-zinc-100 text-zinc-500 text-[7px] font-bold">{{ $spec->name }}</span>
+                    @endforeach
+                    @if($member->specialties->isEmpty())
+                        <span class="text-[8px] text-zinc-300 italic">No Specialization</span>
+                    @endif
+                </div>
+                <div class="flex justify-end gap-3 pt-2 border-t border-zinc-100">
+                    <button @click="openEditModal({{ json_encode($member->load(['user', 'specialties'])) }})" class="p-1.5 text-zinc-400 hover:text-cyan-600"><i data-lucide="edit-3" class="size-3.5"></i></button>
+                    <button @click="confirmDelete({{ json_encode(['id' => $member->id, 'name' => $member->user->name]) }})" class="p-1.5 text-zinc-400 hover:text-red-600"><i data-lucide="trash-2" class="size-3.5"></i></button>
+                </div>
+            </div>
+        @endforeach
+    </div>
     <div class="mt-8 font-mono">
         {{ $team->appends(request()->query())->links() }}
     </div>
@@ -183,7 +219,7 @@
                     </div>
                     <div class="space-y-1.5 relative" x-data="{ open: false, selectedNames: [] }">
                         <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Specialties</label>
-                        <button type="button" @click="open = !open"
+                        <button type="button" @click.stop="open = !open"
                                 class="w-full flex justify-between items-center text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600 uppercase text-left min-h-[42px]">
                             <span class="truncate" x-text="selectedNames.length ? selectedNames.join(', ') : 'Select Specialties'"></span>
                             <i data-lucide="chevron-down" class="size-4 shrink-0" :class="open ? 'rotate-180' : ''"></i>
@@ -261,7 +297,7 @@
                     </div>
                     <div class="space-y-1.5 relative" x-data="{ open: false }">
                         <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Specialties</label>
-                        <button type="button" @click="open = !open"
+                        <button type="button" @click.stop="open = !open"
                                 class="w-full flex justify-between items-center text-[10px] p-3 bg-zinc-50 border border-zinc-200 outline-none focus:border-cyan-600 uppercase text-left min-h-[42px]">
                             <span class="truncate" x-text="editingMember.specialties.length ? 'Selected (' + editingMember.specialties.length + ')' : 'Select Specialties'"></span>
                             <i data-lucide="chevron-down" class="size-4 shrink-0" :class="open ? 'rotate-180' : ''"></i>
@@ -403,7 +439,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="isDeleteModalOpen = false"
-              class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono text-zinc-900">
+               class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-4 sm:p-8 font-mono text-zinc-900">
             @csrf
             @method('DELETE')
             <div class="flex items-center space-x-4 mb-6">

@@ -57,7 +57,7 @@
             <i data-lucide="search" class="absolute left-3.5 top-3 size-3.5 text-zinc-400"></i>
         </div>
         <button @click="openModal()" 
-                class="h-full px-6 py-2.5 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] whitespace-nowrap">
+                class="w-full md:w-auto px-6 py-2.5 bg-zinc-950 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] whitespace-nowrap">
             + Create Sequence
         </button>
     </div>
@@ -165,7 +165,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="isDeleteModalOpen = false"
-              class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono text-zinc-900">
+               class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-4 sm:p-8 font-mono text-zinc-900">
             @csrf
             @method('DELETE')
             <div class="flex items-center space-x-4 mb-6">

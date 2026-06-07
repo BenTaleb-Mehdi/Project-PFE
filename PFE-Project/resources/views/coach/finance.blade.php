@@ -73,8 +73,8 @@
         </div>
     </div>
 
-    <!-- Transaction Table -->
-    <div class="ag-card overflow-hidden bg-white border border-zinc-200">
+    <!-- Transaction Table (Desktop) -->
+    <div class="ag-card overflow-hidden bg-white border border-zinc-200 hidden md:block">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse font-sans font-medium">
                 <thead class="bg-zinc-50 border-b border-zinc-200 uppercase font-mono tracking-widest">
@@ -112,6 +112,32 @@
             </table>
         </div>
     </div>
+
+    <!-- Transaction Cards (Mobile) -->
+    <div class="md:hidden space-y-3">
+        @foreach($transactions as $txn)
+            <div class="ag-card bg-white p-4 border border-zinc-200 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono text-cyan-700 font-bold">#{{ $txn->id }}</span>
+                    <span class="px-2 py-1 text-[8px] font-bold border font-mono {{ $txn->status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100' }}">
+                        {{ strtoupper($txn->status) }}
+                    </span>
+                </div>
+                <div class="flex items-center justify-between text-[10px]">
+                    <span class="text-zinc-400 font-mono">{{ $txn->date }}</span>
+                    <span class="text-zinc-900 font-bold">{{ optional($txn->client)->user->name ?? 'N/A' }}</span>
+                </div>
+                <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
+                    <span class="text-xs font-mono text-zinc-900 font-bold">{{ number_format($txn->amount, 0) }} MAD</span>
+                    <div class="flex gap-3">
+                        <a href="{{ route('coach.finance.receipt.download', $txn->id) }}" class="p-1.5 text-zinc-400 hover:text-cyan-600"><i data-lucide="file-text" class="size-3.5"></i></a>
+                        <button @click="openEditModal({{ json_encode($txn->load('client.user')) }})" class="p-1.5 text-zinc-400 hover:text-cyan-600"><i data-lucide="edit-3" class="size-3.5"></i></button>
+                        <button @click="confirmDelete({{ json_encode(['id' => $txn->id, 'name' => optional($txn->client)->user->name ?? 'N/A']) }})" class="p-1.5 text-zinc-400 hover:text-red-600"><i data-lucide="trash-2" class="size-3.5"></i></button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
     <div class="mt-8 font-mono">
         {{ $transactions->appends(request()->query())->links() }}
     </div>
@@ -134,9 +160,9 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="isAddPaymentModalOpen = false"
-              class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono">
+               class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-4 sm:p-8 font-mono">
             @csrf
-            <header class="mb-8 font-sans">
+            <header class="mb-6 sm:mb-8 font-sans">
                 <h2 class="text-xl font-bold tracking-tight uppercase text-zinc-900">Add New Transaction</h2>
                 <p class="text-[8px] text-cyan-700 uppercase tracking-widest font-mono mt-1">Pupil Payment Sync V3.0</p>
             </header>
@@ -145,7 +171,7 @@
                 <div class="space-y-1.5 font-sans relative">
                     <label class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">Select Pupil</label>
                     <input type="hidden" name="client_id" :value="selectedPupil.id">
-                    <button type="button" @click="pupilOpen = !pupilOpen" 
+                    <button type="button" @click.stop="pupilOpen = !pupilOpen" 
                             class="w-full flex justify-between items-center text-[10px] p-3 bg-zinc-50 border border-zinc-200 uppercase font-sans text-cyan-700">
                         <span x-text="selectedPupil.name"></span>
                         <i data-lucide="chevron-down" class="size-4" :class="pupilOpen ? 'rotate-180' : ''"></i>
@@ -229,7 +255,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="isEditModalOpen = false"
-              class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono">
+               class="relative bg-white w-full max-w-lg border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-4 sm:p-8 font-mono">
             @csrf
             @method('PUT')
             <header class="mb-8 font-sans">
@@ -292,7 +318,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="isDeleteModalOpen = false"
-              class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 font-mono text-zinc-900">
+               class="relative bg-white w-full max-w-md border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-4 sm:p-8 font-mono text-zinc-900">
             @csrf
             @method('DELETE')
             <div class="flex items-center space-x-4 mb-6">

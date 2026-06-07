@@ -84,7 +84,7 @@
     <x-admin.sidebar />
 
     <!-- Content Area -->
-    <main class="lg:ml-64 min-h-screen p-6 lg:p-12 pt-12">
+    <main class="lg:ml-64 min-h-screen p-4 sm:p-6 lg:p-12 pt-20 lg:pt-12">
 
         <!-- ── Notification Top Bar ── -->
         <div class="flex items-center justify-end mb-6">
@@ -92,7 +92,7 @@
 
                 <!-- Bell Button -->
                 <button id="notif-bell-btn"
-                    @click="toggle()"
+                    @click.stop="toggle()"
                     class="relative flex items-center justify-center h-9 w-9 border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-cyan-500 transition-all duration-200"
                     title="Notifications">
                     <i data-lucide="bell" class="size-4 text-zinc-600"></i>
@@ -111,7 +111,7 @@
                      x-transition:leave="transition ease-in duration-100"
                      x-transition:leave-start="opacity-100"
                      x-transition:leave-end="opacity-0"
-                     class="absolute right-0 top-12 z-[300] w-80 bg-white border border-zinc-200 shadow-xl overflow-hidden">
+                     class="absolute right-0 top-12 z-[300] w-[calc(100vw-2rem)] max-w-xs sm:max-w-sm sm:w-80 bg-white border border-zinc-200 shadow-xl overflow-hidden">
 
                     <!-- Header -->
                     <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-100">
@@ -165,8 +165,8 @@
         <!-- ── / Notification Top Bar ── -->
 
         <!-- Dashboard Header Context -->
-        <header class="mb-8 font-sans">
-            <h1 class="text-3xl font-bold tracking-tight uppercase text-zinc-900">@yield('header_title', 'Dashboard')</h1>
+        <header class="mb-6 sm:mb-8 font-sans">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight uppercase text-zinc-900">@yield('header_title', 'Dashboard')</h1>
             <p class="text-[10px] text-zinc-400 mt-2 uppercase tracking-[0.2em] font-mono">@yield('header_subtitle', 'Operational Intel // System Sync Active')</p>
         </header>
         
@@ -181,7 +181,7 @@
                  x-transition:leave="transition ease-in duration-200 transform"
                  x-transition:leave-start="translate-x-0 opacity-100"
                  x-transition:leave-end="translate-x-full opacity-0"
-                 class="fixed top-8 right-8 z-[200] bg-zinc-900 border border-zinc-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] p-6 min-w-[320px] pointer-events-auto"
+                 class="fixed top-4 right-4 sm:top-8 sm:right-8 z-[200] bg-zinc-900 border border-zinc-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] p-4 sm:p-6 w-[calc(100vw-2rem)] max-w-xs sm:min-w-[320px] pointer-events-auto"
                  x-cloak>
                 <div class="flex items-start gap-x-4">
                     <div class="h-10 w-1 bg-cyan-600 flex-shrink-0 animate-pulse"></div>

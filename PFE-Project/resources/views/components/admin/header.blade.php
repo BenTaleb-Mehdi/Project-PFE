@@ -1,10 +1,7 @@
 <!-- resources/views/components/admin/header.blade.php -->
 <header class="lg:hidden sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b border-zinc-200 text-sm py-2.5 font-sans">
     <nav class="max-w-[85rem] mx-auto w-full px-4 flex justify-between items-center" aria-label="Global">
-        <div class="flex items-center space-x-2">
-            <div class="h-5 w-5 bg-cyan-600"></div>
-            <span class="font-bold text-sm tracking-tighter uppercase text-zinc-900">Coach</span>
-        </div>
+        <x-logo class="max-w-[120px]" />
         
         <button type="button" 
                 @click.stop="isSidebarOpen = true"

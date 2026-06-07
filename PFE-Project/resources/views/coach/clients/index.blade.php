@@ -11,9 +11,9 @@
     filterStatus: "{{ request("status", "ALL_STATUSES") }}"
 })'>
     <!-- Action Bar -->
-    <div class="mb-10 lg:flex lg:justify-end font-mono">
+    <div class="mb-6 sm:mb-10 flex sm:justify-end font-mono">
         <button @click="openModal()"
-                class="px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center gap-x-2">
+                class="w-full sm:w-auto px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
             <i data-lucide="plus" class="size-3"></i>
             Onboard New Pupil
         </button>
@@ -100,7 +100,7 @@
                      x-collapse
                      x-cloak
                      class="border-t border-dashed border-zinc-100 bg-zinc-50/50">
-                    <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-4 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
                         <!-- Bio Metrics -->
                         <div class="space-y-4">
                             <h5 class="text-[8px] font-mono text-zinc-400 uppercase tracking-[0.2em] mb-4">Bio Metrics Core</h5>
@@ -233,7 +233,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="showClientModal = false"
-              class="relative bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] w-full max-w-lg p-8">
+               class="relative bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] w-full max-w-lg p-4 sm:p-8">
             @csrf
             <template x-if="isEditing">
                 @method('PUT')
@@ -338,7 +338,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="showAssignModal = false"
-              class="relative bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] w-full max-w-md p-8">
+               class="relative bg-white border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] w-full max-w-md p-4 sm:p-8">
             @csrf
             
             <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-900 mb-2">Program Assignment Wizard</h3>
@@ -349,7 +349,7 @@
                 <div>
                     <label class="block text-[10px] text-zinc-900 uppercase font-bold tracking-widest mb-2 font-mono">Select Nutrition Protocol</label>
                     <div class="relative">
-                        <button type="button" @click="protocolOpen = !protocolOpen" 
+                        <button type="button" @click.stop="protocolOpen = !protocolOpen" 
                                 class="w-full bg-zinc-50 px-4 py-3 text-[10px] flex items-center justify-between border border-zinc-200 outline-none focus:border-cyan-600 transition-colors uppercase font-mono text-cyan-700 rounded-none">
                             <span x-text="selectedProtocol.title"></span>
                             <i data-lucide="chevron-down" class="size-3 transition-transform" :class="protocolOpen ? 'rotate-180' : ''"></i>
@@ -418,7 +418,7 @@
               x-transition:leave-start="opacity-100 translate-y-0 scale-100"
               x-transition:leave-end="opacity-0 translate-y-2"
               @click.outside="isDeleteModalOpen = false"
-              class="relative bg-white w-full max-w-sm border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-8 text-center">
+               class="relative bg-white w-full max-w-sm border border-zinc-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.08)] p-4 sm:p-8 text-center">
             @csrf
             @method('DELETE')
             <div class="size-12 bg-red-50 text-red-600 border border-red-100 flex items-center justify-center mx-auto mb-4">

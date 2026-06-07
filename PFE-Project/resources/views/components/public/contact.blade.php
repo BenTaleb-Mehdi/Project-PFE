@@ -1,13 +1,13 @@
 @props(['contactInfo' => [], 'socials' => [], 'whatsappNumber'])
 
 <div x-show="currentPage === 'contact'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-  <section class="pt-36 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-16">
+  <section class="pt-28 sm:pt-36 pb-16 sm:pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
       <!-- Left info -->
       <div class="space-y-8">
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-medium tracking-widest uppercase mb-4">Contact</div>
-          <h1 class="font-display text-6xl tracking-wider leading-none text-neutral-900 dark:text-white">LET'S<br/><span class="text-brand-500">TALK</span></h1>
+          <h1 class="font-display text-5xl sm:text-6xl tracking-wider leading-none text-neutral-900 dark:text-white">LET'S<br/><span class="text-brand-500">TALK</span></h1>
         </div>
         <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">Your first consultation is free and zero-pressure. Tell me your goals and I'll put together a game plan tailored just for you.</p>
 
@@ -71,7 +71,7 @@
             </div>
             <div class="relative" x-data="{ open: false }">
               <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2 uppercase tracking-widest">Goal</label>
-              <button type="button" @click="open = !open" 
+              <button type="button" @click.stop="open = !open" 
                       class="w-full px-4 py-3 rounded-xl bg-white dark:bg-neutral-800 border focus:outline-none text-sm transition-colors text-left flex justify-between items-center text-neutral-900 dark:text-white"
                       :class="errors.goal ? 'border-red-500' : 'border-neutral-200 dark:border-neutral-700 focus:border-brand-500'">
                 <span x-text="form.goal || 'Select your primary goal'" :class="form.goal ? 'text-neutral-900 dark:text-white' : 'text-neutral-400 dark:text-neutral-500'"></span>

@@ -6,11 +6,11 @@
 
 @section('content')
     <!-- Navbar Molecule -->
-    <div class="mb-12">
+    <div class="mb-8 sm:mb-12">
         <nav class="bg-white border border-zinc-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] w-full overflow-x-auto">
-            <div class="flex items-center px-6">
+            <div class="flex items-center px-4 sm:px-6">
                 <div class="flex space-x-8 h-12">
-                    <a href="#" class="flex items-center h-full text-[10px] font-bold uppercase tracking-widest text-cyan-600 border-b-2 border-cyan-600 transition-all font-sans">
+                    <a href="#" class="flex items-center h-full text-[10px] font-bold uppercase tracking-widest text-cyan-600 border-b-2 border-cyan-600 transition-all font-sans whitespace-nowrap">
                         Overview
                         <span class="ml-2 px-1.5 py-0.5 bg-cyan-50 text-cyan-700 font-mono text-[9px] border border-cyan-100">MTD</span>
                     </a>
@@ -20,9 +20,9 @@
     </div>
 
     <!-- KPI Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 font-sans">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 font-sans">
         <!-- KPI Card (Revenue) -->
-        <div class="ag-card p-8 group transition-all duration-300">
+        <div class="ag-card p-5 sm:p-8 group transition-all duration-300">
             <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Total Revenue MTD</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-3xl font-bold text-cyan-700">{{ $financeMetrics['total_revenue_mtd'] }}</span>
@@ -44,7 +44,7 @@
         </div>
         
         <!-- KPI Card (Pupils) -->
-        <div class="ag-card p-8 group transition-all duration-300">
+        <div class="ag-card p-5 sm:p-8 group transition-all duration-300">
             <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Pupils Performance Cap</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-3xl font-bold text-cyan-700">{{ $activePupils }}</span>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- KPI Card (Compliance) -->
-        <div class="ag-card p-8 group transition-all duration-300">
+        <div class="ag-card p-5 sm:p-8 group transition-all duration-300">
             <p class="text-[10px] text-zinc-400 uppercase tracking-widest mb-4">Compliance Index</p>
             <div class="flex items-baseline space-x-2 font-mono">
                 <span class="text-3xl font-bold text-emerald-600">{{ $complianceIndex }}%</span>
@@ -66,8 +66,8 @@
     </div>
 
     <!-- Bottom Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 font-mono">
-        <div class="ag-card p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 font-mono">
+        <div class="ag-card p-6 sm:p-8">
             <h3 class="text-xs font-bold uppercase tracking-widest mb-8 border-b border-zinc-100 pb-4 flex justify-between">
                 <span>System Stream</span>
                 <span class="text-[8px] animate-pulse text-cyan-600">Live</span>
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Deadline Alert Center -->
-        <div x-data="{ settingsOpen: false, whatsapp: '{{ $whatsappNumber }}', threshold: {{ $threshold }} }" class="ag-card p-8 flex flex-col relative overflow-hidden group">
+        <div x-data="{ settingsOpen: false, whatsapp: '{{ $whatsappNumber }}', threshold: {{ $threshold }} }" class="ag-card p-4 sm:p-8 flex flex-col relative overflow-hidden group">
             <div class="absolute right-0 top-0 p-4">
                 <button @click="settingsOpen = true" class="h-8 w-8 bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-cyan-600 hover:border-cyan-200 transition-all">
                     <i data-lucide="settings-2" class="size-4"></i>

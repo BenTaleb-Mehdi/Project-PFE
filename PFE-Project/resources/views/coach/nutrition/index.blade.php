@@ -61,7 +61,7 @@
                     <div class="relative" x-data='{ open: false }'>
                         <label class="block text-[8px] text-zinc-400 uppercase tracking-widest mb-2">Category Node</label>
                         <input type="hidden" name="category_id" :value="mealCategorySelectedId">
-                        <button type="button" @click="open = !open" 
+                        <button type="button" @click.stop="open = !open" 
                                 class="w-full bg-zinc-50 px-4 py-3 text-[10px] uppercase border border-zinc-200 flex items-center justify-between outline-none focus:border-cyan-600 transition-colors font-mono text-cyan-700 rounded-none">
                             <span x-text="mealCategorySelected || 'Select Category'"></span>
                             <i data-lucide="chevron-down" class="size-4" :class="open ? 'rotate-180' : ''"></i>
@@ -272,7 +272,7 @@
                         
                         <!-- Category Filter -->
                         <div class="relative w-full md:w-48" x-data="{ open: false }">
-                            <button @click="open = !open" 
+                            <button @click.stop="open = !open" 
                                     class="w-full bg-white border border-zinc-200 px-4 py-2.5 text-[9px] uppercase font-mono tracking-widest flex items-center justify-between focus:outline-none focus:border-cyan-600 rounded-none transition-all">
                                 <span x-text="mealCategory === 'ALL_CATEGORIES' ? 'ALL_NODES' : mealCategory"></span>
                                 <i data-lucide="filter" class="size-3 text-zinc-400"></i>
@@ -456,7 +456,7 @@
                     
                     <!-- Status Filter -->
                     <div class="relative w-full md:w-48" x-data="{ open: false }">
-                        <button @click="open = !open" 
+                        <button @click.stop="open = !open" 
                                 class="w-full bg-white border border-zinc-200 px-4 py-2.5 text-[10px] uppercase font-mono tracking-widest flex items-center justify-between focus:outline-none focus:border-cyan-600 rounded-none transition-all">
                             <span x-text="programFilter === 'ALL_PROTOCOLS' ? 'ALL_STATUSES' : programFilter"></span>
                             <i data-lucide="filter" class="size-3 text-zinc-400"></i>
@@ -484,7 +484,8 @@
                 </div>
             </div>
             
-            <div class="overflow-x-auto">
+            <!-- Desktop Table -->
+            <div class="overflow-x-auto hidden md:block">
                 <table class="w-full text-left text-[10px]">
                     <thead class="bg-white border-b border-zinc-100 text-zinc-400 uppercase tracking-widest font-bold">
                         <tr>
@@ -506,7 +507,7 @@
                                 </td>
                                 <td class="px-8 py-5 text-zinc-500 font-mono" x-text="program.items_count + ' Units'"></td>
                                 <td class="px-8 py-5 text-center">
-                                    <span class="text-[10px] bg-zinc-100 text-zinc-950 font-mono px-3 py-1 rounded-sm font-bold border border-zinc-200" x-text="program.clients_count + ' ACTIVE'"></span>
+                                    <span class="text-[10px] bg-zinc-100 text-zinc-950 font-mono px-3 py-1 font-bold border border-zinc-200" x-text="program.clients_count + ' ACTIVE'"></span>
                                 </td>
                                 <td class="px-8 py-5 text-zinc-400 font-mono" x-text="program.updated_at ? program.updated_at.split('T')[0] : 'N/A'"></td>
                                  <td class="px-8 py-5 text-right">
@@ -520,21 +521,43 @@
                                 </td>
                             </tr>
                         </template>
-
-                        <tr x-show="filteredPrograms.length === 0">
-                            <td colspan="5" class="px-8 py-20 text-center">
-                                <div class="flex flex-col items-center gap-3">
-                                    <i data-lucide="search-x" class="size-8 text-zinc-200"></i>
-                                    <p class="text-[8px] text-zinc-300 uppercase tracking-[0.4em] font-mono">NODES_NULL // NO_MATCH_DETECTED</p>
-                                    <button @click="programSearch = ''; programFilter = 'ALL_PROTOCOLS'" 
-                                            class="text-[8px] text-cyan-600 uppercase font-mono tracking-widest hover:text-cyan-800 transition-colors">
-                                        Reset Filters
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card Layout -->
+            <div class="md:hidden divide-y divide-zinc-100">
+                <template x-for="program in filteredPrograms" :key="program.id">
+                    <div class="p-4 hover:bg-zinc-50 transition-colors space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-x-2">
+                                <div class="h-1.5 w-1.5 bg-cyan-600"></div>
+                                <span class="font-bold text-xs text-zinc-950 uppercase" x-text="program.title"></span>
+                            </div>
+                            <span class="text-[10px] bg-zinc-100 text-zinc-950 font-mono px-2 py-0.5 font-bold" x-text="program.clients_count + ' ACTIVE'"></span>
+                        </div>
+                        <div class="flex items-center justify-between text-[9px] text-zinc-500 font-mono">
+                            <span x-text="program.items_count + ' Units'"></span>
+                            <span x-text="program.updated_at ? program.updated_at.split('T')[0] : 'N/A'"></span>
+                        </div>
+                        <div class="flex justify-end gap-x-4 pt-1 border-t border-zinc-50">
+                            <button @click="openDetails(program)" class="text-zinc-400 hover:text-cyan-600"><i data-lucide="layout-list" class="size-3.5"></i></button>
+                            <button @click="editProgram(program)" class="text-zinc-400 hover:text-cyan-600"><i data-lucide="terminal" class="size-3.5"></i></button>
+                            <button @click="openDeleteModal(program)" class="text-zinc-300 hover:text-red-500"><i data-lucide="zap-off" class="size-3.5"></i></button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div x-show="filteredPrograms.length === 0" class="px-8 py-20 text-center">
+                <div class="flex flex-col items-center gap-3">
+                    <i data-lucide="search-x" class="size-8 text-zinc-200"></i>
+                    <p class="text-[8px] text-zinc-300 uppercase tracking-[0.4em] font-mono">NODES_NULL // NO_MATCH_DETECTED</p>
+                    <button @click="programSearch = ''; programFilter = 'ALL_PROTOCOLS'" 
+                            class="text-[8px] text-cyan-600 uppercase font-mono tracking-widest hover:text-cyan-800 transition-colors">
+                        Reset Filters
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -566,10 +589,10 @@
                 <div class="space-y-4">
                     <label class="block text-[9px] text-zinc-500 uppercase font-bold tracking-widest mb-6">Slot Assignment Matrix</label>
                     @foreach($categories as $cat)
-                        <div class="flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-50 border border-zinc-200 hover:border-cyan-500 hover:bg-white transition-all group">
-                            <div class="flex items-center space-x-6">
-                                <div class="h-4 w-1 bg-zinc-300 group-hover:bg-cyan-600 transition-colors"></div>
-                                <span class="text-[10px] text-zinc-900 font-bold uppercase w-32 font-mono">{{ $cat->name }}</span>
+                        <div class="flex flex-col md:flex-row md:items-center justify-between p-4 sm:p-6 bg-zinc-50 border border-zinc-200 hover:border-cyan-500 hover:bg-white transition-all group gap-3">
+                            <div class="flex items-center gap-3 sm:gap-6">
+                                <div class="h-4 w-1 bg-zinc-300 group-hover:bg-cyan-600 transition-colors shrink-0"></div>
+                                <span class="text-[10px] text-zinc-900 font-bold uppercase font-mono">{{ $cat->name }}</span>
                                 
                                 <input type="hidden" name="items[{{ $loop->index }}][slot]" value="{{ $cat->name }}">
                                 <input type="hidden" name="items[{{ $loop->index }}][day]" value="Everyday">
@@ -578,9 +601,9 @@
                                        :value="protocolItems.find(i => i.slot === '{{ $cat->name }}')?.meal_id">
                             </div>
                             
-                            <div class="relative mt-4 md:mt-0" x-data='{ open: false }'>
-                                <button type="button" @click="open = !open" 
-                                        class="px-5 py-3 text-[9px] text-cyan-700 font-mono font-bold uppercase border border-zinc-200 bg-white hover:border-cyan-600 transition-all min-w-[200px] flex justify-between items-center rounded-none"
+                            <div class="relative w-full md:w-auto" x-data='{ open: false }'>
+                                <button type="button" @click.stop="open = !open" 
+                                        class="w-full md:w-auto px-5 py-3 text-[9px] text-cyan-700 font-mono font-bold uppercase border border-zinc-200 bg-white hover:border-cyan-600 transition-all min-w-[200px] flex justify-between items-center"
                                         x-text="getMealName('{{ $cat->name }}')">
                                 </button>
                                 <div x-show="open" @click.outside="open = false" x-cloak

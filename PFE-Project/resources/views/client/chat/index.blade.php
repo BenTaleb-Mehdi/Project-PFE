@@ -8,10 +8,19 @@
     <p style="font-family:'JetBrains Mono',monospace" class="text-[9px] text-cyan-600 mt-1 uppercase tracking-widest">Active Synchronous Uplink // Encrypted Node</p>
 </div>
 
-<div x-data="chatSystem()" class="h-[calc(100vh-240px)] flex bg-white border border-zinc-200 overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]" x-cloak>
+<div x-data="chatSystem()" class="h-[calc(100vh-240px)] flex bg-white border border-zinc-200 overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] relative" x-cloak>
     
+    <!-- Mobile Contact Toggle -->
+    <button @click="showContacts = !showContacts" class="lg:hidden absolute top-2 left-2 z-50 h-9 w-9 bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 hover:bg-zinc-50 shadow-sm">
+        <i data-lucide="message-square" class="size-4"></i>
+    </button>
+
+    <!-- Mobile Overlay Backdrop -->
+    <div x-show="showContacts" @click="showContacts = false" x-cloak x-transition.opacity class="lg:hidden fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-30"></div>
+
     <!-- ── LEFT SIDEBAR: CONTACT LIST ── -->
-    <div class="w-80 border-r border-zinc-200 flex flex-col bg-zinc-50 flex-shrink-0">
+    <div class="w-80 border-r border-zinc-200 flex flex-col bg-zinc-50 flex-shrink-0 lg:relative fixed inset-y-0 left-0 z-40 transition-transform duration-300 lg:translate-x-0"
+         :class="showContacts ? 'translate-x-0' : '-translate-x-full'">
         <!-- Search contacts -->
         <div class="p-4 border-b border-zinc-200 bg-white">
             <div class="relative">
@@ -266,6 +275,7 @@
             messages: [],
             messageText: '',
             searchQuery: '',
+            showContacts: false,
             selectedFile: null,
             fileName: '',
             filePreview: null,
@@ -326,6 +336,7 @@
                 this.messages = [];
                 this.fetchMessages(contact.id);
                 contact.unread_count = 0;
+                this.showContacts = false;
             },
             
             fetchMessages(contactId, silent = false) {

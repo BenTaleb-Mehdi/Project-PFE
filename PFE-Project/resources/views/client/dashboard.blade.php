@@ -12,10 +12,10 @@
 })'>
     
     <!-- DASHBOARD VIEW -->
-    <div class="space-y-12">
-        <header class="mb-12">
-            <h1 class="text-3xl font-mono font-bold text-zinc-900 uppercase tracking-tighter">Dashboard</h1>
-            <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.4em] mt-2">Pupil Intel // Progress Sync Active</p>
+    <div class="space-y-8 sm:space-y-12">
+        <header class="mb-8 sm:mb-12">
+            <h1 class="text-xl sm:text-3xl font-mono font-bold text-zinc-900 uppercase tracking-tighter">Dashboard</h1>
+            <p class="text-[9px] sm:text-[10px] font-mono text-zinc-400 uppercase tracking-[0.4em] mt-2">Pupil Intel // Progress Sync Active</p>
         </header>
 
         <!-- KPI Grid -->
@@ -76,17 +76,18 @@
         <!-- Next Meal Focus -->
         @if($programData['program_title'] !== 'NO_ACTIVE_PROTOCOL')
         <div x-show="nextMeal" class="ag-card p-[1px] bg-gradient-to-br from-cyan-500 via-zinc-800 to-zinc-950 border-none shadow-2xl group transition-all duration-500 hover:shadow-cyan-900/20">
-            <div class="bg-white p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-8 relative overflow-hidden">
+            <div class="bg-white p-5 sm:p-8 flex flex-col gap-6 relative overflow-hidden">
                 <!-- Background Accent Blur -->
                 <div class="absolute top-0 right-0 -mr-16 -mt-16 h-48 w-48 bg-cyan-50/50 rounded-full blur-3xl group-hover:bg-cyan-100/50 transition-colors duration-700"></div>
 
-                <div class="flex items-center gap-6 relative z-10">
-                    <div class="h-16 w-16 bg-zinc-950 flex items-center justify-center text-cyan-500 shadow-[4px_4px_0px_0px_rgba(8,145,178,0.2)] group-hover:shadow-cyan-500/40 transition-all duration-300">
-                        <i data-lucide="zap" class="size-8 animate-pulse"></i>
+                <!-- Top row: icon + meal info -->
+                <div class="flex items-center gap-4 sm:gap-6 relative z-10">
+                    <div class="h-12 w-12 sm:h-16 sm:w-16 bg-zinc-950 flex items-center justify-center text-cyan-500 shadow-[4px_4px_0px_0px_rgba(8,145,178,0.2)] group-hover:shadow-cyan-500/40 transition-all duration-300 shrink-0">
+                        <i data-lucide="zap" class="size-6 sm:size-8 animate-pulse"></i>
                     </div>
                     <div>
-                        <p class="text-[8px] font-mono font-bold text-cyan-600 uppercase tracking-[0.5em] mb-2">Next Scheduled Node</p>
-                        <h3 class="text-3xl font-mono font-bold text-zinc-950 uppercase tracking-tighter leading-none" x-text="nextMeal?.menu"></h3>
+                        <p class="text-[8px] font-mono font-bold text-cyan-600 uppercase tracking-[0.5em] mb-1">Next Scheduled Node</p>
+                        <h3 class="text-xl sm:text-3xl font-mono font-bold text-zinc-950 uppercase tracking-tighter leading-none" x-text="nextMeal?.menu"></h3>
                         <div class="flex items-center gap-2 mt-2">
                             <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                             <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest" x-text="'Sequence Active // ' + nextMeal?.cat"></span>
@@ -94,29 +95,30 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-10 relative z-10">
-                    <div class="text-right">
-                        <div class="flex items-center justify-end gap-2 mb-1">
+                <!-- Bottom row: time + actions -->
+                <div class="flex flex-wrap items-center gap-4 relative z-10">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
                             <i data-lucide="clock" class="size-3 text-cyan-600"></i>
-                            <p class="text-2xl font-mono font-bold text-zinc-950 tracking-tighter" x-text="nextMeal?.time"></p>
+                            <p class="text-xl sm:text-2xl font-mono font-bold text-zinc-950 tracking-tighter" x-text="nextMeal?.time"></p>
                         </div>
                         <p class="text-[8px] font-mono text-zinc-400 font-bold uppercase tracking-[0.2em]">Target Window</p>
                     </div>
                     
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 ml-auto">
                         <form action="{{ route('client.meals.validate') }}" method="POST">
                             @csrf
                             <input type="hidden" name="program_item_id" :value="nextMeal?.id">
                             <button type="submit" 
-                                    class="px-6 py-4 bg-zinc-950 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-600 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-95 flex items-center gap-2">
+                                    class="px-4 sm:px-6 py-3 sm:py-4 bg-zinc-950 text-white text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-600 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-95 flex items-center gap-2">
                                 <i data-lucide="check-circle" class="size-3.5"></i>
                                 Validate Node
                             </button>
                         </form>
                         
                         <a href="{{ route('client.programs.index') }}" 
-                           class="h-14 w-14 bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-950 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:scale-95 group/btn">
-                            <i data-lucide="arrow-right" class="size-6 group-hover/btn:translate-x-1 transition-transform"></i>
+                           class="h-12 w-12 sm:h-14 sm:w-14 bg-zinc-50 border border-zinc-200 flex items-center justify-center text-zinc-950 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:scale-95 group/btn">
+                            <i data-lucide="arrow-right" class="size-5 sm:size-6 group-hover/btn:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
@@ -143,19 +145,19 @@
 
         <!-- Active Protocol Snippet -->
         @if($programData['program_title'] !== 'NO_ACTIVE_PROTOCOL')
-        <div class="ag-card p-8 bg-cyan-900 border-none text-white overflow-hidden relative">
-            <div class="relative z-10 flex flex-col md:flex-row justify-between md:items-end">
+        <div class="ag-card p-6 sm:p-8 bg-cyan-900 border-none text-white overflow-hidden relative">
+            <div class="relative z-10 flex flex-col sm:flex-row justify-between sm:items-end gap-6">
                 <div>
                     <p class="text-[10px] font-mono text-cyan-300 uppercase tracking-[0.3em] mb-4">Active Protocol Lock</p>
-                    <h4 class="text-3xl font-bold font-mono tracking-tight uppercase">{{ $programData['program_title'] }}</h4>
+                    <h4 class="text-2xl sm:text-3xl font-bold font-mono tracking-tight uppercase">{{ $programData['program_title'] }}</h4>
                     <p class="text-[8px] text-cyan-500 font-mono mt-2 uppercase tracking-widest">{{ $programData['items_count'] }} Meal Nodes // Sync Active</p>
                 </div>
-                <div class="mt-8 md:mt-0 flex gap-4">
-                    <div class="p-4 bg-white/5 ag-border border-white/10 text-center flex-1 md:flex-none">
+                <div class="flex gap-4">
+                    <div class="p-4 bg-white/5 ag-border border-white/10 text-center flex-1 sm:flex-none">
                         <p class="text-[6px] text-cyan-400 uppercase font-mono mb-1">Target Kcal</p> 
                         <p class="text-xl font-bold font-mono">{{ $programData['dailyMacros']['kcal'] }}</p>
                     </div>
-                    <div class="p-4 bg-white/5 ag-border border-white/10 text-center flex-1 md:flex-none text-emerald-400">
+                    <div class="p-4 bg-white/5 ag-border border-white/10 text-center flex-1 sm:flex-none text-emerald-400">
                         <p class="text-[6px] text-cyan-400 uppercase font-mono mb-1">Target P</p> 
                         <p class="text-xl font-bold font-mono">{{ $programData['dailyMacros']['p'] }}g</p>
                     </div>

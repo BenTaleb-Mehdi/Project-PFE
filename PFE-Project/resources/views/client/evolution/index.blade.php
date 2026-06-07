@@ -19,7 +19,7 @@
             <span class="h-[1px] w-12 bg-cyan-700"></span>
             <span class="text-[10px] font-mono font-bold text-cyan-700 uppercase tracking-[0.4em]">Current Status: Biometric Active</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Evolution Sync</h1>
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tighter uppercase text-zinc-900">Evolution Sync</h1>
         <p class="text-[11px] font-mono text-zinc-400 mt-5 uppercase tracking-[0.2em] flex items-center">
             <i data-lucide="zap" class="size-4 mr-3 text-cyan-600"></i>
             Module: Physical Trace Capture // V3.0 PRO SYNC
@@ -76,10 +76,10 @@
                     <i data-lucide="activity" class="size-48 stroke-[0.5]"></i>
                 </div>
                 <div class="relative z-10">
-                    <label class="block text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mb-8">System Mass Input (KG)</label>
+                    <label class="block text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mb-4 sm:mb-8">System Mass Input (KG)</label>
                     <div class="flex items-baseline space-x-6">
                         <input type="number" step="0.1" name="weight" placeholder="00.0" required
-                               class="text-7xl font-mono font-bold w-full bg-transparent outline-none text-cyan-500 border-none p-0 focus:ring-0 tracking-tighter placeholder-zinc-800">
+                               class="text-4xl sm:text-7xl font-mono font-bold w-full bg-transparent outline-none text-cyan-500 border-none p-0 focus:ring-0 tracking-tighter placeholder-zinc-800">
                         <span class="text-xs font-mono text-zinc-600 font-bold uppercase">Metric Units</span>
                     </div>
                 </div>

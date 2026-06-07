@@ -129,11 +129,8 @@
 
     <!-- Mobile Top Bar -->
     <div class="mobile-header lg:hidden">
-        <div class="flex items-center gap-x-2">
-            <div class="h-4 w-4 bg-cyan-600"></div>
-            <span style="font-family:'JetBrains Mono',monospace" class="text-xs font-bold tracking-widest uppercase text-zinc-900">Coach Portal</span>
-        </div>
-        <button @click="sidebarOpen = !sidebarOpen" 
+        <x-logo class="max-w-[120px]" />
+        <button @click.stop="sidebarOpen = !sidebarOpen" 
                 class="h-9 w-9 flex items-center justify-center ag-border text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 transition-colors">
             <i data-lucide="menu" class="size-4"></i>
         </button>
@@ -164,7 +161,7 @@
 
                     <!-- Bell Button -->
                     <button id="client-notif-bell-btn"
-                        @click="toggle()"
+                        @click.stop="toggle()"
                         class="relative flex items-center justify-center h-9 w-9 border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-cyan-500 transition-all duration-200"
                         title="Notifications">
                         <i data-lucide="bell" class="size-4 text-zinc-600"></i>
@@ -183,7 +180,7 @@
                          x-transition:leave="transition ease-in duration-100"
                          x-transition:leave-start="opacity-100"
                          x-transition:leave-end="opacity-0"
-                         class="absolute right-0 top-12 z-[300] w-80 bg-white border border-zinc-200 shadow-xl overflow-hidden">
+                         class="absolute right-0 top-12 z-[300] w-[calc(100vw-2rem)] max-w-xs sm:max-w-sm sm:w-80 bg-white border border-zinc-200 shadow-xl overflow-hidden">
 
                         <!-- Header -->
                         <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-100">

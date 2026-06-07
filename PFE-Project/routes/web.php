@@ -109,5 +109,8 @@ Route::prefix('coach')->name('coach.')->middleware(['auth', 'role:admin|co-coach
 Auth::routes(['register' => false]);
 
 Route::get('/home', function() {
+    if (auth()->user()?->hasRole('client')) {
+        return redirect()->route('client.dashboard');
+    }
     return redirect()->route('coach.dashboard');
 })->name('home');
