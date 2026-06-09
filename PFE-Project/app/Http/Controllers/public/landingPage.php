@@ -25,6 +25,36 @@ class landingPage extends Controller
         return view("landingpage", $data);
     }
 
+    protected function getLegalData(): array
+    {
+        $data = $this->landingPageService->getLandingPageData();
+        return [
+            'legal' => $data['legal'],
+            'contactInfo' => $data['contactInfo'],
+            'socials' => $data['socials'],
+        ];
+    }
+
+    public function legal()
+    {
+        return view('public.legal.index', $this->getLegalData());
+    }
+
+    public function privacy()
+    {
+        return view('public.legal.privacy', $this->getLegalData());
+    }
+
+    public function terms()
+    {
+        return view('public.legal.terms', $this->getLegalData());
+    }
+
+    public function cookies()
+    {
+        return view('public.legal.cookies', $this->getLegalData());
+    }
+
     public function submitContact(Request $request)
     {
         $request->validate([

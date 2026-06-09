@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get("/", [landingPage::class,"index"])->name("landingpage");
 Route::post("/contact", [landingPage::class, "submitContact"])->name("contact.submit");
 
+Route::prefix('legal')->name('legal.')->group(function () {
+    Route::get('/', [landingPage::class, 'legal'])->name('index');
+    Route::get('/privacy', [landingPage::class, 'privacy'])->name('privacy');
+    Route::get('/terms', [landingPage::class, 'terms'])->name('terms');
+    Route::get('/cookies', [landingPage::class, 'cookies'])->name('cookies');
+});
+
 // Public Signed Downloads
 Route::get('/receipts/{id}/download/signed', [App\Http\Controllers\Coach\PaymentController::class, 'downloadReceiptSigned'])
     ->name('receipts.download.signed')

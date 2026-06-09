@@ -44,6 +44,13 @@ export function appData() {
       { role: 'ai', text: 'Hello! I am Achraf, your Elite Fitness Coach at IRONCOACH. Ask me anything about strength training, custom nutrition plans, or how to get started on your champion body transformation!' }
     ],
     chatHistory: [],
+    suggestedQuestions: [
+      'What is progressive overload?',
+      'How much protein do I need?',
+      'Best workout split for beginners?',
+      'Tips for better sleep?',
+      'How to stay motivated?'
+    ],
 
     /* ════════════════════════════════════
        INIT
@@ -56,7 +63,10 @@ export function appData() {
 
       /* Global key events */
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.menuOpen) this.closeMenu()
+        if (e.key === 'Escape') {
+          if (this.menuOpen) this.closeMenu()
+          if (this.chatOpen) this.chatOpen = false
+        }
       })
 
       /* Scroll flag */
@@ -268,13 +278,18 @@ export function appData() {
         this.chatHistory.push({ role: 'user', text: userText });
         this.chatHistory.push({ role: 'ai', text: aiResponse });
       } catch (error) {
-        this.chatMessages.push({ role: 'ai', text: 'Connection issue. Check your internet and try again.' });
+        console.error('Chatbot error:', error);
+        this.chatMessages.push({ role: 'ai', text: 'Sorry, I could not connect to the AI service. Check the browser console (F12) for details, or verify your Gemini API key in the .env file.' });
       } finally {
         this.chatLoading = false;
         this.$nextTick(() => {
           this.scrollToBottom();
         });
       }
+    },
+    askSuggested(question) {
+      this.chatInput = question;
+      this.sendChatMessage();
     }
 
   } /* end return */

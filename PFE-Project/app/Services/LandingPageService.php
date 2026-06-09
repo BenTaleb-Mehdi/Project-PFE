@@ -27,6 +27,7 @@ class LandingPageService
             'posts'          => $raw['posts'] ?? [],
             'contactInfo'    => $this->getContactInfo($raw),
             'socials'        => $raw['socials'] ?? [],
+            'legal'          => $raw['legal'] ?? [],
         ];
     }
 

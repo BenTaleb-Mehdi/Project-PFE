@@ -131,6 +131,7 @@
       "readTime": "6 min read",
       "emoji": "🏋️",
       "color": "linear-gradient(135deg,#1a1a2e,#16213e)",
+      "image": "/images/images-blog/post-img1.webp",
       "title": "Progressive Overload: The Only Muscle-Building Principle You Need",
       "excerpt": "If you're not getting stronger over time, you're not growing. Here's exactly how to implement progressive overload systematically.",
       "tags": ["training", "hypertrophy", "strength"],
@@ -143,6 +144,7 @@
       "readTime": "5 min read",
       "emoji": "🥗",
       "color": "linear-gradient(135deg,#0f4c35,#1a6b3a)",
+      "image": "/images/images-blog/post-img2.webp",
       "title": "How Much Protein Do You Actually Need? The Science Explained",
       "excerpt": "Forget the bro-science. Here's what the research actually says about protein requirements for muscle gain and fat loss.",
       "tags": ["nutrition", "protein", "science"],
@@ -155,6 +157,7 @@
       "readTime": "4 min read",
       "emoji": "😴",
       "color": "linear-gradient(135deg,#2d1b69,#4a2c8a)",
+      "image": "/images/images-blog/post-img3.jpg",
       "title": "Why Sleep Is Your Most Powerful Performance Drug",
       "excerpt": "Every supplement in your stack combined won't come close to what 8 hours of quality sleep does for body composition.",
       "tags": ["recovery", "sleep", "performance"],
@@ -167,6 +170,7 @@
       "readTime": "7 min read",
       "emoji": "🧠",
       "color": "linear-gradient(135deg,#7c1d1d,#b91c1c)",
+      "image": "/images/images-blog/post-img4.jpeg",
       "title": "Identity-Based Habit Change: Become the Person Who Never Misses",
       "excerpt": "Motivation is unreliable. Identity is bulletproof. How to rewire your self-concept for permanent fitness habits.",
       "tags": ["mindset", "habits", "psychology"],
@@ -179,6 +183,7 @@
       "readTime": "8 min read",
       "emoji": "⚡",
       "color": "linear-gradient(135deg,#1c1c00,#4a4a00)",
+      "image": "/images/images-blog/post-img5.jpg",
       "title": "The 4-Day Upper/Lower Split: Best Program for Natural Lifters",
       "excerpt": "Four days per week, alternating upper and lower body. It's been around forever because it works — here's how to optimize it.",
       "tags": ["training", "program", "split"],
@@ -191,6 +196,7 @@
       "readTime": "5 min read",
       "emoji": "🔥",
       "color": "linear-gradient(135deg,#431407,#7c2d12)",
+      "image": "/images/images-blog/post-img6.jpg",
       "title": "Calorie Cycling: Eat More on Training Days, Less on Rest Days",
       "excerpt": "A simple nutrient timing strategy that supports muscle growth and fat loss simultaneously — with full explanations.",
       "tags": ["nutrition", "calories", "strategy"],
@@ -255,6 +261,13 @@
   "contactInfo": [
     { "label": "Location", "value": "Tangier, Morocco", "icon": "<svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z\"/><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M15 11a3 3 0 11-6 0 3 3 0 016 0z\"/></svg>" }
   ],
+  "legal": {
+    "company": "Achraf",
+    "email": "privacy@achraf.com",
+    "support_email": "achraf@pro.com",
+    "address": "Tangier, Morocco",
+    "last_updated": "June 1, 2026"
+  },
   "chatbot": {
     "fallback": "I'm Achraf, your Elite Fitness Coach at IRONCOACH! I can help with training, nutrition, recovery, and mindset. What's on your mind?",
     "greetings": [

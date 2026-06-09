@@ -282,6 +282,14 @@
   <!-- FLOATING ACTIONS (FAB cluster) -->
   <x-public.fab :whatsappNumber="$whatsappNumber" />
 
+  <!-- CHATBOT BACKDROP (click outside to close) -->
+  <div
+    x-show="chatOpen"
+    @click="toggleChat()"
+    class="fixed inset-0 z-[98]"
+    style="display: none;"
+  ></div>
+
   <!-- CHATBOT BUTTON -->
   <button
     x-show="!chatOpen"
@@ -305,8 +313,8 @@
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
     x-transition:leave-end="opacity-0 translate-y-8 scale-95"
-    class="fixed bottom-6 left-6 z-[99] w-[380px] bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-700 flex flex-col overflow-hidden"
-    style="height: 560px; display: none;"
+    class="fixed bottom-0 sm:bottom-6 left-0 sm:left-6 z-[99] w-full sm:w-[380px] h-[70vh] max-h-[560px] sm:h-[560px] bg-white dark:bg-neutral-900 rounded-none sm:rounded-2xl shadow-2xl border-t sm:border border-neutral-200 dark:border-neutral-700 flex flex-col overflow-hidden"
+    style="display: none;"
   >
     <!-- Header -->
     <div class="bg-brand-700 text-white px-5 py-4 flex items-center justify-between shrink-0">
@@ -339,6 +347,20 @@
           </div>
         </div>
       </template>
+
+      <!-- Suggested Questions (shown when chat is idle) -->
+      <div x-show="chatMessages.length === 1 && !chatLoading" class="space-y-2 pb-2">
+        <p class="text-xs text-neutral-400 font-medium uppercase tracking-wider">Suggested Questions</p>
+        <div class="flex flex-wrap gap-2">
+          <template x-for="(q, idx) in suggestedQuestions" :key="idx">
+            <button
+              @click="askSuggested(q)"
+              class="text-xs px-3 py-2 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 hover:border-brand-500 hover:text-brand-500 transition-colors text-left"
+              x-text="q"
+            ></button>
+          </template>
+        </div>
+      </div>
 
       <!-- Loading -->
       <div x-show="chatLoading" class="flex justify-start">
