@@ -1,0 +1,36 @@
+<!-- Action Header -->
+<div class="mb-8 flex flex-col sm:flex-row sm:justify-end gap-3 sm:gap-4 font-mono">
+    <button @click="isSpecialtyModalOpen = true"
+            class="w-full sm:w-auto px-6 py-3 bg-white text-zinc-950 border border-zinc-200 text-[10px] uppercase font-bold tracking-widest hover:bg-zinc-50 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.02)] active:scale-[0.99] flex items-center justify-center gap-x-2">
+        <i data-lucide="settings-2" class="size-3"></i>
+        Manage Specialties
+    </button>
+    <button @click="isAddMemberModalOpen = true"
+            class="w-full sm:w-auto px-6 py-3 bg-zinc-950 text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.99] flex items-center justify-center gap-x-2">
+        <i data-lucide="user-plus" class="size-3"></i>
+        Add Member
+    </button>
+</div>
+
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 font-sans">
+    <div class="ag-card p-6 border border-zinc-200">
+        <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Total Staff</p>
+        <div class="flex items-baseline space-x-2 font-mono">
+            <span class="text-2xl font-bold text-cyan-700">{{ $team->total() }}</span>
+            <span class="text-[10px] text-zinc-400 uppercase tracking-widest">Active Nodes</span>
+        </div>
+    </div>
+    <div class="ag-card p-6 border border-zinc-200">
+        <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">Registry Efficiency</p>
+        <div class="flex items-baseline space-x-2 font-mono">
+            <span class="text-2xl font-bold text-emerald-600">98.2%</span>
+        </div>
+    </div>
+    <div class="ag-card p-6 border border-zinc-200">
+        <p class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">System Status</p>
+        <div class="flex items-baseline space-x-2 font-mono">
+            <span class="text-2xl font-bold text-zinc-900 uppercase">ONLINE</span>
+        </div>
+    </div>
+</div>

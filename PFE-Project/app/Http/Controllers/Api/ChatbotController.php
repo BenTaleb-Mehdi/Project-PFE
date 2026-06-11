@@ -31,52 +31,8 @@ class ChatbotController extends Controller
         ]);
         $userMessage = trim($validated['chatInput']);
 
-        // Early handling: direct category creation commands (e.g., "Generate Breakfast")
-        $lowerMessage = strtolower($userMessage);
-        if (strpos($lowerMessage, 'generate') === 0) {
-            // Extract the part after the keyword
-            $parts = preg_split('/\s+/', $userMessage, 2);
-            $categoryName = $parts[1] ?? '';
-            $categoryName = trim($categoryName);
-            if ($categoryName !== '') {
-                try {
-                    $category = $this->categoryService->addSequenceSlot($categoryName);
-                    $created = [$category];
-                    $aiText = "✅ Category \"{$categoryName}\" has been created successfully!";
-                    session()->flash('success', $aiText);
-                    return response()->json([
-                        'output' => $aiText,
-                        'created' => $created,
-                    ]);
-                } catch (\Exception $e) {
-                    $aiText = "⚠️ I tried to create the category \"{$categoryName}\" but encountered an error: " . $e->getMessage();
-                    return response()->json([
-                        'output' => $aiText,
-                        'created' => [],
-                    ], 500);
-                }
-            }
-        }
-
-        // Early handling: if user directly requests category creation
         if (preg_match('/^generate\s+(.+)/i', $userMessage, $matches)) {
-            $categoryName = trim($matches[1]);
-            try {
-                $category = $this->categoryService->addSequenceSlot($categoryName);
-                $created = [$category];
-                $aiText = "✅ Category \"{$categoryName}\" has been created successfully!";
-                session()->flash('success', $aiText);
-                return response()->json([
-                    'output' => $aiText,
-                    'created' => $created,
-                ]);
-            } catch (\Exception $e) {
-                $aiText = "⚠️ I tried to create the category \"{$categoryName}\" but encountered an error: " . $e->getMessage();
-                return response()->json([
-                    'output' => $aiText,
-                    'created' => [],
-                ], 500);
-            }
+            return $this->createCategoryFromName(trim($matches[1]));
         }
 
         $history = $validated['history'] ?? [];
@@ -181,16 +137,10 @@ PROMPT
         }
 
         if (json_last_error() === JSON_ERROR_NONE && isset($decoded['action'])) {
-            $action = $decoded['action'];
-            if ($action === 'create_category' && !empty($decoded['name'])) {
-                try {
-                    $category = $this->categoryService->addSequenceSlot($decoded['name']);
-                    $created[] = $category;
-                    $aiText = $decoded['message'] ?? "✅ Category \"{$decoded['name']}\" has been created successfully!";
-                    session()->flash('success', $aiText);
-                } catch (\Exception $e) {
-                    $aiText = "⚠️ I tried to create the category \"{$decoded['name']}\" but encountered an error: " . $e->getMessage();
-                }
+            if ($decoded['action'] === 'create_category' && !empty($decoded['name'])) {
+                $result = $this->createCategoryFromName($decoded['name'], $decoded['message'] ?? null);
+                $aiText = $result->getData()->output;
+                $created = $result->getData()->created;
             }
         }
 
@@ -199,5 +149,23 @@ PROMPT
             'output'  => $aiText,
             'created' => $created,
         ]);
+    }
+
+    private function createCategoryFromName(string $name, ?string $successMessage = null): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $category = $this->categoryService->addSequenceSlot($name);
+            $message = $successMessage ?? "✅ Category \"{$name}\" has been created successfully!";
+            session()->flash('success', $message);
+            return response()->json([
+                'output' => $message,
+                'created' => [$category],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'output' => "⚠️ I tried to create the category \"{$name}\" but encountered an error: " . $e->getMessage(),
+                'created' => [],
+            ], 500);
+        }
     }
 }

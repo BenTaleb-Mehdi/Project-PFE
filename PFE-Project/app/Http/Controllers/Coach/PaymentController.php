@@ -59,10 +59,7 @@ class PaymentController extends Controller
      */
     public function downloadReceiptSigned($id)
     {
-        $payment = $this->financeService->getPaymentWithClient($id);
-        $pdf     = Pdf::loadView('pdfs.receipt', compact('payment'));
-        
-        return $pdf->download('receipt_' . $payment->id . '.pdf');
+        return $this->downloadReceipt($id);
     }
 
     /**

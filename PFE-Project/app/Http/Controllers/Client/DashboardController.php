@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Services\ClientProgramService;
 use App\Services\EvolutionService;
+use App\Traits\GetClientTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    use GetClientTrait;
+
     protected $programService;
     protected $evolutionService;
 
@@ -64,23 +66,4 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * Internal helper to get client context in dev/prod.
-     */
-    private function getClient()
-    {
-        // Debug/Preview Mode: Allow manual client selection via URL
-        if ($clientId = request('client_id')) {
-            return \App\Models\Client::find($clientId) ?? \App\Models\Client::first();
-        }
-
-        $user = Auth::user();
-        $client = $user ? $user->client : \App\Models\Client::first();
-
-        if (!$client) {
-            abort(404, 'DEPLOYMENT_ERROR: No Client context found.');
-        }
-
-        return $client;
-    }
 }

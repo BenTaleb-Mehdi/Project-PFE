@@ -20,38 +20,36 @@ class ChatService
     {
         $user = User::findOrFail($userId);
 
-        // Determine contact roles based on current user's role
         if ($user->hasRole('client')) {
-            // Clients can only chat with Staff (Admins and Co-coaches)
             $contactQuery = User::whereHas('roles', function ($query) {
                 $query->whereIn('name', ['admin', 'co-coach']);
             });
         } else {
-            // Staff can chat with all Clients and other Staff
             $contactQuery = User::where('id', '!=', $userId);
         }
 
         $contacts = $contactQuery->get();
+        $contactIds = $contacts->pluck('id');
 
-        return $contacts->map(function ($contact) use ($userId) {
-            // Get last message between current user and this contact
-            $lastMessage = Message::where(function ($query) use ($userId, $contact) {
-                $query->where('sender_id', $userId)
-                      ->where('receiver_id', $contact->id);
-            })->orWhere(function ($query) use ($userId, $contact) {
-                $query->where('sender_id', $contact->id)
-                      ->where('receiver_id', $userId);
-            })
-            ->orderBy('created_at', 'desc')
-            ->first();
+        $allUserMessages = Message::where('sender_id', $userId)
+            ->orWhere('receiver_id', $userId)
+            ->latest('created_at')
+            ->get();
 
-            // Calculate unread count sent by this contact to the current user
-            $unreadCount = Message::where('sender_id', $contact->id)
-                                  ->where('receiver_id', $userId)
-                                  ->where('is_read', false)
-                                  ->count();
+        $lastMessages = $allUserMessages->groupBy(function ($msg) use ($userId) {
+            return $msg->sender_id === $userId ? $msg->receiver_id : $msg->sender_id;
+        })->map->first();
 
-            // Find role
+        $unreadCounts = Message::where('receiver_id', $userId)
+            ->whereIn('sender_id', $contactIds)
+            ->where('is_read', false)
+            ->groupBy('sender_id')
+            ->selectRaw('sender_id, COUNT(*) as count')
+            ->pluck('count', 'sender_id');
+
+        return $contacts->map(function ($contact) use ($userId, $lastMessages, $unreadCounts) {
+            $lastMessage = $lastMessages->get($contact->id);
+            $unreadCount = $unreadCounts->get($contact->id, 0);
             $role = $contact->roles->first()?->name ?? 'user';
 
             return [
@@ -69,7 +67,6 @@ class ChatService
                 ] : null,
             ];
         })->sortByDesc(function ($contact) {
-            // Sort by last message date, or id
             return $contact['last_message']['created_at'] ?? '0';
         })->values();
     }

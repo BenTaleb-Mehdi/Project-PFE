@@ -33,7 +33,4 @@ Route::middleware('web')->group(function () {
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
 });
 
-// --- Client Metrics (duplicate-safe) ---
-Route::get('/client/{id}/metrics',  [ClientMetricsController::class, 'show']);
-Route::post('/client/{id}/metrics', [ClientMetricsController::class, 'update']);
-Route::get('/client/{id}/program',  [ClientProgramController::class, 'show']);
+
