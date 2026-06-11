@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\StoreEvolutionRequest;
 use App\Services\EvolutionService;
+use App\Traits\GetClientTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class EvolutionController extends Controller
 {
+    use GetClientTrait;
+
     protected $evolutionService;
 
     public function __construct(EvolutionService $evolutionService)
@@ -59,16 +61,4 @@ class EvolutionController extends Controller
         return redirect()->back()->with('success', 'RECORD_PURGED // Sync_Integrity_Maintained');
     }
 
-    /**
-     * Internal helper to get client context.
-     */
-    private function getClient()
-    {
-        if ($clientId = request('client_id')) {
-            return \App\Models\Client::find($clientId) ?? \App\Models\Client::first();
-        }
-
-        $user = Auth::user();
-        return $user ? $user->client : \App\Models\Client::first();
-    }
 }
